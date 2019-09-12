@@ -63,7 +63,7 @@ public class ApplicationUseCase{
         
         // Basic "Hello, world!" example
         router.get("hello") { req in
-            return Article( title: "Hello, world!" )
+            return Profile(username: "hello", bio: "world", image: "http://notfound", following: true)
         }
         
         collections.forEach{ collection in
