@@ -48,11 +48,6 @@ public class ApplicationUseCase{
             return "It works!"
         }
         
-        // Basic "Hello, world!" example
-        router.get("hello") { req in
-            return Profile(username: "hello", bio: "world", image: "http://notfound", following: true)
-        }
-        
         // Set Routing
         collections.forEach{ collection in
             router.on(collection.method, at: collection.paths, use: collection.closure )

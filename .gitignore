@@ -1,2 +1,3 @@
 .build
 swift-vapor-layered-realworld-example.xcodeproj
+mysql_data
