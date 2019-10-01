@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/vapor/core.git",
         "state": {
           "branch": null,
-          "revision": "727ae2905ebdca162c5da5bfe187c406555859e2",
-          "version": "3.7.3"
+          "revision": "c64f63cb21631010952f7abfef719d376ab6a441",
+          "version": "3.9.1"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/vapor/crypto.git",
         "state": {
           "branch": null,
-          "revision": "45bb12d13cdec80dbd1cc0685ea002e51ab83439",
-          "version": "3.3.2"
+          "revision": "df8eb7d8ae51787b3a0628aa3975e67666da936c",
+          "version": "3.3.3"
         }
       },
       {
@@ -42,17 +42,17 @@
         "repositoryURL": "https://github.com/vapor/fluent.git",
         "state": {
           "branch": null,
-          "revision": "3776a0f623e08b413e878f282a70e8952651c91f",
-          "version": "3.1.3"
+          "revision": "b915c321c6f9e83743ee5efa35a30895e1b02e51",
+          "version": "3.2.0"
         }
       },
       {
-        "package": "FluentSQLite",
-        "repositoryURL": "https://github.com/vapor/fluent-sqlite.git",
+        "package": "FluentMySQL",
+        "repositoryURL": "https://github.com/iq3addLi/fluent-mysql-driver.git",
         "state": {
           "branch": null,
-          "revision": "c32f5bda84bf4ea691d19afe183d40044f579e11",
-          "version": "3.0.0"
+          "revision": "e1522c155579ae68bdb01395957e8b889eaef16d",
+          "version": "3.0.2"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/vapor/http.git",
         "state": {
           "branch": null,
-          "revision": "8da7d475a1a060714766d9ad4b24eb0dae243aab",
-          "version": "3.1.11"
+          "revision": "3808ed0401379b6e9f4a053f03090ea9d658caa9",
+          "version": "3.2.1"
         }
       },
       {
@@ -69,8 +69,17 @@
         "repositoryURL": "https://github.com/vapor/multipart.git",
         "state": {
           "branch": null,
-          "revision": "bd7736c5f28e48ed8b683dcc9df3dcd346064c2b",
-          "version": "3.0.3"
+          "revision": "f919a01c4d10a281d6236a21b0b1d1759a72b8eb",
+          "version": "3.0.4"
+        }
+      },
+      {
+        "package": "MySQL",
+        "repositoryURL": "https://github.com/vapor/mysql-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "6e86ff53e18f02faf26c2cbea1c1fb466bff6866",
+          "version": "3.2.6"
         }
       },
       {
@@ -78,8 +87,8 @@
         "repositoryURL": "https://github.com/vapor/routing.git",
         "state": {
           "branch": null,
-          "revision": "626190ddd2bd9f967743b60ba6adaf90bbd2651c",
-          "version": "3.0.2"
+          "revision": "d76f339c9716785e5079af9d7075d28ff7da3d92",
+          "version": "3.1.0"
         }
       },
       {
@@ -101,21 +110,12 @@
         }
       },
       {
-        "package": "SQLite",
-        "repositoryURL": "https://github.com/vapor/sqlite.git",
-        "state": {
-          "branch": null,
-          "revision": "314d9cd21165bcf14215e336a23ff8214f40e411",
-          "version": "3.2.1"
-        }
-      },
-      {
         "package": "swift-nio",
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "29a9f2aca71c8afb07e291336f1789337ce235dd",
-          "version": "1.13.2"
+          "revision": "ba7970fe396e8198b84c6c1b44b38a1d4e2eb6bd",
+          "version": "1.14.1"
         }
       },
       {
@@ -150,8 +150,8 @@
         "repositoryURL": "https://github.com/vapor/template-kit.git",
         "state": {
           "branch": null,
-          "revision": "4b1073d74be9f5c6a5bc63a07a84e83efec26229",
-          "version": "1.1.2"
+          "revision": "51405c83e95e8adb09565278a5e9b959c605e56c",
+          "version": "1.4.0"
         }
       },
       {

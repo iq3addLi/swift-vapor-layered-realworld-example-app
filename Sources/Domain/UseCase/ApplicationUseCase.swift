@@ -6,10 +6,11 @@
 //
 
 import Vapor
-import FluentSQLite
+import FluentMySQL
 
 public class ApplicationUseCase{
     
+    private let conduit: ConduitRepository = ConduitFluentRepository()
     private lazy var services = {
         return Services.default()
     }()
@@ -23,29 +24,15 @@ public class ApplicationUseCase{
         
         var services = self.services
         
-        // Set Fluent
-        try services.register(FluentSQLiteProvider())
-        
         // Register middleware
         var middlewares = MiddlewareConfig() // Create _empty_ middleware config
-        // middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
         middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
-        
         services.register(middlewares)
         
-        // Configure a SQLite database
-        let sqlite = try SQLiteDatabase(storage: .memory)
+        // test
+        self.conduit.ifneededPreparetion()
         
-        // Register the configured SQLite database to the database config.
-        var databases = DatabasesConfig()
-        databases.add(database: sqlite, as: .sqlite)
-        services.register(databases)
-        
-        // Configure migrations
-//        var migrations = MigrationConfig()
-//        migrations.add(model: Todo.self, database: .sqlite)
-//        services.register(migrations)
-        
+        // Apply change service
         self.services = services
     }
     
@@ -66,18 +53,19 @@ public class ApplicationUseCase{
             return Profile(username: "hello", bio: "world", image: "http://notfound", following: true)
         }
         
+        // Set Routing
         collections.forEach{ collection in
-            switch collection.method{
-            case .GET: router.get(collection.paths, use: collection.closure)
-            case .POST: router.post(collection.paths, use: collection.closure)
-            case .PUT: router.put(collection.paths, use: collection.closure)
-            case .DELETE: router.delete(collection.paths, use: collection.closure)
-            default:
-                fatalError("Unexpected http method.")
-            }
+            router.on(collection.method, at: collection.paths, use: collection.closure )
         }
         
+        // Set router
         services.register(router, as: Router.self)
+        
+        // Set server config
+        let config = NIOServerConfig.default(hostname: "127.0.0.1", port: 8080)
+        services.register(config)
+        
+        // Apply change service
         self.services = services
     }
     
@@ -87,6 +75,7 @@ public class ApplicationUseCase{
         
         // Create vapor application
         let application = try Application(config: config, environment: env, services: self.services)
+        
         // Application launch
         try application.run()
         self.application = application

@@ -34,17 +34,3 @@ public struct Article{
 
 import Vapor
 extension Article: Content{}
-
-//
-//extension Article: Encodable, LosslessHTTPBodyRepresentable{
-//    public func convertToHTTPBody() -> HTTPBody{
-//        return try! HTTPBody(data: JSONEncoder().encode(self))
-//    }
-//}
-//
-//extension Article: ResponseEncodable{
-//    public func encode(for request: Request) throws -> EventLoopFuture<Response> {
-//        let response: Response = request.response( self, as: .json)
-//        return request.eventLoop.newSucceededFuture(result: response)
-//    }
-//}

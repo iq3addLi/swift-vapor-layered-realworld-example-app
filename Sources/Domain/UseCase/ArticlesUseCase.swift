@@ -9,9 +9,7 @@ import Foundation
 
 public class ArticlesUseCase{
     
-    public init(){
-        
-    }
+    public init(){}
     
     public func getArticle(){
         print("get article on usecase.")

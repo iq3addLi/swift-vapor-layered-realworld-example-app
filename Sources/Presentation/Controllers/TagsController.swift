@@ -8,9 +8,13 @@
 import Vapor
 import Domain
 
-final class TagsController {
+public struct TagsController {
+    
+    let useCase = TagsUseCase()
+    
     // GET /tags
-    func getTags(_ request: Request) throws -> String {
-        return "getTags"
+    func getTags(_ request: Request) throws -> Future<Response> {
+        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
+            .encode(status: .ok, for: request)
     }
 }
