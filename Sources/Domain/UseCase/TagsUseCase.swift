@@ -11,8 +11,8 @@ public struct TagsUseCase{
     
     public init(){}
     
-    public func allTags() throws -> [String]{
-        return []
+    public func allTags() throws -> TagsResponse?{
+        return nil
     }
     
 }

@@ -9,15 +9,15 @@ public struct ProfilesUseCase{
     
     public init(){}
     
-    public func profile(by username: String ) -> Profile?{
+    public func profile(by username: String ) -> ProfileResponse?{
         return nil
     }
     
-    public func follow(to username: String ) -> Profile?{
+    public func follow(to username: String ) -> ProfileResponse?{
         return nil
     }
     
-    public func unfollow(to username: String ) -> Profile?{
+    public func unfollow(to username: String ) -> ProfileResponse?{
         return nil
     }
     

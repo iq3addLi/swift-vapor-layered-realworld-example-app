@@ -5,33 +5,40 @@
 //  Created by iq3AddLi on 2019/09/27.
 //
 
-public struct LoginForm{
-    public let email: String
-    public let password: String
-}
-
-public struct UserForm{
-    public let username: String
-    public let email: String
-    public let password: String
-}
-
 
 public struct UsersUseCase{
     
+    let conduit: ConduitRepository = ConduitInMemoryRepository()
+    let jwt: JWTRepository = JWTWithVaporRepository()
+    
     public init(){}
     
-    public func login( form: LoginForm ) throws -> User?{
-        return nil
+    public func login( form: LoginUser ) throws -> UserResponse?{
+        // Search User
+        guard let user = conduit.searchUser(email: form.email, password: form.password) else{
+            return nil
+        }
+        
+        // Issued JWT
+        let token = try jwt.issuedJWTToken(id: user.id, username: user.username)
+        
+        // Return response
+        return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
     
-    public func register(user form: UserForm ) throws -> User?{
-        return nil
+    public func register(user form: NewUser ) throws -> UserResponse?{
+        
+        // Register user
+        let user = conduit.registerUser(name: form.username, email: form.email, password: form.password)
+        
+        // Issued JWT
+        let token = try jwt.issuedJWTToken(id: user.id, username: user.username)
+        
+        // Return response
+        return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
     
-    // ユーザー情報の参照は、ミドルウェアから行う
-    
-    public func update(user id: Int, email: String?, username: String?, bio: String?, image: String? ) throws -> User? {
+    public func update(user: UpdateUser ) throws -> UserResponse? {
         return nil
     }
 }

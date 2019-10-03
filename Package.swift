@@ -13,13 +13,13 @@ let package = Package(
         // 🔵 Swift ORM (queries, models, relations, etc)
         .package(url: "https://github.com/iq3addLi/fluent-mysql-driver.git", from: "3.0.2"),
         
-        //.package(url: "https://github.com/vapor/mysql-kit.git", from: "3.2.6")
-        //.package(url: "https://github.com/vapor/fluent-sqlite.git", from: "3.0.0")
-        //.package(url: "https://github.com/IBM-Swift/SwiftKueryMySQL.git", from: "2.0.2") // Happened this issue 😢 https://forums.swift.org/t/logging-module-name-clash-in-vapor-3/25466
+        // JWT issue and verify
+        .package(url: "https://github.com/vapor/jwt-kit", from: "3.0.0"),
     ],
     targets: [
         .target(name: "ProjectFoundation", dependencies: [
-            "Vapor"
+            "Vapor",
+            "JWT"
         ]),
         .target(name: "Infrastructure", dependencies: [
             "FluentMySQL",

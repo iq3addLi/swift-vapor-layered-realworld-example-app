@@ -14,48 +14,23 @@ public struct UsersController {
     
     // POST /users
     func postUser(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        return try request.content.decode(json: NewUserRequest.self, using: JSONDecoder()).map { (newUserRequest) in
+            
+            let response = try self.useCase.register(user: newUserRequest.user)
+            
+            return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
+        }
     }
     
-    //    ### /user/login [POST]
-    //
-    //    ログインAPI。ユーザー、パスワードを送信して認証トークンを得る。
-    //
-    //    #### Request
-    //
-    //    ```json
-    //    {
-    //    "user": {
-    //    "email": "string",
-    //    "password": "string"
-    //    }
-    //    }
-    //    ```
-    //
-    //
-    //
-    //    #### Resposne
-    //
-    //    200 正常終了
-    //
-    //    ログインしたユーザーの情報が帰ってくる
-    //
-    //    ```json
-    //    {
-    //    "user": {
-    //    "email": "string",
-    //    "token": "string",
-    //    "username": "string",
-    //    "bio": "string",
-    //    "image": "string"
-    //    }
-    //    }
-    //    ```
     // POST /users/login
     func login(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        
+        return try request.content.decode(json: LoginUserRequest.self, using: JSONDecoder()).map { (loginUserRequest) in
+            
+            let response = try self.useCase.login(form: loginUserRequest.user)
+            
+            return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
+        }
     }
     
 
