@@ -157,5 +157,38 @@ final class NIOTests: XCTestCase {
         
         try evGroup.syncShutdownGracefully()
     }
-}
     
+    func testFuturesWhenFailure() throws {
+        // Create EventLoopGroup
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+
+        // Futures
+        let future1 = evGroup.next().submit {
+            return "Hello"
+        }
+        let future2 = evGroup.next().submit {
+            return "World"
+        }
+        let future3 = evGroup.next().submit { () -> String in
+            throw TestError(reason: "Exception")
+        }
+        
+        // When all finished future
+        let future = EventLoopFuture.whenAll([future1, future2, future3], eventLoop: evGroup.next())
+        
+        // run
+        do{
+            _ = try future.wait()
+            XCTFail()
+        }
+        catch( let error ){
+            print(error.localizedDescription)
+        }
+        
+        try evGroup.syncShutdownGracefully()
+    }
+}
+
+struct TestError: Error{
+    let reason: String
+}

@@ -8,7 +8,7 @@
 import XCTest
 import FluentMySQL
 
-import Domain
+@testable import Domain
 import Infrastructure
 import SwiftSlug
 
@@ -40,13 +40,13 @@ final class MySQLFluentTests: XCTestCase {
         // Variables
         let email = "user_1@realworld_test.app"
         
-        // <1>Select
-        guard let row = try Users.query(on: connection).decode(data: UserWithFollowRow.self).filter(\Users.email == email).all().wait().first else{
+        // Quering
+        guard let user = try manager.selectUser(email: email) else{
             XCTFail(); return
         }
         
         // Examining
-        XCTAssertTrue(row.username == "user_1")
+        XCTAssertTrue(user.username == "user_1")
     }
     
     func testInsertUser() throws{
@@ -59,8 +59,10 @@ final class MySQLFluentTests: XCTestCase {
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Insert row
-        let user = try Users(id: nil, username: username, email: email, hash: hash, salt: salt).save(on: connection).wait()
+        // Quering
+        guard let user = try manager.insertUser(name: username, email: email, hash: hash, salt: salt) else{
+            XCTFail(); return
+        }
         
         // Examining
         XCTAssertTrue(user.id != .none)
@@ -74,34 +76,32 @@ final class MySQLFluentTests: XCTestCase {
         // Variables
         let ownUserId = 1
         
-        guard let row = try Users.query(on: connection).decode(data: UserWithFollowRow.self).filter(\Users.id == ownUserId).all().wait().first else{
+        // Quering
+        guard let user = try manager.selectUser(id: ownUserId) else{
             XCTFail(); return
         }
-        XCTAssertTrue(row.username == "user_1")
+        XCTAssertTrue(user.username == "user_1")
     }
     
     func testUpdateUser() throws {
         // Variables
         let ownUserId = 1
-        
-        // Find user
-        guard let row = try Users.query(on: connection).filter(\Users.id == ownUserId).all().wait().first else{
-            XCTFail(); return
-        }
-        row.email = "updated"
-        row.bio   = "updated"
-        row.image = "updated"
-        
+        let email = "updated"
+        let bio   = "updated"
+        let image = "updated"
+
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Update row
-        let updatedUser = try row.update(on: connection ).wait()
+        // Quering
+        guard let user = try manager.updateUser(id: ownUserId, email: email, bio: bio, image: image) else{
+            XCTFail(); return
+        }
         
         // Examining
-        XCTAssertTrue(updatedUser.email == "updated")
-        XCTAssertTrue(updatedUser.bio == "updated")
-        XCTAssertTrue(updatedUser.image == "updated")
+        XCTAssertTrue(user.email == "updated")
+        XCTAssertTrue(user.bio == "updated")
+        XCTAssertTrue(user.image == "updated")
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
@@ -112,19 +112,14 @@ final class MySQLFluentTests: XCTestCase {
         let ownUserId = 2
         let tergetUserName = "user_1"
         
-        // <1>Select
-        let rows = try connection.raw( SQLQueryBuilder.selectUsers(name: tergetUserName, follower: ownUserId) )
-            .all(decoding: UserWithFollowRow.self )
-            .wait()
-        
-        guard let user = rows.first else{
+        // Quering
+        guard let profile = try manager.selectProfile(username: tergetUserName, readIt: ownUserId) else{
             XCTFail(); return
         }
         
         // Examining
-        XCTAssertTrue(user.id == 1)
-        XCTAssertTrue(user.username == "user_1")
-        XCTAssertTrue(user.following ?? false)
+        XCTAssertTrue(profile.username == "user_1")
+        XCTAssertTrue(profile.following )
     }
     
     func testInsertFollowsByUsername() throws {
@@ -135,17 +130,13 @@ final class MySQLFluentTests: XCTestCase {
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Update
-        _ = try connection.raw( SQLQueryBuilder.insertFollows(followee: tergetUserName, follower: ownUserId) ).all().wait()
-        
-        // <2>Select
-        let rows = try connection.raw( SQLQueryBuilder.selectUsers(name: tergetUserName, follower: ownUserId) ).all(decoding: UserWithFollowRow.self).wait()
-        guard let user = rows.first else{
+        // Quering
+        guard let profile = try manager.insertFollow(followee: tergetUserName, follower: ownUserId) else{
             XCTFail(); return
         }
         
         // Examining
-        XCTAssertTrue(user.following ?? false)
+        XCTAssertTrue(profile.following)
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
@@ -155,23 +146,17 @@ final class MySQLFluentTests: XCTestCase {
         // Variables
         let ownUserId = 1
         let tergetUserName = "user_2"
-    
-        // <1>Select
-        guard let followee = try Users.query(on: connection).decode(data: UserWithFollowRow.self).filter(\Users.username == tergetUserName).all().wait().first else{
-            XCTFail(); return
-        }
-        
+                
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <2>Insert to Follows
-        let follow = try Follows(id: nil, followee: followee.id, follower: ownUserId).save(on: connection).wait()
-        
-        // Create response data
-        let profile = UserWithFollowRow(id: followee.id, username: followee.username, email: followee.email, bio: followee.bio, image: followee.image, following: follow.followee == followee.id ) // Because it's insert
+        // Quering
+        guard let profile = try manager.insertFollow2(followee: tergetUserName, follower: ownUserId) else{
+            XCTFail(); return
+        }
         
         // Examining
-        XCTAssertTrue(profile.following ?? false)
+        XCTAssertTrue(profile.following)
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
@@ -185,17 +170,13 @@ final class MySQLFluentTests: XCTestCase {
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Update
-        _ = try connection.raw( SQLQueryBuilder.deleteFollows(followee: tergetUserName, follower: ownUserId) ).all().wait()
-        
-        // <2>Select
-        let rows = try connection.raw( SQLQueryBuilder.selectUsers(name: tergetUserName, follower: ownUserId) ).all(decoding: UserWithFollowRow.self).wait()
-        guard let user = rows.first else{
+        // Quering
+        guard let profile = try manager.deleteFollow(followee: tergetUserName, follower: ownUserId) else{
             XCTFail(); return
         }
         
         // Examining
-        XCTAssertTrue(user.following ?? false == false)
+        XCTAssertTrue(profile.following == false)
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
@@ -209,17 +190,13 @@ final class MySQLFluentTests: XCTestCase {
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Insert
-        _ = try connection.raw( SQLQueryBuilder.insertFavorites(for: tergetArticleSlug, by: ownUserId ) ).all().wait()
-        
-        // <2>Select
-        let rows = try connection.raw( SQLQueryBuilder.selectArticles(condition: .slug(tergetArticleSlug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
-        guard let article = rows.first else{
+        // Quering
+        guard let article = try manager.insertFavorite(by: ownUserId, for: tergetArticleSlug) else{
             XCTFail(); return
         }
         
         // Examining
-        XCTAssertTrue(article.favorited ?? false )
+        XCTAssertTrue(article.favorited )
         XCTAssertTrue(article.favoritesCount == 1)
         
         // transaction rollback
@@ -234,17 +211,13 @@ final class MySQLFluentTests: XCTestCase {
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Update
-        _ = try connection.raw( SQLQueryBuilder.deleteFavorites(for: tergetArticleSlug, by: ownUserId ) ).all().wait()
-        
-        // <2>Select
-        let rows = try connection.raw( SQLQueryBuilder.selectArticles(condition: .slug(tergetArticleSlug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
-        guard let article = rows.first else{
-            XCTFail(); return
-        }
+        // Quering
+         guard let article = try manager.deleteFavorite(by: ownUserId, for: tergetArticleSlug)else{
+             XCTFail(); return
+         }
         
         // Examining
-        XCTAssertTrue(article.favorited ?? false == false)
+        XCTAssertTrue(article.favorited == false)
         XCTAssertTrue(article.favoritesCount == 0)
         
         // transaction rollback
@@ -257,13 +230,13 @@ final class MySQLFluentTests: XCTestCase {
         let tergetArticleSlug = "slug_3"
                 
         // <1>Select
-        let rows = try connection.raw( SQLQueryBuilder.selectComments(for: tergetArticleSlug) ).all(decoding: Comments.self).wait()
+        let rows = try connection.raw( RawSQLQueries.selectComments(for: tergetArticleSlug) ).all(decoding: Comments.self).wait()
 
         // Select profile in comments
         let comments = try rows.map { (comment: Comments) -> Comment in
             
             // <2>Select
-            let rows = try connection.raw( SQLQueryBuilder.selectUsers(id: comment.author, follower: ownUserId) ).all(decoding: UserWithFollowRow.self).wait()
+            let rows = try connection.raw( RawSQLQueries.selectUsers(id: comment.author, follower: ownUserId) ).all(decoding: UserWithFollowRow.self).wait()
             guard let user = rows.first else{
                 XCTFail(); fatalError()
             }
@@ -298,7 +271,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // <2>Insert comment
-        _ = try connection.raw( SQLQueryBuilder.insertComments(for: targetArticleSlug, body: commentBody, author: ownUserId ) ).all().wait()
+        _ = try connection.raw( RawSQLQueries.insertComments(for: targetArticleSlug, body: commentBody, author: ownUserId ) ).all().wait()
         
         // <3>Select comment
         guard let comment = try Comments.query(on: connection).filter(\Comments.id == nextId.auto_increment).all().wait().first else{
@@ -369,7 +342,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // <1>Delete comment
-        _ = try connection.raw( SQLQueryBuilder.deleteComments( id: commentId ) ).all().wait().first
+        _ = try connection.raw( RawSQLQueries.deleteComments( id: commentId ) ).all().wait().first
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
@@ -396,7 +369,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
 //"""
         
         // <1>Select article
-        let rows = try connection.raw( SQLQueryBuilder.selectArticles(condition: .feed(ownUserId), readIt: ownUserId)  ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
+        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .feed(ownUserId), readIt: ownUserId)  ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
         
         // Create response data
         let articles = rows.map{ row in
@@ -429,7 +402,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
 //"""
         
         // <1>Select article
-        let rows = try connection.raw( SQLQueryBuilder.selectArticles(condition: .tag(tagString), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
+        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .tag(tagString), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
         
         // Create response data
         let articles = rows.map{ row in
@@ -461,7 +434,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
 //"""
         
         // <1>Select article
-        let rows = try connection.raw( SQLQueryBuilder.selectArticles(condition: .author(targetUsername), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
+        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .author(targetUsername), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
         
         // Create response data
         let articles = rows.map{ row in
@@ -494,7 +467,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
 //"""
         
         // <1>Select article
-        let rows = try connection.raw( SQLQueryBuilder.selectArticles(condition: .favorite(targetUsername), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
+        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .favorite(targetUsername), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
         
         // Create response data
         let articles = rows.map{ row in
@@ -574,7 +547,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
 //"""
         
         // <1>Select article
-        guard let row = try connection.raw( SQLQueryBuilder.selectArticles(condition: .slug(slug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait().first else{
+        guard let row = try connection.raw( RawSQLQueries.selectArticles(condition: .slug(slug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait().first else{
             XCTFail(); return
         }
         
@@ -594,26 +567,26 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let slug = "slug_1"
         let ownUserId = 2
         
-        // Search Articles
+        // (1)Search Articles
         guard let article = try Articles.query(on: connection).filter(\Articles.slug == slug).all().wait().first else{
             XCTFail(); return
         }
         
-        // Search Tags
+        // (2)Search Tags
         let tags = try article.tags.query(on: connection).all().wait()
         
-        // Search User
+        // (3)Search User
         guard let author = try article.postedUser?.get(on: connection).wait() else{
             XCTFail(); return
         }
         
-        // This article favorited?
+        // (4)This article favorited?
         let favorited = try Favorites.query(on: connection).filter(\Favorites.user == ownUserId).filter(\Favorites.article == article.id!).all().wait().count != 0
         
-        // Author of article is followed?
+        // (5)Author of article is followed?
         let following = try Follows.query(on: connection).filter(\Follows.follower == ownUserId).filter(\Follows.followee == article.author).all().wait().count != 0
         
-        // This article has number of favorite?
+        // (6)This article has number of favorite?
         let favoritesCount = try Favorites.query(on: connection).filter(\Favorites.article == article.id!).all().wait().count
                
         
@@ -684,7 +657,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
 //"""
                 
         // <1>Select article
-        guard let row = try connection.raw( SQLQueryBuilder.selectArticles(condition: .slug(slug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait().first else{
+        guard let row = try connection.raw( RawSQLQueries.selectArticles(condition: .slug(slug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait().first else{
             XCTFail(); return
         }
         
@@ -715,7 +688,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // <1>Delete tables
-        _ = try connection.raw( SQLQueryBuilder.deleteArticles(slug: slug) ).all().wait()
+        _ = try connection.raw( RawSQLQueries.deleteArticles(slug: slug) ).all().wait()
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()

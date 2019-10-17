@@ -23,22 +23,19 @@ public class MySQLDatabaseManager{
     public init(){}
     
     deinit {
-        do{
-            try worker.syncShutdownGracefully()
-        }catch(let error){
-            print("Worker shutdown is failed. reason=\(error)")
+        worker.shutdownGracefully{ (error) in
+            if let error = error{
+                print("Worker shutdown is failed. reason=\(error)")
+            }
         }
     }
     
     public func newConnection() throws -> MySQLConnection{
-        return try database.newConnection(on: self.worker).wait()
+        return try futureConnection().wait()
     }
     
     public func futureConnection() -> Future<MySQLConnection>{
-        return database.newConnection(on: self.worker)
+        return database.newConnection(on: self.worker.next())
     }
-//    public func beginTransaction() throws -> MySQLConnection{
-//        database.
-//    }
 }
 
