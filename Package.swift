@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
@@ -15,14 +15,22 @@ let package = Package(
         
         // JWT issue and verify
         .package(url: "https://github.com/vapor/jwt-kit", from: "3.0.0"),
+        
+        // A simple package to convert strings to URL slugs.
+        .package(url: "https://github.com/twostraws/SwiftSlug", from: "0.3.0"),
+        
+        // Crypto related functions and helpers for Swift implemented in Swift.
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.1.2")
     ],
     targets: [
         .target(name: "ProjectFoundation", dependencies: [
-            "Vapor",
-            "JWT"
+            "Vapor"
         ]),
         .target(name: "Infrastructure", dependencies: [
             "FluentMySQL",
+            "SwiftSlug",
+            "CryptoSwift",
+            "JWT",
             "ProjectFoundation"
         ]),
         .target(name: "Domain", dependencies: [

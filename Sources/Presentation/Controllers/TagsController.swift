@@ -14,7 +14,6 @@ public struct TagsController {
     
     // GET /tags
     func getTags(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        return request.response( try useCase.allTags(), as: .json).encode(status: .ok, for: request)
     }
 }

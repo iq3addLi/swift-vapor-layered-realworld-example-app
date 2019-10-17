@@ -33,6 +33,5 @@ public struct Comment: Codable {
         case author
     }
 
-
 }
 

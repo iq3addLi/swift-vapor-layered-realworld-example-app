@@ -8,7 +8,6 @@
 import Foundation
 
 
-
 public struct Article: Codable {
 
     public var slug: String
@@ -50,4 +49,3 @@ public struct Article: Codable {
 
 
 }
-

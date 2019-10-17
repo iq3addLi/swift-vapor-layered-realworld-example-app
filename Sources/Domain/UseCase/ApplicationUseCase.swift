@@ -11,6 +11,7 @@ import FluentMySQL
 public class ApplicationUseCase{
     
     private let conduit: ConduitRepository = ConduitFluentRepository()
+    
     private lazy var services = {
         return Services.default()
     }()
@@ -50,14 +51,20 @@ public class ApplicationUseCase{
         
         // Set Routing
         collections.forEach{ collection in
-            router.on(collection.method, at: collection.paths, use: collection.closure )
+            router.grouped(collection.middlewares)
+                .on(collection.method.raw, at: collection.paths, use: collection.closure )
         }
         
         // Set router
         services.register(router, as: Router.self)
         
+        // Set Service models
+        services.register(AuthedUser()) // Initial property is blank.
+        services.register(SessionPayload())
+        
+        
         // Set server config
-        let config = NIOServerConfig.default(hostname: "127.0.0.1", port: 8080)
+        let config = NIOServerConfig.default(hostname: "127.0.0.1", port: 8000)
         services.register(config)
         
         // Apply change service

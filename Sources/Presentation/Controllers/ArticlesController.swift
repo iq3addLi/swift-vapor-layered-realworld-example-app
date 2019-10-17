@@ -21,6 +21,7 @@ public struct ArticlesController {
     //     /articles?author=johnjacob
     //     /articles?favorited=jane
     //     /articles?tag=dragons
+    //  <Auth optional>
     func getArticles(_ request: Request) throws -> Future<Response> {
         
         // Get parameter by query
@@ -40,12 +41,16 @@ public struct ArticlesController {
     }
     
     // POST /articles
+    //  <Auth then expand payload>
     func postArticle(_ request: Request) throws -> Future<Response> {
+        
+        // Get relayed parameter
+        let payload = (try request.privateContainer.make(SessionPayload.self))
         
         // Get parameter by body
         return try request.content.decode(json: NewArticleRequest.self, using: JSONDecoder()).then { req in
             // Exec business logic
-            guard let postedArticle = try? self.useCase.postArticle( req.article ) else{
+            guard let postedArticle = try? self.useCase.postArticle( req.article, author: payload.id ) else{
                 return self.temporaryError(request).encode(status: .badRequest, for: request)
             }
             
@@ -55,6 +60,7 @@ public struct ArticlesController {
     }
     
     // GET /articles/{{slug}}
+    //  <Auth optional>
     func getArticle(_ request: Request) throws -> Future<Response> {
         
         // Get parameter by URL
@@ -72,12 +78,14 @@ public struct ArticlesController {
     }
     
     // DELETE /articles/{{slug}}
+    //  <Auth then expand payload>
     func deleteArticle(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)
     }
     
     // PUT /articles/{{slug}}
+    //  <Auth then expand payload>
     func updateArticle(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)
@@ -85,36 +93,42 @@ public struct ArticlesController {
     
 
     // GET /articles/feed
+    //  <Auth optional>
     func getArticlesMyFeed(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)
     }
     
     // POST /articles/{{slug}}/favorite
+    //  <Auth then expand payload>
     func postFavorite(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)
     }
     
     // DELETE /articles/{{slug}}/favorite
+    //  <Auth then expand payload>
     func deleteFavorite(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)
     }
     
     // GET /articles/{{slug}}/comments
+    //  <Auth optional>
     func getComments(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)
     }
     
     // POST /articles/{{slug}}/comments
+    //  <Auth then expand payload>
     func postComment(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)
     }
     
     // DELETE /articles/{{slug}}/comments/{{commentId}}
+    //  <Auth then expand payload>
     func deleteComment(_ request: Request) throws -> Future<Response> {
         return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
             .encode(status: .ok, for: request)

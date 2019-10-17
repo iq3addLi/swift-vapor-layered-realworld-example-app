@@ -8,20 +8,22 @@
 
 import JWT
 
-final class SessionPayload{
-    var id: Int
-    var username: String
-    var exp: ExpirationClaim
+public final class SessionPayload{
+    public var id: Int
+    public var username: String
+    public var exp: ExpirationClaim
+    public var token: String
     
-    init(id: Int, username: String, expireAfterSec exp: Int ){
+    public init(id: Int = 0, username: String = "", expireAfterSec exp: Int = 0, token: String = "" ){
         self.id = id
         self.username = username
         self.exp = ExpirationClaim(value: Date().addingTimeInterval(TimeInterval(exp)))
+        self.token =  token
     }
 }
 
 extension SessionPayload: JWTPayload{
-    func verify(using signer: JWTSigner) throws {
+    public func verify(using signer: JWTSigner) throws {
         try self.exp.verifyNotExpired()
     }
 }

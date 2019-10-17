@@ -15,12 +15,12 @@ public struct UsersUseCase{
     
     public func login( form: LoginUser ) throws -> UserResponse?{
         // Search User
-        guard let user = conduit.searchUser(email: form.email, password: form.password) else{
+        guard let (id, user) = conduit.searchUser(email: form.email, password: form.password) else{
             return nil
         }
         
         // Issued JWT
-        let token = try jwt.issuedJWTToken(id: user.id, username: user.username)
+        let token = try jwt.issuedJWTToken(id: id, username: user.username)
         
         // Return response
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
@@ -29,16 +29,35 @@ public struct UsersUseCase{
     public func register(user form: NewUser ) throws -> UserResponse?{
         
         // Register user
-        let user = conduit.registerUser(name: form.username, email: form.email, password: form.password)
+        let (id, user) = conduit.registerUser(name: form.username, email: form.email, password: form.password)
         
         // Issued JWT
-        let token = try jwt.issuedJWTToken(id: user.id, username: user.username)
+        let token = try jwt.issuedJWTToken(id: id, username: user.username)
         
         // Return response
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
     
-    public func update(user: UpdateUser ) throws -> UserResponse? {
-        return nil
+    public func currentUser( token: String ) throws -> UserResponse? {
+        
+        // Verify and expand payload
+        let session = try jwt.verifyJWTToken(token: token)
+        
+        // Search user in storage
+        guard let user = conduit.searchUser(id: session.id) else{
+            return nil
+        }
+        
+        return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
+    }
+    
+    public func update(userId: Int, updateUser user: UpdateUser, token: String ) throws -> UserResponse? {
+        
+        // Update user in storage
+        guard let user = conduit.updateUser(id: userId, email: user.email, username: user.username, bio: user.bio, image: user.image) else{
+            return nil
+        }
+        
+        return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
 }

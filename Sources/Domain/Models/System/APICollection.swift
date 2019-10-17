@@ -8,18 +8,18 @@
 import Vapor
 
 public struct APICollection{
-    public let method: HTTPMethod
+    public let method: HTTPMethodInDomain
     public let paths: PathComponentsRepresentable
     public let closure: (Request) throws -> Future<Response>
-    public let policy: AuthPolicy
+    public let middlewares: [Middleware]
     
-    public init(method: HTTPMethod,
+    public init(method: HTTPMethodInDomain,
                 paths: PathComponentsRepresentable,
                 closure: @escaping (Request) throws -> Future<Response>,
-                policy: AuthPolicy = .none){
+                middlewares: [Middleware] = []){
         self.method = method
         self.paths = paths
         self.closure = closure
-        self.policy = policy
+        self.middlewares = middlewares
     }
 }

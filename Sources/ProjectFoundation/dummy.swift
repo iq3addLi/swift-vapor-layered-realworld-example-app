@@ -6,7 +6,6 @@
 //
 
 import Vapor
-import Foundation
 
 class DummyFoundation{
     

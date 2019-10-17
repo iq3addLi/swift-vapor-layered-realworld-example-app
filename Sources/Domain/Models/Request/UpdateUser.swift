@@ -12,7 +12,7 @@ import Foundation
 public struct UpdateUser: Codable {
 
     public var email: String?
-    public var token: String?
+    public var token: String?    // MEMO: Why is token here?
     public var username: String?
     public var bio: String?
     public var image: String?

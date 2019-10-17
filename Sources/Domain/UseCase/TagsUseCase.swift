@@ -9,10 +9,11 @@ import Foundation
 
 public struct TagsUseCase{
     
+    let conduit: ConduitRepository = ConduitInMemoryRepository()
+    
     public init(){}
     
-    public func allTags() throws -> TagsResponse?{
-        return nil
+    public func allTags() throws -> TagsResponse{
+        return TagsResponse(tags: try conduit.allTags() )
     }
-    
 }

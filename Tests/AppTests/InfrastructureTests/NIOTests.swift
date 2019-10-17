@@ -1,0 +1,161 @@
+//
+//  NIOTests.swift
+//  AppTests
+//
+//  Created by iq3AddLi on 2019/10/15.
+//
+
+import XCTest
+import NIO
+
+final class NIOTests: XCTestCase {
+    
+    func testEventLoopExecute() throws {
+        // Create EventLoopGroup
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+        var result = ""
+        evGroup.next().execute { // Note: Exactly non blocking. It's executed without waiting for the current block to finish.
+            result += "Hello"
+        }
+        evGroup.next().execute {
+            result += "World"
+        }
+        evGroup.next().execute {
+            result += "!!"
+        }
+        
+        usleep(1000)
+        
+        // Examining
+        XCTAssertTrue(result.count == 12) // Note: Processing order is not promised
+        
+        try evGroup.syncShutdownGracefully()
+    }
+    
+    func testFutureWhenSuccess() throws {
+        
+        // Create EventLoopGroup
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+        
+        let future = evGroup.next().submit {
+            return "Hello"
+        }
+        
+        future.whenSuccess { (count) in
+            print("Success")
+        }
+        future.whenFailure { error in
+            XCTFail()
+        }
+        
+        _ = try future.wait()
+        
+        // Collect eventLoopGroup
+        try evGroup.syncShutdownGracefully()
+    }
+    
+    func testPromise() throws {
+        // Create EventLoopGroup
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+        
+        let promises = [ "Hello", "World", "!!" ].map { string -> EventLoopPromise<String> in
+            let eventloop = evGroup.next()
+            let promise = eventloop.newPromise(String.self)
+            eventloop.execute {
+                promise.succeed(result: string)
+            }
+            return promise
+        }
+        let future = EventLoopFuture.reduce("", promises.map{ $0.futureResult }, eventLoop: evGroup.next()) { (concated: String, text: String) in
+            return concated + text
+        }
+        let result = try future.wait()
+        
+        // Examining
+        XCTAssertTrue(result == "HelloWorld!!")
+        
+        try evGroup.syncShutdownGracefully()
+    }
+    
+    func testFutureFold() throws {
+        // Create EventLoopGroup
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+
+        let future1 = evGroup.next().submit {
+            return "Hello"
+        }
+        let future2 = evGroup.next().submit {
+            return "World"
+        }
+        let future3 = evGroup.next().submit {
+            return "!!"
+        }
+        let eventloop = evGroup.next()
+        let succeeded = eventloop.newSucceededFuture(result: "")
+        
+        // Note: that all futures are executed when fold and reduce are called.
+        let future = succeeded.fold([future1, future2, future3]) { (concated, text) -> EventLoopFuture<String> in
+            eventloop.newSucceededFuture(result: concated + text)
+        }
+        let result = try future.wait() // Note: Only the combiningFunction is executed here
+        
+        // Examining
+        XCTAssertTrue(result == "HelloWorld!!")
+        
+        try evGroup.syncShutdownGracefully()
+    }
+    
+    func testFutureReduce() throws {
+        // Create EventLoopGroup
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+
+        let future1 = evGroup.next().submit {
+            return "Hello"
+        }
+        let future2 = evGroup.next().submit {
+            return "World"
+        }
+        let future3 = evGroup.next().submit {
+            return "!!"
+        }
+        let future = EventLoopFuture.reduce("", [future1, future2, future3], eventLoop: evGroup.next()) { (concated: String, text: String) in
+            return concated + text
+        }
+        let result = try future.wait()
+        
+        // Examining
+        XCTAssertTrue(result == "HelloWorld!!")
+        
+        try evGroup.syncShutdownGracefully()
+    }
+    
+    func testFuturesWhenAll() throws {
+        // Create EventLoopGroup
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+
+        // Futures
+        let future1 = evGroup.next().submit {
+            return "Hello"
+        }
+        let future2 = evGroup.next().submit {
+            return "World"
+        }
+        let future3 = evGroup.next().submit {
+            return "!!"
+        }
+        
+        // When all finished future
+        let future = EventLoopFuture.whenAll([future1, future2, future3], eventLoop: evGroup.next()).map { strings in
+            return strings.joined()
+        }
+        
+        // run
+        let result = try future.wait()
+        
+        // Examining
+        XCTAssertTrue(result == "HelloWorld!!")
+        
+        try evGroup.syncShutdownGracefully()
+    }
+}
+    

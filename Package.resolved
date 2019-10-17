@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "CryptoSwift",
+        "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift",
+        "state": {
+          "branch": null,
+          "revision": "4ccfe9034a07af4b153657ba1cdac702ffcf8f2f",
+          "version": "1.1.2"
+        }
+      },
+      {
         "package": "DatabaseKit",
         "repositoryURL": "https://github.com/vapor/database-kit.git",
         "state": {
@@ -152,6 +161,15 @@
           "branch": null,
           "revision": "37760e9a52030bb9011972c5213c3350fa9d41fd",
           "version": "1.0.0"
+        }
+      },
+      {
+        "package": "SwiftSlug",
+        "repositoryURL": "https://github.com/twostraws/SwiftSlug",
+        "state": {
+          "branch": null,
+          "revision": "c9a291c4734811dbe6873d9ab2d2612468976dd5",
+          "version": "0.3.0"
         }
       },
       {

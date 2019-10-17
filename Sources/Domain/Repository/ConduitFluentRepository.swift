@@ -8,26 +8,47 @@
 import Infrastructure
 import FluentMySQL
 
-public struct ConduitFluentRepository: ConduitRepository{
+struct ConduitFluentRepository: ConduitRepository{
+    
         
-    public func ifneededPreparetion() {
+    func ifneededPreparetion() {
         print("preparetion")
     }
     
-    public func registerUser(name username: String, email: String, password: String) -> Users{
+    func registerUser(name username: String, email: String, password: String) -> ( userId: Int, user: User ){
         // Dummy
-        let userEntity = Users(id: 0, username: username, email: email, hash: password /* no hash */ )
-        return userEntity
+        let userEntity = User(email: "", token: "", username: "", bio: "", image: "")
+        return ( 1, userEntity )
     }
     
-    public func searchUser(email: String, password: String) -> Users?{
+    func searchUser(email: String, password: String) -> ( userId: Int, user: User)?{
         // Dummy
         return nil
     }
     
-    public func issuedJWTToken( id: String, username: String ) -> String{
+    func searchUser(id: Int) -> User?{
         // Dummy
-        return ""
+        return nil
+    }
+    
+    func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> User?{
+        // Dummy
+        return nil
+    }
+    
+    func addArticle(userId author: Int, title: String, discription: String, body: String, tagList: [String]) -> Article? {
+        // Dummy
+        return nil
+    }
+        
+    func getArticles( offset: Int?, limit: Int?, author: String?, favorited username: String?, tag: String? ) throws -> [Article]{
+        // Dummy
+        return []
+    }
+    
+    func allTags() throws -> [String]{
+        // Dummy
+        return []
     }
 }
 
