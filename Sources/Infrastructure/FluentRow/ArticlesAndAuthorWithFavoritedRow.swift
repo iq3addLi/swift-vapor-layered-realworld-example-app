@@ -7,7 +7,7 @@
 
 // I don't like the strong nested Protocol and the Model-dependent ORM 😢
 
-import FluentMySQL
+import Core // Supply Codable for Date
 
 public final class ArticlesAndAuthorWithFavoritedRow: Codable{
     // Article

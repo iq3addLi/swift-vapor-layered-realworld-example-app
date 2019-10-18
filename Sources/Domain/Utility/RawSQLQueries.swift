@@ -34,11 +34,11 @@ extension RawSQLQueries{
         Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
         Users.username, Users.bio, Users.image,
         (select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
-        ( select count(*) from Favorites where article = Articles.id ) as favoritesCount,
+        ( select count(*) from Favorites where article = Articles.id ) as favoritesCount
         \( { () -> String in
         switch userId{
         case .some( let id ): return """
-            exists( select * from Follows where followee = Users.id and follower = \(id) ) as following,
+            ,exists( select * from Follows where followee = Users.id and follower = \(id) ) as following,
             exists( select * from Favorites where article = Articles.id and user = \(id) ) as favorited
             """
         case .none: return ""
@@ -94,7 +94,7 @@ extension RawSQLQueries{
         """
     }
     
-    // Insert is performed by Fluent
+    // Insert is performed by SQLQueryBuilder
 }
 
 // MARK: Users
@@ -119,17 +119,22 @@ extension RawSQLQueries{
         """
     }
     
-    // Insert is performed by Fluent
+    // Insert is performed by SQLQueryBuilder
 }
 
 // MARK: Comments
 extension RawSQLQueries{
     
-    public static func selectComments(for articleSlug: String) -> String {
+    public static func selectComments(for articleSlug: String, readIt userId: Int? = nil) -> String {
         return """
-        select * from Comments
+        select
+            Comments.id, Comments.body, Comments.createdAt, Comments.updatedAt,
+            Users.username, Users.email, Users.bio, Users.image
+            \((userId != nil) ? ",exists( select * from Follows where followee = Users.id and follower = \(userId!) ) as following" : "" )
+        from Comments
+            inner join Users on Comments.author = Users.id
         where
-            article = (select id from Articles where slug = "\(articleSlug)");
+            Comments.article = ( select id from Articles where slug = "\(articleSlug)");
         """
     }
     
@@ -143,14 +148,16 @@ extension RawSQLQueries{
         """
     }
          
-    public static func deleteComments( id: Int ) -> String {
+    public static func deleteComments(id commentId: Int ) -> String {
         return """
         DELETE
         FROM Comments
         WHERE
-            id = "\(id)"
+            id = "\(commentId)"
         """
     }
+    
+    // Insert is performed by SQLQueryBuilder
 }
 
 // MARK: Follows
@@ -201,4 +208,4 @@ extension RawSQLQueries{
 }
 
 // MARK: Tags
-// Tag Insertion and Deletion is performed by Fluent
+// Tag Insertion and Deletion is performed by SQLQueryBuilder

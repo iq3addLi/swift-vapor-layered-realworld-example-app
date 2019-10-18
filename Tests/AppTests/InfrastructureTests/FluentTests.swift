@@ -18,6 +18,7 @@ final class MySQLFluentTests: XCTestCase {
         return MySQLDatabaseManager()
     }()
     
+    // Note: Naturally, transactions work within the same connection.
     lazy var connection: MySQLConnection! = {
         do {
             return try self.manager.newConnection()
@@ -41,7 +42,7 @@ final class MySQLFluentTests: XCTestCase {
         let email = "user_1@realworld_test.app"
         
         // Quering
-        guard let user = try manager.selectUser(email: email) else{
+        guard let user = try manager.selectUser(on: connection, email: email) else{
             XCTFail(); return
         }
         
@@ -60,7 +61,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let user = try manager.insertUser(name: username, email: email, hash: hash, salt: salt) else{
+        guard let user = try manager.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt) else{
             XCTFail(); return
         }
         
@@ -74,10 +75,10 @@ final class MySQLFluentTests: XCTestCase {
     
     func testSelectUserById() throws {
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         
         // Quering
-        guard let user = try manager.selectUser(id: ownUserId) else{
+        guard let user = try manager.selectUser(on: connection, id: readItUser) else{
             XCTFail(); return
         }
         XCTAssertTrue(user.username == "user_1")
@@ -85,7 +86,7 @@ final class MySQLFluentTests: XCTestCase {
     
     func testUpdateUser() throws {
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         let email = "updated"
         let bio   = "updated"
         let image = "updated"
@@ -94,7 +95,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let user = try manager.updateUser(id: ownUserId, email: email, bio: bio, image: image) else{
+        guard let user = try manager.updateUser(on: connection, id: readItUser, email: email, bio: bio, image: image) else{
             XCTFail(); return
         }
         
@@ -109,11 +110,11 @@ final class MySQLFluentTests: XCTestCase {
     
     func testSelectProfileByUsername() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         let tergetUserName = "user_1"
         
         // Quering
-        guard let profile = try manager.selectProfile(username: tergetUserName, readIt: ownUserId) else{
+        guard let profile = try manager.selectProfile(on: connection, username: tergetUserName, readIt: readItUser) else{
             XCTFail(); return
         }
         
@@ -124,14 +125,14 @@ final class MySQLFluentTests: XCTestCase {
     
     func testInsertFollowsByUsername() throws {
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         let tergetUserName = "user_2"
                 
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let profile = try manager.insertFollow(followee: tergetUserName, follower: ownUserId) else{
+        guard let profile = try manager.insertFollow(on: connection, followee: tergetUserName, follower: readItUser) else{
             XCTFail(); return
         }
         
@@ -144,14 +145,14 @@ final class MySQLFluentTests: XCTestCase {
     
     func testInsertFollowsByUsernameUsingFluent() throws {
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         let tergetUserName = "user_2"
                 
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let profile = try manager.insertFollow2(followee: tergetUserName, follower: ownUserId) else{
+        guard let profile = try manager.insertFollow2(on: connection, followee: tergetUserName, follower: readItUser) else{
             XCTFail(); return
         }
         
@@ -164,14 +165,14 @@ final class MySQLFluentTests: XCTestCase {
     
     func testDeleteFollowsByUsername() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         let tergetUserName = "user_1"
         
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let profile = try manager.deleteFollow(followee: tergetUserName, follower: ownUserId) else{
+        guard let profile = try manager.deleteFollow(on: connection, followee: tergetUserName, follower: readItUser) else{
             XCTFail(); return
         }
         
@@ -184,14 +185,14 @@ final class MySQLFluentTests: XCTestCase {
     
     func testInsertFavoriteBySlug() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         let tergetArticleSlug = "slug_3"
         
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let article = try manager.insertFavorite(by: ownUserId, for: tergetArticleSlug) else{
+        guard let article = try manager.insertFavorite(on: connection, by: readItUser, for: tergetArticleSlug) else{
             XCTFail(); return
         }
         
@@ -205,14 +206,14 @@ final class MySQLFluentTests: XCTestCase {
     
     func testDeleteFavoritesByUsername() throws {
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         let tergetArticleSlug = "slug_1"
     
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-         guard let article = try manager.deleteFavorite(by: ownUserId, for: tergetArticleSlug)else{
+         guard let article = try manager.deleteFavorite(on: connection, by: readItUser, for: tergetArticleSlug)else{
              XCTFail(); return
          }
         
@@ -226,34 +227,21 @@ final class MySQLFluentTests: XCTestCase {
     
     func testSelectCommentsBySlug() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         let tergetArticleSlug = "slug_3"
                 
-        // <1>Select
-        let rows = try connection.raw( RawSQLQueries.selectComments(for: tergetArticleSlug) ).all(decoding: Comments.self).wait()
-
-        // Select profile in comments
-        let comments = try rows.map { (comment: Comments) -> Comment in
-            
-            // <2>Select
-            let rows = try connection.raw( RawSQLQueries.selectUsers(id: comment.author, follower: ownUserId) ).all(decoding: UserWithFollowRow.self).wait()
-            guard let user = rows.first else{
-                XCTFail(); fatalError()
-            }
-            
-            return Comment(_id: comment.id!, createdAt: comment.createdAt!, updatedAt: comment.updatedAt!, body: comment.body, author: Profile(username: user.username, bio: user.bio, image: user.image, following: user.following ?? false))
-        }
+        // Quering
+        let comments = try manager.selectComments(on: connection, for: tergetArticleSlug, readit: readItUser)
         
         // Examining
         XCTAssertTrue(comments.count == 2)
         XCTAssertTrue(comments.filter{ $0.author.username == "user_1" }.first!.author.following == true)
-        
     }
     
     func testInsertCommentBySlug() throws {
         
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         let commentBody = "Comment by unittest."
         let targetArticleSlug = "slug_1"
         
@@ -271,7 +259,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // <2>Insert comment
-        _ = try connection.raw( RawSQLQueries.insertComments(for: targetArticleSlug, body: commentBody, author: ownUserId ) ).all().wait()
+        _ = try connection.raw( RawSQLQueries.insertComments(for: targetArticleSlug, body: commentBody, author: readItUser ) ).all().wait()
         
         // <3>Select comment
         guard let comment = try Comments.query(on: connection).filter(\Comments.id == nextId.auto_increment).all().wait().first else{
@@ -298,7 +286,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     
     func testInsertCommentBySlugUsingFluent() throws {
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         let commentBody = "Comment by unittest."
         let targetArticleSlug = "slug_1"
         
@@ -311,7 +299,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // <2>Insert to Comments
-        let inserted = try Comments(body: commentBody, author: ownUserId, article: article.id! ).save(on: connection).wait() // MEMO: Return value's timestamp is nil when insert😣 So need to select again😩
+        let inserted = try Comments(body: commentBody, author: readItUser, article: article.id! ).save(on: connection).wait() // MEMO: Return value's timestamp is nil when insert😣 So need to select again😩
 
         // <3>Get author infomation
         guard let author = try inserted.commentedUser?.get(on: connection).wait() else{
@@ -341,8 +329,12 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Delete comment
-        _ = try connection.raw( RawSQLQueries.deleteComments( id: commentId ) ).all().wait().first
+        // Querying
+        try manager.deleteComments(on: connection, commentId: commentId)
+        
+        // Examining
+        let rows = try Comments.query(on: connection).all().wait()
+        XCTAssertTrue(rows.count == 1)
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
@@ -350,31 +342,10 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     
     func testSelectArticlesbyFollower() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         
-        // Raw query
-//        let selectArticlesQueryString = """
-//select
-//    Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
-//    Users.username, Users.bio, Users.image,
-//    (select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
-//    exists( select * from Follows where followee = Users.id and follower = \(ownUserId) ) as following,
-//    exists( select * from Favorites where article = Articles.id and user = Follows.follower ) as favorited,
-//    ( select count(*) from Favorites where article = Articles.id ) as favoritesCount
-//from Articles
-//    inner join Users on Articles.author = Users.id
-//    left join Follows on Articles.author = Follows.followee
-//where
-//    Follows.follower = \(ownUserId);
-//"""
-        
-        // <1>Select article
-        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .feed(ownUserId), readIt: ownUserId)  ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
-        
-        // Create response data
-        let articles = rows.map{ row in
-            Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
-        }
+        // Querying
+        let articles = try manager.selectArticles(on: connection, follower: readItUser, readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -382,32 +353,11 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     
     func testSelectArticlesbyTag() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         let tagString = "Vapor"
         
-        // Raw query
-//        let selectArticlesQueryString = """
-//select
-//    Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
-//    exists( select * from Favorites where article = Articles.id and user = \(ownUserId) ) as favorited,
-//    ( select count(*) from Favorites where article = Articles.id ) as favoritesCount,
-//    (select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
-//    Users.username, Users.bio, Users.image,
-//    exists( select * from Follows where followee = Users.id and follower = \(ownUserId) ) as following
-//from Articles
-//    inner join Users on Articles.author = Users.id
-//    left join Tags on Articles.id = Tags.article
-//where
-//    Tags.tag = "\(tagString)";
-//"""
-        
-        // <1>Select article
-        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .tag(tagString), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
-        
-        // Create response data
-        let articles = rows.map{ row in
-            Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
-        }
+        // Querying
+        let articles = try manager.selectArticles(on: connection, tag: tagString, readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 2)
@@ -415,31 +365,11 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     
     func testSelectArticlesbyAuthor() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         let targetUsername = "user_1"
         
-        // Raw query
-//        let selectArticlesQueryString = """
-//select
-//    Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
-//    exists( select * from Favorites where article = Articles.id and user = \(ownUserId) ) as favorited,
-//    ( select count(*) from Favorites where article = Articles.id ) as favoritesCount,
-//    (select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
-//    Users.username, Users.bio, Users.image,
-//    exists( select * from Follows where followee = Users.id and follower = \(ownUserId) ) as following
-//from Articles
-//    inner join Users on Articles.author = Users.id
-//where
-//    Users.username = "\(targetUsername)";
-//"""
-        
-        // <1>Select article
-        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .author(targetUsername), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
-        
-        // Create response data
-        let articles = rows.map{ row in
-            Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
-        }
+        // Querying
+        let articles = try manager.selectArticles(on: connection, author: targetUsername, readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -447,32 +377,11 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     
     func testSelectArticlesInFavorite() throws {
         // Variables
-        let ownUserId = 2
+        let readItUser = 2
         let targetUsername = "user_1"
         
-        // Raw query
-//        let selectArticlesQueryString = """
-//select
-//    Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
-//    exists( select * from Favorites where article = Articles.id and user = ( select id from Users where username = "\(targetUsername)") ) as favorited,
-//    ( select count(*) from Favorites where article = Articles.id ) as favoritesCount,
-//    ( select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
-//    Users.username, Users.bio, Users.image,
-//    exists( select * from Follows where followee = Users.id and follower = \(ownUserId) ) as following
-//from Articles
-//    inner join Users on Users.id = Articles.author
-//    left join Favorites on Articles.id = Favorites.article
-//where
-//    Favorites.user = ( select id from Users where username = "\(targetUsername)");
-//"""
-        
-        // <1>Select article
-        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: .favorite(targetUsername), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
-        
-        // Create response data
-        let articles = rows.map{ row in
-            Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
-        }
+        // Querying
+        let articles = try manager.selectArticles(on: connection, favorite: targetUsername, readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 1)
@@ -494,32 +403,17 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // Set new article
-        let article = try Articles(id: nil, slug: slug + randomString(length: 36), title: title, description: description, body: body, author: author).save(on: connection).wait()
-        
-        // Create EventLoopGroup
-        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: tags.count)
-        
-        // Set new tags
-        let orders = tags.map{ Tags(id: nil, article: article.id!, tag: $0 ).save(on: connection) }
-        
-        // Bundle future (Perhaps this is not valid)
-        let future = EventLoopFuture.reduce(0, orders, eventLoop: evGroup.next()) { (count: Int, tag: Tags) in
-            // Examining
-            XCTAssertNotNil( tag.id )
-            return count
-        }
-        future.whenSuccess { (count) in
-            print("Success")
-        }
-        future.whenFailure { error in
-            print("Failed result=\(error)")
+        // Querying
+        guard let article = try manager.insertArticle(on: connection, author: author, title: title, slug: slug, description: description, body: body, tags: tags) else{
+            XCTFail(); return
         }
         
-        _ = try future.wait()
-        
-        // Collect eventLoopGroup
-        try evGroup.syncShutdownGracefully()
+        // Examining
+        XCTAssertTrue(article.slug == slug)
+        XCTAssertTrue(article.title == title)
+        XCTAssertTrue(article._description == description)
+        XCTAssertTrue(article.body == body)
+        XCTAssertTrue(article.tagList == tags)
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
@@ -528,44 +422,25 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     func testSelectArticlebySlug() throws {
         // Variables
         let slug = "slug_1"
-        let ownUserId = 2
+        let readItUser = 2
         
-        // Raw query
-//        let selectArticlesQueryString = """
-//select
-//    Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
-//    exists( select * from Favorites where article = Articles.id and user = \(ownUserId)) as favorited,
-//    ( select count(*) from Favorites where article = Articles.id ) as favoritesCount,
-//    ( select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
-//    Users.username, Users.bio, Users.image,
-//    exists( select * from Follows where followee = Users.id and follower = \(ownUserId) ) as following
-//from Articles
-//    inner join Users on Articles.author = Users.id
-//    left join Favorites on Articles.id = Favorites.article
-//where
-//    Articles.slug = "\(slug)"
-//"""
-        
-        // <1>Select article
-        guard let row = try connection.raw( RawSQLQueries.selectArticles(condition: .slug(slug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait().first else{
+        // Querying
+        guard let article = try manager.selectArticles(on: connection, slug: slug, readIt: readItUser) else{
             XCTFail(); return
         }
         
-        // Create response data
-        let response = Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
-        
         // Examining
-        XCTAssertTrue(response.slug == slug)
-        XCTAssertTrue(response.favoritesCount == 1)
-        XCTAssertTrue(response.favorited == false)
-        XCTAssertTrue(response.author.following)
-        XCTAssertTrue(response.tagList.count == 0)
+        XCTAssertTrue(article.slug == slug)
+        XCTAssertTrue(article.favoritesCount == 1)
+        XCTAssertTrue(article.favorited == false)
+        XCTAssertTrue(article.author.following)
+        XCTAssertTrue(article.tagList.count == 0)
     }
     
     func testSelectArticlebySlugUsingFluent() throws {
         // Variables
         let slug = "slug_1"
-        let ownUserId = 2
+        let readItUser = 2
         
         // (1)Search Articles
         guard let article = try Articles.query(on: connection).filter(\Articles.slug == slug).all().wait().first else{
@@ -581,10 +456,10 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         }
         
         // (4)This article favorited?
-        let favorited = try Favorites.query(on: connection).filter(\Favorites.user == ownUserId).filter(\Favorites.article == article.id!).all().wait().count != 0
+        let favorited = try Favorites.query(on: connection).filter(\Favorites.user == readItUser).filter(\Favorites.article == article.id!).all().wait().count != 0
         
         // (5)Author of article is followed?
-        let following = try Follows.query(on: connection).filter(\Follows.follower == ownUserId).filter(\Follows.followee == article.author).all().wait().count != 0
+        let following = try Follows.query(on: connection).filter(\Follows.follower == readItUser).filter(\Follows.followee == article.author).all().wait().count != 0
         
         // (6)This article has number of favorite?
         let favoritesCount = try Favorites.query(on: connection).filter(\Favorites.article == article.id!).all().wait().count
@@ -603,7 +478,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     
     func testUpdateArticlebySlug() throws {
         // Variables
-        let ownUserId = 1
+        let readItUser = 1
         let slug = "slug_1"
         let title = "It's a update post."
         let description = "It's a description for update post."
@@ -617,52 +492,25 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         article.title = title
         article.description = description
         article.body = body
-        
-        // Allow dirty reads
-        //_ = try! connection.simpleQuery("SET SESSION TRANSACTION ISOLATION LEVEL read uncommitted").wait()
-        
+                
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
 
         // Update Article
         let _ = try article.update(on: connection).wait()
         
-        // Search Tags
+        // Update Tags
         let tags = try article.tags.query(on: connection).all().wait()
         
         try tags.filter{ tagList.contains($0.tag) == false }
-            .forEach{
-                try $0.delete(on: connection).wait()
-        }
+                .forEach{ try $0.delete(on: connection).wait() }
         try tagList.filter{ tags.map{ $0.tag }.contains($0) == false }
-            .forEach{
-                _ = try Tags(id: nil, article: article.id!, tag: $0).save(on: connection).wait()
-        }
-        
-//        // Raw query
-//        let selectArticlesQueryString = """
-//select
-//    Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
-//    exists( select * from Favorites where article = Articles.id and user = \(ownUserId)) as favorited,
-//    ( select count(*) from Favorites where article = Articles.id ) as favoritesCount,
-//    ( select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
-//    Users.username, Users.bio, Users.image,
-//    exists( select * from Follows where followee = Users.id and follower = \(ownUserId) ) as following
-//from Articles
-//    inner join Users on Articles.author = Users.id
-//    left join Favorites on Articles.id = Favorites.article
-//where
-//    Articles.slug = "\(slug)"
-//"""
-                
-        // <1>Select article
-        guard let row = try connection.raw( RawSQLQueries.selectArticles(condition: .slug(slug), readIt: ownUserId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait().first else{
+                .forEach{ _ = try Tags(id: nil, article: article.id!, tag: $0).save(on: connection).wait() }
+                        
+        // Querying
+        guard let response = try manager.selectArticles(on: connection, slug: slug, readIt: readItUser) else{
             XCTFail(); return
         }
-        
-        // Create response data
-        let response = Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
         
         // Examining
         XCTAssertTrue(response.slug == slug)
@@ -671,12 +519,8 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         XCTAssertTrue(response.body == body)
         XCTAssertTrue(response.tagList == tagList)
         
-        
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
-        
-        // Restore transaction level
-        //_ = try! connection.simpleQuery("SET SESSION TRANSACTION ISOLATION LEVEL read uncommitted").wait()
         
     }
     
@@ -687,8 +531,12 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         // transaction start
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
-        // <1>Delete tables
-        _ = try connection.raw( RawSQLQueries.deleteArticles(slug: slug) ).all().wait()
+        // Querying
+        try manager.deleteArticle(on: connection, slug: slug)
+        
+        // Examing
+        let article = try manager.selectArticles(on: connection, slug: slug)
+        XCTAssertNil(article)
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
