@@ -20,5 +20,3 @@ public final class CommentWithAuthorRow: Codable{
     public let image: String
     public let following: Bool?
 }
-
-// return Comment(_id: comment.id!, createdAt: comment.createdAt!, updatedAt: comment.updatedAt!, body: comment.body, author: Profile(username: user.username, bio: user.bio, image: user.image, following: user.following ?? false))

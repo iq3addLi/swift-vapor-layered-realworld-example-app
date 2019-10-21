@@ -18,22 +18,22 @@ extension MySQLDatabaseManager{
         return try Users.query(on: connection).filter(\Users.id == id).all().wait().first
     }
     
-    func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) throws -> Users? {
+    func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) throws -> Users {
         return
             try Users(id: nil, username: username, email: email, hash: hash, salt: salt)
             .save(on: connection)
             .wait()
     }
     
-    func updateUser(on connection: MySQLConnection, id: Int, email: String, bio: String, image: String) throws -> Users?{
+    func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) throws -> Users?{
 
         guard let row = try Users.query(on: connection).filter(\Users.id == id).all().wait().first else{
             return nil
         }
             
-        row.email = email
-        row.bio   = bio
-        row.image = image
+        if let email = email { row.email = email }
+        if let bio = bio { row.bio = bio }
+        if let image = image { row.image = image }
         
         return try row.update(on: connection ).wait()
     }
@@ -102,38 +102,32 @@ extension MySQLDatabaseManager{
         }
     }
     
-    // TODO: Insert
+    func insertComment(on connection: MySQLConnection, for articleSlug: String, body: String, author userId: Int) throws -> Comment{
+        
+        guard let article = try Articles.query(on: connection).filter(\Articles.slug == articleSlug).all().wait().first else{
+            throw Error(reason: "No article to comment was found")
+        }
+        let inserted = try Comments(body: body, author: userId, article: article.id! ).save(on: connection).wait() // MEMO: Return value's timestamp is nil when insert😣 So need to select again😩
+        guard let comment = try Comments.query(on: connection).filter(\Comments.id == inserted.id!).all().wait().first else{
+            throw Error(reason: "The comment was saved successfully, but fluent did not return a value.")
+        }
+        guard let author = try inserted.commentedUser?.get(on: connection).wait() else{
+            throw Error(reason: "Failed to get commented user.")
+        }
+        
+        return Comment(_id: comment.id!, createdAt: comment.createdAt!, updatedAt: comment.updatedAt!, body: comment.body, author: Profile(username: author.username, bio: author.bio, image: author.image, following: false /* Because It's own. */))
+    }
     
     func deleteComments(on connection: MySQLConnection, commentId: Int ) throws{
         _ = try connection.raw( RawSQLQueries.deleteComments( id: commentId ) ).all().wait().first
     }
     
     
-    private func selectArticles(on connection: MySQLConnection, condition: RawSQLQueries.ArticleCondition, readIt userId: Int?) throws -> [Article]{
-        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: condition, readIt: userId)  ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
+    func selectArticles(on connection: MySQLConnection, condition: ArticleCondition, readIt userId: Int? = nil, offset: Int? = nil, limit: Int? = nil) throws -> [Article]{
+        let rows = try connection.raw( RawSQLQueries.selectArticles(condition: condition, readIt: userId, offset: offset, limit: limit) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self).wait()
         return rows.map{ row in
             Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
         }
-    }
-    
-    func selectArticles(on connection: MySQLConnection, follower id: Int, readIt userId: Int? = nil) throws -> [Article]{
-        return try selectArticles(on: connection, condition: .feed(id), readIt: userId)
-    }
-    
-    func selectArticles(on connection: MySQLConnection, author username: String, readIt userId: Int? = nil) throws -> [Article]{
-        return try selectArticles(on: connection, condition: .author(username), readIt: userId)
-    }
-    
-    func selectArticles(on connection: MySQLConnection, tag: String, readIt userId: Int? = nil) throws -> [Article]{
-        return try selectArticles(on: connection, condition: .tag(tag), readIt: userId)
-    }
-    
-    func selectArticles(on connection: MySQLConnection, favorite username: String, readIt userId: Int? = nil) throws -> [Article]{
-        return try selectArticles(on: connection, condition: .favorite(username), readIt: userId)
-    }
-    
-    func selectArticles(on connection: MySQLConnection, slug: String, readIt userId: Int? = nil) throws -> Article?{
-        return try selectArticles(on: connection, condition: .slug(slug), readIt: userId).first
     }
     
     func insertArticle(on connection: MySQLConnection, author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) throws -> Article?{
@@ -154,7 +148,7 @@ extension MySQLDatabaseManager{
         
         // All future closure execute
         _ = try allFuture.wait()
-        return try selectArticles(on: connection, slug: slug, readIt: userId)
+        return try selectArticles(on: connection, condition: .slug(slug), readIt: userId ).first
     }
     
     func deleteArticle(on connection: MySQLConnection, slug: String ) throws {
@@ -165,26 +159,21 @@ extension MySQLDatabaseManager{
 // MARK: TRANSACTION
 extension MySQLDatabaseManager{
 
-    func startTransaction<T>(_ transactionClosure:(_ connection: MySQLConnection) throws -> T, completionClosure:(T) -> Void, failureClosure: (Error) -> Void){
+    func startTransaction<T>(_ transactionClosure:(_ connection: MySQLConnection) throws -> T ) throws -> T{
         // Connection and start transaction
-        let connection: MySQLConnection
-        do {
-            connection = try newConnection()
-             _ = try connection.simpleQuery("START TRANSACTION").wait()
-        }catch( let error ){
-            /* TODO: Notify to system */
-            failureClosure( error ); return
-        }
+        let connection = try newConnection()
+        _ = try connection.simpleQuery("START TRANSACTION").wait()
         
         // Execute transaction
         let result: T
         do {
             result = try transactionClosure(connection)
         }catch( let error ){
-            do{ _ = try connection.simpleQuery("ROLLBACK").wait() } catch { /* TODO: Notify to system */ }
-            failureClosure( error ); return 
+            _ = try connection.simpleQuery("ROLLBACK").wait()
+            throw error
         }
-        do{ _ = try connection.simpleQuery("COMMIT").wait() } catch { /* TODO: Notify to system */ }
-        completionClosure(result)
+        _ = try connection.simpleQuery("COMMIT").wait()
+        
+        return result
     }
 }

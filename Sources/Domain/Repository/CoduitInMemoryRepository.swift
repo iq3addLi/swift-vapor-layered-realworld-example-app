@@ -29,7 +29,7 @@ class ConduitInMemoryRepository: ConduitRepository{
         print("preparetion")
     }
     
-    func registerUser(name username: String, email: String, password: String) -> ( userId: Int, user: User ){
+    func registerUser(name username: String, email: String, password: String) throws -> ( userId: Int, user: User ){
         // Hash password with salt
         let salt = "_salt"// TODO: temporaly
         let hash = password + salt // TODO: temporaly

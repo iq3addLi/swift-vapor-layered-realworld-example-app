@@ -12,10 +12,6 @@ public struct ArticlesController {
     
     let useCase = ArticlesUseCase()
     
-    private func temporaryError(_ request: Request) -> Response{
-        return request.response( GenericErrorModel(errors: GenericErrorModelErrors(body: ["It's a temporary error."])) , as: .json)
-    }
-    
     // GET /articles
     //     /articles?offset=100&limit=3)
     //     /articles?author=johnjacob
@@ -32,9 +28,7 @@ public struct ArticlesController {
         let tag = request.query[ String.self, at: "tag" ]
         
         // Exec business logic
-        guard let articles = try? useCase.getArticles(offset: offset, limit: limit, author: author, favorited: favorited, tag: tag) else{
-            return self.temporaryError(request).encode(status: .badRequest, for: request)
-        }
+        let articles = try useCase.getArticles( author: author, favorited: favorited, tag: tag, offset: offset, limit: limit)
         
         // Success
         return try request.response( articles , as: .json).encode(for: request)
@@ -45,33 +39,30 @@ public struct ArticlesController {
     func postArticle(_ request: Request) throws -> Future<Response> {
         
         // Get relayed parameter
-        let payload = (try request.privateContainer.make(SessionPayload.self))
+        let payload = try request.privateContainer.make(SessionPayload.self)
         
         // Get parameter by body
-        return try request.content.decode(json: NewArticleRequest.self, using: JSONDecoder()).then { req in
-            // Exec business logic
-            guard let postedArticle = try? self.useCase.postArticle( req.article, author: payload.id ) else{
-                return self.temporaryError(request).encode(status: .badRequest, for: request)
-            }
-            
-            // Success
-            return request.response( postedArticle , as: .json).encode(status: .ok, for: request)
-        }
+        let req = try request.content.decode(json: NewArticleRequest.self, using: JSONDecoder()).wait()
+        
+        // Exec business logic
+        let postedArticle = try self.useCase.postArticle( req.article, author: payload.id! )
+        
+        // Success
+        return request.response( postedArticle, as: .json).encode(status: .ok, for: request)
     }
     
     // GET /articles/{{slug}}
     //  <Auth optional>
     func getArticle(_ request: Request) throws -> Future<Response> {
         
+        // Get relayed parameter
+        let payload = (try request.privateContainer.make(SessionPayload.self))
+        
         // Get parameter by URL
-        guard let slug = try? request.parameters.next(String.self) else{
-            return self.temporaryError(request).encode(status: .badRequest, for: request)
-        }
+        let slug = try request.parameters.next(String.self)
         
         // Exec business logic
-        guard let article = try useCase.getArticle(slug: slug) else{
-            return self.temporaryError(request).encode(status: .badRequest, for: request)
-        }
+        let article = try useCase.getArticle(slug: slug, readingUserId: payload.id)
         
         // Success
         return request.response( article , as: .json).encode(status: .ok, for: request)

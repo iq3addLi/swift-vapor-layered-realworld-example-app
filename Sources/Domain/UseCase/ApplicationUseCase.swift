@@ -10,7 +10,7 @@ import FluentMySQL
 
 public class ApplicationUseCase{
     
-    private let conduit: ConduitRepository = ConduitFluentRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository()
     
     private lazy var services = {
         return Services.default()

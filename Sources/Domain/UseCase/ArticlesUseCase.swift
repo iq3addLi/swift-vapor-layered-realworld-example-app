@@ -9,30 +9,43 @@ import Foundation
 
 public class ArticlesUseCase{
     
-    let conduit: ConduitRepository = ConduitInMemoryRepository()
+    let conduit: ConduitRepository = ConduitMySQLRepository()
+    
     
     public init(){
     }
     
-    public func getArticles( offset: Int?, limit: Int?, author: String?, favorited username: String?, tag: String? ) throws -> MultipleArticlesResponse?{
+    public func getArticles( author: String?, favorited username: String?, tag: String?, offset: Int?, limit: Int?) throws -> MultipleArticlesResponse{
+        
+        let condition = { () -> ArticleCondition in
+            if let author = author { return .author(author) }
+            if let username = username { return .favorite(username) }
+            if let tag = tag { return .tag(tag) }
+            return .global
+        }()
+        
+        // TODO: Get userId by JWTToken
+        let userId: Int? = nil
+        
         // Get article from storage
-        let articles = try conduit.getArticles(offset: offset, limit: limit, author: author, favorited: username, tag: tag)
+        let articles = try conduit.articles(condition: condition, readingUserId: userId, offset: offset, limit: limit)
         return MultipleArticlesResponse(articles: articles, articlesCount: articles.count)
     }
     
-    public func postArticle(_ article: NewArticle, author userId: Int ) throws -> SingleArticleResponse?{
+    public func postArticle(_ article: NewArticle, author userId: Int ) throws -> SingleArticleResponse{
         
         // Add article to storage.
-        guard let added = try conduit.addArticle(userId: userId, title: article.title, discription: article._description, body: article.body, tagList: article.tagList ?? [] ) else{
-            return nil // database error
-        }
+        let added = try conduit.addArticle(userId: userId, title: article.title, discription: article._description, body: article.body, tagList: article.tagList ?? [] )
         
         // Exchange to response value
         return SingleArticleResponse(article: added )
     }
 
-    public func getArticle( slug: String ) throws -> SingleArticleResponse?{
-        return nil
+    public func getArticle( slug: String, readingUserId: Int? ) throws -> SingleArticleResponse{
+        guard let article =  try conduit.articles(condition: .slug(slug), readingUserId: readingUserId, offset: nil, limit: nil).first else{
+            throw Error(reason: "Article not found.")
+        }
+        return SingleArticleResponse(article: article )
     }
 
     public func deleteArticle( slug: String ) throws -> Bool{

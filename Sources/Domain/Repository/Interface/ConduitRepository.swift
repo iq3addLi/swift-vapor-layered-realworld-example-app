@@ -12,20 +12,39 @@ public protocol ConduitRepository{
     func ifneededPreparetion()
     
     // Users
-    @discardableResult
-    func registerUser(name username: String, email: String, password: String) -> ( userId: Int, user: User)
+    func registerUser(name username: String, email: String, password: String) throws -> ( userId: Int, user: User)
     
-    func searchUser(email: String, password: String) -> ( userId: Int, user: User)?
+    func searchUser(email: String, password: String) throws -> ( userId: Int, user: User)
     
-    func searchUser(id: Int) -> User?
+    func searchUser(id: Int) throws -> User
     
-    func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> User?
+    func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) throws -> User
+    
+    // Profiles
+    func searchProfile(username: String, readingUserId: Int?) throws -> Profile
+    
+    func follow(followee username: String, follower userId: Int) throws -> Profile
+    
+    func unfollow(followee username: String, follower userId: Int) throws -> Profile
+    
+    // Favorites
+    func favorite(by userId: Int, for articleSlug: String) throws -> Article
+    
+    func unfavorite(by userId: Int, for articleSlug: String) throws -> Article
+    
+    // Comments
+    func comments(for articleSlug: String) throws -> [Comment]
+    
+    func addComment(for articleSlug: String, body: String, author: Int) throws -> Comment
+    
+    func deleteComment(id: Int) throws
+    
     
     // Articles
-    @discardableResult
-    func addArticle(userId author: Int, title: String, discription: String, body: String, tagList: [String]) throws -> Article?
+    func addArticle(userId author: Int, title: String, discription: String, body: String, tagList: [String]) throws -> Article
     
-    func getArticles( offset: Int?, limit: Int?, author: String?, favorited username: String?, tag: String? ) throws -> [Article]
+    func articles( condition: ArticleCondition, readingUserId: Int?, offset: Int?, limit: Int? ) throws -> [Article]
+    
     
     // Tags
     func allTags() throws -> [String]

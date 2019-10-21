@@ -8,16 +8,14 @@
 
 public struct UsersUseCase{
     
-    let conduit: ConduitRepository = ConduitInMemoryRepository()
+    let conduit: ConduitRepository = ConduitMySQLRepository()
     let jwt: JWTRepository = JWTWithVaporRepository()
     
     public init(){}
     
     public func login( form: LoginUser ) throws -> UserResponse?{
         // Search User
-        guard let (id, user) = conduit.searchUser(email: form.email, password: form.password) else{
-            return nil
-        }
+        let (id, user) = try conduit.searchUser(email: form.email, password: form.password)
         
         // Issued JWT
         let token = try jwt.issuedJWTToken(id: id, username: user.username)
@@ -29,7 +27,7 @@ public struct UsersUseCase{
     public func register(user form: NewUser ) throws -> UserResponse?{
         
         // Register user
-        let (id, user) = conduit.registerUser(name: form.username, email: form.email, password: form.password)
+        let (id, user) = try conduit.registerUser(name: form.username, email: form.email, password: form.password)
         
         // Issued JWT
         let token = try jwt.issuedJWTToken(id: id, username: user.username)
@@ -44,19 +42,16 @@ public struct UsersUseCase{
         let session = try jwt.verifyJWTToken(token: token)
         
         // Search user in storage
-        guard let user = conduit.searchUser(id: session.id) else{
-            return nil
-        }
+        let user = try conduit.searchUser(id: session.id!)
         
+        // Return response
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
     
     public func update(userId: Int, updateUser user: UpdateUser, token: String ) throws -> UserResponse? {
         
         // Update user in storage
-        guard let user = conduit.updateUser(id: userId, email: user.email, username: user.username, bio: user.bio, image: user.image) else{
-            return nil
-        }
+        let user = try conduit.updateUser(id: userId, email: user.email, username: user.username, bio: user.bio, image: user.image)
         
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }

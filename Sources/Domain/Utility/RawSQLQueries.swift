@@ -5,20 +5,7 @@
 //  Created by iq3AddLi on 2019/10/17.
 //
 
-
-public struct RawSQLQueries{
-    
-    public enum ArticleCondition{
-        case feed(Int) // followerId
-        case favorite(String) // username
-        case tag(String) // tag
-        case author(String) // username
-        case slug(String) // slug
-    }
-}
-
-// MARK: Articles
-extension RawSQLQueries{
+public enum RawSQLQueries{
     
     /// dummy description
     ///
@@ -28,14 +15,16 @@ extension RawSQLQueries{
     ///     - condition: dummy.
     ///     - userId: dummy.
     /// - returns: sql query.
-    public static func selectArticles(condition: ArticleCondition, readIt userId: Int?) -> String {
+    public static func selectArticles(condition: ArticleCondition, readIt userId: Int?, offset: Int? = nil, limit: Int? = nil) -> String {
         return """
         select
         Articles.id, Articles.slug, Articles.title, Articles.description, Articles.body, Articles.author, Articles.createdAt, Articles.updatedAt,
         Users.username, Users.bio, Users.image,
         (select GROUP_CONCAT(DISTINCT tag) as TagList from Tags where Tags.article = Articles.id) as tagCSV,
         ( select count(*) from Favorites where article = Articles.id ) as favoritesCount
-        \( { () -> String in
+        \(
+        // When userId is specified
+        { () -> String in
         switch userId{
         case .some( let id ): return """
             ,exists( select * from Follows where followee = Users.id and follower = \(id) ) as following,
@@ -43,8 +32,14 @@ extension RawSQLQueries{
             """
         case .none: return ""
         }}() )
-        \( {() -> String in
+        \(
+        // Switch for each search condition
+        {() -> String in
         switch condition{
+        case .global: return """
+            from Articles
+                inner join Users on Articles.author = Users.id
+            """
         case .feed(let followerId): return """
             from Articles
                 inner join Users on Articles.author = Users.id
@@ -79,6 +74,14 @@ extension RawSQLQueries{
                 Articles.slug = "\(slug)"
             """
         }}() )
+        \(
+        // When limit is specified
+        limit != nil ? "limit \(limit!)\n" : ""
+        )
+        \(
+        // When offset is specified
+        offset != nil ? "offset \(offset!)\n" : ""
+        )
         """
     }
     

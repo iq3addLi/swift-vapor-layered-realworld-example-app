@@ -61,9 +61,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let user = try manager.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt) else{
-            XCTFail(); return
-        }
+        let user = try manager.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt)
         
         // Examining
         XCTAssertTrue(user.id != .none)

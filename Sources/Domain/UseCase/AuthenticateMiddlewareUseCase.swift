@@ -10,7 +10,7 @@ import Infrastructure
 
 public struct AuthenticateMiddlewareUseCase{
     
-    private let conduit: ConduitRepository = ConduitInMemoryRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()
     
     public init(){}
@@ -20,12 +20,12 @@ public struct AuthenticateMiddlewareUseCase{
         // Verify and expand payload
         let session = try jwt.verifyJWTToken(token: token)
         
-        // Search user in storage
-        guard let user = conduit.searchUser(id: session.id) else{
-            return nil
-        }
+        let userId = session.id!
         
-        return ( session.id, user )
+        // Search user in storage
+        let user = try conduit.searchUser(id: userId)
+        
+        return ( userId, user )
     }
     
     public func payload(by token: String ) throws -> SessionPayload {
