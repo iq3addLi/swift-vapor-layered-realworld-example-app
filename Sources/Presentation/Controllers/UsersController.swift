@@ -55,13 +55,13 @@ public struct UsersController {
     func updateUser(_ request: Request) throws -> Future<Response> {
         
         // Get relayed parameter
-        let payload = (try request.privateContainer.make(SessionPayload.self))
+        let user = (try request.privateContainer.make(VerifiedUserEntity.self))
         
         // Parse json body
         return try request.content.decode(json: UpdateUserRequest.self, using: JSONDecoder()).map { updateUserRequest in
             
             // Verify then update user
-            guard let response = try self.useCase.update(userId: payload.id!, updateUser: updateUserRequest.user, token: payload.token! )  else{
+            guard let response = try self.useCase.update(userId: user.id!, updateUser: updateUserRequest.user, token: user.token! )  else{
                 // Abort
                 throw Abort( .internalServerError )
             }

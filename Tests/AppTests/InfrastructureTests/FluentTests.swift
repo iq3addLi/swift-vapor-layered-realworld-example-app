@@ -343,7 +343,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let readItUser = 2
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, follower: readItUser, readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .feed(readItUser), readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -355,7 +355,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let tagString = "Vapor"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, tag: tagString, readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .tag(tagString), readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 2)
@@ -367,7 +367,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let targetUsername = "user_1"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, author: targetUsername, readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .author(targetUsername), readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -379,7 +379,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let targetUsername = "user_1"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, favorite: targetUsername, readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .favorite(targetUsername), readIt: readItUser)
         
         // Examining
         XCTAssertTrue(articles.count == 1)
@@ -423,7 +423,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let readItUser = 2
         
         // Querying
-        guard let article = try manager.selectArticles(on: connection, slug: slug, readIt: readItUser) else{
+        guard let article = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).first else{
             XCTFail(); return
         }
         
@@ -506,7 +506,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
                 .forEach{ _ = try Tags(id: nil, article: article.id!, tag: $0).save(on: connection).wait() }
                         
         // Querying
-        guard let response = try manager.selectArticles(on: connection, slug: slug, readIt: readItUser) else{
+        guard let response = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).first else{
             XCTFail(); return
         }
         
@@ -533,13 +533,19 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         try manager.deleteArticle(on: connection, slug: slug)
         
         // Examing
-        let article = try manager.selectArticles(on: connection, slug: slug)
+        let article = try manager.selectArticles(on: connection, condition: .slug(slug)).first
         XCTAssertNil(article)
         
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
+    func testSelectTags() throws {
+        // Querying
+        let tags = try manager.selectTags(on: connection)
+        // Examing
+        XCTAssertTrue(tags.count == 2)
+    }
 }
 
 

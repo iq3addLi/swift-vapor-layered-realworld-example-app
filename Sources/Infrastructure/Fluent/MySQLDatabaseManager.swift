@@ -39,3 +39,25 @@ public class MySQLDatabaseManager{
     }
 }
 
+
+// MARK: TRANSACTION
+extension MySQLDatabaseManager{
+
+    public func startTransaction<T>(_ transactionClosure:(_ connection: MySQLConnection) throws -> T ) throws -> T{
+        // Connection and start transaction
+        let connection = try newConnection()
+        _ = try connection.simpleQuery("START TRANSACTION").wait()
+        
+        // Execute transaction
+        let result: T
+        do {
+            result = try transactionClosure(connection)
+        }catch( let error ){
+            _ = try connection.simpleQuery("ROLLBACK").wait()
+            throw error
+        }
+        _ = try connection.simpleQuery("COMMIT").wait()
+        
+        return result
+    }
+}

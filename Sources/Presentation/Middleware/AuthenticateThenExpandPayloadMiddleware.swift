@@ -23,11 +23,10 @@ struct AuthenticateThenExpandPayloadMiddleware: Middleware {
         let payload = try useCase.payload(by: auth.token)
         
         // Add ralay service value
-        let sessionPayload = (try request.privateContainer.make(SessionPayload.self))
-        sessionPayload.id = payload.id
-        sessionPayload.username = payload.username
-        sessionPayload.exp = payload.exp
-        sessionPayload.token = auth.token
+        let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
+        entity.id = payload.id
+        entity.username = payload.username
+        entity.token = auth.token
         
         return try next.respond(to: request)
     }

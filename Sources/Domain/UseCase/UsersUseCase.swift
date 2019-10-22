@@ -8,8 +8,8 @@
 
 public struct UsersUseCase{
     
-    let conduit: ConduitRepository = ConduitMySQLRepository()
-    let jwt: JWTRepository = JWTWithVaporRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let jwt: JWTRepository = JWTWithVaporRepository()
     
     public init(){}
     
@@ -39,10 +39,10 @@ public struct UsersUseCase{
     public func currentUser( token: String ) throws -> UserResponse? {
         
         // Verify and expand payload
-        let session = try jwt.verifyJWTToken(token: token)
+        let payload = try jwt.verifyJWTToken(token: token)
         
         // Search user in storage
-        let user = try conduit.searchUser(id: session.id!)
+        let user = try conduit.searchUser(id: payload.id)
         
         // Return response
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))

@@ -16,11 +16,10 @@ final class AuthenticateOptionalMiddleware: Middleware {
         // Get Authentication: Token *
         guard let auth = request.http.headers.tokenAuthorization else{
             // Clear service value to next
-            let sessionPayload = (try request.privateContainer.make(SessionPayload.self))
-            sessionPayload.id = nil
-            sessionPayload.username = nil
-            sessionPayload.exp = nil
-            sessionPayload.token = nil
+            let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
+            entity.id = nil
+            entity.username = nil
+            entity.token = nil
             return try next.respond(to: request)
         }
         
@@ -28,11 +27,10 @@ final class AuthenticateOptionalMiddleware: Middleware {
         let payload = try useCase.payload(by: auth.token)
         
         // Add ralay service value
-        let sessionPayload = (try request.privateContainer.make(SessionPayload.self))
-        sessionPayload.id = payload.id
-        sessionPayload.username = payload.username
-        sessionPayload.exp = payload.exp
-        sessionPayload.token = auth.token
+        let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
+        entity.id = payload.id
+        entity.username = payload.username
+        entity.token = auth.token
         
         return try next.respond(to: request)
     }

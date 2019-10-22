@@ -60,7 +60,7 @@ public class ApplicationUseCase{
         
         // Set Service models
         services.register(AuthedUser()) // Initial property is blank.
-        services.register(SessionPayload())
+        services.register(VerifiedUserEntity())
         
         
         // Set server config

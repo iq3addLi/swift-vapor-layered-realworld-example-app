@@ -14,17 +14,20 @@ public struct UpdateArticle: Codable {
     public var title: String?
     public var _description: String?
     public var body: String?
-
-    public init(title: String?, _description: String?, body: String?) {
+    public var tagList: [String]? // Add
+    
+    public init(title: String?, _description: String?, body: String?, tagList: [String]?) {
         self.title = title
         self._description = _description
         self.body = body
+        self.tagList = tagList
     }
 
     public enum CodingKeys: String, CodingKey { 
         case title
         case _description = "description"
         case body
+        case tagList
     }
 
 

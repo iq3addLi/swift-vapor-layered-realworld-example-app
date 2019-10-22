@@ -9,7 +9,7 @@ import Foundation
 
 public struct TagsUseCase{
     
-    let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository()
     
     public init(){}
     

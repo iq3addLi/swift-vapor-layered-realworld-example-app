@@ -102,6 +102,7 @@ public enum RawSQLQueries{
 
 // MARK: Users
 extension RawSQLQueries{
+    
     public static func selectUsers(name: String, follower id: Int?) -> String{
         return """
         select *
@@ -165,6 +166,7 @@ extension RawSQLQueries{
 
 // MARK: Follows
 extension RawSQLQueries{
+    
     public static func insertFollows(followee username: String, follower id: Int) -> String{
         return """
         insert
@@ -211,4 +213,13 @@ extension RawSQLQueries{
 }
 
 // MARK: Tags
-// Tag Insertion and Deletion is performed by SQLQueryBuilder
+extension RawSQLQueries{
+    
+    public static func selectTags() -> String{
+        return """
+        select distinct tag from Tags;
+        """
+    }
+
+    // Tag Insertion and Deletion is performed by SQLQueryBuilder
+}

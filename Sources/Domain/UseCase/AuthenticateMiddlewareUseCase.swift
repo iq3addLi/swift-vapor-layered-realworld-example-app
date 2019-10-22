@@ -18,14 +18,12 @@ public struct AuthenticateMiddlewareUseCase{
     public func user(by token: String ) throws -> ( id: Int, user: User)? {
         
         // Verify and expand payload
-        let session = try jwt.verifyJWTToken(token: token)
-        
-        let userId = session.id!
+        let payload = try jwt.verifyJWTToken(token: token)
         
         // Search user in storage
-        let user = try conduit.searchUser(id: userId)
+        let user = try conduit.searchUser(id: payload.id)
         
-        return ( userId, user )
+        return ( payload.id, user )
     }
     
     public func payload(by token: String ) throws -> SessionPayload {

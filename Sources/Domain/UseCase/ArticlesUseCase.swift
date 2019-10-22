@@ -9,74 +9,77 @@ import Foundation
 
 public class ArticlesUseCase{
     
-    let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository()
     
+    public init(){}
     
-    public init(){
-    }
-    
-    public func getArticles( author: String?, favorited username: String?, tag: String?, offset: Int?, limit: Int?) throws -> MultipleArticlesResponse{
+    public func getArticles( author: String? = nil, feeder: Int? = nil, favorited username: String? = nil, tag: String? = nil, offset: Int? = nil, limit: Int? = nil, readingUserId: Int? = nil) throws -> MultipleArticlesResponse{
         
         let condition = { () -> ArticleCondition in
+            if let feeder = feeder { return .feed(feeder) }
             if let author = author { return .author(author) }
             if let username = username { return .favorite(username) }
             if let tag = tag { return .tag(tag) }
             return .global
         }()
         
-        // TODO: Get userId by JWTToken
-        let userId: Int? = nil
-        
         // Get article from storage
-        let articles = try conduit.articles(condition: condition, readingUserId: userId, offset: offset, limit: limit)
+        let articles = try conduit.articles(condition: condition, readingUserId: readingUserId, offset: offset, limit: limit)
         return MultipleArticlesResponse(articles: articles, articlesCount: articles.count)
     }
     
-    public func postArticle(_ article: NewArticle, author userId: Int ) throws -> SingleArticleResponse{
-        
-        // Add article to storage.
-        let added = try conduit.addArticle(userId: userId, title: article.title, discription: article._description, body: article.body, tagList: article.tagList ?? [] )
-        
-        // Exchange to response value
-        return SingleArticleResponse(article: added )
-    }
-
     public func getArticle( slug: String, readingUserId: Int? ) throws -> SingleArticleResponse{
         guard let article =  try conduit.articles(condition: .slug(slug), readingUserId: readingUserId, offset: nil, limit: nil).first else{
-            throw Error(reason: "Article not found.")
+            throw Error( "Article not found.")
         }
         return SingleArticleResponse(article: article )
     }
+    
+    public func postArticle(_ article: NewArticle, author userId: Int ) throws -> SingleArticleResponse{
 
-    public func deleteArticle( slug: String ) throws -> Bool{
-        return true
-    }
-    
-    public func updateArticle( slug: String ) throws -> SingleArticleResponse?{
-        return nil
-    }
-    
-    public func getArticlesByUser( username: String, offset: Int?, limit: Int? ) throws -> MultipleArticlesResponse?{
-        return nil
-    }
-    
-    public func favorite( username: String ) throws -> SingleArticleResponse?{
-        return nil
-    }
-    
-    public func unfavorite( username: String ) throws -> SingleArticleResponse?{
-        return nil
-    }
-    
-    public func getComments( slug: String ) throws -> MultipleCommentsResponse?{
-        return nil
+        // Exchange to response value
+        return SingleArticleResponse(article:
+            try conduit.addArticle(userId: userId, title: article.title, discription: article._description, body: article.body, tagList: article.tagList ?? [] )
+        )
     }
 
-    public func postComment( slug: String ) throws -> SingleCommentResponse?{
-        return nil
+    public func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readingUserId: Int? ) throws -> SingleArticleResponse{
+        return SingleArticleResponse(article:
+            try conduit.updateArticle(slug: slug, title: title, description: description, body: body, tagList: tagList, readIt: readingUserId)
+        )
+    }
+    
+    public func deleteArticle( slug: String ) throws{
+        try conduit.deleteArticle(slug: slug)
+    }
+    
+    public func favorite(by userId: Int, for articleSlug: String) throws -> SingleArticleResponse{
+        return SingleArticleResponse(article:
+            try conduit.favorite(by: userId, for: articleSlug)
+        )
+    }
+    
+    public func unfavorite(by userId: Int, for articleSlug: String) throws -> SingleArticleResponse{
+        return SingleArticleResponse(article:
+            try conduit.unfavorite(by: userId, for: articleSlug)
+        )
+    }
+    
+    public func getComments( slug: String ) throws -> MultipleCommentsResponse{
+        return MultipleCommentsResponse(comments:
+            try conduit.comments(for: slug)
+        )
     }
 
-    public func deleteComment( slug: String ) throws -> Bool{
-        return true
+    public func postComment( slug: String, body: String, author: Int ) throws -> SingleCommentResponse{
+        return SingleCommentResponse(comment:
+            try conduit.addComment(for: slug, body: body, author: author)
+        )
     }
+
+    public func deleteComment( slug: String, id: Int ) throws{
+        try conduit.deleteComment( for: slug, id: id)
+    }
+    
+    
 }

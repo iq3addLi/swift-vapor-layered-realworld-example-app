@@ -27,8 +27,11 @@ public struct ArticlesController {
         let favorited = request.query[ String.self, at: "favorited" ]
         let tag = request.query[ String.self, at: "tag" ]
         
-        // Exec business logic
-        let articles = try useCase.getArticles( author: author, favorited: favorited, tag: tag, offset: offset, limit: limit)
+        // Get relayed parameter
+        let userId = try request.privateContainer.make(VerifiedUserEntity.self).id // Optional
+        
+        // Into domain logic
+        let articles = try useCase.getArticles( author: author, favorited: favorited, tag: tag, offset: offset, limit: limit, readingUserId: userId)
         
         // Success
         return try request.response( articles , as: .json).encode(for: request)
@@ -38,14 +41,14 @@ public struct ArticlesController {
     //  <Auth then expand payload>
     func postArticle(_ request: Request) throws -> Future<Response> {
         
-        // Get relayed parameter
-        let payload = try request.privateContainer.make(SessionPayload.self)
-        
         // Get parameter by body
         let req = try request.content.decode(json: NewArticleRequest.self, using: JSONDecoder()).wait()
         
-        // Exec business logic
-        let postedArticle = try self.useCase.postArticle( req.article, author: payload.id! )
+        // Get relayed parameter
+        let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
+        
+        // Into domain logic
+        let postedArticle = try self.useCase.postArticle( req.article, author: userId )
         
         // Success
         return request.response( postedArticle, as: .json).encode(status: .ok, for: request)
@@ -55,14 +58,14 @@ public struct ArticlesController {
     //  <Auth optional>
     func getArticle(_ request: Request) throws -> Future<Response> {
         
-        // Get relayed parameter
-        let payload = (try request.privateContainer.make(SessionPayload.self))
-        
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
         
-        // Exec business logic
-        let article = try useCase.getArticle(slug: slug, readingUserId: payload.id)
+        // Get relayed parameter
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id // Optional
+        
+        // Into domain logic
+        let article = try useCase.getArticle(slug: slug, readingUserId: userId)
         
         // Success
         return request.response( article , as: .json).encode(status: .ok, for: request)
@@ -71,58 +74,129 @@ public struct ArticlesController {
     // DELETE /articles/{{slug}}
     //  <Auth then expand payload>
     func deleteArticle(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        
+        // Get parameter by URL
+        let slug = try request.parameters.next(String.self)
+        
+        // Into domain logic
+        try useCase.deleteArticle(slug: slug)
+        
+        // Success
+        return request.response().encode(status: .ok, for: request)
     }
     
     // PUT /articles/{{slug}}
     //  <Auth then expand payload>
     func updateArticle(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        
+        // Get parameter by URL
+        let slug = try request.parameters.next(String.self)
+        
+        // Get parameter by body
+        let article = try request.content.decode(json: UpdateArticleRequest.self, using: JSONDecoder()).wait().article
+        
+        // Get relayed parameter
+        let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
+        
+        // Into domain logic
+        let response = try useCase.updateArticle(slug: slug, title: article.title, description: article._description, body: article.body, tagList: article.tagList, readingUserId: userId)
+        
+        // Success
+        return request.response( response, as: .json).encode(status: .ok, for: request)
     }
     
 
     // GET /articles/feed
-    //  <Auth optional>
+    //  <Auth then expand payload>
     func getArticlesMyFeed(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        // Get parameter by query
+        let offset = request.query[ Int.self, at: "offset" ]
+        let limit = request.query[ Int.self, at: "limit" ]
+        
+        // Get relayed parameter
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id // Optional
+        
+        // Into domain logic
+        let articles = try useCase.getArticles(feeder: userId, offset: offset, limit: limit, readingUserId: userId)
+        
+        // Success
+        return request.response( articles , as: .json).encode(status: .ok, for: request)
     }
     
     // POST /articles/{{slug}}/favorite
     //  <Auth then expand payload>
     func postFavorite(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        // Get parameter by URL
+        let slug = try request.parameters.next(String.self)
+        
+        // Get relayed parameter
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        
+        // Into domain logic
+        let response = try useCase.favorite(by: userId, for: slug)
+        
+        // Success
+        return request.response( response, as: .json).encode(status: .ok, for: request)
     }
     
     // DELETE /articles/{{slug}}/favorite
     //  <Auth then expand payload>
     func deleteFavorite(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        // Get parameter by URL
+        let slug = try request.parameters.next(String.self)
+        
+        // Get relayed parameter
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        
+        // Into domain logic
+        let response = try useCase.unfavorite(by: userId, for: slug)
+        
+        // Success
+        return request.response( response, as: .json).encode(status: .ok, for: request)
     }
     
     // GET /articles/{{slug}}/comments
     //  <Auth optional>
     func getComments(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        // Get parameter by URL
+        let slug = try request.parameters.next(String.self)
+        
+        // Into domain logic
+        let response = try useCase.getComments(slug: slug)
+        
+        // Success
+        return request.response( response, as: .json).encode(status: .ok, for: request)
     }
     
     // POST /articles/{{slug}}/comments
     //  <Auth then expand payload>
     func postComment(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        // Get parameter by URL
+        let slug = try request.parameters.next(String.self)
+        
+        // Get parameter by body
+        let comment = try request.content.decode(json: NewCommentRequest.self, using: JSONDecoder()).wait().comment
+        
+        // Get relayed parameter
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        
+        // Into domain logic
+        let response = try useCase.postComment(slug: slug, body: comment.body, author: userId)
+        
+        // Success
+        return request.response( response, as: .json).encode(status: .ok, for: request)
     }
     
     // DELETE /articles/{{slug}}/comments/{{commentId}}
-    //  <Auth then expand payload>
+    //  <Auth required>
     func deleteComment(_ request: Request) throws -> Future<Response> {
-        return request.response( GeneralInfomation("This API is not implemented yet.") , as: .json)
-            .encode(status: .ok, for: request)
+        // Get parameter by URL
+        let slug = try request.parameters.next(String.self)
+        let commentId = try request.parameters.next(Int.self)
+        
+        // Into domain logic
+        try useCase.deleteComment(slug: slug, id: commentId)
+        return request.response().encode(status: .ok, for: request)
     }
     
 }

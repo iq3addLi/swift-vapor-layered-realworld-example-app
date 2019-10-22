@@ -105,14 +105,14 @@ extension MySQLDatabaseManager{
     func insertComment(on connection: MySQLConnection, for articleSlug: String, body: String, author userId: Int) throws -> Comment{
         
         guard let article = try Articles.query(on: connection).filter(\Articles.slug == articleSlug).all().wait().first else{
-            throw Error(reason: "No article to comment was found")
+            throw Error( "No article to comment was found")
         }
         let inserted = try Comments(body: body, author: userId, article: article.id! ).save(on: connection).wait() // MEMO: Return value's timestamp is nil when insert😣 So need to select again😩
         guard let comment = try Comments.query(on: connection).filter(\Comments.id == inserted.id!).all().wait().first else{
-            throw Error(reason: "The comment was saved successfully, but fluent did not return a value.")
+            throw Error( "The comment was saved successfully, but fluent did not return a value.")
         }
         guard let author = try inserted.commentedUser?.get(on: connection).wait() else{
-            throw Error(reason: "Failed to get commented user.")
+            throw Error( "Failed to get commented user.")
         }
         
         return Comment(_id: comment.id!, createdAt: comment.createdAt!, updatedAt: comment.updatedAt!, body: comment.body, author: Profile(username: author.username, bio: author.bio, image: author.image, following: false /* Because It's own. */))
@@ -151,29 +151,45 @@ extension MySQLDatabaseManager{
         return try selectArticles(on: connection, condition: .slug(slug), readIt: userId ).first
     }
     
+    func updateArticle(on connection: MySQLConnection, slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) throws -> Article{
+        
+        // Search Articles
+        guard let target = try Articles.query(on: connection).filter(\Articles.slug == slug).all().wait().first else{
+            throw Error( "Article is not found")
+        }
+        
+        // Update Article
+        if let t = title { target.title = t }
+        if let d = description { target.description = d }
+        if let b = body { target.body = b }
+        
+        let _ = try target.update(on: connection).wait()
+        
+        // Update Tags
+        if let tagList = tagList {
+            let tags = try target.tags.query(on: connection).all().wait()
+            
+            try tags.filter{ tagList.contains($0.tag) == false }
+                    .forEach{ try $0.delete(on: connection).wait() }
+            try tagList.filter{ tags.map{ $0.tag }.contains($0) == false }
+                    .forEach{ _ = try Tags(id: nil, article: target.id!, tag: $0).save(on: connection).wait() }
+        }
+        
+        // Search Article properties
+        guard let article = try selectArticles(on: connection, condition: .slug(slug), readIt: userId).first else{
+            throw Error( "Article is not found when after update.")
+        }
+        return article
+    }
+    
     func deleteArticle(on connection: MySQLConnection, slug: String ) throws {
         _ = try connection.raw( RawSQLQueries.deleteArticles(slug: slug) ).all().wait()
     }
-}
-
-// MARK: TRANSACTION
-extension MySQLDatabaseManager{
-
-    func startTransaction<T>(_ transactionClosure:(_ connection: MySQLConnection) throws -> T ) throws -> T{
-        // Connection and start transaction
-        let connection = try newConnection()
-        _ = try connection.simpleQuery("START TRANSACTION").wait()
-        
-        // Execute transaction
-        let result: T
-        do {
-            result = try transactionClosure(connection)
-        }catch( let error ){
-            _ = try connection.simpleQuery("ROLLBACK").wait()
-            throw error
-        }
-        _ = try connection.simpleQuery("COMMIT").wait()
-        
-        return result
+    
+    func selectTags(on connection: MySQLConnection) throws -> [String]{
+        return try connection.raw( RawSQLQueries.selectTags() )
+            .all(decoding: TagOnlyRow.self )
+            .wait()
+            .map{ $0.tag }
     }
 }

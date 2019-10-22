@@ -21,7 +21,7 @@ struct JWTWithVaporRepository: JWTRepository{
         
         // Encoding to string and return
         guard let token =  String(data: data, encoding: .utf8) else{
-            fatalError("JWT crypted data is encoding failed.")
+            throw Error("JWT crypted data is encoding failed.")
         }
         return token
     }

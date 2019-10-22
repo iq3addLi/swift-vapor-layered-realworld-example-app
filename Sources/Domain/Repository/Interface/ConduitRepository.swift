@@ -37,7 +37,7 @@ public protocol ConduitRepository{
     
     func addComment(for articleSlug: String, body: String, author: Int) throws -> Comment
     
-    func deleteComment(id: Int) throws
+    func deleteComment(for articleSlug: String, id: Int) throws
     
     
     // Articles
@@ -45,6 +45,9 @@ public protocol ConduitRepository{
     
     func articles( condition: ArticleCondition, readingUserId: Int?, offset: Int?, limit: Int? ) throws -> [Article]
     
+    func deleteArticle( slug: String ) throws
+    
+    func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) throws -> Article
     
     // Tags
     func allTags() throws -> [String]
