@@ -13,7 +13,7 @@ public struct UsersUseCase{
     
     public init(){}
     
-    public func login( form: LoginUser ) throws -> UserResponse?{
+    public func login( form: LoginUser ) throws -> UserResponse{
         // Search User
         let (id, user) = try conduit.searchUser(email: form.email, password: form.password)
         
@@ -24,7 +24,7 @@ public struct UsersUseCase{
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
     
-    public func register(user form: NewUser ) throws -> UserResponse?{
+    public func register(user form: NewUser ) throws -> UserResponse{
         
         // Register user
         let (id, user) = try conduit.registerUser(name: form.username, email: form.email, password: form.password)
@@ -36,7 +36,7 @@ public struct UsersUseCase{
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
     
-    public func currentUser( token: String ) throws -> UserResponse? {
+    public func currentUser( token: String ) throws -> UserResponse {
         
         // Verify and expand payload
         let payload = try jwt.verifyJWTToken(token: token)
@@ -48,7 +48,7 @@ public struct UsersUseCase{
         return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
     }
     
-    public func update(userId: Int, updateUser user: UpdateUser, token: String ) throws -> UserResponse? {
+    public func update(userId: Int, updateUser user: UpdateUser, token: String ) throws -> UserResponse {
         
         // Update user in storage
         let user = try conduit.updateUser(id: userId, email: user.email, username: user.username, bio: user.bio, image: user.image)
