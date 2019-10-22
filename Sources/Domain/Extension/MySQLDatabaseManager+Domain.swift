@@ -18,11 +18,11 @@ extension MySQLDatabaseManager{
         return try Users.query(on: connection).filter(\Users.id == id).all().wait().first
     }
     
-    func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) throws -> Users {
-        return
-            try Users(id: nil, username: username, email: email, hash: hash, salt: salt)
-            .save(on: connection)
-            .wait()
+    func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) throws -> Future<Users> {
+        return Users(id: nil, username: username, email: email, hash: hash, salt: salt).save(on: connection)/*.map { users in
+            throw Error("This error is trial.")
+            return users
+        }*/
     }
     
     func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) throws -> Users?{

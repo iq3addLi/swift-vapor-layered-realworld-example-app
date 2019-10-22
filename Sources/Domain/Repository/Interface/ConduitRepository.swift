@@ -5,14 +5,14 @@
 //  Created by iq3AddLi on 2019/09/12.
 //
 
-import Infrastructure
+import Async
 
 public protocol ConduitRepository{
     
     func ifneededPreparetion()
     
     // Users
-    func registerUser(name username: String, email: String, password: String) throws -> ( userId: Int, user: User)
+    func registerUser(name username: String, email: String, password: String) throws -> Future<(Int, User)>
     
     func searchUser(email: String, password: String) throws -> ( userId: Int, user: User)
     

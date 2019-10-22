@@ -19,15 +19,21 @@ struct ConduitMySQLRepository: ConduitRepository{
     }
     
     // MARK: Users
-    func registerUser(name username: String, email: String, password: String) throws -> ( userId: Int, user: User ){
+    func registerUser(name username: String, email: String, password: String) throws -> Future<(Int, User)>{
         
         let salt = AES.randomIV(16).toHexString()
         let hash = try PKCS5.PBKDF2(password: Array(password.utf8), salt: Array(salt.utf8), keyLength: 32).calculate().toHexString()
         
-        return try database.startTransaction{ connection in
-            let user = try database.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt)
-            
-            return ( user.id!, User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image) )
+//        return try database.futureTransaction{ connection in
+//            let user = try database.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt)
+//
+//            return ( user.id!, User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image) )
+//        }
+        let database = self.database
+        return try database.futureTransaction{ connection in
+            try database.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt)
+        }.map{ user in
+            ( user.id!, User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image) )
         }
     }
     

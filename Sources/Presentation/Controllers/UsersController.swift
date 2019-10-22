@@ -14,28 +14,23 @@ public struct UsersController {
     
     // POST /users
     func postUser(_ request: Request) throws -> Future<Response> {
-        return try request.content.decode(json: NewUserRequest.self, using: JSONDecoder()).map { newUserRequest in
-            // Register user
-            guard let response = try self.useCase.register(user: newUserRequest.user) else{
-                // Abort
-                throw Abort( .internalServerError )
+        try request.content.decode(json: NewUserRequest.self, using: JSONDecoder())
+            .flatMap { newUserRequest -> EventLoopFuture<UserResponse> in
+                try self.useCase.register(user: newUserRequest.user)
             }
-            
-            return request.response( response , as: .json)
-        }
+            .flatMap { response -> Future<Response> in
+                request.response( response , as: .json).encode(status: .ok, for: request )
+            }
     }
     
     // POST /users/login
     func login(_ request: Request) throws -> Future<Response> {
         
-        return try request.content.decode(json: LoginUserRequest.self, using: JSONDecoder()).map { loginUserRequest in
+        try request.content.decode(json: LoginUserRequest.self, using: JSONDecoder()).map { loginUserRequest in
             // Log-in user
-            guard let response = try self.useCase.login(form: loginUserRequest.user) else{
-                // Abort
-                throw Abort( .internalServerError )
-            }
+            let response = try self.useCase.login(form: loginUserRequest.user)
             
-            return request.response( response, as: .json)
+            return request.response( response, as: .json) // .encode(status: .ok, for: request )
         }
     }
     
@@ -61,11 +56,8 @@ public struct UsersController {
         return try request.content.decode(json: UpdateUserRequest.self, using: JSONDecoder()).map { updateUserRequest in
             
             // Verify then update user
-            guard let response = try self.useCase.update(userId: user.id!, updateUser: updateUserRequest.user, token: user.token! )  else{
-                // Abort
-                throw Abort( .internalServerError )
-            }
-            return request.response( response , as: .json)
+            let response = try self.useCase.update(userId: user.id!, updateUser: updateUserRequest.user, token: user.token! )
+            return request.response( response , as: .json) // .encode(status: .ok, for: request )
         }
     }
     
