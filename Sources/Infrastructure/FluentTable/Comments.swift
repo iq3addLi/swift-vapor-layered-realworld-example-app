@@ -36,11 +36,11 @@ extension Comments: MySQLModel{
 // Relation
 extension Comments {
     
-    public var commentedArticle: Parent<Comments, Articles>? {
+    public var commentedArticle: Parent<Comments, Articles> {
         return parent(\.article)
     }
     
-    public var commentedUser: Parent<Comments, Users>? {
+    public var commentedUser: Parent<Comments, Users> {
         return parent(\.author)
     }
 }

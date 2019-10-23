@@ -43,7 +43,6 @@ public class MySQLDatabaseManager{
 // MARK: TRANSACTION
 extension MySQLDatabaseManager{
 
-    
     public func futureTransaction<T>(_  transactionClosure: @escaping (_ connection: MySQLConnection) throws -> Future<T> ) throws -> Future<T>{
         
         // Connection and start transaction

@@ -148,7 +148,7 @@ struct ConduitMySQLRepository: ConduitRepository{
     }
     
     func deleteArticle( slug: String ) throws{
-        try database.startTransaction { connection in
+        try database.startTransaction { connection -> Void in
             try database.deleteArticle(on: connection, slug: slug)
         }
     }
