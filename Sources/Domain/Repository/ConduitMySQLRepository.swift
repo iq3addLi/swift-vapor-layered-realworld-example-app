@@ -192,7 +192,7 @@ struct ConduitMySQLRepository: ConduitRepository{
         let database = self.database
         return database.futureConnection()
             .flatMap{ connection in
-                database.selectUser(on: try database.newConnection(), id: id)
+                database.selectUser(on: connection, id: id)
             }
             .map{ userOrNil in
                 guard let user = userOrNil else{
@@ -204,9 +204,11 @@ struct ConduitMySQLRepository: ConduitRepository{
     
     func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> Future<User>{
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.updateUser(on: connection, id: id, email: email, bio: bio, image: image)
+                connection.transaction(on: .mysql) { connectionOnTransaction in
+                    database.updateUser(on: connectionOnTransaction, id: id, email: email, bio: bio, image: image)
+                }
             }
             .map{ user in
                 User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image)
@@ -289,7 +291,7 @@ struct ConduitMySQLRepository: ConduitRepository{
         let database = self.database
         return database.futureConnection()
             .flatMap{ connection in
-                database.selectArticles(on: try database.newConnection(), condition: condition, readIt: readingUserId, offset: offset, limit: limit)
+                database.selectArticles(on: connection, condition: condition, readIt: readingUserId, offset: offset, limit: limit)
             }
     }
     

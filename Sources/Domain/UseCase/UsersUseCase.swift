@@ -56,7 +56,7 @@ extension UsersUseCase{
             }
     }
     
-    public func current( userId: Int, token: String ) throws -> Future<UserResponse> {
+    public func current( userId: Int, token: String ) -> Future<UserResponse> {
         
         conduit.searchUser(id: userId)
             .map{ tuple in

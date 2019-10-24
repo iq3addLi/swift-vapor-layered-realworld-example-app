@@ -203,10 +203,12 @@ extension MySQLDatabaseManager{
     }
     
     func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) -> Future<Users>{
-        Users.query(on: connection).filter(\Users.id == id)
-            .all()
+        Users.query(on: connection)
+            .filter(\Users.id == id)
+            .first() // Note: 2019-10-24 15:06:13.682666+0900 Run[41699:1276087] Fatal error: Attempting to call `send(...)` while handler is still: callback(NIO.EventLoopPromise<()>(futureResult: NIO.EventLoopFuture<()>), (Function)).: file /Users/arakane/github/swift-vapor-layered-realworld-example-app/.build/checkouts/mysql-kit/Sources/MySQL/Connection/MySQLConnection.swift, line 81
+            // https://github.com/vapor/fluent-mysql-driver/issues/136 👀
             .map{ users -> Users in
-                guard let user = users.first else{
+                guard let user = users else{
                     throw Error("Update process is failed. User not found.")
                 }
                 return user
