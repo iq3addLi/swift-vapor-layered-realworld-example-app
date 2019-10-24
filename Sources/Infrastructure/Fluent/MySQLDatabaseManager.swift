@@ -43,16 +43,17 @@ public class MySQLDatabaseManager{
 // MARK: TRANSACTION
 extension MySQLDatabaseManager{
 
-    public func futureTransaction<T>(_  transactionClosure: @escaping (_ connection: MySQLConnection) throws -> Future<T> ) throws -> Future<T>{
+    public func futureTransaction() -> Future<MySQLConnection>{
         
         // Connection and start transaction
         var connection: MySQLConnection?
-        let future = futureConnection().flatMap{ conn -> Future<[[MySQLColumn: MySQLData]]> /* Without this specification I will be beaten by the compiler. F**k☺️ */ in
-            connection = conn
-            return conn.simpleQuery("START TRANSACTION")
-        }.flatMap { _ in
-            try transactionClosure(connection!)
-        }
+        let future = futureConnection()
+            .flatMap{ conn -> Future<[[MySQLColumn: MySQLData]]> /* Without this specification I will be beaten by the compiler. F**k☺️ */ in
+                connection = conn
+                return conn.simpleQuery("START TRANSACTION")
+            }.map { _ -> MySQLConnection in
+                connection!
+            }
         
         future.whenFailure { _ in
             _ = connection?.simpleQuery("ROLLBACK")

@@ -8,7 +8,7 @@
 import Vapor
 import Domain
 
-public struct UsersController {
+struct UsersController {
     
     let useCase = UsersUseCase()
     
@@ -16,34 +16,32 @@ public struct UsersController {
     func postUser(_ request: Request) throws -> Future<Response> {
         try request.content.decode(json: NewUserRequest.self, using: JSONDecoder())
             .flatMap { newUserRequest -> EventLoopFuture<UserResponse> in
-                try self.useCase.register(user: newUserRequest.user)
+                self.useCase.register(user: newUserRequest.user)
             }
-            .flatMap { response -> Future<Response> in
-                request.response( response , as: .json).encode(status: .ok, for: request )
+            .map { response in
+                request.response( response , as: .json)
             }
     }
     
     // POST /users/login
     func login(_ request: Request) throws -> Future<Response> {
-        
-        try request.content.decode(json: LoginUserRequest.self, using: JSONDecoder()).map { loginUserRequest in
-            // Log-in user
-            let response = try self.useCase.login(form: loginUserRequest.user)
-            
-            return request.response( response, as: .json) // .encode(status: .ok, for: request )
-        }
+        let useCase = self.useCase
+        return try request.content.decode(json: LoginUserRequest.self, using: JSONDecoder())
+            .flatMap { req in
+                // Log-in user
+                useCase.login(form: req.user)
+            }
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
     
 
     // GET /user Auth then search user
     func getUser(_ request: Request) throws -> Future<Response> {
-        
-        // Had I my infomation?
-        let user = (try request.privateContainer.make(AuthedUser.self)).toResponse()
-        let response = UserResponse(user: user)
-        
         // Create response
-        return request.response( response, as: .json).encode(status: .ok, for: request)
+        return request.response( UserResponse(user: (try request.privateContainer.make(AuthedUser.self)).toResponse()), as: .json)
+            .encode(status: .ok, for: request)
     }
     
     // PUT /user Auth then expand payload
@@ -53,12 +51,15 @@ public struct UsersController {
         let user = (try request.privateContainer.make(VerifiedUserEntity.self))
         
         // Parse json body
-        return try request.content.decode(json: UpdateUserRequest.self, using: JSONDecoder()).map { updateUserRequest in
-            
-            // Verify then update user
-            let response = try self.useCase.update(userId: user.id!, updateUser: updateUserRequest.user, token: user.token! )
-            return request.response( response , as: .json) // .encode(status: .ok, for: request )
-        }
+        let useCase = self.useCase
+        return try request.content.decode(json: UpdateUserRequest.self, using: JSONDecoder())
+            .flatMap { req in
+                // Verify then update user
+                useCase.update(userId: user.id!, token: user.token!, updateUser: req.user )
+            }
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
     
 }

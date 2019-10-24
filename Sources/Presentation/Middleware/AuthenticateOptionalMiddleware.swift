@@ -14,24 +14,14 @@ final class AuthenticateOptionalMiddleware: Middleware {
     
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
-        guard let auth = request.http.headers.tokenAuthorization else{
-            // Clear service value to next
+        let token = request.http.headers.tokenAuthorization?.token
+        try { ( payload: SessionPayload? ) throws in
+            // Write/erase ralay service value
             let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
-            entity.id = nil
-            entity.username = nil
-            entity.token = nil
-            return try next.respond(to: request)
-        }
-        
-        // Verify then expand payload
-        let payload = try useCase.payload(by: auth.token)
-        
-        // Add ralay service value
-        let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
-        entity.id = payload.id
-        entity.username = payload.username
-        entity.token = auth.token
-        
+            entity.id = payload?.id
+            entity.username = payload?.username
+            entity.token = token
+        }( token == nil ? nil : (try useCase.payload(by: token!)) )
         return try next.respond(to: request)
     }
 }

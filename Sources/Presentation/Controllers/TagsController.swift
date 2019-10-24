@@ -8,12 +8,15 @@
 import Vapor
 import Domain
 
-public struct TagsController {
+struct TagsController {
     
     let useCase = TagsUseCase()
     
     // GET /tags
     func getTags(_ request: Request) throws -> Future<Response> {
-        return request.response( try useCase.allTags(), as: .json).encode(status: .ok, for: request)
+        useCase.allTags()
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
 }

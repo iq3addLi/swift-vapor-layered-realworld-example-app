@@ -19,13 +19,6 @@ extension MySQLDatabaseManager{
         return try Users.query(on: connection).filter(\Users.id == id).all().wait().first
     }
     
-    func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) throws -> Future<Users> {
-        return Users(id: nil, username: username, email: email, hash: hash, salt: salt).save(on: connection)/*.map { users in
-            throw Error("This error is trial.")
-            return users
-        }*/
-    }
-    
     func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) throws -> Users?{
 
         guard let row = try Users.query(on: connection).filter(\Users.id == id).all().wait().first else{
@@ -205,6 +198,10 @@ extension MySQLDatabaseManager{
     }
     
     
+    func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) -> Future<Users> {
+        Users(id: nil, username: username, email: email, hash: hash, salt: salt).save(on: connection)
+    }
+    
     func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) -> Future<Users>{
         Users.query(on: connection).filter(\Users.id == id)
             .all()
@@ -351,7 +348,7 @@ extension MySQLDatabaseManager{
     }
     
     
-    func insertArticle(on connection: MySQLConnection, author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) throws -> Future<Article>{
+    func insertArticle(on connection: MySQLConnection, author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article>{
  
         Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
             .save(on: connection)
@@ -386,7 +383,7 @@ extension MySQLDatabaseManager{
             .all()
             .flatMap{ rows -> Future<Articles> in
                 guard let target = rows.first else{
-                    throw Error( "Update process is failed. Article is not found.")
+                    throw Error( "Update process is failed. Article is not found. Logically impossible.")
                 }
 
                 // Update Article

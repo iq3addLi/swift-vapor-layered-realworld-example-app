@@ -8,9 +8,9 @@
 import Vapor
 import Domain
 
-public struct ArticlesController {
+struct ArticlesController {
     
-    let useCase = ArticlesUseCase()
+    fileprivate let useCase = ArticlesUseCase()
     
     // GET /articles
     //     /articles?offset=100&limit=3)
@@ -19,7 +19,6 @@ public struct ArticlesController {
     //     /articles?tag=dragons
     //  <Auth optional>
     func getArticles(_ request: Request) throws -> Future<Response> {
-        
         // Get parameter by query
         let offset = request.query[ Int.self, at: "offset" ]
         let limit = request.query[ Int.self, at: "limit" ]
@@ -30,34 +29,32 @@ public struct ArticlesController {
         // Get relayed parameter
         let userId = try request.privateContainer.make(VerifiedUserEntity.self).id // Optional
         
-        // Into domain logic
-        let articles = try useCase.getArticles( author: author, favorited: favorited, tag: tag, offset: offset, limit: limit, readingUserId: userId)
-        
-        // Success
-        return try request.response( articles , as: .json).encode(for: request)
+        // Return future
+        return useCase.getArticles( author: author, favorited: favorited, tag: tag, offset: offset, limit: limit, readingUserId: userId)
+                .map{ articles in
+                    request.response( articles , as: .json)
+                }
     }
     
     // POST /articles
     //  <Auth then expand payload>
     func postArticle(_ request: Request) throws -> Future<Response> {
-        
+        let useCase = self.useCase
         // Get parameter by body
-        let req = try request.content.decode(json: NewArticleRequest.self, using: JSONDecoder()).wait()
-        
-        // Get relayed parameter
-        let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
-        
-        // Into domain logic
-        let postedArticle = try self.useCase.postArticle( req.article, author: userId )
-        
-        // Success
-        return request.response( postedArticle, as: .json).encode(status: .ok, for: request)
+        return try request.content.decode(json: NewArticleRequest.self, using: JSONDecoder())
+            .flatMap{ req -> Future<SingleArticleResponse> in
+                // Get relayed parameter
+                let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
+                return useCase.postArticle( req.article, author: userId )
+            }
+            .map{ postedArticle in
+                request.response( postedArticle, as: .json)
+            }
     }
     
     // GET /articles/{{slug}}
     //  <Auth optional>
     func getArticle(_ request: Request) throws -> Future<Response> {
-        
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
         
@@ -65,44 +62,43 @@ public struct ArticlesController {
         let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id // Optional
         
         // Into domain logic
-        let article = try useCase.getArticle(slug: slug, readingUserId: userId)
-        
-        // Success
-        return request.response( article , as: .json).encode(status: .ok, for: request)
+        return useCase.getArticle(slug: slug, readingUserId: userId)
+            .map{ article in
+                request.response( article , as: .json)
+            }
     }
     
     // DELETE /articles/{{slug}}
     //  <Auth then expand payload>
     func deleteArticle(_ request: Request) throws -> Future<Response> {
-        
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
         
         // Into domain logic
-        try useCase.deleteArticle(slug: slug)
-        
-        // Success
-        return request.response().encode(status: .ok, for: request)
+        return useCase.deleteArticle(slug: slug)
+            .map{
+                request.response()
+            }
     }
     
     // PUT /articles/{{slug}}
     //  <Auth then expand payload>
     func updateArticle(_ request: Request) throws -> Future<Response> {
-        
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
-        
-        // Get parameter by body
-        let article = try request.content.decode(json: UpdateArticleRequest.self, using: JSONDecoder()).wait().article
         
         // Get relayed parameter
         let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
         
-        // Into domain logic
-        let response = try useCase.updateArticle(slug: slug, title: article.title, description: article._description, body: article.body, tagList: article.tagList, readingUserId: userId)
-        
-        // Success
-        return request.response( response, as: .json).encode(status: .ok, for: request)
+        // Get parameter by body
+        let useCase = self.useCase
+        return try request.content.decode(json: UpdateArticleRequest.self, using: JSONDecoder())
+            .flatMap{ req in
+                useCase.updateArticle(slug: slug, title: req.article.title, description: req.article._description, body: req.article.body, tagList: req.article.tagList, readingUserId: userId)
+            }
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
     
 
@@ -116,11 +112,10 @@ public struct ArticlesController {
         // Get relayed parameter
         let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id // Optional
         
-        // Into domain logic
-        let articles = try useCase.getArticles(feeder: userId, offset: offset, limit: limit, readingUserId: userId)
-        
-        // Success
-        return request.response( articles , as: .json).encode(status: .ok, for: request)
+        return useCase.getArticles(feeder: userId, offset: offset, limit: limit, readingUserId: userId)
+            .map{ articles in
+                request.response( articles , as: .json)
+            }
     }
     
     // POST /articles/{{slug}}/favorite
@@ -133,10 +128,10 @@ public struct ArticlesController {
         let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
         
         // Into domain logic
-        let response = try useCase.favorite(by: userId, for: slug)
-        
-        // Success
-        return request.response( response, as: .json).encode(status: .ok, for: request)
+        return useCase.favorite(by: userId, for: slug)
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
     
     // DELETE /articles/{{slug}}/favorite
@@ -149,10 +144,10 @@ public struct ArticlesController {
         let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
         
         // Into domain logic
-        let response = try useCase.unfavorite(by: userId, for: slug)
-        
-        // Success
-        return request.response( response, as: .json).encode(status: .ok, for: request)
+        return useCase.unfavorite(by: userId, for: slug)
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
     
     // GET /articles/{{slug}}/comments
@@ -162,10 +157,10 @@ public struct ArticlesController {
         let slug = try request.parameters.next(String.self)
         
         // Into domain logic
-        let response = try useCase.getComments(slug: slug)
-        
-        // Success
-        return request.response( response, as: .json).encode(status: .ok, for: request)
+        return useCase.getComments(slug: slug)
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
     
     // POST /articles/{{slug}}/comments
@@ -174,17 +169,18 @@ public struct ArticlesController {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
         
-        // Get parameter by body
-        let comment = try request.content.decode(json: NewCommentRequest.self, using: JSONDecoder()).wait().comment
-        
         // Get relayed parameter
         let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
         
-        // Into domain logic
-        let response = try useCase.postComment(slug: slug, body: comment.body, author: userId)
-        
-        // Success
-        return request.response( response, as: .json).encode(status: .ok, for: request)
+        // Get parameter by body
+        let useCase = self.useCase
+        return try request.content.decode(json: NewCommentRequest.self, using: JSONDecoder())
+            .flatMap{ req in
+                useCase.postComment(slug: slug, body: req.comment.body, author: userId)
+            }
+            .map{ response in
+                request.response( response, as: .json)
+            }
     }
     
     // DELETE /articles/{{slug}}/comments/{{commentId}}
@@ -195,8 +191,9 @@ public struct ArticlesController {
         let commentId = try request.parameters.next(Int.self)
         
         // Into domain logic
-        try useCase.deleteComment(slug: slug, id: commentId)
-        return request.response().encode(status: .ok, for: request)
+        return  useCase.deleteComment(slug: slug, id: commentId)
+            .map{ _ in
+                request.response()
+            }
     }
-    
 }
