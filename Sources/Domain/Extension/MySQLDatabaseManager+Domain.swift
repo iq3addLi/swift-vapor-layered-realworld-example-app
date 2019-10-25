@@ -352,19 +352,23 @@ extension MySQLDatabaseManager{
     
     func insertArticle(on connection: MySQLConnection, author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article>{
  
-        Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
+        let eventLoop = connection.eventLoop
+        return Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
             .save(on: connection)
-            .flatMap{ article -> Future<[Tags]> in
-                let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-                defer{
-                    evGroup.shutdownGracefully { (error) in
-                        // TODO: notify to system
-                        if let error = error{ print(error) }
-                    }
+            .flatMap{ article -> Future<Void> in
+//                let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+//                defer{
+//                    evGroup.shutdownGracefully { (error) in
+//                        // TODO: notify to system
+//                        if let error = error{ print(error) }
+//                    }
+//                }
+//               // insert tags
+                let insertTags = tags.map{ Tags(id: nil, article: article.id!, tag: $0 ).save(on: connection).map{ _ in return } }
+                switch insertTags.serializedFuture(){
+                    case .some(let futures): return futures
+                    case .none: return eventLoop.newSucceededFuture(result: Void())
                 }
-                // insert tags
-                let insertTags = tags.map{ Tags(id: nil, article: article.id!, tag: $0 ).save(on: connection) }
-                return EventLoopFuture.whenAll(insertTags, eventLoop: evGroup.next())
             }
             .flatMap{ [weak self] _ -> Future<[Article]> in
                 self!.selectArticles(on: connection, condition: .slug(slug), readIt: userId )

@@ -231,34 +231,42 @@ struct ConduitMySQLRepository: ConduitRepository{
     
     func follow(followee username: String, follower userId: Int) -> Future<Profile>{
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.insertFollow(on: connection, followee: username, follower: userId)
+                connection.transaction(on: .mysql) { connection in
+                    database.insertFollow(on: connection, followee: username, follower: userId)
+                }
             }
     }
     
     
     func unfollow(followee username: String, follower userId: Int) -> Future<Profile>{
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.deleteFollow(on: connection, followee: username, follower: userId)
+                connection.transaction(on: .mysql) { connection in
+                    database.deleteFollow(on: connection, followee: username, follower: userId)
+                }
             }
     }
     
     func favorite(by userId: Int, for articleSlug: String) -> Future<Article>{
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.insertFavorite(on: connection, by: userId, for: articleSlug)
+                connection.transaction(on: .mysql) { connection in
+                    database.insertFavorite(on: connection, by: userId, for: articleSlug)
+                }
             }
     }
     
     func unfavorite(by userId: Int, for articleSlug: String) -> Future<Article>{
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.deleteFavorite(on: connection, by: userId, for: articleSlug)
+                connection.transaction(on: .mysql) { connection in
+                    database.deleteFavorite(on: connection, by: userId, for: articleSlug)
+                }
             }
     }
     
@@ -272,18 +280,22 @@ struct ConduitMySQLRepository: ConduitRepository{
     
     func addComment(for articleSlug: String, body: String, author userId: Int) -> Future<Comment>{
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.insertComment(on: connection, for: articleSlug, body: body, author: userId)
+                connection.transaction(on: .mysql) { connection in
+                    database.insertComment(on: connection, for: articleSlug, body: body, author: userId)
+                }
             }
         
     }
 
     func deleteComment(for articleSlug: String, id: Int) -> Future<Void>{ // Slug is not required for MySQL implementation.
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.deleteComments(on: connection, commentId: id)
+                connection.transaction(on: .mysql) { connection in
+                    database.deleteComments(on: connection, commentId: id)
+                }
             }
     }
     
@@ -297,26 +309,32 @@ struct ConduitMySQLRepository: ConduitRepository{
     
     func addArticle(userId author: Int, title: String, discription: String, body: String, tagList: [String]) -> Future<Article> {
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
                 let slug = try title.convertedToSlug()
-                return database.insertArticle(on: connection, author: author, title: title, slug: slug, description: discription, body: body, tags: tagList)
+                return connection.transaction(on: .mysql) { conenction in
+                    database.insertArticle(on: connection, author: author, title: title, slug: slug, description: discription, body: body, tags: tagList)
+                }
             }
     }
 
     func deleteArticle( slug: String ) -> Future<Void> {
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.deleteArticle(on: connection, slug: slug)
+                connection.transaction(on: .mysql) { conenction in
+                    database.deleteArticle(on: connection, slug: slug)
+                }
             }
     }
 
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article>{
         let database = self.database
-        return database.futureTransaction()
+        return database.futureConnection()
             .flatMap{ connection in
-                database.updateArticle(on: connection, slug: slug, title: title, description: description, body: body, tagList: tagList, readIt: userId)
+                connection.transaction(on: .mysql) { conenction in
+                    database.updateArticle(on: connection, slug: slug, title: title, description: description, body: body, tagList: tagList, readIt: userId)
+                }
             }
     }
     
