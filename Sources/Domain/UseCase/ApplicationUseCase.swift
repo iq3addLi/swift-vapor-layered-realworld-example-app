@@ -25,8 +25,16 @@ public class ApplicationUseCase{
         
         var services = self.services
         
-        // Register middleware
+        // Register middlewares
+        let corsConfig = CORSMiddleware.Configuration(
+            allowedOrigin: .all,
+            allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],
+            allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith]
+        )
+        let corsMiddleware = CORSMiddleware(configuration: corsConfig)
+        
         var middlewares = MiddlewareConfig() // Create _empty_ middleware config
+        middlewares.use(corsMiddleware)
         middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
         services.register(middlewares)
         
