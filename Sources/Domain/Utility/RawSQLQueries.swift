@@ -52,7 +52,7 @@ public enum RawSQLQueries{
                 inner join Users on Users.id = Articles.author
                 left join Favorites on Articles.id = Favorites.article
             where
-                Favorites.user = ( select id from Users where username = "\(username)");
+                Favorites.user = ( select id from Users where username = "\(username)")
             """
         case .tag(let tag): return """
             from Articles
@@ -93,7 +93,7 @@ public enum RawSQLQueries{
             left join Tags on Articles.id = Tags.article
             left join Favorites on Articles.id = Favorites.article
         WHERE
-            Articles.slug = "\(slug)";
+            Articles.slug = "\(slug)"
         """
     }
     
@@ -109,7 +109,7 @@ extension RawSQLQueries{
         \((id != nil) ? ",exists( select * from Follows where followee = Users.id and follower = \(id!) ) as following" : "" )
         from Users
         where
-            username = "\(name)";
+            username = "\(name)"
         """
     }
     
@@ -119,7 +119,7 @@ extension RawSQLQueries{
         \((id != nil) ? ",exists( select * from Follows where followee = Users.id and follower = \(id!) ) as following" : "" )
         from Users
         where
-            id = "\(userId)";
+            id = "\(userId)"
         """
     }
     
@@ -138,7 +138,7 @@ extension RawSQLQueries{
         from Comments
             inner join Users on Comments.author = Users.id
         where
-            Comments.article = ( select id from Articles where slug = "\(articleSlug)");
+            Comments.article = ( select id from Articles where slug = "\(articleSlug)")
         """
     }
     
@@ -148,7 +148,7 @@ extension RawSQLQueries{
             into Comments (body, author, article)
         values (
             "\(body)", \(userId), (select id from Articles where slug = "\(articleSlug)")
-        );
+        )
         """
     }
          
@@ -174,7 +174,7 @@ extension RawSQLQueries{
         values (
             (select id from Users where username = "\(username)"),
             \(id)
-        );
+        )
         """
     }
     
@@ -183,7 +183,7 @@ extension RawSQLQueries{
         DELETE FROM Follows
         WHERE
             followee = (select id from Users where username = "\(username)") and
-            follower = \(id);
+            follower = \(id)
         """
     }
 }
@@ -198,7 +198,7 @@ extension RawSQLQueries{
         values (
             (select id from Articles where slug = "\(articleSlug)"),
             \(userId)
-        );
+        )
         """
     }
 
@@ -207,7 +207,7 @@ extension RawSQLQueries{
         DELETE FROM Favorites
         WHERE
             article = (select id from Articles where slug = "\(articleSlug)") and
-            user = \(userId);
+            user = \(userId)
         """
     }
 }
@@ -217,7 +217,7 @@ extension RawSQLQueries{
     
     public static func selectTags() -> String{
         return """
-        select distinct tag from Tags;
+        select distinct tag from Tags
         """
     }
 
