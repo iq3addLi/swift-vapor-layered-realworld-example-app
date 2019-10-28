@@ -7,12 +7,11 @@
 
 import Domain
 
-/**
- All application is start here🏃‍♂️
- 
- - throws:
-   dummy comment.
- */
+
+
+/// All application is start here🏃‍♂️
+/// - throws:
+///  <#Description#>
 public func applciationMain() throws{
     
     let useCase = ApplicationUseCase()

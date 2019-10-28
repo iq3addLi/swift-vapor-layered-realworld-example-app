@@ -5,6 +5,8 @@
 //  Created by iq3AddLi on 2019/10/17.
 //
 
+
+/// <#Description#>
 public enum RawSQLQueries{
     
     /// dummy description
@@ -85,6 +87,11 @@ public enum RawSQLQueries{
         """
     }
     
+    
+    /// <#Description#>
+    /// - Parameter slug: <#slug description#>
+    /// - returns:
+    ///    <#Description#>
     public static func deleteArticles(slug: String) -> String {
         return """
         DELETE
@@ -103,6 +110,12 @@ public enum RawSQLQueries{
 // MARK: Users
 extension RawSQLQueries{
     
+    
+    /// <#Description#>
+    /// - Parameter name: <#name description#>
+    /// - Parameter id: <#id description#>
+    /// - returns:
+    ///    <#Description#>
     public static func selectUsers(name: String, follower id: Int?) -> String{
         return """
         select *
@@ -113,6 +126,12 @@ extension RawSQLQueries{
         """
     }
     
+    
+    /// <#Description#>
+    /// - Parameter userId: <#userId description#>
+    /// - Parameter id: <#id description#>
+    /// - returns:
+    ///    <#Description#>
     public static func selectUsers(id userId: Int, follower id: Int?) -> String{
         return """
         select *
@@ -129,6 +148,12 @@ extension RawSQLQueries{
 // MARK: Comments
 extension RawSQLQueries{
     
+    
+    /// <#Description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter userId: <#userId description#>
+    /// - returns:
+    ///    <#Description#>
     public static func selectComments(for articleSlug: String, readIt userId: Int? = nil) -> String {
         return """
         select
@@ -142,6 +167,13 @@ extension RawSQLQueries{
         """
     }
     
+    
+    /// <#Description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter body: <#body description#>
+    /// - Parameter userId: <#userId description#>
+    /// - returns:
+    ///    <#Description#>
     public static func insertComments(for articleSlug: String, body: String, author userId: Int ) -> String {
         return """
         insert
@@ -151,7 +183,12 @@ extension RawSQLQueries{
         )
         """
     }
-         
+
+    
+    /// <#Description#>
+    /// - Parameter commentId: <#commentId description#>
+    /// - returns:
+    ///    <#Description#>
     public static func deleteComments(id commentId: Int ) -> String {
         return """
         DELETE
@@ -167,6 +204,12 @@ extension RawSQLQueries{
 // MARK: Follows
 extension RawSQLQueries{
     
+    
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter id: <#id description#>
+    /// - returns:
+    ///    <#Description#>
     public static func insertFollows(followee username: String, follower id: Int) -> String{
         return """
         insert
@@ -178,6 +221,12 @@ extension RawSQLQueries{
         """
     }
     
+    
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter id: <#id description#>
+    /// - returns:
+    ///    <#Description#>
     public static func deleteFollows(followee username: String, follower id: Int) -> String{
         return """
         DELETE FROM Follows
@@ -191,6 +240,12 @@ extension RawSQLQueries{
 // MARK: Favorites
 extension RawSQLQueries{
 
+    
+    /// <#Description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter userId: <#userId description#>
+    /// - returns:
+    ///    <#Description#>
     public static func insertFavorites(for articleSlug: String, by userId: Int) -> String{
         return """
         insert
@@ -202,6 +257,12 @@ extension RawSQLQueries{
         """
     }
 
+    
+    /// <#Description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter userId: <#userId description#>
+    /// - returns:
+    ///    <#Description#>
     public static func deleteFavorites(for articleSlug: String, by userId: Int) -> String {
         return  """
         DELETE FROM Favorites
@@ -215,6 +276,10 @@ extension RawSQLQueries{
 // MARK: Tags
 extension RawSQLQueries{
     
+    
+    /// <#Description#>
+    /// - returns:
+    ///    <#Description#>  
     public static func selectTags() -> String{
         return """
         select distinct tag from Tags

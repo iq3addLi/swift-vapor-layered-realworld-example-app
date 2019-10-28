@@ -5,7 +5,8 @@
 //  Created by iq3AddLi on 2019/09/27.
 //
 
-/// dummy comment
+
+/// <#Description#>
 public struct ProfilesUseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     public init(){}
@@ -14,7 +15,13 @@ public struct ProfilesUseCase{
 import Async
 extension ProfilesUseCase{
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - username: <#username description#>
+    ///     - readingUserId: <#readingUserId description#>
+    /// - returns:
+    ///    <#Description#>
     public func profile(by username: String, readingUserId: Int? ) -> Future<ProfileResponse>{
         conduit.searchProfile(username: username, readingUserId: readingUserId)
             .map{ profile in
@@ -22,7 +29,13 @@ extension ProfilesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///      - username: <#username description#>
+    ///      - userId: <#userId description#>
+    /// - returns:
+    ///    <#Description#>
     public func follow(to username: String, from userId: Int ) -> Future<ProfileResponse>{
         conduit.follow(followee: username, follower: userId)
             .map{ profile in
@@ -30,7 +43,13 @@ extension ProfilesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///      - username: <#username description#>
+    ///      - userId: <#userId description#>
+    /// - returns:
+    ///    <#Description#> 
     public func unfollow(to username: String, from userId: Int ) -> Future<ProfileResponse>{
         conduit.unfollow(followee: username, follower: userId)
             .map{ profile in

@@ -12,7 +12,10 @@ public extension Array where Element == EventLoopFuture<Void> {
     
     /// Serialize Future array
     ///
-    /// @warning May be used only when the result of Future can be discarded
+    /// - warning:
+    ///    May be used only when the result of Future can be discarded
+    /// - returns:
+    ///    (dummy)
     func serializedFuture() -> EventLoopFuture<Void>?{
         var serializedFuture: EventLoopFuture<Void>?
         

@@ -8,6 +8,7 @@
 import Infrastructure
 import FluentMySQL
 
+
 extension MySQLDatabaseManager{
     
     func selectUser(on connection: MySQLConnection, email: String) -> Future<Users?>{

@@ -5,15 +5,15 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
-
-public struct GenericErrorModelErrors: Codable {
-
-    public var body: [String]
-
-    public init(body: [String]) {
-        self.body = body
-    }
-
-
-}
+// This definition does not match the content of the production environment
+//public struct GenericErrorModelErrors: Codable {
+//
+//    public var body: [String]
+//
+//    public init(body: [String]) {
+//        self.body = body
+//    }
+//
+//
+//}
 

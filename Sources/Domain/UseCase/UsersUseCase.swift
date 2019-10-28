@@ -6,17 +6,25 @@
 //
 
 
-/// dummy comment
+/// <#Description#>
 public struct UsersUseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()
+    
+    
+    /// <#Description#>
     public init(){}
 }
 
 import Async
 extension UsersUseCase{
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - form: <#form description#>
+    /// - returns:
+    ///    <#Description#>
     public func login( form: LoginUser ) -> Future<UserResponse>{
         let jwt = self.jwt
         // Search User
@@ -30,7 +38,11 @@ extension UsersUseCase{
             }
     }
     
-    /// dummy comment
+    /// <#Description#>
+    /// - parameters:
+    ///     - form: <#form description#>
+    /// - returns:
+    ///    <#Description#>
     public func register(user form: NewUser ) -> Future<UserResponse>{
         let jwt = self.jwt
         // Register user
@@ -44,7 +56,14 @@ extension UsersUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - token: <#token description#>
+    /// - returns:
+    ///    <#Description#>
+    /// - throws:
+    ///  <#Description#> 
     public func currentUser( token: String ) throws -> Future<UserResponse> {
         
         // Verify and expand payload
@@ -59,7 +78,13 @@ extension UsersUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///      - userId: <#userId description#>
+    ///      - token: <#token description#>
+    /// - returns:
+    ///    <#Description#>
     public func current( userId: Int, token: String ) -> Future<UserResponse> {
         
         conduit.searchUser(id: userId)
@@ -70,7 +95,14 @@ extension UsersUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - userId: <#userId description#>
+    ///     - token: <#token description#>
+    ///     - user: <#user description#>
+    /// - returns:
+    ///    <#Description#>
     public func update(userId: Int, token: String, updateUser user: UpdateUser ) -> Future<UserResponse> {
         
         // Update user in storage

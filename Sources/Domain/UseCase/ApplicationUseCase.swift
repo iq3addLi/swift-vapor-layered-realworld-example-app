@@ -8,7 +8,8 @@
 import Vapor
 import FluentMySQL
 
-/// dummy comment
+
+/// <#Description#>
 public class ApplicationUseCase{
     
     private let conduit: ConduitRepository = ConduitMySQLRepository()
@@ -20,7 +21,10 @@ public class ApplicationUseCase{
     
     public init(){}
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - returns:
+    ///    <#Description#>
     public func initialize() throws{
         
         var services = self.services
@@ -28,14 +32,14 @@ public class ApplicationUseCase{
         // Register middlewares
         let corsConfig = CORSMiddleware.Configuration(
             allowedOrigin: .all,
-            allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE, .PATCH],
+            allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE],
             allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith]
         )
         let corsMiddleware = CORSMiddleware(configuration: corsConfig)
         
         var middlewares = MiddlewareConfig() // Create _empty_ middleware config
         middlewares.use(corsMiddleware)
-        middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
+        middlewares.use(ErrorMiddleware(errorToResponse)) // Catches errors and converts to HTTP response
         services.register(middlewares)
         
         // test
@@ -46,7 +50,10 @@ public class ApplicationUseCase{
     }
     
     /// <#Description#>
-    /// - Parameter collections: <#collections description#>
+    /// - parameters:
+    ///     - collections: <#collections description#>
+    /// - returns:
+    ///    (dummy)
     public func routing(collections: [APICollection] ){
         
         var services = self.services
@@ -55,7 +62,8 @@ public class ApplicationUseCase{
         let router = EngineRouter.default()
         
         // Basic "It works" example
-        router.get { req in
+        router.get { req -> String in
+            throw Abort( .badRequest )
             return "It works!"
         }
         
@@ -81,7 +89,8 @@ public class ApplicationUseCase{
         self.services = services
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
     public func launch() throws{
         let config = Config.default()
         let env = try Environment.detect()
@@ -94,4 +103,52 @@ public class ApplicationUseCase{
         self.application = application
     }
     
+    
+    private func errorToResponse( request: Request, error: Swift.Error ) -> (Response) {
+        
+        // variables to determine
+        let status: HTTPResponseStatus
+        let reason: String
+        let headers: HTTPHeaders
+
+        // inspect the error type
+        switch error {
+        case let abort as AbortError:
+            // this is an abort error, we should use its status, reason, and headers
+            reason = abort.reason
+            status = abort.status
+            headers = abort.headers
+        case let validation as ValidationError:
+            // this is a validation error
+            reason = validation.reason
+            status = .badRequest
+            headers = [:]
+        case let debuggable as Debuggable:
+            // if not release mode, and error is debuggable, provide debug
+            // info directly to the developer
+            reason = debuggable.reason
+            status = .internalServerError
+            headers = [:]
+        default:
+            // not an abort error, and not debuggable or in dev mode
+            // just deliver a generic 500 to avoid exposing any sensitive error info
+            reason = error.localizedDescription
+            status = .internalServerError
+            headers = [:]
+        }
+
+        // create a Response with appropriate status
+        let response = request.response(http: .init(status: status, headers: headers))
+
+        // attempt to serialize the error to json
+        do {
+            let errorResponse = ErrorResponse(errors:["body" : [reason]])
+            response.http.body = try HTTPBody(data: JSONEncoder().encode(errorResponse))
+            response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
+        } catch {
+            response.http.body = HTTPBody(string: "Oops: \(error)")
+            response.http.headers.replaceOrAdd(name: .contentType, value: "text/plain; charset=utf-8")
+        }
+        return response
+    }
 }

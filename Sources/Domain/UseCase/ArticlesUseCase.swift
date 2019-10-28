@@ -6,9 +6,13 @@
 //
 
 
-/// dummy comment
+
+/// <#Description#>
 public class ArticlesUseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
+    
+    
+    /// <#Description#>
     public init(){}
 }
    
@@ -16,7 +20,18 @@ public class ArticlesUseCase{
 import Async
 extension ArticlesUseCase{
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - author: <#author description#>
+    ///     - feeder: <#feeder description#>
+    ///     - username: <#username description#>
+    ///     - tag: <#tag description#>
+    ///     - offset: <#offset description#>
+    ///     - limit: <#limit description#>
+    ///     - readingUserId: <#readingUserId description#>
+    /// - returns:
+    ///    <#Description#>
     public func getArticles( author: String? = nil, feeder: Int? = nil, favorited username: String? = nil, tag: String? = nil, offset: Int? = nil, limit: Int? = nil, readingUserId: Int? = nil) -> Future<MultipleArticlesResponse>{
         
         let condition = { () -> ArticleCondition in
@@ -34,7 +49,13 @@ extension ArticlesUseCase{
         }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters
+    ///     - slug: <#slug description#>
+    ///     - readingUserId: <#readingUserId description#>
+    /// - returns:
+    ///    <#Description#>
     public func getArticle( slug: String, readingUserId: Int? ) -> Future<SingleArticleResponse>{
         conduit.articles(condition: .slug(slug), readingUserId: readingUserId, offset: nil, limit: nil)
             .map{ articles in
@@ -45,7 +66,13 @@ extension ArticlesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - article: <#article description#>
+    ///     -  userId: <#userId description#>
+    /// - returns:
+    ///    <#Description#>
     public func postArticle(_ article: NewArticle, author userId: Int ) -> Future<SingleArticleResponse>{
         conduit.addArticle(userId: userId, title: article.title, discription: article._description, body: article.body, tagList: article.tagList ?? [] )
             .map{ article in
@@ -53,7 +80,16 @@ extension ArticlesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    ///      - slug: <#slug description#>
+    ///      - title: <#title description#>
+    ///      - description: <#description description#>
+    ///      - body: <#body description#>
+    ///      - tagList: <#tagList description#>
+    ///      - readingUserId: <#readingUserId description#>
+    /// - returns:
+    ///    <#Description#>
     public func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readingUserId: Int? ) -> Future<SingleArticleResponse>{
         conduit.updateArticle(slug: slug, title: title, description: description, body: body, tagList: tagList, readIt: readingUserId)
             .map{ article in
@@ -61,12 +97,23 @@ extension ArticlesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - slug: <#slug description#>
+    /// - returns:
+    ///    <#Description#>
     public func deleteArticle( slug: String ) -> Future<Void>{
         conduit.deleteArticle(slug: slug)
     }
 
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - userId: <#userId description#>
+    ///     - articleSlug: <#articleSlug description#>
+    /// - returns:
+    ///    <#Description#>
     public func favorite(by userId: Int, for articleSlug: String) -> Future<SingleArticleResponse>{
         conduit.favorite(by: userId, for: articleSlug)
             .map{ article in
@@ -74,7 +121,13 @@ extension ArticlesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///     - userId: <#userId description#>
+    ///     - articleSlug: <#articleSlug description#>
+    /// - returns:
+    ///    <#Description#>
     public func unfavorite(by userId: Int, for articleSlug: String) -> Future<SingleArticleResponse>{
         conduit.unfavorite(by: userId, for: articleSlug)
             .map{ article in
@@ -82,7 +135,12 @@ extension ArticlesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///      - slug: <#slug description#>
+    /// - returns:
+    ///    <#Description#>
     public func getComments( slug: String ) -> Future<MultipleCommentsResponse>{
         conduit.comments(for: slug)
             .map{ comments in
@@ -90,7 +148,14 @@ extension ArticlesUseCase{
             }
     }
 
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///      - slug: <#slug description#>
+    ///      - body: <#body description#>
+    ///      - author: <#author description#>
+    /// - returns:
+    ///    <#Description#>
     public func postComment( slug: String, body: String, author: Int ) -> Future<SingleCommentResponse>{
         conduit.addComment(for: slug, body: body, author: author)
             .map{ comment in
@@ -98,7 +163,13 @@ extension ArticlesUseCase{
             }
     }
     
-    /// dummy comment
+    
+    /// <#Description#>
+    /// - parameters:
+    ///      - slug: <#slug description#>
+    ///      - id: <#id description#>
+    /// - returns:
+    ///    <#Description#> 
     public func deleteComment( slug: String, id: Int ) -> Future<Void>{
         conduit.deleteComment( for: slug, id: id)
     }

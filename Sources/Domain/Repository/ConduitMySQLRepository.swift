@@ -6,9 +6,9 @@
 //
 
 import Infrastructure
-import FluentMySQL
 import CryptoSwift
 import SwiftSlug
+import Async
 
 struct ConduitMySQLRepository: ConduitRepository{
     
