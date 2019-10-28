@@ -10,6 +10,7 @@ import HTTP
 private let tokenPrefix = "Token"
 
 extension HTTPHeaders {
+    
     /// Access or set the `Authorization: Token ...` header.
     public var tokenAuthorization: BearerAuthorization? {
         get {

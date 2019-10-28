@@ -8,7 +8,8 @@
 import Vapor
 import Domain
 
-final class AuthenticateOptionalMiddleware: Middleware {
+
+struct AuthenticateOptionalMiddleware: Middleware {
     
     let useCase = AuthenticateMiddlewareUseCase()
     

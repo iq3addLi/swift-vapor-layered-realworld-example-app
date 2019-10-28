@@ -9,6 +9,7 @@ import Vapor
 import Domain
 
 struct AuthenticateThenSearchUserMiddleware: Middleware {
+    
     let useCase = AuthenticateMiddlewareUseCase()
     
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {

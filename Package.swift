@@ -3,8 +3,11 @@ import PackageDescription
 
 let package = Package(
     name: "swift-vapor-layered-realworld-example",
+    platforms: [
+        .macOS(.v10_14)
+    ],
     products: [
-        .executable(name: "swift-vapor-layered-realworld-example", targets: ["Run"]),
+        .executable(name: "swift-vapor-layered-realworld-example", targets: ["realworld"]),
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
@@ -23,30 +26,26 @@ let package = Package(
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.1.2")
     ],
     targets: [
-        .target(name: "ProjectFoundation", dependencies: [
-            "Vapor"
-        ]),
         .target(name: "Infrastructure", dependencies: [
+            "Vapor",
             "FluentMySQL",
             "SwiftSlug",
             "CryptoSwift",
             "JWT",
-            "ProjectFoundation"
         ]),
         .target(name: "Domain", dependencies: [
             "Infrastructure",
-            "ProjectFoundation"
         ]),
         .target(name: "Presentation", dependencies: [
             "Domain",
-            "ProjectFoundation"
         ]),
-        .target(name: "Run", dependencies: [
+        .target(name: "realworld", dependencies: [
             "Presentation"
         ]),
         .testTarget(name: "AppTests", dependencies: [
             "Presentation"
         ])
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
 

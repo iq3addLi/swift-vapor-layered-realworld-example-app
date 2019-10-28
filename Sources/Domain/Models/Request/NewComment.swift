@@ -5,9 +5,6 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
-import Foundation
-
-
 
 public struct NewComment: Codable {
 

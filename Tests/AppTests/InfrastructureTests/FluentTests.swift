@@ -42,7 +42,7 @@ final class MySQLFluentTests: XCTestCase {
         let email = "user_1@realworld_test.app"
         
         // Quering
-        guard let user = try manager.selectUser(on: connection, email: email) else{
+        guard let user = try manager.selectUser(on: connection, email: email).wait() else{
             XCTFail(); return
         }
         
@@ -61,7 +61,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        let user = try manager.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt)
+        let user = try manager.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt).wait()
         
         // Examining
         XCTAssertTrue(user.id != .none)
@@ -76,7 +76,7 @@ final class MySQLFluentTests: XCTestCase {
         let readItUser = 1
         
         // Quering
-        guard let user = try manager.selectUser(on: connection, id: readItUser) else{
+        guard let user = try manager.selectUser(on: connection, id: readItUser).wait() else{
             XCTFail(); return
         }
         XCTAssertTrue(user.username == "user_1")
@@ -93,9 +93,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let user = try manager.updateUser(on: connection, id: readItUser, email: email, bio: bio, image: image) else{
-            XCTFail(); return
-        }
+        let user = try manager.updateUser(on: connection, id: readItUser, email: email, bio: bio, image: image).wait()
         
         // Examining
         XCTAssertTrue(user.email == "updated")
@@ -112,7 +110,7 @@ final class MySQLFluentTests: XCTestCase {
         let tergetUserName = "user_1"
         
         // Quering
-        guard let profile = try manager.selectProfile(on: connection, username: tergetUserName, readIt: readItUser) else{
+        guard let profile = try manager.selectProfile(on: connection, username: tergetUserName, readIt: readItUser).wait() else{
             XCTFail(); return
         }
         
@@ -130,9 +128,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let profile = try manager.insertFollow(on: connection, followee: tergetUserName, follower: readItUser) else{
-            XCTFail(); return
-        }
+        let profile = try manager.insertFollow(on: connection, followee: tergetUserName, follower: readItUser).wait()
         
         // Examining
         XCTAssertTrue(profile.following)
@@ -140,26 +136,7 @@ final class MySQLFluentTests: XCTestCase {
         // transaction rollback
         _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
-    
-    func testInsertFollowsByUsernameUsingFluent() throws {
-        // Variables
-        let readItUser = 1
-        let tergetUserName = "user_2"
-                
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
-        // Quering
-        guard let profile = try manager.insertFollow2(on: connection, followee: tergetUserName, follower: readItUser) else{
-            XCTFail(); return
-        }
-        
-        // Examining
-        XCTAssertTrue(profile.following)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
-    }
+
     
     func testDeleteFollowsByUsername() throws {
         // Variables
@@ -170,9 +147,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let profile = try manager.deleteFollow(on: connection, followee: tergetUserName, follower: readItUser) else{
-            XCTFail(); return
-        }
+        let profile = try manager.deleteFollow(on: connection, followee: tergetUserName, follower: readItUser).wait()
         
         // Examining
         XCTAssertTrue(profile.following == false)
@@ -190,9 +165,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        guard let article = try manager.insertFavorite(on: connection, by: readItUser, for: tergetArticleSlug) else{
-            XCTFail(); return
-        }
+        let article = try manager.insertFavorite(on: connection, by: readItUser, for: tergetArticleSlug).wait()
         
         // Examining
         XCTAssertTrue(article.favorited )
@@ -211,9 +184,7 @@ final class MySQLFluentTests: XCTestCase {
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-         guard let article = try manager.deleteFavorite(on: connection, by: readItUser, for: tergetArticleSlug)else{
-             XCTFail(); return
-         }
+        let article = try manager.deleteFavorite(on: connection, by: readItUser, for: tergetArticleSlug).wait()
         
         // Examining
         XCTAssertTrue(article.favorited == false)
@@ -229,57 +200,11 @@ final class MySQLFluentTests: XCTestCase {
         let tergetArticleSlug = "slug_3"
                 
         // Quering
-        let comments = try manager.selectComments(on: connection, for: tergetArticleSlug, readit: readItUser)
+        let comments = try manager.selectComments(on: connection, for: tergetArticleSlug, readit: readItUser).wait()
         
         // Examining
         XCTAssertTrue(comments.count == 2)
         XCTAssertTrue(comments.filter{ $0.author.username == "user_1" }.first!.author.following == true)
-    }
-    
-    func testInsertCommentBySlug() throws {
-        
-        // Variables
-        let readItUser = 1
-        let commentBody = "Comment by unittest."
-        let targetArticleSlug = "slug_1"
-        
-        // Raw queries
-        let selectNextIdQueryString = """
-SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comments.name)";
-"""
-        
-        // <1>Select next id
-        guard let nextId = try connection.raw( selectNextIdQueryString ).all(decoding: NextIdRow.self).wait().first else{
-            XCTFail(); return
-        }
-        
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
-        // <2>Insert comment
-        _ = try connection.raw( RawSQLQueries.insertComments(for: targetArticleSlug, body: commentBody, author: readItUser ) ).all().wait()
-        
-        // <3>Select comment
-        guard let comment = try Comments.query(on: connection).filter(\Comments.id == nextId.auto_increment).all().wait().first else{
-            XCTFail(); return
-        }
-        
-        // <4>Get author infomation
-        guard let author = try comment.commentedUser?.get(on: connection).wait() else{
-            XCTFail(); return
-        }
-        
-        // Create response data
-        let insertedComment = Comment(_id: comment.id!, createdAt: comment.createdAt!, updatedAt: comment.updatedAt!, body: comment.body, author: Profile(username: author.username, bio: author.bio, image: author.image, following: false /* Because It's own. */))
-        
-        // Examining
-        XCTAssertTrue(insertedComment._id == nextId.auto_increment)
-        XCTAssertTrue(insertedComment.body == commentBody)
-        XCTAssertTrue(insertedComment.author.username == author.username)
-        XCTAssertTrue(comment.article == 1)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testInsertCommentBySlugUsingFluent() throws {
@@ -300,9 +225,8 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let inserted = try Comments(body: commentBody, author: readItUser, article: article.id! ).save(on: connection).wait() // MEMO: Return value's timestamp is nil when insert😣 So need to select again😩
 
         // <3>Get author infomation
-        guard let author = try inserted.commentedUser?.get(on: connection).wait() else{
-            XCTFail(); return
-        }
+        let author = try inserted.commentedUser.get(on: connection).wait()
+        
         // <4>Get Inserted row
         guard let row = try Comments.query(on: connection).filter(\Comments.id == inserted.id!).all().wait().first else{
             XCTFail(); return
@@ -328,7 +252,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Querying
-        try manager.deleteComments(on: connection, commentId: commentId)
+        try manager.deleteComments(on: connection, commentId: commentId).wait()
         
         // Examining
         let rows = try Comments.query(on: connection).all().wait()
@@ -343,7 +267,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let readItUser = 2
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .feed(readItUser), readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .feed(readItUser), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -355,7 +279,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let tagString = "Vapor"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .tag(tagString), readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .tag(tagString), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 2)
@@ -367,7 +291,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let targetUsername = "user_1"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .author(targetUsername), readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .author(targetUsername), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -379,7 +303,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let targetUsername = "user_1"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .favorite(targetUsername), readIt: readItUser)
+        let articles = try manager.selectArticles(on: connection, condition: .favorite(targetUsername), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 1)
@@ -402,9 +326,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Querying
-        guard let article = try manager.insertArticle(on: connection, author: author, title: title, slug: slug, description: description, body: body, tags: tags) else{
-            XCTFail(); return
-        }
+        let article = try manager.insertArticle(on: connection, author: author, title: title, slug: slug, description: description, body: body, tags: tags).wait()
         
         // Examining
         XCTAssertTrue(article.slug == slug)
@@ -423,7 +345,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         let readItUser = 2
         
         // Querying
-        guard let article = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).first else{
+        guard let article = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).wait().first else{
             XCTFail(); return
         }
         
@@ -506,7 +428,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
                 .forEach{ _ = try Tags(id: nil, article: article.id!, tag: $0).save(on: connection).wait() }
                         
         // Querying
-        guard let response = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).first else{
+        guard let response = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).wait().first else{
             XCTFail(); return
         }
         
@@ -530,10 +452,10 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
         _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Querying
-        try manager.deleteArticle(on: connection, slug: slug)
+        try manager.deleteArticle(on: connection, slug: slug).wait()
         
         // Examing
-        let article = try manager.selectArticles(on: connection, condition: .slug(slug)).first
+        let article = try manager.selectArticles(on: connection, condition: .slug(slug)).wait().first
         XCTAssertNil(article)
         
         // transaction rollback
@@ -542,7 +464,7 @@ SELECT auto_increment FROM information_schema.tables WHERE table_name = "\(Comme
     
     func testSelectTags() throws {
         // Querying
-        let tags = try manager.selectTags(on: connection)
+        let tags = try manager.selectTags(on: connection).wait()
         // Examing
         XCTAssertTrue(tags.count == 2)
     }

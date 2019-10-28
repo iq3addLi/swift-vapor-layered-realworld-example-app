@@ -9,7 +9,6 @@ import Vapor
 
 extension Article: LosslessHTTPBodyRepresentable{}
 extension Comment: LosslessHTTPBodyRepresentable{}
-extension GeneralInfomation: LosslessHTTPBodyRepresentable{}
 extension GenericErrorModel: LosslessHTTPBodyRepresentable{}
 extension GenericErrorModelErrors: LosslessHTTPBodyRepresentable{}
 extension MultipleArticlesResponse: LosslessHTTPBodyRepresentable{}
@@ -24,6 +23,6 @@ extension UserResponse: LosslessHTTPBodyRepresentable{}
 
 extension LosslessHTTPBodyRepresentable where Self: Codable{
     public func convertToHTTPBody() -> HTTPBody{
-        return try! HTTPBody(data: JSONEncoder().encode(self))
+        return try! HTTPBody(data: JSONEncoder.custom(dates: .iso8601).encode(self))
     }
 }
