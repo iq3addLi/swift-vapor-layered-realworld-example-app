@@ -8,13 +8,16 @@
 
 import Infrastructure
 
+/// dummy comment
 public struct AuthenticateMiddlewareUseCase{
     
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()
     
+    /// dummy comment
     public init(){}
     
+    /// dummy comment
     public func payload(by token: String ) throws -> SessionPayload {
         // Verify and expand payload
         return try jwt.verifyJWTToken(token: token)
@@ -24,6 +27,7 @@ public struct AuthenticateMiddlewareUseCase{
 import Async
 extension AuthenticateMiddlewareUseCase {
     
+    /// dummy comment
     public func user(by token: String ) throws -> Future<(Int, User)> {
         
         // Verify and expand payload

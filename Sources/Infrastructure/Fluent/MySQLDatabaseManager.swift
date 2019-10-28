@@ -8,6 +8,7 @@
 import FluentMySQL
 import Dispatch
 
+/// dummy comment
 public class MySQLDatabaseManager{
     
     private lazy var database: MySQLDatabase = {
@@ -17,9 +18,10 @@ public class MySQLDatabaseManager{
     }()
     
     private lazy var worker: Worker = {
-        return MultiThreadedEventLoopGroup(numberOfThreads: 2)
+        MultiThreadedEventLoopGroup(numberOfThreads: 2)
     }()
     
+    /// dummy comment
     public init(){}
     
     deinit {
@@ -30,12 +32,19 @@ public class MySQLDatabaseManager{
         }
     }
     
+    /// dummy comment
     public func newConnection() throws -> MySQLConnection{
-        return try futureConnection().wait()
+        try futureConnection().wait()
     }
     
+    /// dummy comment
     public func futureConnection() -> Future<MySQLConnection>{
-        return database.newConnection(on: self.worker.next())
+        database.newConnection(on: self.worker.next())
+    }
+    
+    /// dummy comment
+    public func currentEventLoopConnection() -> Future<MySQLConnection>{
+        database.newConnection(on: MultiThreadedEventLoopGroup.currentEventLoop!)
     }
 }
 
@@ -43,6 +52,7 @@ public class MySQLDatabaseManager{
 // MARK: TRANSACTION
 extension MySQLDatabaseManager{
 
+    /// dummy comment
     public func futureTransaction() -> Future<MySQLConnection>{
         
         // Connection and start transaction
@@ -66,6 +76,7 @@ extension MySQLDatabaseManager{
         return future
     }
     
+    /// dummy comment
     public func startTransaction<T>(_ transactionClosure:(_ connection: MySQLConnection) throws -> T ) throws -> T{
         // Connection and start transaction
         let connection = try newConnection()

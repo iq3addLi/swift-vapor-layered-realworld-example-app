@@ -6,16 +6,29 @@
 //
 
 
+/// dummy comment
 public final class AuthedUser{
+    /// dummy comment
     public var id: Int
+    
+    /// dummy comment
     public var email: String
+    
+    /// dummy comment
     public var token: String
+    
+    /// dummy comment
     public var username: String
+    
+    /// dummy comment
     public var bio: String
+    
+    /// dummy comment
     public var image: String
 //    public var favorites: [Int]
 //    public var following: [Int]
     
+    /// dummy comment
     public init(id: Int = 0, email: String = "", token: String = "", username: String = "", bio: String = "", image: String = ""/*, favorites: [Int] = [], following: [Int] = []*/){
         self.id = id
         self.email = email
@@ -29,6 +42,7 @@ public final class AuthedUser{
 }
 
 extension AuthedUser{
+    /// dummy comment
     public func toResponse() -> User{
         return User(email: email, token: token, username: username, bio: bio, image: image)
     }

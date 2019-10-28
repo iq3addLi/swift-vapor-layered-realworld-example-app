@@ -6,9 +6,15 @@
 //
 
 
+/// dummy comment
 public final class VerifiedUserEntity{
+    /// dummy comment
     public var id: Int?
+    
+    /// dummy comment
     public var username: String?
+    
+    /// dummy comment
     public var token: String?
 }
 

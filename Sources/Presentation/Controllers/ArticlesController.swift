@@ -8,6 +8,7 @@
 import Vapor
 import Domain
 
+/// dummy comment
 struct ArticlesController {
     
     fileprivate let useCase = ArticlesUseCase()

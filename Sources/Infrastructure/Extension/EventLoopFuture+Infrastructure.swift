@@ -27,6 +27,7 @@ import Async
 //    }
 //}
 
+/// dummy comment
 public extension Array where Element == EventLoopFuture<Void> {
     
     /// Serialize Future array

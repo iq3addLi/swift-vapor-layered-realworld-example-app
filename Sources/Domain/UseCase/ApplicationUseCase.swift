@@ -8,6 +8,7 @@
 import Vapor
 import FluentMySQL
 
+/// dummy comment
 public class ApplicationUseCase{
     
     private let conduit: ConduitRepository = ConduitMySQLRepository()
@@ -17,10 +18,9 @@ public class ApplicationUseCase{
     }()
     private var application: Vapor.Application?
     
-    public init(){
-        
-    }
+    public init(){}
     
+    /// dummy comment
     public func initialize() throws{
         
         var services = self.services
@@ -37,6 +37,8 @@ public class ApplicationUseCase{
         self.services = services
     }
     
+    /// <#Description#>
+    /// - Parameter collections: <#collections description#>
     public func routing(collections: [APICollection] ){
         
         var services = self.services
@@ -71,6 +73,7 @@ public class ApplicationUseCase{
         self.services = services
     }
     
+    /// dummy comment
     public func launch() throws{
         let config = Config.default()
         let env = try Environment.detect()

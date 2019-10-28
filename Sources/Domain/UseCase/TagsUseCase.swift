@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// dummy comment
 public struct TagsUseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     public init(){}
@@ -15,6 +16,7 @@ public struct TagsUseCase{
 
 import Async
 extension TagsUseCase{
+    /// dummy comment
     public func allTags() -> Future<TagsResponse>{
         conduit.allTags()
             .map{ tags in

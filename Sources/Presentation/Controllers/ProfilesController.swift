@@ -8,6 +8,7 @@
 import Vapor
 import Domain
 
+/// dummy comment
 struct ProfilesController {
     
     let useCase = ProfilesUseCase()

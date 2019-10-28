@@ -6,11 +6,19 @@
 //
 
 
+/// dummy comment
 public struct SessionPayload{
+    
+    /// dummy comment
     public let id: Int
+    
+    /// dummy comment
     public let username: String
+    
+    /// dummy comment
     public let exp: ExpirationClaim
     
+    /// dummy comment
     public init(id: Int, username: String, expireAfterSec exp: Int){
         self.id = id
         self.username = username
@@ -20,6 +28,7 @@ public struct SessionPayload{
 
 import JWT
 extension SessionPayload: JWTPayload{
+    /// dummy comment
     public func verify(using signer: JWTSigner) throws {
         try exp.verifyNotExpired()
     }

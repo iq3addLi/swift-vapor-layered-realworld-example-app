@@ -6,7 +6,7 @@
 //
 
 
-
+/// dummy comment
 public struct UsersUseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()
@@ -16,6 +16,7 @@ public struct UsersUseCase{
 import Async
 extension UsersUseCase{
     
+    /// dummy comment
     public func login( form: LoginUser ) -> Future<UserResponse>{
         let jwt = self.jwt
         // Search User
@@ -29,6 +30,7 @@ extension UsersUseCase{
             }
     }
     
+    /// dummy comment
     public func register(user form: NewUser ) -> Future<UserResponse>{
         let jwt = self.jwt
         // Register user
@@ -42,6 +44,7 @@ extension UsersUseCase{
             }
     }
     
+    /// dummy comment
     public func currentUser( token: String ) throws -> Future<UserResponse> {
         
         // Verify and expand payload
@@ -56,6 +59,7 @@ extension UsersUseCase{
             }
     }
     
+    /// dummy comment
     public func current( userId: Int, token: String ) -> Future<UserResponse> {
         
         conduit.searchUser(id: userId)
@@ -66,6 +70,7 @@ extension UsersUseCase{
             }
     }
     
+    /// dummy comment
     public func update(userId: Int, token: String, updateUser user: UpdateUser ) -> Future<UserResponse> {
         
         // Update user in storage

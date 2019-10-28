@@ -5,6 +5,7 @@
 //  Created by iq3AddLi on 2019/10/21.
 //
 
+/// dummy comment
 public enum ArticleCondition{
     case global
     case feed(Int) // followerId
