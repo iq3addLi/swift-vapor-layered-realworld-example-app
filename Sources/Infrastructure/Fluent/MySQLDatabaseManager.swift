@@ -17,81 +17,19 @@ public class MySQLDatabaseManager{
         return MySQLDatabase(config: config)
     }()
     
-    private lazy var worker: Worker = {
-        MultiThreadedEventLoopGroup(numberOfThreads: 2)
-    }()
-    
     /// dummy comment
     public init(){}
     
-    deinit {
-        worker.shutdownGracefully{ (error) in
-            if let error = error{
-                print("Worker shutdown is failed. reason=\(error)")
-            }
-        }
+    /// dummy comment
+    public func newConnection(on worker: Worker ) -> Future<MySQLConnection>{
+        database.newConnection(on: worker)
     }
     
     /// dummy comment
-    public func newConnection() throws -> MySQLConnection{
-        try futureConnection().wait()
-    }
-    
-    /// dummy comment
-    public func futureConnection() -> Future<MySQLConnection>{
-        database.newConnection(on: self.worker.next())
-    }
-    
-    /// dummy comment
-    public func currentEventLoopConnection() -> Future<MySQLConnection>{
-        database.newConnection(on: MultiThreadedEventLoopGroup.currentEventLoop!)
-    }
-}
-
-
-// MARK: TRANSACTION
-extension MySQLDatabaseManager{
-
-    /// dummy comment
-    public func futureTransaction() -> Future<MySQLConnection>{
-        
-        // Connection and start transaction
-        var connection: MySQLConnection?
-        let future = futureConnection()
-            .flatMap{ conn -> Future<[[MySQLColumn: MySQLData]]> /* Without this specification I will be beaten by the compiler. F**k☺️ */ in
-                connection = conn
-                return conn.simpleQuery("START TRANSACTION")
-            }.map { _ -> MySQLConnection in
-                connection!
-            }
-        
-        future.whenFailure { _ in
-            _ = connection?.simpleQuery("ROLLBACK")
+    public func connectionOnCurrentEventLoop() -> Future<MySQLConnection>{
+        guard let worker = MultiThreadedEventLoopGroup.currentEventLoop else{
+            fatalError("connectionOnCurrentEventLoop() is need execute on EventLoopGroup.")
         }
-        
-        future.whenSuccess { _ in
-            _ = connection?.simpleQuery("COMMIT")
-        }
-        
-        return future
-    }
-    
-    /// dummy comment
-    public func startTransaction<T>(_ transactionClosure:(_ connection: MySQLConnection) throws -> T ) throws -> T{
-        // Connection and start transaction
-        let connection = try newConnection()
-        _ = try connection.simpleQuery("START TRANSACTION").wait()
-        
-        // Execute transaction
-        let result: T
-        do {
-            result = try transactionClosure(connection)
-        }catch( let error ){
-            _ = try connection.simpleQuery("ROLLBACK").wait()
-            throw error
-        }
-        _ = try connection.simpleQuery("COMMIT").wait()
-        
-        return result
+        return newConnection(on: worker)
     }
 }

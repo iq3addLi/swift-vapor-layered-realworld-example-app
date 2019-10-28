@@ -21,14 +21,25 @@ final class MySQLFluentTests: XCTestCase {
     // Note: Naturally, transactions work within the same connection.
     lazy var connection: MySQLConnection! = {
         do {
-            return try self.manager.newConnection()
+            return try self.manager.newConnection(on: worker).wait()
         }catch( let error ){
             fatalError(error.localizedDescription)
         }
     }()
     
+    private lazy var worker: Worker = {
+        MultiThreadedEventLoopGroup(numberOfThreads: 2)
+    }()
+    
+    /// dummy comment
     deinit{
         connection.close()
+        
+        worker.shutdownGracefully{ (error) in
+            if let error = error{
+                print("Worker shutdown is failed. reason=\(error)")
+            }
+        }
         manager = nil
     }
     

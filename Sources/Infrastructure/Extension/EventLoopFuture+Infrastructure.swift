@@ -7,26 +7,6 @@
 
 import Async
 
-//public extension Array where Element == EventLoopFuture<Any> {
-//    
-//    /// Serialize Future array
-//    ///
-//    /// @warning May be used only when the result of Future can be discarded
-//    func serialization() -> EventLoopFuture<Any>?{
-//        var serializedFuture: EventLoopFuture<Any>?
-//        
-//        self.forEach { future in
-//            if serializedFuture != nil{
-//                serializedFuture = serializedFuture.flatMap{ _ in future }
-//            }else{
-//                serializedFuture = future
-//            }
-//        }
-//        
-//        return serializedFuture
-//    }
-//}
-
 /// dummy comment
 public extension Array where Element == EventLoopFuture<Void> {
     
