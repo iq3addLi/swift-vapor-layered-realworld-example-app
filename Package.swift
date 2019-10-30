@@ -7,14 +7,14 @@ let package = Package(
         .macOS(.v10_14)
     ],
     products: [
-        .executable(name: "swift-vapor-layered-realworld-example", targets: ["realworld"]),
+        .executable(name: "realworld", targets: ["realworld"]),
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
-        .package(url: "https://github.com/vapor/vapor.git", from: "3.3.0"),
+        .package(url: "https://github.com/vapor/vapor", from: "3.3.0"),
 
         // 🔵 Swift ORM (queries, models, relations, etc)
-        .package(url: "https://github.com/iq3addLi/fluent-mysql-driver.git", from: "3.0.2"),
+        .package(url: "https://github.com/iq3addLi/fluent-mysql-driver", from: "3.0.2"),
         
         // JWT issue and verify
         .package(url: "https://github.com/vapor/jwt-kit", from: "3.0.0"),
@@ -23,7 +23,11 @@ let package = Package(
         .package(url: "https://github.com/twostraws/SwiftSlug", from: "0.3.0"),
         
         // Crypto related functions and helpers for Swift implemented in Swift.
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.1.2")
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.1.2"),
+        
+        // Swift logging API
+        // .package(url: "https://github.com/apple/swift-log.git", from: "1.1.1") // error: multiple products named 'Logging' in: Console, swift-log 😢
+        
     ],
     targets: [
         .target(name: "Infrastructure", dependencies: [
