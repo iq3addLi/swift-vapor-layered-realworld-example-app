@@ -13,7 +13,7 @@ protocol ConduitRepository{
     
     
     /// <#Description#>
-    func ifneededPreparetion()    
+    func ifneededPreparetion() throws
     
     // Async
     

@@ -5,7 +5,6 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-import FluentMySQL
 
 public final class Tags{
     public var id: Int?
@@ -19,13 +18,30 @@ public final class Tags{
 }
 
 
+import FluentMySQL
+
 extension Tags: MySQLModel{
     // Table name
     public static var name: String {
         return "Tags"
     }
+    
+    public static func create(on connection: MySQLConnection) -> Future<Void> {
+        connection.raw("""
+            CREATE TABLE `Tags` (
+              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+              `article` bigint(20) unsigned NOT NULL,
+              `tag` varchar(256) NOT NULL DEFAULT '',
+              PRIMARY KEY (`id`),
+              UNIQUE KEY `unique_key` (`article`,`tag`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """)
+            .run()
+    }
 }
 
+// extension Tags: MySQLMigration{}
+    
 // Relation
 extension Tags {
     var taggedArticle: Parent<Tags, Articles>? {

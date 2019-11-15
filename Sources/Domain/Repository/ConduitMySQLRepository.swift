@@ -9,15 +9,35 @@ import Infrastructure
 import CryptoSwift
 import SwiftSlug
 import Async
+import FluentMySQL
 
 struct ConduitMySQLRepository: ConduitRepository{
     
     let database = MySQLDatabaseManager()
     
-    func ifneededPreparetion() {
-        // print("preparetion")
+    func ifneededPreparetion() throws{
+
+        try database.futureConnection()
+            .flatMap{ connection in
+                Articles.create(on: connection)
+                    .flatMap{
+                        Comments.create(on: connection)
+                    }
+                    .flatMap{
+                        Favorites.create(on: connection)
+                    }
+                    .flatMap{
+                        Follows.create(on: connection)
+                    }
+                    .flatMap{
+                        Tags.create(on: connection)
+                    }
+                    .flatMap{
+                        Users.create(on: connection)
+                    }
+            }
+            .wait()
     }
-    
     
     func registerUser(name username: String, email: String, password: String) -> Future<(Int, User)>{
 

@@ -5,7 +5,6 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-import FluentMySQL
 
 public final class Users{
     public var id: Int?
@@ -27,12 +26,35 @@ public final class Users{
     }
 }
 
+import FluentMySQL
+
 extension Users: MySQLModel{
     // Table name
     public static var name: String {
         return "Users"
     }
+    
+    public static func create(on connection: MySQLConnection) -> Future<Void> {
+        connection.raw("""
+            CREATE TABLE `Users` (
+              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+              `username` varchar(256) NOT NULL DEFAULT '',
+              `email` varchar(1024) NOT NULL DEFAULT '',
+              `bio` text NOT NULL,
+              `image` varchar(1024) NOT NULL DEFAULT '',
+              `hash` varchar(1024) NOT NULL DEFAULT '',
+              `salt` varchar(256) NOT NULL DEFAULT '',
+              `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              PRIMARY KEY (`id`),
+              UNIQUE KEY `username` (`username`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """)
+            .run()
+    }
 }
+
+// extension Users: MySQLMigration{}
 
 // Relation
 extension Users {

@@ -5,8 +5,6 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-import FluentMySQL
-
 public final class Articles {
     public var id: Int?
     public var slug: String
@@ -29,12 +27,50 @@ public final class Articles {
     }
 }
 
+import FluentMySQL
+
 extension Articles: MySQLModel{
     // Table name
     public static var name: String {
         return "Articles" // Make explicit
     }
+    
+    public static func create(on connection: MySQLConnection) -> Future<Void> {
+        connection.raw("""
+            CREATE TABLE `Articles` (
+              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+              `slug` varchar(100) NOT NULL,
+              `title` varchar(1024) NOT NULL,
+              `description` text NOT NULL,
+              `body` text NOT NULL,
+              `author` bigint(20) unsigned NOT NULL,
+              `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              PRIMARY KEY (`id`),
+              UNIQUE KEY `slug_UNIQUE` (`slug`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """)
+            .run()
+    }
 }
+
+//extension Articles: MySQLMigration{
+//
+//    // Does Not worked in expectly
+//    public static func prepare(on connection: MySQLConnection) -> Future<Void> {
+//        MySQLDatabase.create(Articles.self, on: connection) { builder in
+//            builder.field(for: \.id, isIdentifier: true)
+//            builder.field(for: \.slug, type: .text(100), .notNull)
+//            builder.field(for: \.title, type: .text(1024), .notNull)
+//            builder.field(for: \.description, type: .text, .notNull)
+//            builder.field(for: \.body, type: .text, .notNull)
+//            builder.field(for: \.author, type: .bigint(20), .notNull)
+//            let defaultValueConstraint = MySQLColumnConstraint.default(.value("CURRENT_TIMESTAMP"))
+//            builder.field(for: \.createdAt, type: .timestamp, defaultValueConstraint )
+//            builder.field(for: \.updatedAt, type: .timestamp, defaultValueConstraint )
+//        }
+//    }
+//}
 
 // Relation
 extension Articles {

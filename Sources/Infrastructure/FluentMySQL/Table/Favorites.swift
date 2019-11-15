@@ -5,7 +5,6 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-import FluentMySQL
 
 public final class Favorites{
     public var id: Int?
@@ -18,13 +17,28 @@ public final class Favorites{
     }
 }
 
+import FluentMySQL
 
 extension Favorites: MySQLModel{
     // Table name
     public static var name: String {
         return "Favorites"
     }
+    
+    public static func create(on connection: MySQLConnection) -> Future<Void> {
+        connection.raw("""
+            CREATE TABLE `Favorites` (
+              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+              `article` bigint(20) unsigned NOT NULL,
+              `user` bigint(20) unsigned NOT NULL,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """)
+            .run()
+    }
 }
+
+// extension Favorites: MySQLMigration{}
 
 // Relation
 extension Favorites {

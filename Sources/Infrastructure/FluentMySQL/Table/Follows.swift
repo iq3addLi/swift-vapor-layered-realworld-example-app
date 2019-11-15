@@ -5,8 +5,6 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-import FluentMySQL
-
 public final class Follows{
     public var id: Int?
     public var followee: Int
@@ -18,13 +16,29 @@ public final class Follows{
     }
 }
 
+import FluentMySQL
 
 extension Follows: MySQLModel{
     // Table name
     public static var name: String {
         return "Follows"
     }
+    
+    public static func create(on connection: MySQLConnection) -> Future<Void> {
+        connection.raw("""
+            CREATE TABLE `Follows` (
+              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+              `followee` bigint(20) unsigned NOT NULL,
+              `follower` bigint(20) unsigned NOT NULL,
+              PRIMARY KEY (`id`),
+              UNIQUE KEY `unique_key` (`followee`,`follower`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """)
+            .run()
+    }
 }
+
+// extension Follows: MySQLMigration{}
 
 // Relation
 extension Follows {

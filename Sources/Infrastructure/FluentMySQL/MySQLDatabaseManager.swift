@@ -12,9 +12,11 @@ import Dispatch
 public class MySQLDatabaseManager{
     
     private lazy var database: MySQLDatabase = {
-        let config = MySQLDatabaseConfig(hostname: "127.0.0.1", username: "root", password: "rootpassword", database: "realworld_test")
-        
-        return MySQLDatabase(config: config)
+        MySQLDatabase(config: MySQLDatabaseConfig.fromEnvironment)
+    }()
+    
+    private lazy var worker = {
+        MultiThreadedEventLoopGroup(numberOfThreads: 1)
     }()
     
     /// dummy comment
@@ -23,6 +25,11 @@ public class MySQLDatabaseManager{
     /// dummy comment
     public func newConnection(on worker: Worker ) -> Future<MySQLConnection>{
         database.newConnection(on: worker)
+    }
+    
+    /// dummy comment
+    public func futureConnection() -> Future<MySQLConnection>{
+        database.newConnection(on: self.worker)
     }
     
     /// dummy comment

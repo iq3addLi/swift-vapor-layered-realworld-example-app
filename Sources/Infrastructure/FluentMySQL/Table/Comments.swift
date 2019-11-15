@@ -5,7 +5,6 @@
 //  Created by iq3AddLi on 2019/09/12.
 //
 
-import FluentMySQL
 
 public final class Comments{
     public var id: Int?
@@ -25,13 +24,31 @@ public final class Comments{
     }
 }
 
+import FluentMySQL
 
 extension Comments: MySQLModel{
     // Table name
     public static var name: String {
         return "Comments"
     }
+    
+    public static func create(on connection: MySQLConnection) -> Future<Void> {
+        connection.raw("""
+            CREATE TABLE `Comments` (
+              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+              `body` text NOT NULL,
+              `author` bigint(20) unsigned NOT NULL,
+              `article` bigint(20) unsigned NOT NULL,
+              `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """)
+            .run()
+    }
 }
+
+// extension Comments: MySQLMigration{}
 
 // Relation
 extension Comments {

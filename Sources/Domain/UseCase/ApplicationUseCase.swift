@@ -7,7 +7,7 @@
 
 import Vapor
 import FluentMySQL
-
+import Infrastructure
 
 /// <#Description#>
 public class ApplicationUseCase{
@@ -43,7 +43,7 @@ public class ApplicationUseCase{
         services.register(middlewares)
         
         // test
-        self.conduit.ifneededPreparetion()
+        try self.conduit.ifneededPreparetion()
         
         // Apply change service
         self.services = services
@@ -63,7 +63,7 @@ public class ApplicationUseCase{
         
         // Basic "It works" example
         router.get { req -> String in
-            throw Abort( .badRequest )
+            // throw Abort( .badRequest )
             return "It works!"
         }
         
@@ -82,7 +82,7 @@ public class ApplicationUseCase{
         
         
         // Set server config
-        let config = NIOServerConfig.default(hostname: "127.0.0.1", port: 8000)
+        let config = NIOServerConfig.default(hostname: "127.0.0.1", port: 8080)
         services.register(config)
         
         // Apply change service
