@@ -164,7 +164,7 @@ $ pulumi preview
 ```bash
 $ pulumi up --yes
 ```
-When processing is complete, the host names for MySQL and APP will be displayed. In this case, the connection information is listed in [pulumi/index.ts](pulumi/index.ts).
+When processing is complete, the host names for MySQL and APP will be displayed. In this case, the connection settings is listed in [pulumi/Pulumi.dev.yaml](pulumi/Pulumi.dev.yaml).
 
 ```bash
 Outputs:
