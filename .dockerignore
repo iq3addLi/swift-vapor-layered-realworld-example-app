@@ -3,3 +3,4 @@
 .swiftpm/
 *.xcodeproj/
 pulumi/
+mysql_data/
