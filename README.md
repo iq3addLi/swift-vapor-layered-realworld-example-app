@@ -1,6 +1,7 @@
 ------
 
 <div style="font-size:xx-large">⚠️ Caution!!</div>
+
 This application is solving the following problems: 
 * When an API with optional authentication is called several times, the following error is output on [this line](https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/blob/0.9.0/Sources/Presentation/Middleware/AuthenticateOptionalMiddleware.swift#L24) and crashes.
 
