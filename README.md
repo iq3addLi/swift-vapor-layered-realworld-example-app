@@ -145,8 +145,11 @@ $ docker stop <<IMAGE ID for MySQL>> <<IMAGE ID for RealWorld App>>
 ### Set environments for AWS CLI
 
 ```bash
-$ export AWS_ACCESS_KEY_ID=<KEY>
-$ export AWS_SECRET_ACCESS_KEY=<SECRET>
+$ set +o history # disable record to bash_history 
+$ export AWS_ACCESS_KEY_ID=<<Your access key id of AWS account>>
+$ export AWS_SECRET_ACCESS_KEY=<<Your access key secret of AWS account>>
+$ set -o history
+$ clear # flush terminal
 ```
 
 ### Preview pulumi stack
@@ -177,7 +180,7 @@ Everyone using AWS. I think you know well. **Launched resources are expensive�
 $ pulumi destroy --yes
 ```
 
-
+⚠️ MySQL storage is volatile.
 
 
 
