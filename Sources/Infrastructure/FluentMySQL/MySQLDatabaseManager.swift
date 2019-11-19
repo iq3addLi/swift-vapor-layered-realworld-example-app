@@ -11,6 +11,10 @@ import Dispatch
 /// dummy comment
 public class MySQLDatabaseManager{
     
+    public static var `default` = {
+        MySQLDatabaseManager()
+    }()
+
     private lazy var database: MySQLDatabase = {
         MySQLDatabase(config: MySQLDatabaseConfig.fromEnvironment)
     }()
@@ -22,13 +26,19 @@ public class MySQLDatabaseManager{
     /// dummy comment
     public init(){}
     
+    deinit {
+        worker.shutdownGracefully { (error) in
+            print("\(error != nil ? error!.localizedDescription : "Unexpected failed to thread destruct.")")
+        }
+    }
+    
     /// dummy comment
     public func newConnection(on worker: Worker ) -> Future<MySQLConnection>{
         database.newConnection(on: worker)
     }
     
     /// dummy comment
-    public func futureConnection() -> Future<MySQLConnection>{
+    public func connectionOnDatabaseEventLoop() -> Future<MySQLConnection>{
         database.newConnection(on: self.worker)
     }
     

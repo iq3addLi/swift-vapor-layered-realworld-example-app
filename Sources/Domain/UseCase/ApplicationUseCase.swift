@@ -28,24 +28,25 @@ public class ApplicationUseCase{
     public func initialize() throws{
         
         var services = self.services
+        var middlewares = MiddlewareConfig() // Create _empty_ middleware config
         
-        // Register middlewares
+        // Set custom CORS middleware
         let corsConfig = CORSMiddleware.Configuration(
             allowedOrigin: .all,
             allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE],
             allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith]
         )
         let corsMiddleware = CORSMiddleware(configuration: corsConfig)
-        
-        var middlewares = MiddlewareConfig() // Create _empty_ middleware config
         middlewares.use(corsMiddleware)
+        
+        // Set custom error handler
         middlewares.use(ErrorMiddleware(errorToResponse)) // Catches errors and converts to HTTP response
-        services.register(middlewares)
         
         // test
         try self.conduit.ifneededPreparetion()
         
         // Apply change service
+        services.register(middlewares)
         self.services = services
     }
     
@@ -54,7 +55,7 @@ public class ApplicationUseCase{
     ///     - collections: <#collections description#>
     /// - returns:
     ///    (dummy)
-    public func routing(collections: [APICollection] ){
+    public func routing( collections: [APICollection] ){
         
         var services = self.services
         
@@ -63,7 +64,6 @@ public class ApplicationUseCase{
         
         // Basic "It works" example
         router.get { req -> String in
-            // throw Abort( .badRequest )
             return "It works!"
         }
         

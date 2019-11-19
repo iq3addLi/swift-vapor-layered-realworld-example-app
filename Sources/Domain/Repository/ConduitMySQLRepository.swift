@@ -13,28 +13,18 @@ import FluentMySQL
 
 struct ConduitMySQLRepository: ConduitRepository{
     
-    let database = MySQLDatabaseManager()
+    let database = MySQLDatabaseManager.default
     
     func ifneededPreparetion() throws{
 
-        try database.futureConnection()
+        try database.connectionOnDatabaseEventLoop()
             .flatMap{ connection in
                 Articles.create(on: connection)
-                    .flatMap{
-                        Comments.create(on: connection)
-                    }
-                    .flatMap{
-                        Favorites.create(on: connection)
-                    }
-                    .flatMap{
-                        Follows.create(on: connection)
-                    }
-                    .flatMap{
-                        Tags.create(on: connection)
-                    }
-                    .flatMap{
-                        Users.create(on: connection)
-                    }
+                    .flatMap{ Comments.create(on: connection) }
+                    .flatMap{ Favorites.create(on: connection) }
+                    .flatMap{ Follows.create(on: connection) }
+                    .flatMap{ Tags.create(on: connection) }
+                    .flatMap{ Users.create(on: connection) }
             }
             .wait()
     }
