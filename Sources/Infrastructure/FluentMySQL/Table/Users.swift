@@ -36,7 +36,7 @@ extension Users: MySQLModel{
     
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
-            CREATE TABLE `Users` (
+            CREATE TABLE IF NOT EXISTS `Users` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `username` varchar(256) NOT NULL DEFAULT '',
               `email` varchar(1024) NOT NULL DEFAULT '',

@@ -28,7 +28,7 @@ extension Tags: MySQLModel{
     
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
-            CREATE TABLE `Tags` (
+            CREATE TABLE IF NOT EXISTS `Tags` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `article` bigint(20) unsigned NOT NULL,
               `tag` varchar(256) NOT NULL DEFAULT '',

@@ -27,7 +27,7 @@ extension Favorites: MySQLModel{
     
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
-            CREATE TABLE `Favorites` (
+            CREATE TABLE IF NOT EXISTS `Favorites` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `article` bigint(20) unsigned NOT NULL,
               `user` bigint(20) unsigned NOT NULL,

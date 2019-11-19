@@ -26,7 +26,7 @@ extension Follows: MySQLModel{
     
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
-            CREATE TABLE `Follows` (
+            CREATE TABLE IF NOT EXISTS `Follows` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `followee` bigint(20) unsigned NOT NULL,
               `follower` bigint(20) unsigned NOT NULL,

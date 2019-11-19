@@ -34,7 +34,7 @@ extension Comments: MySQLModel{
     
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
-            CREATE TABLE `Comments` (
+            CREATE TABLE IF NOT EXISTS `Comments` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `body` text NOT NULL,
               `author` bigint(20) unsigned NOT NULL,

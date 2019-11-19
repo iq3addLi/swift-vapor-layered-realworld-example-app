@@ -37,7 +37,7 @@ extension Articles: MySQLModel{
     
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
-            CREATE TABLE `Articles` (
+            CREATE TABLE IF NOT EXISTS `Articles` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `slug` varchar(100) NOT NULL,
               `title` varchar(1024) NOT NULL,
