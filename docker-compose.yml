@@ -8,7 +8,7 @@ services:
       - ./mysql_data:/var/lib/mysql
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     environment:
-      MYSQL_DATABASE: mysql_test
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: mysqldatabase
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: mysqlpassword
       MYSQL_ROOT_PASSWORD: rootpassword

@@ -1,0 +1,3 @@
+name: swift-vapor-layered-realworld-example-app
+runtime: nodejs
+description: Exemplary real world backend API built with Vapor on Swift.
