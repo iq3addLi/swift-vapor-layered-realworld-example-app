@@ -72,7 +72,7 @@ By `Control + C` on launched terminal. Will stop MySQL and App.
 
 * docker is installed.
 
-### Build container
+### Build container for RealWorld App
 
 ```bash
 $ docker build -t realworld:latest .
@@ -126,7 +126,7 @@ $ docker run \
 
 `Server starting on http://0.0.0.0:80`  is displayed. But it opens at http://0.0.0.0:8080 .
 
-### Stop container
+### Stop containers
 
 ```bash
 $ docker ps
@@ -174,7 +174,7 @@ Outputs:
 
 Everyone using AWS. I think you know well. **Launched resources are expensive💸**. Clean up resources when you are done.
 
-### Destroying pulumi stack
+### Clean up pulumi stack
 
 ```bash
 $ pulumi destroy --yes
