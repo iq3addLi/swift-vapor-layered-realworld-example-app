@@ -153,7 +153,7 @@ $ docker stop <<IMAGE ID for MySQL>> <<IMAGE ID for RealWorld App>>
 
 ### Precondition
 
-* You have an AWS account and pulumi account.
+* You have AWS and pulumi account.
 * AWS and Pulumi CLI is Installed.
 
 ### Set environments for AWS CLI
