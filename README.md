@@ -1,20 +1,26 @@
-<p align="center">
-    <img src="https://user-images.githubusercontent.com/1342803/36623515-7293b4ec-18d3-11e8-85ab-4e2f8fb38fbd.png" width="320" alt="API Template">
-    <br>
-    <br>
-    <a href="http://docs.vapor.codes/3.0/">
-        <img src="http://img.shields.io/badge/read_the-docs-2196f3.svg" alt="Documentation">
-    </a>
-    <a href="https://discord.gg/vapor">
-        <img src="https://img.shields.io/discord/431917998102675485.svg" alt="Team Chat">
-    </a>
-    <a href="LICENSE">
-        <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT License">
-    </a>
-    <a href="https://circleci.com/gh/vapor/api-template">
-        <img src="https://circleci.com/gh/vapor/api-template.svg?style=shield" alt="Continuous Integration">
-    </a>
-    <a href="https://swift.org">
-        <img src="http://img.shields.io/badge/swift-4.1-brightgreen.svg" alt="Swift 4.1">
-    </a>
-</p>
+⚠️ **This project is in progress yet. Please wait for the release**👷‍♂️👷‍♀️
+
+# ![RealWorld Example App](logo.png)
+
+> ### Vapor codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
+
+
+### [Demo](https://github.com/gothinkster/realworld)&nbsp;&nbsp;&nbsp;&nbsp;[RealWorld](https://github.com/gothinkster/realworld)
+
+
+This codebase was created to demonstrate a fully fledged fullstack application built with **Vapor** including CRUD operations, authentication, routing, pagination, and more.
+
+We've gone to great lengths to adhere to the **Vapor** community styleguides & best practices.
+
+For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
+
+
+# How it works
+
+> Describe the general architecture of your app here
+
+# Getting started
+
+> npm install, npm start, etc.
+
+
