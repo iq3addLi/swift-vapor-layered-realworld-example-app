@@ -1,4 +1,17 @@
-⚠️ **This project is in progress yet. Please wait for the release**👷‍♂️👷‍♀️
+------
+
+<div style="font-size:xx-large">⚠️ Caution!!</div>
+This application is solving the following problems: 
+* When an API with optional authentication is called several times, the following error is output on [this line](https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/blob/0.9.0/Sources/Presentation/Middleware/AuthenticateOptionalMiddleware.swift#L24) and crashes.
+
+```bash
+realworld(50355,0x700001305000) malloc: Double free of object 0x102c9cab0
+realworld(50355,0x700001305000) malloc: *** set a breakpoint in malloc_error_break to debug
+```
+
+Please wait for a while until the release.  👷‍♂️👷‍♀️
+
+------
 
 # ![RealWorld Example App](logo.png)
 
