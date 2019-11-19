@@ -10,5 +10,5 @@ services:
     environment:
       MYSQL_DATABASE: mysqldatabase
       MYSQL_USER: mysqluser
-      MYSQL_PASSWORD: mysqlpassword
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_PASSWORD: mysqlpass
+      MYSQL_ROOT_PASSWORD: rootpass
