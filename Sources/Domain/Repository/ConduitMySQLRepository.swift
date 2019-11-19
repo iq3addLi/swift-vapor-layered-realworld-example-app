@@ -39,6 +39,26 @@ struct ConduitMySQLRepository: ConduitRepository{
             .wait()
     }
     
+    func validate(username: String, email: String, password: String) throws -> Future<Void>{
+
+        return Validation.reduce([
+            Validation.blank(key: "username", value: username),
+            Validation.count(1..., key: "username", value: username),
+            Validation.count(...20, key: "username", value: username),
+            database.isUnique(username: username),
+            Validation.blank(key: "email", value: email),
+            Validation.email(email),
+            database.isUnique(email: email),
+            Validation.blank(key: "password", value: password),
+            Validation.count(8..., key: "password", value: password)
+        ]).map { issues in
+            if issues.count > 0 {
+                throw issues.generateReport()
+            }
+            return
+        }
+    }
+    
     func registerUser(name username: String, email: String, password: String) -> Future<(Int, User)>{
 
         let database = self.database

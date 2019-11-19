@@ -18,7 +18,7 @@ struct UsersController {
         let useCase = self.useCase
         return try request.content.decode(json: NewUserRequest.self, using: JSONDecoder())
             .flatMap { newUserRequest -> EventLoopFuture<UserResponse> in
-                useCase.register(user: newUserRequest.user)
+                try useCase.register(user: newUserRequest.user)
             }
             .map { response in
                 request.response( response , as: .json)

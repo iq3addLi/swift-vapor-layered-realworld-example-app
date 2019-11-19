@@ -19,6 +19,13 @@ protocol ConduitRepository{
     
     // Users
     
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter email: <#email description#>
+    /// - Parameter password: <#password description#>
+    /// - returns:
+    ///    <#Description#>
+    func validate(username: String, email: String, password: String) throws -> Future<Void>
     
     /// <#Description#>
     /// - Parameter username: <#username description#>

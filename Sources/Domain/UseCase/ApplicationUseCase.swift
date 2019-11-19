@@ -92,63 +92,70 @@ public class ApplicationUseCase{
     
     /// <#Description#>
     public func launch() throws{
-        let config = Config.default()
-        let env = try Environment.detect()
-        
         // Create vapor application
-        let application = try Application(config: config, environment: env, services: self.services)
-        
+        let application = try Application(config: Config.default(),
+                                          environment: try Environment.detect(),
+                                          services: self.services)
         // Application launch
         try application.run()
         self.application = application
     }
     
     
-    private func errorToResponse( request: Request, error: Swift.Error ) -> (Response) {
-        
-        // variables to determine
-        let status: HTTPResponseStatus
-        let reason: String
-        let headers: HTTPHeaders
-
-        // inspect the error type
-        switch error {
-        case let abort as AbortError:
-            // this is an abort error, we should use its status, reason, and headers
-            reason = abort.reason
-            status = abort.status
-            headers = abort.headers
-        case let validation as ValidationError:
-            // this is a validation error
-            reason = validation.reason
-            status = .badRequest
-            headers = [:]
-        case let debuggable as Debuggable:
-            // if not release mode, and error is debuggable, provide debug
-            // info directly to the developer
-            reason = debuggable.reason
-            status = .internalServerError
-            headers = [:]
-        default:
-            // not an abort error, and not debuggable or in dev mode
-            // just deliver a generic 500 to avoid exposing any sensitive error info
-            reason = error.localizedDescription
-            status = .internalServerError
-            headers = [:]
-        }
-
-        // create a Response with appropriate status
-        let response = request.response(http: .init(status: status, headers: headers))
-
-        // attempt to serialize the error to json
-        do {
-            let errorResponse = ErrorResponse(errors:["body" : [reason]])
-            response.http.body = try HTTPBody(data: JSONEncoder().encode(errorResponse))
-            response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
+    private func errorToResponse( request: Request, error: Swift.Error ) -> Response {
+    
+        do{
+            // inspect the error type
+            switch error {
+            case let abort as AbortError: return try abort.toResponse(for: request)
+            case let validation as ValidationError: return try validation.toResponse(for: request)
+            case let debuggable as Debuggable: return try debuggable.toResponse(for: request)
+            default:
+                // not an abort error, and not debuggable or in dev mode
+                // just deliver a generic 500 to avoid exposing any sensitive error info
+                let response = request.response(http: .init(status: .internalServerError, headers: [:]))
+                response.http.body = try HTTPBody(data: JSONEncoder().encode(ErrorResponse(errors:["body" : [error.localizedDescription]])))
+                response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
+                return response
+            }
         } catch {
+            let response = request.response(http: .init(status: .internalServerError, headers: [:]))
             response.http.body = HTTPBody(string: "Oops: \(error)")
             response.http.headers.replaceOrAdd(name: .contentType, value: "text/plain; charset=utf-8")
+            return response
         }
+        
+    }
+}
+
+
+extension AbortError{
+    func toResponse(for request: Request) throws -> Response{
+        // this is an abort error, we should use its status, reason, and headers
+        let response = request.response(http: .init(status: status, headers: headers))
+        response.http.body = try HTTPBody(data: JSONEncoder().encode(ErrorResponse(errors:["body" : [reason]])))
+        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
+        return response
+    }
+}
+
+extension Debuggable{
+    func toResponse(for request: Request) throws -> Response{
+        // if not release mode, and error is debuggable, provide debug
+        // info directly to the developer
+        let response = request.response(http: .init(status: .internalServerError, headers: [:]))
+        response.http.body = try HTTPBody(data: JSONEncoder().encode(ErrorResponse(errors:["body" : [reason]])))
+        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
+        return response
+        
+    }
+}
+
+extension ValidationError{
+    func toResponse(for request: Request) throws -> Response{
+        let response = request.response(http: .init(status: .badRequest, headers: [:]))
+        response.http.body = try HTTPBody(data: JSONEncoder().encode(self))
+        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
         return response
     }
 }
