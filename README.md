@@ -14,7 +14,7 @@ Please wait for a while until the release.  👷‍♂️👷‍♀️
 
 ------
 
-[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://docs.vapor.codes/3.0/)  [![swift.org](https://img.shields.io/badge/🐦_swift-5.1-brightgreen.svg)](https://swift.org)
+[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://docs.vapor.codes/3.0/)  [![swift.org](https://img.shields.io/badge/🐦_swift-5.1-brightgreen.svg)](https://swift.org)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-orange.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/)
 
 # ![RealWorld Example App](logo.png)
 
@@ -41,13 +41,13 @@ For more information on how to this works with other frontends/backends, head ov
 * Swift 5.1.1 or over than is installed.
 * Docker is installed.
 
-### build RealWorld App
+### Build RealWorld App
 
 ```bash
 $ swift build -c release 
 ```
 
-### launch container of MySQL
+### Launch container of MySQL
 
 ```bash
 $ docker-compose up
@@ -64,7 +64,7 @@ $ export MYSQL_DATABASE=mysqldatabase
 
 This setting values is editable, but it needs to match the setting in [docker-compose.yml](./docker-compose.yml).
 
-### launch RealWorld App 
+### Launch RealWorld App 
 
 ```bash
 $ .build/release/realworld serve --hostname 0.0.0.0 --port 8080
@@ -99,7 +99,7 @@ $ export MYSQL_ROOTPASS=rootpass
 
 This setting values is editable.  Note that the value set at the beginning is recorded. 
 
-### launch container of MySQL
+### Launch container of MySQL
 
 ```bash
 $ docker run \
@@ -120,7 +120,7 @@ $ docker network inspect bridge | grep IPv4Address
                 "IPv4Address": "172.17.0.2/16", // example
 ```
 
-### launch container of RealWorld App 
+### Launch container of RealWorld App 
 
 ```bash
 $ docker run \
