@@ -10,6 +10,13 @@
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/LoginUser.swift",
       "line": 11,
+      "symbol": "LoginUser",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/LoginUser.swift",
+      "line": 11,
       "symbol": "LoginUser.email",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -54,6 +61,13 @@
       "line": 9,
       "symbol": "NewArticle",
       "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewArticle.swift",
+      "line": 10,
+      "symbol": "NewArticle",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -156,6 +170,13 @@
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewComment.swift",
+      "line": 10,
+      "symbol": "NewComment",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewComment.swift",
       "line": 11,
       "symbol": "NewComment.body",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -194,6 +215,13 @@
       "line": 9,
       "symbol": "NewUser",
       "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewUser.swift",
+      "line": 10,
+      "symbol": "NewUser",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -250,6 +278,13 @@
       "line": 9,
       "symbol": "UpdateArticle",
       "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/UpdateArticle.swift",
+      "line": 10,
+      "symbol": "UpdateArticle",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -348,6 +383,13 @@
       "line": 9,
       "symbol": "UpdateUser",
       "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/UpdateUser.swift",
+      "line": 10,
+      "symbol": "UpdateUser",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -666,45 +708,17 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/GenericErrorModel.swift",
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/ErrorResponse.swift",
       "line": 9,
-      "symbol": "GenericErrorModel",
+      "symbol": "ErrorResponse",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/GenericErrorModel.swift",
-      "line": 11,
-      "symbol": "GenericErrorModel.errors",
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/ErrorResponse.swift",
+      "line": 10,
+      "symbol": "ErrorResponse.errors",
       "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/GenericErrorModel.swift",
-      "line": 13,
-      "symbol": "GenericErrorModel.init(errors:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/GenericErrorModelErrors.swift",
-      "line": 9,
-      "symbol": "GenericErrorModelErrors",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/GenericErrorModelErrors.swift",
-      "line": 11,
-      "symbol": "GenericErrorModelErrors.body",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Response/GenericErrorModelErrors.swift",
-      "line": 13,
-      "symbol": "GenericErrorModelErrors.init(body:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -1030,157 +1044,31 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/System/ValidateIssue.swift",
+      "line": 26,
+      "symbol": "ValidationError",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/System/ValidateIssue.swift",
+      "line": 27,
+      "symbol": "ValidationError.errors",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ApplicationUseCase.swift",
-      "line": 21,
+      "line": 22,
       "symbol": "ApplicationUseCase.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ArticlesUseCase.swift",
-      "line": 12,
-      "symbol": "ArticlesUseCase.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ProfilesUseCase.swift",
-      "line": 11,
+      "line": 12,
       "symbol": "ProfilesUseCase.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/TagsUseCase.swift",
-      "line": 13,
-      "symbol": "TagsUseCase.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/UsersUseCase.swift",
-      "line": 13,
-      "symbol": "UsersUseCase.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 8,
-      "symbol": "RawSQLQueries",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 88,
-      "symbol": "RawSQLQueries.deleteArticles(slug:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 104,
-      "symbol": "RawSQLQueries",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 106,
-      "symbol": "RawSQLQueries.selectUsers(name:follower:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 116,
-      "symbol": "RawSQLQueries.selectUsers(id:follower:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 130,
-      "symbol": "RawSQLQueries",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 132,
-      "symbol": "RawSQLQueries.selectComments(for:readIt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 145,
-      "symbol": "RawSQLQueries.insertComments(for:body:author:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 155,
-      "symbol": "RawSQLQueries.deleteComments(id:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 168,
-      "symbol": "RawSQLQueries",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 170,
-      "symbol": "RawSQLQueries.insertFollows(followee:follower:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 181,
-      "symbol": "RawSQLQueries.deleteFollows(followee:follower:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 192,
-      "symbol": "RawSQLQueries",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 194,
-      "symbol": "RawSQLQueries.insertFavorites(for:by:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 205,
-      "symbol": "RawSQLQueries.deleteFavorites(for:by:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 216,
-      "symbol": "RawSQLQueries",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Utility/RawSQLQueries.swift",
-      "line": 218,
-      "symbol": "RawSQLQueries.selectTags()",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     }
   ],
