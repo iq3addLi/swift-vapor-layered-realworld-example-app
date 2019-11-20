@@ -15,7 +15,6 @@ public struct ProfilesUseCase{
 import Async
 extension ProfilesUseCase{
     
-    
     /// <#Description#>
     /// - parameters:
     ///     - username: <#username description#>
@@ -29,7 +28,6 @@ extension ProfilesUseCase{
             }
     }
     
-    
     /// <#Description#>
     /// - parameters:
     ///      - username: <#username description#>
@@ -42,7 +40,6 @@ extension ProfilesUseCase{
                 ProfileResponse(profile: profile)
             }
     }
-    
     
     /// <#Description#>
     /// - parameters:

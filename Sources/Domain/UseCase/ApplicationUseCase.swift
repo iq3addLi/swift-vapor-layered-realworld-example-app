@@ -102,6 +102,9 @@ public class ApplicationUseCase{
     }
     
     
+    /// <#Description#>
+    /// - Parameter request: <#request description#>
+    /// - Parameter error: <#error description#>
     private func errorToResponse( request: Request, error: Swift.Error ) -> Response {
     
         do{
@@ -129,7 +132,11 @@ public class ApplicationUseCase{
 }
 
 
+
 extension AbortError{
+    
+    /// <#Description#>
+    /// - Parameter request: <#request description#>
     func toResponse(for request: Request) throws -> Response{
         // this is an abort error, we should use its status, reason, and headers
         let response = request.response(http: .init(status: status, headers: headers))
@@ -140,6 +147,9 @@ extension AbortError{
 }
 
 extension Debuggable{
+    
+    /// <#Description#>
+    /// - Parameter request: <#request description#>
     func toResponse(for request: Request) throws -> Response{
         // if not release mode, and error is debuggable, provide debug
         // info directly to the developer
@@ -152,6 +162,9 @@ extension Debuggable{
 }
 
 extension ValidationError{
+    
+    /// <#Description#>
+    /// - Parameter request: <#request description#>
     func toResponse(for request: Request) throws -> Response{
         let response = request.response(http: .init(status: .badRequest, headers: [:]))
         response.http.body = try HTTPBody(data: JSONEncoder().encode(self))

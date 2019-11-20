@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           Domain Docs
         </a>
-         (39% documented)
+         (38% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -218,7 +218,21 @@
 
                 </div>
               </div>
-            <p>&lt;#Description#&gt;</p>
+            <p>Object that generates raw sql.
+I wanted to get enough information in one query.
+The reason for using raw query is that the following function was not found in Fluent.</p>
+
+<ul>
+<li>Sub query</li>
+<li>GROUP_CONCAT</li>
+<li>Distinct</li>
+<li>DELETE JOIN</li>
+</ul>
+
+<p>I may have missed it.
+As an aside, I have never met OR-Mapper, which can cover the vast specifications of SQL.
+This is part of the reason, I attach importance to portability over typeSafe for OR-Mapper.
+There is also a growing need to adopt KVS. Database that interacts directly with the application.</p>
 
           </div>
         </section>
@@ -240,17 +254,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>dummy description</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    dummy note.
-
-</div>
-<div class="aside aside-warning">
-    <p class="aside-title">Warning</p>
-    dummy warning
-
-</div>
+                        <p>Returns the query. Inquires about articles according to the argument conditions.</p>
 
                       </div>
                       <div class="declaration">
@@ -273,7 +277,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>dummy.</p>
+                                  <p>Information that shows what criteria to search for articles.</p>
                                 </div>
                               </td>
                             </tr>
@@ -285,7 +289,31 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>dummy.</p>
+                                  <p>ID of the user reading this article. If nil, following is false.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>offset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Search result offset. Nil is not set.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>limit</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Search result limit. Nil is unlimited.</p>
                                 </div>
                               </td>
                             </tr>
@@ -294,7 +322,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>sql query.</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -312,7 +340,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. It deletes an article and related tags and favorite information.</p>
 
                       </div>
                       <div class="declaration">
@@ -335,7 +363,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#slug description#&gt;</p>
+                                  <p>Article&rsquo;s slug for delete.</p>
                                 </div>
                               </td>
                             </tr>
@@ -344,7 +372,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -363,9 +391,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Domain13RawSQLQueriesO11selectUsers4name8followerS2S_SiSgtFZ"></a>
-                    <a name="//apple_ref/swift/Method/selectUsers(name:follower:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Domain13RawSQLQueriesO11selectUsers4name8followerS2S_SiSgtFZ">selectUsers(name:follower:)</a>
+                    <a name="/s:6Domain13RawSQLQueriesO10selectUser4name8followerS2S_SiSgtFZ"></a>
+                    <a name="//apple_ref/swift/Method/selectUser(name:follower:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain13RawSQLQueriesO10selectUser4name8followerS2S_SiSgtFZ">selectUser(name:follower:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -373,14 +401,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Inquiries about users and their follow-up information.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">selectUsers</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">follower</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">selectUser</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">follower</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -396,7 +424,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#name description#&gt;</p>
+                                  <p>Username to search for.</p>
                                 </div>
                               </td>
                             </tr>
@@ -408,7 +436,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#id description#&gt;</p>
+                                  <p>User&rsquo;s ID searching for the user. If nil, following is false.</p>
                                 </div>
                               </td>
                             </tr>
@@ -417,7 +445,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -425,9 +453,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Domain13RawSQLQueriesO11selectUsers2id8followerSSSi_SiSgtFZ"></a>
-                    <a name="//apple_ref/swift/Method/selectUsers(id:follower:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Domain13RawSQLQueriesO11selectUsers2id8followerSSSi_SiSgtFZ">selectUsers(id:follower:)</a>
+                    <a name="/s:6Domain13RawSQLQueriesO10selectUser2id8followerSSSi_SiSgtFZ"></a>
+                    <a name="//apple_ref/swift/Method/selectUser(id:follower:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain13RawSQLQueriesO10selectUser2id8followerSSSi_SiSgtFZ">selectUser(id:follower:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -435,14 +463,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Inquiries about users and their follow-up information.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">selectUsers</span><span class="p">(</span><span class="n">id</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">follower</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">selectUser</span><span class="p">(</span><span class="n">id</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">follower</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -458,7 +486,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#userId description#&gt;</p>
+                                  <p>User&rsquo;s ID to search for.</p>
                                 </div>
                               </td>
                             </tr>
@@ -470,7 +498,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#id description#&gt;</p>
+                                  <p>User&rsquo;s ID searching for the user. If nil, following is false.</p>
                                 </div>
                               </td>
                             </tr>
@@ -479,7 +507,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -508,7 +536,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Get comments associated with an article.</p>
 
                       </div>
                       <div class="declaration">
@@ -531,7 +559,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#articleSlug description#&gt;</p>
+                                  <p>Article&rsquo;s slug to be commented.</p>
                                 </div>
                               </td>
                             </tr>
@@ -543,7 +571,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#userId description#&gt;</p>
+                                  <p>User who gets the comment. If nil, following is false.</p>
                                 </div>
                               </td>
                             </tr>
@@ -552,7 +580,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -570,7 +598,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Inserts a comment associated with an article.</p>
 
                       </div>
                       <div class="declaration">
@@ -593,7 +621,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#articleSlug description#&gt;</p>
+                                  <p>Article&rsquo;s slug to be commented.</p>
                                 </div>
                               </td>
                             </tr>
@@ -605,7 +633,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#body description#&gt;</p>
+                                  <p>A comment body.</p>
                                 </div>
                               </td>
                             </tr>
@@ -617,7 +645,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#userId description#&gt;</p>
+                                  <p>User&rsquo;s ID to comment.</p>
                                 </div>
                               </td>
                             </tr>
@@ -626,7 +654,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -644,7 +672,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Delete the comment.</p>
 
                       </div>
                       <div class="declaration">
@@ -667,7 +695,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#commentId description#&gt;</p>
+                                  <p>Comment ID for delete.</p>
                                 </div>
                               </td>
                             </tr>
@@ -676,7 +704,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -705,7 +733,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Insert follow information associated with a user.</p>
 
                       </div>
                       <div class="declaration">
@@ -728,7 +756,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#username description#&gt;</p>
+                                  <p>Username to be followed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -740,7 +768,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#id description#&gt;</p>
+                                  <p>User&rsquo;s Id to follow.</p>
                                 </div>
                               </td>
                             </tr>
@@ -749,7 +777,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -767,7 +795,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Delete follow information associated with a user.</p>
 
                       </div>
                       <div class="declaration">
@@ -790,7 +818,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#username description#&gt;</p>
+                                  <p>Username to be unfollowed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -802,7 +830,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#id description#&gt;</p>
+                                  <p>User&rsquo;s Id to unfollow.</p>
                                 </div>
                               </td>
                             </tr>
@@ -811,7 +839,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -840,7 +868,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. Inserts favorite information associated with an article.</p>
 
                       </div>
                       <div class="declaration">
@@ -863,7 +891,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#articleSlug description#&gt;</p>
+                                  <p>Article&rsquo;s slug to be favorited.</p>
                                 </div>
                               </td>
                             </tr>
@@ -875,7 +903,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#userId description#&gt;</p>
+                                  <p>User&rsquo;s Id to favorite.</p>
                                 </div>
                               </td>
                             </tr>
@@ -884,7 +912,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -902,7 +930,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. This deletes favorite information associated with an article.</p>
 
                       </div>
                       <div class="declaration">
@@ -925,7 +953,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#articleSlug description#&gt;</p>
+                                  <p>Article&rsquo;s slug to be unfavorited.</p>
                                 </div>
                               </td>
                             </tr>
@@ -937,7 +965,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>&lt;#userId description#&gt;</p>
+                                  <p>User&rsquo;s Id to unfavorite.</p>
                                 </div>
                               </td>
                             </tr>
@@ -946,7 +974,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>
@@ -975,7 +1003,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Returns the query. It returns the tag registered in the database as unique.</p>
 
                       </div>
                       <div class="declaration">
@@ -988,7 +1016,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>&lt;#Description#&gt;</p>
+                        <p>SQL query string.</p>
                       </div>
                     </section>
                   </div>

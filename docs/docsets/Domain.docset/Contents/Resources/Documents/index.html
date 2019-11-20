@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           Domain Docs
         </a>
-         (39% documented)
+         (38% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -227,7 +227,7 @@ realworld<span class="o">(</span>50355,0x700001305000<span class="o">)</span> ma
 
 <hr>
 
-<p><a href="http://realworld.io"><img src="https://img.shields.io/badge/realworld-backend-%23783578.svg" alt="RealWorld Frontend"></a>  <a href="https://docs.vapor.codes/3.0/"><img src="http://img.shields.io/badge/%F0%9F%92%A7_vapor-3.3-2196f3.svg" alt="Vapor Documentation"></a>  <a href="https://swift.org"><img src="https://img.shields.io/badge/%F0%9F%90%A6_swift-5.1-brightgreen.svg" alt="swift.org"></a>  <a href="https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/"><img src="https://img.shields.io/badge/Project&#x27;s_domain-doc-orange.svg" alt="API Doc"></a></p>
+<p><a href="http://realworld.io"><img src="https://img.shields.io/badge/realworld-backend-%23783578.svg" alt="RealWorld Frontend"></a>  <a href="https://github.com/vapor/vapor"><img src="http://img.shields.io/badge/%F0%9F%92%A7_vapor-3.3-2196f3.svg" alt="Vapor Documentation"></a>  <a href="https://swift.org"><img src="https://img.shields.io/badge/%F0%9F%90%A6_swift-5.1-brightgreen.svg" alt="swift.org"></a>  <a href="https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/"><img src="https://img.shields.io/badge/Project&#x27;s_domain-doc-orange.svg" alt="API Doc"></a></p>
 <h1 id='img-src-logo-png-alt-realworld-example-app' class='heading'><img src="logo.png" alt="RealWorld Example App"></h1>
 
 <blockquote>
@@ -311,8 +311,7 @@ realworld<span class="o">(</span>50355,0x700001305000<span class="o">)</span> ma
   <span class="nt">-e</span> <span class="nv">MYSQL_HOSTNAME</span><span class="o">=&lt;&lt;</span><span class="no">host</span><span class="sh"> part of MySQL address&gt;&gt;</span><span class="se">\</span><span class="sh">
   -e MYSQL_USERNAME=</span><span class="k">${</span><span class="nv">MYSQL_USERNAME</span><span class="k">}</span><span class="se">\</span><span class="sh">
   -e MYSQL_PASSWORD=</span><span class="k">${</span><span class="nv">MYSQL_PASSWORD</span><span class="k">}</span><span class="se">\</span><span class="sh">
-  -e MYSQL_DATABASE=</span><span class="k">${</span><span class="nv">MYSQL_DATABASE</span><span class="k">}</span><span class="se">\</span><span class="sh">
-  -e MYSQL_ROOT_PASSWORD=</span><span class="k">${</span><span class="nv">MYSQL_ROOTPASS</span><span class="k">}</span><span class="se">\</span><span class="sh">
+  -e MYSQL_DATABASE=</span><span class="k">${</span><span class="nv">MYSQL_DATABASE</span><span class="k">}</span><span class="se">\/</span><span class="sh">
   realworld:latest
 </span></code></pre>
 
@@ -343,7 +342,9 @@ realworld<span class="o">(</span>50355,0x700001305000<span class="o">)</span> ma
 <pre class="highlight shell"><code><span class="nv">$ </span>pulumi up <span class="nt">--yes</span>
 </code></pre>
 
-<p>When processing is complete, the host names for MySQL and APP will be displayed. In this case, the connection settings is listed in <a href="pulumi/Pulumi.dev.yaml">pulumi/Pulumi.dev.yaml</a>.</p>
+<p>In this case, the connection settings is listed in <a href="pulumi/Pulumi.dev.yaml">pulumi/Pulumi.dev.yaml</a>. </p>
+
+<p>When processing is complete, the host names for MySQL and APP will be displayed. </p>
 <pre class="highlight shell"><code>Outputs:
     appHost  : <span class="s2">"svlre-app-listener-*.us-east-1.elb.amazonaws.com"</span>
     mysqlHost: <span class="s2">"svlre-mysql-listener-*.elb.us-east-1.amazonaws.com"</span>

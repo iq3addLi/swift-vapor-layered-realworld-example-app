@@ -7,10 +7,15 @@
 
 import JWT
 
+
+/// <#Description#>
 struct JWTWithVaporRepository: JWTRepository{
     
     let secret = "secret"
     
+    /// <#Description#>
+    /// - Parameter id: <#id description#>
+    /// - Parameter username: <#username description#>
     func issuedJWTToken( id: Int, username: String ) throws -> String{
         
         // create payload
@@ -26,6 +31,9 @@ struct JWTWithVaporRepository: JWTRepository{
         return token
     }
     
+    
+    /// <#Description#>
+    /// - Parameter token: <#token description#>
     func verifyJWTToken( token: String ) throws -> SessionPayload{
         // Verify and expand
         return try JWT<SessionPayload>(from: token, verifiedUsing: .hs256(key: secret)).payload

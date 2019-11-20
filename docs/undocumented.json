@@ -10,13 +10,6 @@
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/LoginUser.swift",
       "line": 11,
-      "symbol": "LoginUser",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/LoginUser.swift",
-      "line": 11,
       "symbol": "LoginUser.email",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -61,13 +54,6 @@
       "line": 9,
       "symbol": "NewArticle",
       "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewArticle.swift",
-      "line": 10,
-      "symbol": "NewArticle",
-      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -170,13 +156,6 @@
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewComment.swift",
-      "line": 10,
-      "symbol": "NewComment",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewComment.swift",
       "line": 11,
       "symbol": "NewComment.body",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -215,13 +194,6 @@
       "line": 9,
       "symbol": "NewUser",
       "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/NewUser.swift",
-      "line": 10,
-      "symbol": "NewUser",
-      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -278,13 +250,6 @@
       "line": 9,
       "symbol": "UpdateArticle",
       "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/UpdateArticle.swift",
-      "line": 10,
-      "symbol": "UpdateArticle",
-      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -383,13 +348,6 @@
       "line": 9,
       "symbol": "UpdateUser",
       "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/Request/UpdateUser.swift",
-      "line": 10,
-      "symbol": "UpdateUser",
-      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -1045,14 +1003,7 @@
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/System/ValidateIssue.swift",
-      "line": 26,
-      "symbol": "ValidationError",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Models/System/ValidateIssue.swift",
-      "line": 27,
+      "line": 35,
       "symbol": "ValidationError.errors",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"

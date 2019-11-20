@@ -14,7 +14,7 @@ Please wait for a while until the release.  👷‍♂️👷‍♀️
 
 ------
 
-[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://docs.vapor.codes/3.0/)  [![swift.org](https://img.shields.io/badge/🐦_swift-5.1-brightgreen.svg)](https://swift.org)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-orange.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/)
+[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![swift.org](https://img.shields.io/badge/🐦_swift-5.1-brightgreen.svg)](https://swift.org)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-orange.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/)
 
 # ![RealWorld Example App](logo.png)
 
@@ -129,8 +129,7 @@ $ docker run \
   -e MYSQL_HOSTNAME=<<host part of MySQL address>>\
   -e MYSQL_USERNAME=${MYSQL_USERNAME}\
   -e MYSQL_PASSWORD=${MYSQL_PASSWORD}\
-  -e MYSQL_DATABASE=${MYSQL_DATABASE}\
-  -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOTPASS}\
+  -e MYSQL_DATABASE=${MYSQL_DATABASE}\/
   realworld:latest
 ```
 
@@ -174,7 +173,9 @@ $ pulumi preview
 ```bash
 $ pulumi up --yes
 ```
-When processing is complete, the host names for MySQL and APP will be displayed. In this case, the connection settings is listed in [pulumi/Pulumi.dev.yaml](pulumi/Pulumi.dev.yaml).
+In this case, the connection settings is listed in [pulumi/Pulumi.dev.yaml](pulumi/Pulumi.dev.yaml). 
+
+When processing is complete, the host names for MySQL and APP will be displayed. 
 
 ```bash
 Outputs:

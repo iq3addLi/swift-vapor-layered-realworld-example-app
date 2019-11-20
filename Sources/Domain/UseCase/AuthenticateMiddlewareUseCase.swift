@@ -33,7 +33,6 @@ public struct AuthenticateMiddlewareUseCase{
 import Async
 extension AuthenticateMiddlewareUseCase {
     
-    
     /// <#Description#>
     /// - parameters:
     ///     - token: <#token description#>

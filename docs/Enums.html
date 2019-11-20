@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
           Domain Docs
         </a>
-         (39% documented)
+         (38% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -298,7 +298,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>&lt;#Description#&gt;</p>
+                        <p>Object that generates raw sql.
+I wanted to get enough information in one query.
+The reason for using raw query is that the following function was not found in Fluent.</p>
+
+<ul>
+<li>Sub query</li>
+<li>GROUP_CONCAT</li>
+<li>Distinct</li>
+<li>DELETE JOIN</li>
+</ul>
+
+<p>I may have missed it.
+As an aside, I have never met OR-Mapper, which can cover the vast specifications of SQL.
+This is part of the reason, I attach importance to portability over typeSafe for OR-Mapper.
+There is also a growing need to adopt KVS. Database that interacts directly with the application.</p>
 
                         <a href="Enums/RawSQLQueries.html" class="slightly-smaller">See more</a>
                       </div>

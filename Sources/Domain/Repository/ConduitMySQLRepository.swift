@@ -11,10 +11,13 @@ import SwiftSlug
 import Async
 import FluentMySQL
 
+
+/// <#Description#>
 struct ConduitMySQLRepository: ConduitRepository{
     
     let database = MySQLDatabaseManager.default
     
+    /// <#Description#>
     func ifneededPreparetion() throws{
 
         try database.connectionOnDatabaseEventLoop()
@@ -29,26 +32,33 @@ struct ConduitMySQLRepository: ConduitRepository{
             .wait()
     }
     
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter email: <#email description#>
+    /// - Parameter password: <#password description#>
     func validate(username: String, email: String, password: String) throws -> Future<Void>{
-
-        return Validation.reduce([
-            Validation.blank(key: "username", value: username),
-            Validation.count(1..., key: "username", value: username),
-            Validation.count(...20, key: "username", value: username),
+        let validation = Validation()
+        return validation.reduce([
+            validation.blank(key: "username", value: username),
+            validation.count(1..., key: "username", value: username),
+            validation.count(...20, key: "username", value: username),
             database.isUnique(username: username),
-            Validation.blank(key: "email", value: email),
-            Validation.email(email),
+            validation.blank(key: "email", value: email),
+            validation.email(email),
             database.isUnique(email: email),
-            Validation.blank(key: "password", value: password),
-            Validation.count(8..., key: "password", value: password)
+            validation.blank(key: "password", value: password),
+            validation.count(8..., key: "password", value: password)
         ]).map { issues in
             if issues.count > 0 {
                 throw issues.generateReport()
             }
-            return
         }
     }
     
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter email: <#email description#>
+    /// - Parameter password: <#password description#>
     func registerUser(name username: String, email: String, password: String) -> Future<(Int, User)>{
 
         let database = self.database
@@ -64,6 +74,9 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter email: <#email description#>
+    /// - Parameter password: <#password description#>
     func authUser(email: String, password: String) -> Future<(Int, User)>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -85,6 +98,8 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter id: <#id description#>
     func searchUser(id: Int) -> Future<(Int, User)>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -99,6 +114,12 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter id: <#id description#>
+    /// - Parameter email: <#email description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter bio: <#bio description#>
+    /// - Parameter image: <#image description#>
     func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> Future<User>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -112,6 +133,9 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter readingUserId: <#readingUserId description#>
     func searchProfile(username: String, readingUserId: Int?) -> Future<Profile>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -126,6 +150,9 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter userId: <#userId description#>
     func follow(followee username: String, follower userId: Int) -> Future<Profile>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -136,7 +163,9 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter userId: <#userId description#>
     func unfollow(followee username: String, follower userId: Int) -> Future<Profile>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -147,6 +176,9 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter userId: <#userId description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
     func favorite(by userId: Int, for articleSlug: String) -> Future<Article>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -157,6 +189,9 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter userId: <#userId description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
     func unfavorite(by userId: Int, for articleSlug: String) -> Future<Article>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -167,6 +202,8 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
     func comments(for articleSlug: String) -> Future<[Comment]>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -175,6 +212,10 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter body: <#body description#>
+    /// - Parameter userId: <#userId description#>
     func addComment(for articleSlug: String, body: String, author userId: Int) -> Future<Comment>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -185,7 +226,10 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
         
     }
-
+    
+    /// <#Description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter id: <#id description#>
     func deleteComment(for articleSlug: String, id: Int) -> Future<Void>{ // Slug is not required for MySQL implementation.
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -196,6 +240,11 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter condition: <#condition description#>
+    /// - Parameter readingUserId: <#readingUserId description#>
+    /// - Parameter offset: <#offset description#>
+    /// - Parameter limit: <#limit description#>
     func articles( condition: ArticleCondition, readingUserId: Int? = nil, offset: Int? = nil, limit: Int? = nil ) -> Future<[Article]>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -204,6 +253,12 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
+    /// - Parameter author: <#author description#>
+    /// - Parameter title: <#title description#>
+    /// - Parameter discription: <#discription description#>
+    /// - Parameter body: <#body description#>
+    /// - Parameter tagList: <#tagList description#>
     func addArticle(userId author: Int, title: String, discription: String, body: String, tagList: [String]) -> Future<Article> {
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -214,7 +269,9 @@ struct ConduitMySQLRepository: ConduitRepository{
                 }
             }
     }
-
+    
+    /// <#Description#>
+    /// - Parameter slug: <#slug description#>
     func deleteArticle( slug: String ) -> Future<Void> {
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -224,7 +281,14 @@ struct ConduitMySQLRepository: ConduitRepository{
                 }
             }
     }
-
+    
+    /// <#Description#>
+    /// - Parameter slug: <#slug description#>
+    /// - Parameter title: <#title description#>
+    /// - Parameter description: <#description description#>
+    /// - Parameter body: <#body description#>
+    /// - Parameter tagList: <#tagList description#>
+    /// - Parameter userId: <#userId description#>
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()
@@ -235,6 +299,7 @@ struct ConduitMySQLRepository: ConduitRepository{
             }
     }
     
+    /// <#Description#>
     func allTags() -> Future<[String]>{
         let database = self.database
         return database.connectionOnCurrentEventLoop()

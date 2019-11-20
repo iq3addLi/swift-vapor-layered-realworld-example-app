@@ -7,12 +7,19 @@
 
 import Foundation
 
+/// <#Description#>
 struct ValidateIssue{
+    
+    /// <#Description#>
     let key: String
+    
+    /// <#Description#>
     let report: String
 }
 
 extension Array where Element == ValidateIssue{
+    
+    /// <#Description#>
     func generateReport() -> ValidationError {
         var errors: [String: [String]] = [:]
         self.forEach{ issue in
@@ -23,6 +30,7 @@ extension Array where Element == ValidateIssue{
 }
 
 
+/// <#Description#>
 public struct ValidationError: Swift.Error, Codable {
     public var errors: [String: [String]]
 }

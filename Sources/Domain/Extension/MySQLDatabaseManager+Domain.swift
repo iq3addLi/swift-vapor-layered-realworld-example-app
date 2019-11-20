@@ -11,19 +11,36 @@ import FluentMySQL
 
 extension MySQLDatabaseManager{
     
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter email: <#email description#>
     func selectUser(on connection: MySQLConnection, email: String) -> Future<Users?>{
         Users.query(on: connection).filter(\Users.email == email).all().map{ $0.first }
     }
     
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter id: <#id description#>
     func selectUser(on connection: MySQLConnection, id: Int) -> Future<Users?>{
         Users.query(on: connection).filter(\Users.id == id).all().map{ $0.first }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter email: <#email description#>
+    /// - Parameter hash: <#hash description#>
+    /// - Parameter salt: <#salt description#>
     func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) -> Future<Users> {
         Users(id: nil, username: username, email: email, hash: hash, salt: salt).save(on: connection)
     }
     
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter id: <#id description#>
+    /// - Parameter email: <#email description#>
+    /// - Parameter bio: <#bio description#>
+    /// - Parameter image: <#image description#>
     func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) -> Future<Users>{
         Users.query(on: connection)
             .filter(\Users.id == id)
@@ -43,9 +60,12 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter userId: <#userId description#>
     func selectProfile(on connection: MySQLConnection, username: String, readIt userId: Int? = nil) -> Future<Profile?>{
-        connection.raw( RawSQLQueries.selectUsers(name: username, follower: userId) )
+        connection.raw( RawSQLQueries.selectUser(name: username, follower: userId) )
             .all(decoding: UserWithFollowRow.self )
             .map{ rows in
                 guard let row = rows.first else{
@@ -55,7 +75,10 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter userId: <#userId description#>
     func insertFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile>{
         var followee: Users?
         return Users.query(on: connection)
@@ -72,12 +95,15 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter username: <#username description#>
+    /// - Parameter userId: <#userId description#>
     func deleteFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile>{
         connection.raw( RawSQLQueries.deleteFollows(followee: username, follower: userId) )
             .all()
             .flatMap{ _ in
-                connection.raw( RawSQLQueries.selectUsers(name: username, follower: userId) ).all(decoding: UserWithFollowRow.self)
+                connection.raw( RawSQLQueries.selectUser(name: username, follower: userId) ).all(decoding: UserWithFollowRow.self)
             }
             .map{ rows in
                 guard let user = rows.first else{
@@ -87,7 +113,10 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter userId: <#userId description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
     func insertFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article>{
         connection.raw( RawSQLQueries.insertFavorites(for: articleSlug, by: userId ) )
             .all()
@@ -102,7 +131,10 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter userId: <#userId description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
     func deleteFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article>{
         connection.raw( RawSQLQueries.deleteFavorites(for: articleSlug, by: userId ) )
             .all()
@@ -117,7 +149,10 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter userId: <#userId description#>
     func selectComments(on connection: MySQLConnection, for articleSlug: String, readit userId: Int? = nil) -> Future<[Comment]>{
         connection.raw( RawSQLQueries.selectComments(for: articleSlug, readIt: userId) )
             .all(decoding: CommentWithAuthorRow.self)
@@ -128,7 +163,11 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter body: <#body description#>
+    /// - Parameter userId: <#userId description#>
     func insertComment(on connection: MySQLConnection, for articleSlug: String, body: String, author userId: Int) -> Future<Comment>{
         var inserted: Comments?
         return Articles.query(on: connection)
@@ -155,12 +194,19 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter commentId: <#commentId description#>
     func deleteComments(on connection: MySQLConnection, commentId: Int ) -> Future<Void>{
         connection.raw( RawSQLQueries.deleteComments( id: commentId ) ).all().map{ _ in return }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter condition: <#condition description#>
+    /// - Parameter userId: <#userId description#>
+    /// - Parameter offset: <#offset description#>
+    /// - Parameter limit: <#limit description#>
     func selectArticles(on connection: MySQLConnection, condition: ArticleCondition, readIt userId: Int? = nil, offset: Int? = nil, limit: Int? = nil) -> Future<[Article]>{
         connection.raw( RawSQLQueries.selectArticles(condition: condition, readIt: userId, offset: offset, limit: limit) )
             .all(decoding: ArticlesAndAuthorWithFavoritedRow.self)
@@ -171,7 +217,15 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter author: <#author description#>
+    /// - Parameter title: <#title description#>
+    /// - Parameter slug: <#slug description#>
+    /// - Parameter description: <#description description#>
+    /// - Parameter body: <#body description#>
+    /// - Parameter tags: <#tags description#>
+    /// - Parameter userId: <#userId description#>
     func insertArticle(on connection: MySQLConnection, author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article>{
  
         let eventLoop = connection.eventLoop
@@ -195,7 +249,14 @@ extension MySQLDatabaseManager{
             }
     }
     
-    
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter slug: <#slug description#>
+    /// - Parameter title: <#title description#>
+    /// - Parameter description: <#description description#>
+    /// - Parameter body: <#body description#>
+    /// - Parameter tagList: <#tagList description#>
+    /// - Parameter userId: <#userId description#>
     func updateArticle(on connection: MySQLConnection, slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article>{
         // Update article
         let future = Articles.query(on: connection)
@@ -257,10 +318,15 @@ extension MySQLDatabaseManager{
         }
     }
     
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
+    /// - Parameter slug: <#slug description#>
     func deleteArticle(on connection: MySQLConnection, slug: String ) -> Future<Void> {
         connection.raw( RawSQLQueries.deleteArticles(slug: slug) ).all().map{ _ in return }
     }
     
+    /// <#Description#>
+    /// - Parameter connection: <#connection description#>
     func selectTags(on connection: MySQLConnection) -> Future<[String]>{
         connection.raw( RawSQLQueries.selectTags() )
             .all(decoding: TagOnlyRow.self )
