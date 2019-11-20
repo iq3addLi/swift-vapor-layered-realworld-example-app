@@ -14,6 +14,8 @@ Please wait for a while until the release.  👷‍♂️👷‍♀️
 
 ------
 
+[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://docs.vapor.codes/3.0/)  [![swift.org](https://img.shields.io/badge/🐦_swift-5.1-brightgreen.svg)](https://swift.org)
+
 # ![RealWorld Example App](logo.png)
 
 > ### Vapor codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
@@ -31,21 +33,15 @@ For more information on how to this works with other frontends/backends, head ov
 
 # How it works
 
-> *Now writing ...*
-
-
-
-# Getting started
-
 ## On local
 
 ### Precondition
 
 * Your platform is Linux or Mac.
-* Swift/5.1.1 is installed.
-* docker is installed.
+* Swift 5.1.1 or over than is installed.
+* Docker is installed.
 
-### build
+### build RealWorld App
 
 ```bash
 $ swift build -c release 
@@ -84,7 +80,7 @@ By `Control + C` on launched terminal. Will stop MySQL and App.
 
 ### Precondition
 
-* docker is installed.
+* Docker is installed.
 
 ### Build container for RealWorld App
 
@@ -197,4 +193,9 @@ $ pulumi destroy --yes
 ⚠️ MySQL storage is volatile.
 
 
+
+
+# Getting started
+
+> *Now writing ...*
 
