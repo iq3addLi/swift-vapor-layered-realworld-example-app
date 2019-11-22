@@ -19,4 +19,9 @@ public final class VerifiedUserEntity{
 }
 
 import Vapor
-extension VerifiedUserEntity: Service{}
+//extension VerifiedUserEntity: Service{}
+extension VerifiedUserEntity: ServiceType{
+    public static func makeService(for container: Container) throws -> Self{
+        return .init()
+    }
+}

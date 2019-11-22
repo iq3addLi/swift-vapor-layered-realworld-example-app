@@ -76,8 +76,8 @@ public class ApplicationUseCase: UseCase{
         services.register(router, as: Router.self)
         
         // Set Service models
-        services.register(AuthedUser()) // Initial property is blank.
-        services.register(VerifiedUserEntity())
+        services.register(AuthedUser.self)
+        services.register(VerifiedUserEntity.self)
         
         
         // Set server config

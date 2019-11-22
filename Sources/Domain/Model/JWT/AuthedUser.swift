@@ -49,4 +49,12 @@ extension AuthedUser{
 }
 
 import Vapor
-extension AuthedUser: Service{} // MEMO: struct is can't be Service
+//extension AuthedUser: Service{}
+// MEMO: <s>struct is can't be Service</s>
+// When you want to relay a variable from Middleware to Request, you cannot make it a struct. To create a copy.
+// Do not try to do the same with Service. To continue using the memory address registered with register()
+extension AuthedUser: ServiceType{
+    public static func makeService(for container: Container) throws -> Self{
+        return .init()
+    }
+}

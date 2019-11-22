@@ -1,19 +1,3 @@
-------
-
-# ⚠️ Caution!!
-
-This application is solving the following problems: 
-* When an API with optional authentication is called several times, the following error is output on [this line](https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/blob/0.9.0/Sources/Presentation/Middleware/AuthenticateOptionalMiddleware.swift#L24) and crashes.
-
-```bash
-realworld(50355,0x700001305000) malloc: Double free of object 0x102c9cab0
-realworld(50355,0x700001305000) malloc: *** set a breakpoint in malloc_error_break to debug
-```
-
-Please wait for a while until the release.  👷‍♂️👷‍♀️
-
-------
-
 ⚠️   *Sorry. This readme and in code comments is in progress.*
 
 [![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.1-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
