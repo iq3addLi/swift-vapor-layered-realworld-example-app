@@ -18,8 +18,10 @@
 /// As an aside, I have never met OR-Mapper, which can cover the vast specifications of SQL.
 /// This is part of the reason, I attach importance to portability over typeSafe for OR-Mapper.
 /// There is also a growing need to adopt KVS. Database that interacts directly with the application.
-public enum RawSQLQueries{
+public enum RawSQLQueries{}
     
+// MARK: Articles
+extension RawSQLQueries{
     /// Returns the query. Inquires about articles according to the argument conditions.
     /// - Parameter condition: Information that shows what criteria to search for articles.
     /// - Parameter userId: ID of the user reading this article. If nil, following is false.

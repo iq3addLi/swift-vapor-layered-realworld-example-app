@@ -6,9 +6,8 @@
 //
 
 
-
 /// <#Description#>
-public class ArticlesUseCase{
+public class ArticlesUseCase: UseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     
     

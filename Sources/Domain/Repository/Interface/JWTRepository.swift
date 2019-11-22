@@ -9,7 +9,7 @@ import Foundation
 
 
 /// <#Description#>
-protocol JWTRepository{
+protocol JWTRepository: Repository{
     
     
     /// <#Description#>

@@ -7,7 +7,6 @@
 
 import HTTP
 
-private let tokenPrefix = "Token"
 
 extension HTTPHeaders {
     
@@ -18,7 +17,7 @@ extension HTTPHeaders {
                 return nil
             }
             
-            guard let range = string.range(of: "\(tokenPrefix) ") else {
+            guard let range = string.range(of: "Token ") else {
                 return nil
             }
             
@@ -27,7 +26,7 @@ extension HTTPHeaders {
         }
         set {
             if let bearer = newValue {
-                replaceOrAdd(name: .authorization, value: "\(tokenPrefix) \(bearer.token)")
+                replaceOrAdd(name: .authorization, value: "Token \(bearer.token)")
             } else {
                 remove(name: .authorization)
             }

@@ -7,8 +7,6 @@
 
 import Domain
 
-
-
 /// All application is start here🏃‍♂️
 /// - throws:
 ///  <#Description#>

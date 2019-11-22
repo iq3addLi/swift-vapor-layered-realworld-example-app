@@ -6,6 +6,7 @@
 //
 
 
+/// see https://github.com/gothinkster/realworld/blob/master/api/swagger.json
 public struct LoginUser: Codable {
 
     public var email: String

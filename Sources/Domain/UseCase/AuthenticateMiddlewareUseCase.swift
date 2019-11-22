@@ -7,7 +7,7 @@
 
 
 /// <#Description#>
-public struct AuthenticateMiddlewareUseCase{
+public struct AuthenticateMiddlewareUseCase: UseCase{
     
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()

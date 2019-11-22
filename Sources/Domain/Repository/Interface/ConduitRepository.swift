@@ -9,15 +9,14 @@ import Async
 
 
 /// <#Description#>
-protocol ConduitRepository{
+protocol ConduitRepository: Repository{
     
+    // MARK: Setup
     
     /// <#Description#>
     func ifneededPreparetion() throws
     
-    // Async
-    
-    // Users
+    // MARK: Users
     
     /// <#Description#>
     /// - Parameter username: <#username description#>
@@ -61,7 +60,7 @@ protocol ConduitRepository{
     ///    <#Description#>
     func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> Future<User>
     
-    // Profiles
+    // MARK: Profiles
     
     
     /// <#Description#>
@@ -87,7 +86,7 @@ protocol ConduitRepository{
     ///    <#Description#>
     func unfollow(followee username: String, follower userId: Int) -> Future<Profile>
     
-    // Favorites
+    // MARK: Favorites
     
     
     /// <#Description#>
@@ -105,7 +104,7 @@ protocol ConduitRepository{
     ///    <#Description#>
     func unfavorite(by userId: Int, for articleSlug: String) -> Future<Article>
     
-    // Comments
+    // MARK: Comments
     
     
     /// <#Description#>
@@ -131,7 +130,7 @@ protocol ConduitRepository{
     ///    <#Description#>
     func deleteComment(for articleSlug: String, id: Int) -> Future<Void>
     
-    // Articles
+    // MARK: Articles
     
     
     /// <#Description#>
@@ -173,7 +172,7 @@ protocol ConduitRepository{
     ///    <#Description#>
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article>
     
-    // Tags
+    // MARK: Tags
     
     
     /// <#Description#>

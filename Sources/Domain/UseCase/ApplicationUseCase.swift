@@ -6,11 +6,10 @@
 //
 
 import Vapor
-import FluentMySQL
 import Infrastructure
 
 /// <#Description#>
-public class ApplicationUseCase{
+public class ApplicationUseCase: UseCase{
     
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     
@@ -117,7 +116,7 @@ public class ApplicationUseCase{
                 // not an abort error, and not debuggable or in dev mode
                 // just deliver a generic 500 to avoid exposing any sensitive error info
                 let response = request.response(http: .init(status: .internalServerError, headers: [:]))
-                response.http.body = try HTTPBody(data: JSONEncoder().encode(ErrorResponse(errors:["body" : [error.localizedDescription]])))
+                response.http.body = try HTTPBody(data: JSONEncoder().encode(GenericErrorModel(errors: GenericErrorModelErrors(body: [error.localizedDescription]))))
                 response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
                 return response
             }
@@ -140,7 +139,7 @@ extension AbortError{
     func toResponse(for request: Request) throws -> Response{
         // this is an abort error, we should use its status, reason, and headers
         let response = request.response(http: .init(status: status, headers: headers))
-        response.http.body = try HTTPBody(data: JSONEncoder().encode(ErrorResponse(errors:["body" : [reason]])))
+        response.http.body = try HTTPBody(data: JSONEncoder().encode(GenericErrorModel(errors: GenericErrorModelErrors(body: [reason]))))
         response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
         return response
     }
@@ -154,7 +153,7 @@ extension Debuggable{
         // if not release mode, and error is debuggable, provide debug
         // info directly to the developer
         let response = request.response(http: .init(status: .internalServerError, headers: [:]))
-        response.http.body = try HTTPBody(data: JSONEncoder().encode(ErrorResponse(errors:["body" : [reason]])))
+        response.http.body = try HTTPBody(data: JSONEncoder().encode(GenericErrorModel(errors: GenericErrorModelErrors(body: [reason]))))
         response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
         return response
         

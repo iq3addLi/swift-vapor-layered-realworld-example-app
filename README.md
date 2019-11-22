@@ -14,7 +14,9 @@ Please wait for a while until the release.  👷‍♂️👷‍♀️
 
 ------
 
-[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![swift.org](https://img.shields.io/badge/swift-5.1-brightgreen.svg?logo=swift)](https://swift.org)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-orange.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
+⚠️   *Sorry. This readme and in code comments is in progress.*
+
+[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.1-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
 
 # ![RealWorld Example App](logo.png)
 
@@ -129,7 +131,7 @@ $ docker run \
   -e MYSQL_HOSTNAME=<<host part of MySQL address>>\
   -e MYSQL_USERNAME=${MYSQL_USERNAME}\
   -e MYSQL_PASSWORD=${MYSQL_PASSWORD}\
-  -e MYSQL_DATABASE=${MYSQL_DATABASE}\/
+  -e MYSQL_DATABASE=${MYSQL_DATABASE}\
   realworld:latest
 ```
 
@@ -139,7 +141,7 @@ $ docker run \
 
 ```bash
 $ docker ps
-$ docker stop <<IMAGE ID for MySQL>> <<IMAGE ID for RealWorld App>>
+$ docker stop <<CONTAINER ID or NAME for MySQL>> <<CONTAINER ID or NAME for RealWorld App>>
 ```
 
 

@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-
+/// see https://github.com/gothinkster/realworld/blob/master/api/swagger.json
 public struct Comment: Codable {
 
     public var _id: Int

@@ -9,9 +9,8 @@ import Vapor
 
 extension Article: LosslessHTTPBodyRepresentable{}
 extension Comment: LosslessHTTPBodyRepresentable{}
-//extension GenericErrorModel: LosslessHTTPBodyRepresentable{}
-//extension GenericErrorModelErrors: LosslessHTTPBodyRepresentable{}
-extension ErrorResponse: LosslessHTTPBodyRepresentable{}
+extension GenericErrorModel: LosslessHTTPBodyRepresentable{}
+extension GenericErrorModelErrors: LosslessHTTPBodyRepresentable{}
 extension MultipleArticlesResponse: LosslessHTTPBodyRepresentable{}
 extension MultipleCommentsResponse: LosslessHTTPBodyRepresentable{}
 extension Profile: LosslessHTTPBodyRepresentable{}

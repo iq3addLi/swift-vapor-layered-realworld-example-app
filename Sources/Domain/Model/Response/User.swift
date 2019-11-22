@@ -5,7 +5,7 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
-
+/// see https://github.com/gothinkster/realworld/blob/master/api/swagger.json
 public struct User: Codable {
 
     public var email: String

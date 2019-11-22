@@ -50,7 +50,7 @@ struct ConduitMySQLRepository: ConduitRepository{
             validation.count(8..., key: "password", value: password)
         ]).map { issues in
             if issues.count > 0 {
-                throw issues.generateReport()
+                throw issues.generateError()
             }
         }
     }

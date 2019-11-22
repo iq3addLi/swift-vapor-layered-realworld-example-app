@@ -7,7 +7,7 @@
 
 
 /// <#Description#>
-public struct TagsUseCase{
+public struct TagsUseCase: UseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     
     

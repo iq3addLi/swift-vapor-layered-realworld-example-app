@@ -10,8 +10,10 @@ import Validation
 
 
 /// This class has the validation function required for this project.
+///
 /// [vapor/validation](https://github.com/vapor/validation) is adopted as Infrastructure.
 /// This class was prepared because [realworld's production implementation](https://conduit.productionready.io/api) validation was an exhaustive check.
+///
 /// As an aside, I like vapor/validation. This is because there is a usage that is loosely coupled to vapor/vapor.
 /// If it is an add-in to vapor/vapor Package like fluent, I think it is better. Looking [here](https://github.com/vapor/vapor/blob/4.0.0-beta.1/Package.swift), I expect it will probably be in the future.
 final class Validation{
@@ -21,8 +23,8 @@ final class Validation{
     /// - Parameter key: The name of the parameter to validate
     /// - Parameter value: The value of the parameter to validate
     /// - Parameter report: Report when verification fails, paired with veridator.
-    /// - throws:
-    ///    Binded key and report in parameter as ValidateIssue
+    /// - warning:
+    ///   Please execute in Thread of SwiftNIO
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func willDo( validator: Validator<String>, key: String, value: String, report: String ) -> Future<ValidateIssue?>{
@@ -38,12 +40,16 @@ final class Validation{
     }
 }
 
-extension Domain.Validation{
+
+// MARK: By purpose
+extension Validation{
     
     /// Returns lower bound validation processing as Future.
     /// - Parameter range: Lower bound as PartialRangeFrom\<Int\>
     /// - Parameter key: The name of the parameter to validate
     /// - Parameter value: The value of the parameter to validate
+    /// - warning:
+    ///   Please execute in Thread of SwiftNIO
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func count(_ range: PartialRangeFrom<Int>, key: String, value: String ) -> Future<ValidateIssue?>{
@@ -54,6 +60,8 @@ extension Domain.Validation{
     /// - Parameter range: Upper bound as PartialRangeThrough\<Int\>
     /// - Parameter key: The name of the parameter to validate
     /// - Parameter value: The value of the parameter to validate
+    /// - warning:
+    ///   Please execute in Thread of SwiftNIO
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func count(_ range: PartialRangeThrough<Int>, key: String, value: String ) -> Future<ValidateIssue?>{
@@ -63,6 +71,8 @@ extension Domain.Validation{
     /// Returns not blank validation processing as Future.
     /// - Parameter key: The name of the parameter to validate
     /// - Parameter value: The value of the parameter to validate
+    /// - warning:
+    ///   Please execute in Thread of SwiftNIO
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func blank( key: String, value: String ) -> Future<ValidateIssue?>{
@@ -71,6 +81,8 @@ extension Domain.Validation{
     
     /// Returns email validation processing as Future.
     /// - Parameter value: The email to validate
+    /// - warning:
+    ///   Please execute in Thread of SwiftNIO
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func email(_ value: String ) -> Future<ValidateIssue?>{
@@ -80,6 +92,8 @@ extension Domain.Validation{
     /// Returns url validation processing as Future.
     /// - Parameter key: The name of the parameter to validate
     /// - Parameter value: The url to validate
+    /// - warning:
+    ///   Please execute in Thread of SwiftNIO
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func url( key: String, value: String ) -> Future<ValidateIssue?>{
@@ -87,7 +101,8 @@ extension Domain.Validation{
     }
 }
 
-extension Domain.Validation{
+// MARK: Full verification
+extension Validation{
 
     /// Execute multiple validation futures in the current thread.
     /// - Parameter validations: An array of validation Future

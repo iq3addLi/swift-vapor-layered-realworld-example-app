@@ -7,7 +7,7 @@
 
 
 /// <#Description#>
-public struct ProfilesUseCase{
+public struct ProfilesUseCase: UseCase{
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     public init(){}
 }

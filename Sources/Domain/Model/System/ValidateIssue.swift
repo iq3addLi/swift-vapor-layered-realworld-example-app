@@ -20,7 +20,7 @@ struct ValidateIssue{
 extension Array where Element == ValidateIssue{
     
     /// <#Description#>
-    func generateReport() -> ValidationError {
+    func generateError() -> ValidationError {
         var errors: [String: [String]] = [:]
         self.forEach{ issue in
             errors[issue.key] = self.filter{ issue.key == $0.key }.map{ $0.report }
