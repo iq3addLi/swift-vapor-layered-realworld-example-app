@@ -1,4 +1,4 @@
-⚠️   *Sorry. This readme and in code comments is in progress.*
+⚠️   *This project is still under development. Several bugs have been confirmed. The development is expected to be completed around December 7th.*
 
 [![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.1-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
 
