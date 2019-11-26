@@ -42,7 +42,7 @@ struct ArticlesController {
     func postArticle(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
         // Get parameter by body
-        return try request.content.decode(json: NewArticleRequest.self, using: JSONDecoder())
+        return try request.content.decode(json: NewArticleRequest.self, using: .custom(dates: .iso8601))
             .flatMap{ req -> Future<SingleArticleResponse> in
                 // Get relayed parameter
                 let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
@@ -93,7 +93,7 @@ struct ArticlesController {
         
         // Get parameter by body
         let useCase = self.useCase
-        return try request.content.decode(json: UpdateArticleRequest.self, using: JSONDecoder())
+        return try request.content.decode(json: UpdateArticleRequest.self, using: .custom(dates: .iso8601))
             .flatMap{ req in
                 useCase.updateArticle(slug: slug, title: req.article.title, description: req.article._description, body: req.article.body, tagList: req.article.tagList, readingUserId: userId)
             }
@@ -175,7 +175,7 @@ struct ArticlesController {
         
         // Get parameter by body
         let useCase = self.useCase
-        return try request.content.decode(json: NewCommentRequest.self, using: JSONDecoder())
+        return try request.content.decode(json: NewCommentRequest.self, using: .custom(dates: .iso8601))
             .flatMap{ req in
                 useCase.postComment(slug: slug, body: req.comment.body, author: userId)
             }

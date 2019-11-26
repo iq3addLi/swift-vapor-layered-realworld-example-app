@@ -44,8 +44,8 @@ extension Users: MySQLModel{
               `image` varchar(1024) NOT NULL DEFAULT '',
               `hash` varchar(1024) NOT NULL DEFAULT '',
               `salt` varchar(256) NOT NULL DEFAULT '',
-              `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-              `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              `createdAt` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+              `updatedAt` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
               PRIMARY KEY (`id`),
               UNIQUE KEY `username` (`username`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

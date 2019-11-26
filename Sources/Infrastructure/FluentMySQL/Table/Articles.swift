@@ -44,8 +44,8 @@ extension Articles: MySQLModel{
               `description` text NOT NULL,
               `body` text NOT NULL,
               `author` bigint(20) unsigned NOT NULL,
-              `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-              `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              `createdAt` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+              `updatedAt` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
               PRIMARY KEY (`id`),
               UNIQUE KEY `slug_UNIQUE` (`slug`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

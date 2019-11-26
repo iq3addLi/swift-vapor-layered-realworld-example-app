@@ -23,6 +23,6 @@ extension UserResponse: LosslessHTTPBodyRepresentable{}
 
 extension LosslessHTTPBodyRepresentable where Self: Codable{
     public func convertToHTTPBody() -> HTTPBody{
-        return try! HTTPBody(data: JSONEncoder.custom(dates: .iso8601).encode(self))
+        return try! HTTPBody(data: JSONEncoder.custom(dates: .formatted(.iso8601withFractionalSeconds)).encode(self))
     }
 }

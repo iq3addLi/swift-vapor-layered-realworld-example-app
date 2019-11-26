@@ -39,8 +39,8 @@ extension Comments: MySQLModel{
               `body` text NOT NULL,
               `author` bigint(20) unsigned NOT NULL,
               `article` bigint(20) unsigned NOT NULL,
-              `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-              `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              `createdAt` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+              `updatedAt` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
               PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             """)

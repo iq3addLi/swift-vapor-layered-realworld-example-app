@@ -16,7 +16,7 @@ struct UsersController {
     // POST /users
     func postUser(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
-        return try request.content.decode(json: NewUserRequest.self, using: JSONDecoder())
+        return try request.content.decode(json: NewUserRequest.self, using: .custom(dates: .iso8601))
             .flatMap { newUserRequest -> EventLoopFuture<UserResponse> in
                 try useCase.register(user: newUserRequest.user)
             }
@@ -28,7 +28,7 @@ struct UsersController {
     // POST /users/login
     func login(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
-        return try request.content.decode(json: LoginUserRequest.self, using: JSONDecoder())
+        return try request.content.decode(json: LoginUserRequest.self, using: .custom(dates: .iso8601))
             .flatMap { req in
                 // Log-in user
                 useCase.login(form: req.user)
@@ -55,7 +55,7 @@ struct UsersController {
         
         // Parse json body
         let useCase = self.useCase
-        return try request.content.decode(json: UpdateUserRequest.self, using: JSONDecoder())
+        return try request.content.decode(json: UpdateUserRequest.self, using: .custom(dates: .iso8601))
             .flatMap { req in
                 // Verify then update user
                 useCase.update(userId: user.id!, token: user.token!, updateUser: req.user )
