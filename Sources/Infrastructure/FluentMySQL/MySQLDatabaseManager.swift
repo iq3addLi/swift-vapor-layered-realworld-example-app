@@ -15,31 +15,48 @@ public class MySQLDatabaseManager{
         MySQLDatabaseManager()
     }()
 
-    private lazy var database: MySQLDatabase = {
-        MySQLDatabase(config: MySQLDatabaseConfig.fromEnvironment)
+    private lazy var connectionPoolCache = {
+        StandaloneDatabaseConnectionPoolCache<MySQLDatabase>(
+            database: database,
+            config: DatabaseConnectionPoolConfig(maxConnections: 10))
     }()
     
-    private lazy var worker = {
-        MultiThreadedEventLoopGroup(numberOfThreads: 1)
+    private lazy var database = {
+       MySQLDatabase(config: MySQLDatabaseConfig.fromEnvironment)
     }()
+    
+//    private lazy var worker = {
+//        MultiThreadedEventLoopGroup(numberOfThreads: 1)
+//    }()
+//
+//    private lazy var connectionPool: DatabaseConnectionPool = {
+//        DatabaseConnectionPool(config: DatabaseConnectionPoolConfig(maxConnections: 10 * 10), database: database)
+//    }()
     
     /// dummy comment
     public init(){}
     
-    deinit {
-        worker.shutdownGracefully { (error) in
-            print("\(error != nil ? error!.localizedDescription : "Unexpected failed to thread destruct.")")
+//    deinit {
+//        worker.shutdownGracefully { (error) in
+//            print("\(error != nil ? error!.localizedDescription : "Unexpected failed to thread destruct.")")
+//        }
+//    }
+    
+    /// dummy comment
+    public func requestConnection(on worker: Worker ) -> Future<MySQLConnection>{
+        //print("worker (\(worker)) of hash is \( (worker as AnyObject).hash ?? 0 )")
+        return connectionPoolCache.requestConnectionToPool(on: worker.eventLoop)
+    }
+    
+    /// dummy comment
+    public func connectionOnInstantEventLoop() -> Future<MySQLConnection>{
+        return database.newConnection(on: MultiThreadedEventLoopGroup(numberOfThreads: 1))
+    }
+    
+    public func correctInstantEventLoop( connection: MySQLConnection){
+        connection.eventLoop.shutdownGracefully { (error) in
+            print("\(error != nil ? error!.localizedDescription : "shutdownGracefully was successed.")")
         }
-    }
-    
-    /// dummy comment
-    public func newConnection(on worker: Worker ) -> Future<MySQLConnection>{
-        database.newConnection(on: worker)
-    }
-    
-    /// dummy comment
-    public func connectionOnDatabaseEventLoop() -> Future<MySQLConnection>{
-        database.newConnection(on: self.worker)
     }
     
     /// dummy comment
@@ -47,6 +64,14 @@ public class MySQLDatabaseManager{
         guard let worker = MultiThreadedEventLoopGroup.currentEventLoop else{
             fatalError("connectionOnCurrentEventLoop() is need execute on EventLoopGroup.")
         }
-        return newConnection(on: worker)
+        return requestConnection(on: worker)
+    }
+    
+    public func releaseConnection(_ connection: MySQLConnection) {
+        guard let worker = MultiThreadedEventLoopGroup.currentEventLoop else{
+            fatalError("connectionOnCurrentEventLoop() is need execute on EventLoopGroup.")
+        }
+        // to inactive state for connection
+        connectionPoolCache.releaseConnectionToPool(on: worker, connection: connection)
     }
 }

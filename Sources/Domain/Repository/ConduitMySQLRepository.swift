@@ -20,14 +20,19 @@ struct ConduitMySQLRepository: ConduitRepository{
     /// <#Description#>
     func ifneededPreparetion() throws{
 
-        try database.connectionOnDatabaseEventLoop()
-            .flatMap{ connection in
-                Articles.create(on: connection)
-                    .flatMap{ Comments.create(on: connection) }
-                    .flatMap{ Favorites.create(on: connection) }
-                    .flatMap{ Follows.create(on: connection) }
-                    .flatMap{ Tags.create(on: connection) }
-                    .flatMap{ Users.create(on: connection) }
+        var connection: MySQLConnection?
+        return try database.connectionOnInstantEventLoop()
+            .flatMap{ conn in
+                connection = conn
+                return Articles.create(on: conn)
+                    .flatMap{ Comments.create(on: conn) }
+                    .flatMap{ Favorites.create(on: conn) }
+                    .flatMap{ Follows.create(on: conn) }
+                    .flatMap{ Tags.create(on: conn) }
+                    .flatMap{ Users.create(on: conn) }
+            }
+            .always {
+                self.database.correctInstantEventLoop(connection: connection!)
             }
             .wait()
     }

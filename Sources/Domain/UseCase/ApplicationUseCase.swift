@@ -75,7 +75,7 @@ public class ApplicationUseCase: UseCase{
         // Set router
         services.register(router, as: Router.self)
         
-        // Set Service models
+        // Set transferable type
         services.register(AuthedUser.self)
         services.register(VerifiedUserEntity.self)
         

@@ -15,14 +15,26 @@ extension MySQLDatabaseManager{
     /// - Parameter connection: <#connection description#>
     /// - Parameter email: <#email description#>
     func selectUser(on connection: MySQLConnection, email: String) -> Future<Users?>{
-        Users.query(on: connection).filter(\Users.email == email).all().map{ $0.first }
+        Users.query(on: connection)
+            .filter(\Users.email == email)
+            .all()
+            .map{ $0.first }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
     /// - Parameter connection: <#connection description#>
     /// - Parameter id: <#id description#>
     func selectUser(on connection: MySQLConnection, id: Int) -> Future<Users?>{
-        Users.query(on: connection).filter(\Users.id == id).all().map{ $0.first }
+        Users.query(on: connection)
+            .filter(\Users.id == id)
+            .all()
+            .map{ $0.first }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
@@ -32,7 +44,11 @@ extension MySQLDatabaseManager{
     /// - Parameter hash: <#hash description#>
     /// - Parameter salt: <#salt description#>
     func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) -> Future<Users> {
-        Users(id: nil, username: username, email: email, hash: hash, salt: salt).save(on: connection)
+        Users(id: nil, username: username, email: email, hash: hash, salt: salt)
+            .save(on: connection)
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
@@ -42,10 +58,29 @@ extension MySQLDatabaseManager{
     /// - Parameter bio: <#bio description#>
     /// - Parameter image: <#image description#>
     func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) -> Future<Users>{
+//        connectionOnCurrentEventLoop()
+//        .flatMap { connection in
+//            Users.query(on: connection).filter(\Users.id == id).first()
+//        }
+//        .map{ users -> Users in
+//            guard let user = users else{
+//                throw Error("Update process is failed. User not found.")
+//            }
+//            return user
+//        }
+//        .flatMap{ user in
+//            if let email = email { user.email = email }
+//            if let bio = bio { user.bio = bio }
+//            if let image = image { user.image = image }
+//            return user.update(on: connection )
+//        }
+//        .always { [weak self] in
+//            self?.releaseConnection(connection)
+//        }
+        
         Users.query(on: connection)
             .filter(\Users.id == id)
-            .first() // Note: 2019-10-24 15:06:13.682666+0900 Run[41699:1276087] Fatal error: Attempting to call `send(...)` while handler is still: callback(NIO.EventLoopPromise<()>(futureResult: NIO.EventLoopFuture<()>), (Function)).: file /Users/arakane/github/swift-vapor-layered-realworld-example-app/.build/checkouts/mysql-kit/Sources/MySQL/Connection/MySQLConnection.swift, line 81
-            // https://github.com/vapor/fluent-mysql-driver/issues/136 👀
+            .first()
             .map{ users -> Users in
                 guard let user = users else{
                     throw Error("Update process is failed. User not found.")
@@ -57,6 +92,9 @@ extension MySQLDatabaseManager{
                 if let bio = bio { user.bio = bio }
                 if let image = image { user.image = image }
                 return user.update(on: connection )
+            }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
             }
     }
     
@@ -72,6 +110,9 @@ extension MySQLDatabaseManager{
                     return nil
                 }
                 return Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false)
+            }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
             }
     }
     
@@ -90,8 +131,12 @@ extension MySQLDatabaseManager{
                 }
                 followee = row
                 return Follows(id: nil, followee: row.id!, follower: userId).save(on: connection)
-            }.map{ follow in
+            }
+            .map{ follow in
                 Profile(username: followee!.username, bio: followee!.bio, image: followee!.image, following:  follow.followee == followee!.id )
+            }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
             }
     }
     
@@ -111,6 +156,9 @@ extension MySQLDatabaseManager{
                 }
                 return Profile(username: user.username, bio: user.bio, image: user.image, following: user.following ?? false)
             }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
@@ -128,6 +176,9 @@ extension MySQLDatabaseManager{
                     throw Error("Insert process is failed. Article is not found. Logically impossible.")
                 }
                 return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
+            }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
             }
     }
     
@@ -147,6 +198,9 @@ extension MySQLDatabaseManager{
                 }
                 return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
             }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
@@ -160,6 +214,9 @@ extension MySQLDatabaseManager{
                 rows.map { comment in
                 Comment(_id: comment.id, createdAt: comment.createdAt, updatedAt: comment.updatedAt, body: comment.body, author: Profile(username: comment.username, bio: comment.bio, image: comment.image, following: comment.following ?? false))
                 }
+            }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
             }
     }
     
@@ -192,13 +249,21 @@ extension MySQLDatabaseManager{
             .map{ author in
                 Comment(_id: inserted!.id!, createdAt: inserted!.createdAt!, updatedAt: inserted!.updatedAt!, body: inserted!.body, author: Profile(username: author.username, bio: author.bio, image: author.image, following: false /* Because It's own. */))
             }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
     /// - Parameter connection: <#connection description#>
     /// - Parameter commentId: <#commentId description#>
     func deleteComments(on connection: MySQLConnection, commentId: Int ) -> Future<Void>{
-        connection.raw( RawSQLQueries.deleteComments( id: commentId ) ).all().map{ _ in return }
+        connection.raw( RawSQLQueries.deleteComments( id: commentId ) )
+            .all()
+            .map{ _ in return }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
@@ -214,6 +279,9 @@ extension MySQLDatabaseManager{
                 rows.map{ row in
                     Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
                 }
+            }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
             }
     }
     
@@ -247,6 +315,9 @@ extension MySQLDatabaseManager{
                 }
                 return article
             }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
@@ -273,6 +344,9 @@ extension MySQLDatabaseManager{
                 if let b = body { target.body = b }
                 
                 return target.update(on: connection)
+            }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
             }
         
         // Define finishing process
@@ -311,10 +385,16 @@ extension MySQLDatabaseManager{
                 }
                 .flatMap( getArticlesClosure )
                 .map( pickArticleClosure )
+                .always { [weak self] in
+                    self?.releaseConnection(connection)
+                }
         }else{
             return future
                 .flatMap( getArticlesClosure )
                 .map( pickArticleClosure )
+                .always { [weak self] in
+                    self?.releaseConnection(connection)
+                }
         }
     }
     
@@ -322,7 +402,12 @@ extension MySQLDatabaseManager{
     /// - Parameter connection: <#connection description#>
     /// - Parameter slug: <#slug description#>
     func deleteArticle(on connection: MySQLConnection, slug: String ) -> Future<Void> {
-        connection.raw( RawSQLQueries.deleteArticles(slug: slug) ).all().map{ _ in return }
+        connection.raw( RawSQLQueries.deleteArticles(slug: slug) )
+            .all()
+            .map{ _ in return }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
     
     /// <#Description#>
@@ -331,6 +416,8 @@ extension MySQLDatabaseManager{
         connection.raw( RawSQLQueries.selectTags() )
             .all(decoding: TagOnlyRow.self )
             .map{ rows in rows.map{ $0.tag } }
+            .always { [weak self] in
+                self?.releaseConnection(connection)
+            }
     }
-    
 }
