@@ -12,39 +12,46 @@ internal final class StandaloneDatabaseConnectionPoolCache<Database> where Datab
 
     /// The source databases.
     private let database: Database
-    
-    /// The cached connection pools.
-    private var cache: [Int: DatabaseConnectionPool<Database>]
 
     /// The pool configuration settings.
     private let config: DatabaseConnectionPoolConfig
-
+    
+    /// The cached connection pools on thread.
+    private let threadVariablePools: ThreadSpecificVariable<DatabaseConnectionPool<Database>> // Note: https://github.com/apple/swift-nio/blob/2.10.1/Sources/NIO/Thread.swift#L154-L157 has deinit, but https://github.com/apple/swift-nio/blob/1.14.1/Sources/NIO/Thread.swift hasn't deinit. So do it manually.
+    
     /// Creates a new `DatabaseConnectionPoolCache`.
     internal init(database: Database, config: DatabaseConnectionPoolConfig) {
         self.database = database
         self.config = config
-        self.cache = [:]
+        self.threadVariablePools = ThreadSpecificVariable<DatabaseConnectionPool<Database>>()
     }
-
-    internal func requestConnectionToPool(on eventLoop: EventLoop) -> Future<Database.Connection>{
-        guard let hash = (eventLoop as AnyObject).hash else{
-            fatalError("The eventloop has not hash.")
+    
+    deinit {
+        threadVariablePools.release()
+    }
+    
+    internal func requestConnectionToPool() -> Future<Database.Connection>{
+        guard let eventLoop = MultiThreadedEventLoopGroup.currentEventLoop else{
+            fatalError("connectionOnCurrentEventLoop() is need execute on EventLoopGroup.")
         }
-        
-        return ( cache[hash] ?? {
+        return ( threadVariablePools.currentValue ?? {
             let pool = database.newConnectionPool(config: config, on: eventLoop)
-            cache[hash] = pool
+            threadVariablePools.currentValue = pool
             return pool
         }()).requestConnection()
     }
     
-    internal func releaseConnectionToPool(on eventLoop: EventLoop, connection: Database.Connection) {
-        guard let hash = (eventLoop as AnyObject).hash else{
-            fatalError("The eventloop has not hash.")
-        }
-        guard let pool = cache[hash] else{
+    internal func releaseConnectionToPool(connection: Database.Connection) {
+        guard let pool = threadVariablePools.currentValue else{
             fatalError("A connection pool was not found.")
         }
         pool.releaseConnection(connection)
+    }
+}
+
+extension ThreadSpecificVariable{
+    fileprivate func release(){
+        let pthreadErr = pthread_key_delete(pthread_key_t())
+        precondition(pthreadErr == 0, "pthread_key_delete failed, error \(pthreadErr)")
     }
 }

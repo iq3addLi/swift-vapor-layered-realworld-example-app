@@ -135,16 +135,12 @@ extension MySQLDatabaseManager{
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func isUnique(username: String) -> Future<ValidateIssue?>{
-        self.connectionOnCurrentEventLoop().flatMap { connection in
-            Users.query(on: connection)
-                .filter(\Users.username == username)
-                .all()
-                .map{
-                    guard $0.first == nil
-                        else{ return ValidateIssue(key: "username", report: "has already been taken" ) }
-                    return nil
-                }
-        }
+        selectUser(name: username)
+            .map{
+                guard $0 == nil
+                    else{ return ValidateIssue(key: "username", report: "has already been taken" ) }
+                return nil
+            }
     }
     
     /// Query the DB to see if it is a unique email
@@ -152,15 +148,11 @@ extension MySQLDatabaseManager{
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func isUnique(email: String) -> Future<ValidateIssue?>{
-        self.connectionOnCurrentEventLoop().flatMap { connection in
-            Users.query(on: connection)
-                .filter(\Users.email == email)
-                .all()
-                .map{
-                    guard $0.first == nil
-                        else{ return ValidateIssue(key: "email", report: "has already been taken" ) }
-                    return nil
-                }
-        }
+        selectUser(email: email)
+            .map{
+                guard $0 == nil
+                    else{ return ValidateIssue(key: "email", report: "has already been taken" ) }
+                return nil
+            }
     }
 }
