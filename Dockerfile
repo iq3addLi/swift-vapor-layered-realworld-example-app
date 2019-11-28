@@ -9,7 +9,7 @@ ARG env
 
 # apt-get
 RUN apt-get -qq update \
-  && apt-get -q -y install openssl libssl-dev libz-dev libicu-dev \
+  && apt-get -q -y install libssl-dev libz-dev libicu-dev \
   && rm -r /var/lib/apt/lists/*
   
 WORKDIR /app
