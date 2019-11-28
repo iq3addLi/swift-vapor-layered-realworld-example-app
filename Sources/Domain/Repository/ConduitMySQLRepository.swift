@@ -210,10 +210,13 @@ struct ConduitMySQLRepository: ConduitRepository{
         }
         return currentEventLoop
             .submit{ () -> String in
-                try title.convertedToSlug()
+                try title.convertedToSlug() + "-" + .random(length: 8)
             }
             .flatMap{ slug in
-                self.database.insertArticle(author: author, title: title, slug: slug, description: discription, body: body, tags: tagList)
+                self.database.insertArticle(author: author, title: title, slug: slug, description: discription, body: body, tags: { tagList in
+                    // Trim whitespace, camecased and remove duplicate element
+                    Array( Set(tagList.map { $0.camelcased }))
+                }(tagList))
             }
     }
     
@@ -231,7 +234,10 @@ struct ConduitMySQLRepository: ConduitRepository{
     /// - Parameter tagList: <#tagList description#>
     /// - Parameter userId: <#userId description#>
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article>{
-        database.updateArticle(slug: slug, title: title, description: description, body: body, tagList: tagList, readIt: userId)
+        database.updateArticle(slug: slug, title: title, description: description, body: body, tagList: tagList != nil ? { tagList in
+            // Trim whitespace, camecased and remove duplicate element
+            Array( Set(tagList.map { $0.camelcased }))
+        }(tagList!) : nil, readIt: userId)
     }
     
     /// <#Description#>

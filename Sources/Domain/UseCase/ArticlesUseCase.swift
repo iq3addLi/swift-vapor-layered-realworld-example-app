@@ -73,11 +73,7 @@ extension ArticlesUseCase{
     /// - returns:
     ///    <#Description#>
     public func postArticle(_ article: NewArticle, author userId: Int ) -> Future<SingleArticleResponse>{
-        conduit.addArticle(userId: userId, title: article.title, discription: article._description, body: article.body, tagList: { tagList in
-                               // Trim whitespace and remove duplicate element
-                               Array( Set(tagList.map { $0.trimmingCharacters(in: .whitespaces) }))
-                           }(article.tagList ?? [])
-            )
+        conduit.addArticle(userId: userId, title: article.title, discription: article._description, body: article.body, tagList: article.tagList ?? [])
             .map{ article in
                 SingleArticleResponse(article: article )
             }

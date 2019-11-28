@@ -63,7 +63,7 @@ final class MySQLFluentTests: XCTestCase {
     
     func testInsertUser() throws{
         // Variables
-        let username = randomString(length: 8)
+        let username = String.random(length: 8)
         let email = "\(username)@realworld_test.com"
         let hash = "hash_salt"
         let salt = "_salt"
@@ -481,8 +481,3 @@ final class MySQLFluentTests: XCTestCase {
     }
 }
 
-
-private func randomString(length: Int) -> String {
-    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    return String((0..<length).map{ _ in letters.randomElement()! })
-}

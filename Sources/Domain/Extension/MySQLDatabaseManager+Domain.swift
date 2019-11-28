@@ -319,23 +319,17 @@ extension MySQLDatabaseManager{
             // Update Tags
             let eventLoop = future.eventLoop
             var articleId: Int?
-            return future.flatMap{ article -> EventLoopFuture<[Tags]> in
+            return future
+                .flatMap{ article -> EventLoopFuture<[Tags]> in
                     articleId = article.id
                     return try article.tags.query(on: connection).all()
                 }
-                .map{ tags -> EventLoopFuture<Void> in
+                .flatMap{ tags -> EventLoopFuture<Void> in
                     let deleteFutures = tags.filter{ tagList.contains($0.tag) == false }
-                        .map{ $0.delete(on: connection) }
-
+                                            .map{ $0.delete(on: connection) }
                     let saveFutures = tagList.filter{ tags.map{ $0.tag }.contains($0) == false }
-                        .map{ Tags(id: nil, article: articleId!, tag: $0).save(on: connection).map{ _ in return } }
-                    
-                    switch (deleteFutures.serializedFuture(), saveFutures.serializedFuture()){
-                    case (.some(let d), .some(let s)): return d.flatMap{ s }
-                    case (.some(let d), .none): return d
-                    case (.none, .some(let s)): return s
-                    case (.none, .none): return eventLoop.newSucceededFuture(result: Void())
-                    }
+                                            .map{ Tags(id: nil, article: articleId!, tag: $0).save(on: connection).transform(to: Void()) }
+                    return (deleteFutures + saveFutures).serializedFuture() ?? eventLoop.newSucceededFuture(result: Void())
                 }
                 .flatMap( getArticlesClosure )
                 .map( pickArticleClosure )
