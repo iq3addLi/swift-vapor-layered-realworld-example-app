@@ -1,6 +1,7 @@
 .git/
 .build/
 .swiftpm/
+build/
 *.xcodeproj/
 pulumi/
 mysql_data/
