@@ -14,6 +14,4 @@ public struct SingleCommentResponse: Codable {
         self.comment = comment
     }
 
-
 }
-

@@ -8,27 +8,26 @@
 import Foundation
 
 /// <#Description#>
-struct ValidateIssue{
-    
+struct ValidateIssue {
+
     /// <#Description#>
     let key: String
-    
+
     /// <#Description#>
     let report: String
 }
 
-extension Array where Element == ValidateIssue{
-    
+extension Array where Element == ValidateIssue {
+
     /// <#Description#>
     func generateError() -> ValidationError {
         var errors: [String: [String]] = [:]
-        self.forEach{ issue in
-            errors[issue.key] = self.filter{ issue.key == $0.key }.map{ $0.report }
+        self.forEach { issue in
+            errors[issue.key] = self.filter { issue.key == $0.key }.map { $0.report }
         }
         return ValidationError( errors: errors )
     }
 }
-
 
 /// <#Description#>
 public struct ValidationError: Swift.Error, Codable {

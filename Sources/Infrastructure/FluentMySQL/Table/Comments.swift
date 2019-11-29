@@ -5,15 +5,14 @@
 //  Created by iq3AddLi on 2019/09/12.
 //
 
-
-public final class Comments{
+public final class Comments {
     public var id: Int?
     public var body: String
     public var author: Int
     public var article: Int
     public var createdAt: Date?
     public var updatedAt: Date?
-    
+
     public init( id: Int? = nil, body: String, author: Int, article: Int, createdAt: Date? = nil, updatedAt: Date? = nil ) {
         self.id = id
         self.body = body
@@ -26,12 +25,12 @@ public final class Comments{
 
 import FluentMySQL
 
-extension Comments: MySQLModel{
+extension Comments: MySQLModel {
     // Table name
     public static var name: String {
         return "Comments"
     }
-    
+
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Comments` (
@@ -52,13 +51,12 @@ extension Comments: MySQLModel{
 
 // Relation
 extension Comments {
-    
+
     public var commentedArticle: Parent<Comments, Articles> {
         return parent(\.article)
     }
-    
+
     public var commentedUser: Parent<Comments, Users> {
         return parent(\.author)
     }
 }
-

@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-public final class Follows{
+public final class Follows {
     public var id: Int?
     public var followee: Int
     public var follower: Int
@@ -18,12 +18,12 @@ public final class Follows{
 
 import FluentMySQL
 
-extension Follows: MySQLModel{
+extension Follows: MySQLModel {
     // Table name
     public static var name: String {
         return "Follows"
     }
-    
+
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Follows` (
@@ -42,13 +42,12 @@ extension Follows: MySQLModel{
 
 // Relation
 extension Follows {
-    
+
     var followeeUser: Parent<Follows, Users>? {
         return parent(\.followee)
     }
-    
+
     var followerUser: Parent<Follows, Users>? {
         return parent(\.follower)
     }
 }
-

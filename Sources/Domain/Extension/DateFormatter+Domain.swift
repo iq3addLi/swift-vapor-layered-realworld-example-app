@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension DateFormatter{
+extension DateFormatter {
     static var iso8601withFractionalSeconds: DateFormatter {
 //        let formatter = ISO8601DateFormatter() // ISO8601DateFormatter is not DateFormatter:(
 //        formatter.formatOptions.insert(.withFractionalSeconds)

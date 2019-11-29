@@ -14,6 +14,4 @@ public struct LoginUserRequest: Codable {
         self.user = user
     }
 
-
 }
-

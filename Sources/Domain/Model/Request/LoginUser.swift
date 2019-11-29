@@ -5,7 +5,6 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
-
 /// see https://github.com/gothinkster/realworld/blob/master/api/swagger.json
 public struct LoginUser: Codable {
 
@@ -17,6 +16,4 @@ public struct LoginUser: Codable {
         self.password = password
     }
 
-
 }
-

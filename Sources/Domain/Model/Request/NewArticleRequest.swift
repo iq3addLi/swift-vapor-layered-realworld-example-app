@@ -14,6 +14,4 @@ public struct NewArticleRequest: Codable {
         self.article = article
     }
 
-
 }
-

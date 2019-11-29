@@ -6,8 +6,8 @@
 //
 
 // dummy comment
-public final class TagOnlyRow: Codable{
-    
+public final class TagOnlyRow: Codable {
+
     // dummy comment
     public let tag: String
 }

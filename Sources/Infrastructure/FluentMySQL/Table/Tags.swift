@@ -5,8 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-
-public final class Tags{
+public final class Tags {
     public var id: Int?
     public var article: Int
     public var tag: String
@@ -17,15 +16,14 @@ public final class Tags{
     }
 }
 
-
 import FluentMySQL
 
-extension Tags: MySQLModel{
+extension Tags: MySQLModel {
     // Table name
     public static var name: String {
         return "Tags"
     }
-    
+
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Tags` (
@@ -41,11 +39,10 @@ extension Tags: MySQLModel{
 }
 
 // extension Tags: MySQLMigration{}
-    
+
 // Relation
 extension Tags {
     var taggedArticle: Parent<Tags, Articles>? {
         return parent(\.article)
     }
 }
-

@@ -9,12 +9,12 @@ import Vapor
 import Domain
 
 struct AuthenticateThenSearchUserMiddleware: Middleware {
-    
+
     let useCase = AuthenticateMiddlewareUseCase()
-    
+
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
-        guard let token = request.http.headers.tokenAuthorization?.token else{
+        guard let token = request.http.headers.tokenAuthorization?.token else {
 
             // Erase ralay service value
             let relay = (try request.privateContainer.make(AuthedUser.self))
@@ -24,14 +24,14 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
             relay.token = ""
             relay.bio = ""
             relay.image = ""
-            
+
             // Abort
             throw Abort( .badRequest )
         }
-        
+
         // Verify then search user
         return try useCase.user(by: token)
-            .flatMap{ tuple in
+            .flatMap { tuple in
                 let (id, user) = tuple
 
                 // Add ralay service value
@@ -42,7 +42,7 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
                 relay.token = token
                 relay.bio = user.bio
                 relay.image = user.image
-                
+
                 return try next.respond(to: request)
             }
     }

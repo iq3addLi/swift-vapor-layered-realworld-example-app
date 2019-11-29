@@ -10,9 +10,9 @@ import Domain
 
 /// dummy comment
 struct UsersController {
-    
+
     let useCase = UsersUseCase()
-    
+
     // POST /users
     func postUser(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
@@ -21,10 +21,10 @@ struct UsersController {
                 try useCase.register(user: newUserRequest.user)
             }
             .map { response in
-                request.response( response , as: .json)
+                request.response( response, as: .json)
             }
     }
-    
+
     // POST /users/login
     func login(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
@@ -33,11 +33,10 @@ struct UsersController {
                 // Log-in user
                 useCase.login(form: req.user)
             }
-            .map{ response in
+            .map { response in
                 request.response( response, as: .json)
             }
     }
-    
 
     // GET /user Auth then search user
     func getUser(_ request: Request) throws -> Future<Response> {
@@ -46,13 +45,13 @@ struct UsersController {
         // Create response
         return request.response( response, as: .json).encode(status: .ok, for: request)
     }
-    
+
     // PUT /user Auth then expand payload
     func updateUser(_ request: Request) throws -> Future<Response> {
-        
+
         // Get relayed parameter
         let user = (try request.privateContainer.make(VerifiedUserEntity.self))
-        
+
         // Parse json body
         let useCase = self.useCase
         return try request.content.decode(json: UpdateUserRequest.self, using: .custom(dates: .iso8601))
@@ -60,9 +59,9 @@ struct UsersController {
                 // Verify then update user
                 useCase.update(userId: user.id!, token: user.token!, updateUser: req.user )
             }
-            .map{ response in
+            .map { response in
                 request.response( response, as: .json)
             }
     }
-    
+
 }

@@ -14,6 +14,4 @@ public struct SingleArticleResponse: Codable {
         self.article = article
     }
 
-
 }
-

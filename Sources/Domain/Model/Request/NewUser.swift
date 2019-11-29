@@ -18,6 +18,4 @@ public struct NewUser: Codable {
         self.password = password
     }
 
-
 }
-

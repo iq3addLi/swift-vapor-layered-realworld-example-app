@@ -20,13 +20,11 @@ public struct NewArticle: Codable {
         self.tagList = tagList
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey {
         case title
         case _description = "description"
         case body
         case tagList
     }
 
-
 }
-

@@ -20,6 +20,4 @@ public struct Profile: Codable {
         self.following = following
     }
 
-
 }
-

@@ -14,6 +14,4 @@ public struct GenericErrorModelErrors: Codable {
         self.body = body
     }
 
-
 }
-

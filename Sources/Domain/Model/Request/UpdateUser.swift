@@ -22,6 +22,4 @@ public struct UpdateUser: Codable {
         self.image = image
     }
 
-
 }
-

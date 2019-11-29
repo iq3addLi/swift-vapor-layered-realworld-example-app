@@ -23,11 +23,9 @@ public struct User: Codable {
     }
 }
 
-
-
 import Infrastructure
-extension Users{
-    public func profile( following: Bool) -> Profile{
+extension Users {
+    public func profile( following: Bool) -> Profile {
         return Profile(username: username, bio: bio, image: image, following: following)
     }
 }

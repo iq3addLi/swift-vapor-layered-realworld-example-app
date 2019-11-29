@@ -18,10 +18,10 @@
 /// As an aside, I have never met OR-Mapper, which can cover the vast specifications of SQL.
 /// This is part of the reason, I attach importance to portability over typeSafe for OR-Mapper.
 /// There is also a growing need to adopt KVS. Database that interacts directly with the application.
-public enum RawSQLQueries{}
-    
+public enum RawSQLQueries {}
+
 // MARK: Articles
-extension RawSQLQueries{
+extension RawSQLQueries {
     /// Returns the query. Inquires about articles according to the argument conditions.
     /// - Parameter condition: Information that shows what criteria to search for articles.
     /// - Parameter userId: ID of the user reading this article. If nil, following is false.
@@ -39,7 +39,7 @@ extension RawSQLQueries{
         \(
         // When userId is specified
         { () -> String in
-        switch userId{
+        switch userId {
         case .some( let id ): return """
             ,exists( select * from Follows where followee = Users.id and follower = \(id) ) as following,
             exists( select * from Favorites where article = Articles.id and user = \(id) ) as favorited
@@ -49,7 +49,7 @@ extension RawSQLQueries{
         \(
         // Switch for each search condition
         {() -> String in
-        switch condition{
+        switch condition {
         case .global: return """
             from Articles
                 inner join Users on Articles.author = Users.id
@@ -98,8 +98,7 @@ extension RawSQLQueries{
         )
         """
     }
-    
-    
+
     /// Returns the query. It deletes an article and related tags and favorite information.
     /// - Parameter slug: Article's slug for delete.
     /// - returns:
@@ -107,27 +106,28 @@ extension RawSQLQueries{
     public static func deleteArticles(slug: String) -> String {
         return """
         DELETE
-            Articles, Tags, Favorites
+            Articles, Tags, Favorites, Comments
         FROM Articles
             left join Tags on Articles.id = Tags.article
             left join Favorites on Articles.id = Favorites.article
+            left join Comments on Articles.id = Comments.article
         WHERE
             Articles.slug = "\(slug)"
-        """ // TODO: with comments
+        """
     }
-    
+
     // Insert is performed by SQLQueryBuilder
 }
 
 // MARK: Users
-extension RawSQLQueries{
-    
+extension RawSQLQueries {
+
     /// Returns the query. Inquiries about users and their follow-up information.
     /// - Parameter name: Username to search for.
     /// - Parameter id: User's ID searching for the user. If nil, following is false.
     /// - returns:
     ///    SQL query string.
-    public static func selectUser(name: String, follower id: Int?) -> String{
+    public static func selectUser(name: String, follower id: Int?) -> String {
         return """
         select *
         \((id != nil) ? ",exists( select * from Follows where followee = Users.id and follower = \(id!) ) as following" : "" )
@@ -136,13 +136,13 @@ extension RawSQLQueries{
             username = "\(name)"
         """
     }
-    
+
     /// Returns the query. Inquiries about users and their follow-up information.
     /// - Parameter userId: User's ID to search for.
     /// - Parameter id: User's ID searching for the user. If nil, following is false.
     /// - returns:
     ///    SQL query string.
-    public static func selectUser(id userId: Int, follower id: Int?) -> String{
+    public static func selectUser(id userId: Int, follower id: Int?) -> String {
         return """
         select *
         \((id != nil) ? ",exists( select * from Follows where followee = Users.id and follower = \(id!) ) as following" : "" )
@@ -151,13 +151,13 @@ extension RawSQLQueries{
             id = "\(userId)"
         """
     }
-    
+
     // Insert is performed by SQLQueryBuilder
 }
 
 // MARK: Comments
-extension RawSQLQueries{
-    
+extension RawSQLQueries {
+
     /// Returns the query. Get comments associated with an article.
     /// - Parameter articleSlug: Article's slug to be commented.
     /// - Parameter userId: User who gets the comment. If nil, following is false.
@@ -175,7 +175,7 @@ extension RawSQLQueries{
             Comments.article = ( select id from Articles where slug = "\(articleSlug)")
         """
     }
-    
+
     /// Returns the query. Inserts a comment associated with an article.
     /// - Parameter articleSlug: Article's slug to be commented.
     /// - Parameter body: A comment body.
@@ -204,20 +204,19 @@ extension RawSQLQueries{
             id = "\(commentId)"
         """
     }
-    
+
     // Insert is performed by SQLQueryBuilder
 }
 
 // MARK: Follows
-extension RawSQLQueries{
-    
-    
+extension RawSQLQueries {
+
     /// Returns the query. Insert follow information associated with a user.
     /// - Parameter username: Username to be followed.
     /// - Parameter id: User's Id to follow.
     /// - returns:
     ///    SQL query string.
-    public static func insertFollows(followee username: String, follower id: Int) -> String{
+    public static func insertFollows(followee username: String, follower id: Int) -> String {
         return """
         insert
             into Follows (followee, follower)
@@ -227,14 +226,13 @@ extension RawSQLQueries{
         )
         """
     }
-    
-    
+
     /// Returns the query. Delete follow information associated with a user.
     /// - Parameter username: Username to be unfollowed.
     /// - Parameter id: User's Id to unfollow.
     /// - returns:
     ///    SQL query string.
-    public static func deleteFollows(followee username: String, follower id: Int) -> String{
+    public static func deleteFollows(followee username: String, follower id: Int) -> String {
         return """
         DELETE
             FROM Follows
@@ -246,15 +244,14 @@ extension RawSQLQueries{
 }
 
 // MARK: Favorites
-extension RawSQLQueries{
+extension RawSQLQueries {
 
-    
     /// Returns the query. Inserts favorite information associated with an article.
     /// - Parameter articleSlug: Article's slug to be favorited.
     /// - Parameter userId: User's Id to favorite.
     /// - returns:
     ///    SQL query string.
-    public static func insertFavorites(for articleSlug: String, by userId: Int) -> String{
+    public static func insertFavorites(for articleSlug: String, by userId: Int) -> String {
         return """
         insert
             into Favorites (article, user)
@@ -265,7 +262,6 @@ extension RawSQLQueries{
         """
     }
 
-    
     /// Returns the query. This deletes favorite information associated with an article.
     /// - Parameter articleSlug: Article's slug to be unfavorited.
     /// - Parameter userId: User's Id to unfavorite.
@@ -283,13 +279,12 @@ extension RawSQLQueries{
 }
 
 // MARK: Tags
-extension RawSQLQueries{
-    
-    
+extension RawSQLQueries {
+
     /// Returns the query. It returns the tag registered in the database as unique.
     /// - returns:
     ///    SQL query string.
-    public static func selectTags() -> String{
+    public static func selectTags() -> String {
         return """
         select distinct tag from Tags
         """

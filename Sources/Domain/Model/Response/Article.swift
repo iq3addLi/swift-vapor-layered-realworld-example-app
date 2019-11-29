@@ -34,7 +34,7 @@ public struct Article: Codable {
         self.author = author
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey {
         case slug
         case title
         case _description = "description"
@@ -46,6 +46,5 @@ public struct Article: Codable {
         case favoritesCount
         case author
     }
-
 
 }

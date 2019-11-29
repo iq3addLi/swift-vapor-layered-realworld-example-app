@@ -24,7 +24,7 @@ public struct Comment: Codable {
         self.author = author
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey {
         case _id = "id"
         case createdAt
         case updatedAt
@@ -33,4 +33,3 @@ public struct Comment: Codable {
     }
 
 }
-

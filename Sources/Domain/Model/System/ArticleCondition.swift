@@ -6,7 +6,7 @@
 //
 
 /// dummy comment
-public enum ArticleCondition{
+public enum ArticleCondition {
     case global
     case feed(Int) // followerId
     case favorite(String) // username

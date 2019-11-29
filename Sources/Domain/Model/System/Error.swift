@@ -6,12 +6,12 @@
 //
 
 /// dummy comment
-struct Error: Swift.Error{
+struct Error: Swift.Error {
     let reason: String
-    
+
     /// <#Description#>
     /// - Parameter reason: <#reason description#>
-    init(_ reason: String){
+    init(_ reason: String) {
         self.reason = reason
     }
 }

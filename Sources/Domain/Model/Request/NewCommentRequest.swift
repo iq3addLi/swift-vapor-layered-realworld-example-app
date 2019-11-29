@@ -14,6 +14,4 @@ public struct NewCommentRequest: Codable {
         self.comment = comment
     }
 
-
 }
-

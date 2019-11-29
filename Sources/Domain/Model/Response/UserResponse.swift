@@ -14,6 +14,4 @@ public struct UserResponse: Codable {
         self.user = user
     }
 
-
 }
-

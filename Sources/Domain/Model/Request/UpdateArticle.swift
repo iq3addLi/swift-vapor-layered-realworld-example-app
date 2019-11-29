@@ -12,7 +12,7 @@ public struct UpdateArticle: Codable {
     public var _description: String?
     public var body: String?
     public var tagList: [String]? // Add
-    
+
     public init(title: String?, _description: String?, body: String?, tagList: [String]?) {
         self.title = title
         self._description = _description
@@ -20,13 +20,11 @@ public struct UpdateArticle: Codable {
         self.tagList = tagList
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey {
         case title
         case _description = "description"
         case body
         case tagList
     }
 
-
 }
-

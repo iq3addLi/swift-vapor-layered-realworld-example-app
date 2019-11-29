@@ -14,6 +14,4 @@ public struct NewUserRequest: Codable {
         self.user = user
     }
 
-
 }
-

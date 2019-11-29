@@ -7,19 +7,16 @@
 
 import Foundation
 
-
 /// <#Description#>
-protocol JWTRepository: Repository{
-    
-    
+protocol JWTRepository: Repository {
+
     /// <#Description#>
     /// - Parameter id: <#id description#>
     /// - Parameter username: <#username description#>
     /// - returns:
     ///    <#Description#>  
     func issuedJWTToken( id: Int, username: String ) throws -> String
-    
-    
+
     /// <#Description#>
     /// - Parameter token: <#token description#>
     /// - returns:

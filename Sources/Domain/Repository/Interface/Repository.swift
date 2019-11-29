@@ -6,4 +6,4 @@
 //
 
 /// This is the protocol that lets jazzy generate documentation. It has no functional meaning.
-protocol Repository{}
+protocol Repository {}

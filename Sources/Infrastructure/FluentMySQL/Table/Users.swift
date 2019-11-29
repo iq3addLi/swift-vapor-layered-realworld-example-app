@@ -5,8 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-
-public final class Users{
+public final class Users {
     public var id: Int?
     public var username: String
     public var email: String
@@ -14,7 +13,7 @@ public final class Users{
     public var image: String
     public var hash: String // hashed password
     public var salt: String
-    
+
     public init(id: Int?, username: String, email: String, bio: String = "", image: String = "", hash: String, salt: String) {
         self.id = id
         self.username = username
@@ -28,12 +27,12 @@ public final class Users{
 
 import FluentMySQL
 
-extension Users: MySQLModel{
+extension Users: MySQLModel {
     // Table name
     public static var name: String {
         return "Users"
     }
-    
+
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Users` (
@@ -62,5 +61,3 @@ extension Users {
         return children(\.author)
     }
 }
-
-

@@ -14,6 +14,4 @@ public struct TagsResponse: Codable {
         self.tags = tags
     }
 
-
 }
-

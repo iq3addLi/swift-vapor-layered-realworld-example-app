@@ -5,8 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
-
-public final class Favorites{
+public final class Favorites {
     public var id: Int?
     public var article: Int
     public var user: Int
@@ -19,12 +18,12 @@ public final class Favorites{
 
 import FluentMySQL
 
-extension Favorites: MySQLModel{
+extension Favorites: MySQLModel {
     // Table name
     public static var name: String {
         return "Favorites"
     }
-    
+
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Favorites` (
@@ -42,11 +41,11 @@ extension Favorites: MySQLModel{
 
 // Relation
 extension Favorites {
-    
+
     var favoritedArticle: Parent<Favorites, Articles>? {
         return parent(\.article)
     }
-    
+
     var favoriteUser: Parent<Favorites, Users>? {
         return parent(\.user)
     }

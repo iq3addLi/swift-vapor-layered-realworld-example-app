@@ -14,6 +14,4 @@ public struct NewComment: Codable {
         self.body = body
     }
 
-
 }
-

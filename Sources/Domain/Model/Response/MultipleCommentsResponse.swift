@@ -14,6 +14,4 @@ public struct MultipleCommentsResponse: Codable {
         self.comments = comments
     }
 
-
 }
-

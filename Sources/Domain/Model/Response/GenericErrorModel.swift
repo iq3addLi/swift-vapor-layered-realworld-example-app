@@ -14,5 +14,4 @@ public struct GenericErrorModel: Codable {
         self.errors = errors
     }
 
-
 }

@@ -14,6 +14,4 @@ public struct ProfileResponse: Codable {
         self.profile = profile
     }
 
-
 }
-

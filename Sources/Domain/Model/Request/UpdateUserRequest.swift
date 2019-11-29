@@ -14,6 +14,4 @@ public struct UpdateUserRequest: Codable {
         self.user = user
     }
 
-
 }
-
