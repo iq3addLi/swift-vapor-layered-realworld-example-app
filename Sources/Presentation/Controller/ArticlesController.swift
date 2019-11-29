@@ -78,7 +78,7 @@ struct ArticlesController {
         // Into domain logic
         return useCase.deleteArticle(slug: slug)
             .map {
-                request.response()
+                request.response( EmptyResponse(), as: .json)
             }
     }
 
@@ -193,7 +193,7 @@ struct ArticlesController {
         // Into domain logic
         return  useCase.deleteComment(slug: slug, id: commentId)
             .map { _ in
-                request.response()
+                request.response( EmptyResponse(), as: .json)
             }
     }
 }

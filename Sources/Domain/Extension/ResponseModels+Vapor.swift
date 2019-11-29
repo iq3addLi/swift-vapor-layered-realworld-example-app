@@ -20,6 +20,7 @@ extension SingleCommentResponse: LosslessHTTPBodyRepresentable {}
 extension TagsResponse: LosslessHTTPBodyRepresentable {}
 extension User: LosslessHTTPBodyRepresentable {}
 extension UserResponse: LosslessHTTPBodyRepresentable {}
+extension EmptyResponse: LosslessHTTPBodyRepresentable {}
 
 extension LosslessHTTPBodyRepresentable where Self: Codable {
     public func convertToHTTPBody() -> HTTPBody {
