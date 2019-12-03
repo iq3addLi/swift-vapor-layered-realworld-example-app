@@ -5,10 +5,9 @@
 //  Created by iq3AddLi on 2019/10/09.
 //
 
-import FluentMySQL
-import Dispatch
+import MySQL
 
-/// dummy comment
+/// Class that manages operations to MySQL
 public class MySQLDatabaseManager {
 
     public static var `default` = {

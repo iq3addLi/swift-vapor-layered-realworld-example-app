@@ -8,10 +8,10 @@
 import Domain
 import Vapor
 
-/// dummy comment
+/// Controller For Tag processing
 struct TagsController {
 
-    let useCase = TagsUseCase()
+    private let useCase = TagsUseCase()
 
     // GET /tags
     func getTags(_ request: Request) throws -> Future<Response> {

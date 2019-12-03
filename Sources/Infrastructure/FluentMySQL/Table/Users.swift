@@ -5,6 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
+/// Representation of Users table
 public final class Users {
     public var id: Int?
     public var username: String
@@ -25,13 +26,7 @@ public final class Users {
     }
 }
 
-import FluentMySQL
-
-extension Users: MySQLModel {
-    // Table name
-    public static var name: String {
-        return "Users"
-    }
+extension Users {
 
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
@@ -53,7 +48,14 @@ extension Users: MySQLModel {
     }
 }
 
-// extension Users: MySQLMigration{}
+
+import FluentMySQL
+extension Users: MySQLModel {
+    // Table name
+    public static var name: String {
+        return "Users"
+    }
+}
 
 // Relation
 extension Users {

@@ -8,10 +8,10 @@
 import Domain
 import Vapor
 
-/// dummy comment
+/// Controller For Article processing
 struct ArticlesController {
 
-    fileprivate let useCase = ArticlesUseCase()
+    private let useCase = ArticlesUseCase()
 
     // GET /articles
     //     /articles?offset=100&limit=3)

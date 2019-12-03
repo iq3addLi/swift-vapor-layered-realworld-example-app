@@ -7,8 +7,11 @@
 
 import FluentMySQL
 
+/// Extension for MySQLDatabaseConfig
 extension MySQLDatabaseConfig {
 
+    
+    /// Generate Config from environment variables.
     static var fromEnvironment: Self {
         guard
             let hostname = ProcessInfo.processInfo.environment["MYSQL_HOSTNAME"],

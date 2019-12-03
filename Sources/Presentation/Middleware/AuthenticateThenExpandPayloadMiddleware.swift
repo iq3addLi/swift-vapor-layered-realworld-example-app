@@ -8,6 +8,7 @@
 import Domain
 import Vapor
 
+/// Middleware to processes that requires authentication and ask for JWT Payload Relay
 struct AuthenticateThenExpandPayloadMiddleware: Middleware {
 
     let useCase = AuthenticateMiddlewareUseCase()

@@ -5,6 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
+/// Representation of Favorites table
 public final class Favorites {
     public var id: Int?
     public var article: Int
@@ -16,14 +17,7 @@ public final class Favorites {
     }
 }
 
-import FluentMySQL
-
-extension Favorites: MySQLModel {
-    // Table name
-    public static var name: String {
-        return "Favorites"
-    }
-
+extension Favorites {
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Favorites` (
@@ -37,7 +31,14 @@ extension Favorites: MySQLModel {
     }
 }
 
-// extension Favorites: MySQLMigration{}
+import FluentMySQL
+
+extension Favorites: MySQLModel {
+    // Table name
+    public static var name: String {
+        return "Favorites"
+    }
+}
 
 // Relation
 extension Favorites {

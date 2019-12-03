@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/09.
 //
 
-// dummy comment
+/// Representation of a row combining Users and Follows information about them.
 public final class UserWithFollowRow: Codable {
 
     // dummy comment

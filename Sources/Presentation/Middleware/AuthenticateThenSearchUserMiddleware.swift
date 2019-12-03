@@ -8,6 +8,7 @@
 import Domain
 import Vapor
 
+/// Middleware to process that requires authentication and ask for relay of authenticated user information
 struct AuthenticateThenSearchUserMiddleware: Middleware {
 
     let useCase = AuthenticateMiddlewareUseCase()

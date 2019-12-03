@@ -7,7 +7,7 @@
 
 import Core // Supply Codable for Date
 
-/// dummy comment
+/// Representation of a row combining Comments and Users
 public final class CommentWithAuthorRow: Codable {
     // Comment
 

@@ -5,6 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
+/// Representation of Articles table
 public final class Articles {
     public var id: Int?
     public var slug: String
@@ -27,14 +28,7 @@ public final class Articles {
     }
 }
 
-import FluentMySQL
-
-extension Articles: MySQLModel {
-    // Table name
-    public static var name: String {
-        return "Articles" // Make explicit
-    }
-
+extension Articles {
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Articles` (
@@ -54,23 +48,15 @@ extension Articles: MySQLModel {
     }
 }
 
-//extension Articles: MySQLMigration{
-//
-//    // Does Not worked in expectly
-//    public static func prepare(on connection: MySQLConnection) -> Future<Void> {
-//        MySQLDatabase.create(Articles.self, on: connection) { builder in
-//            builder.field(for: \.id, isIdentifier: true)
-//            builder.field(for: \.slug, type: .text(100), .notNull)
-//            builder.field(for: \.title, type: .text(1024), .notNull)
-//            builder.field(for: \.description, type: .text, .notNull)
-//            builder.field(for: \.body, type: .text, .notNull)
-//            builder.field(for: \.author, type: .bigint(20), .notNull)
-//            let defaultValueConstraint = MySQLColumnConstraint.default(.value("CURRENT_TIMESTAMP"))
-//            builder.field(for: \.createdAt, type: .timestamp, defaultValueConstraint )
-//            builder.field(for: \.updatedAt, type: .timestamp, defaultValueConstraint )
-//        }
-//    }
-//}
+
+import FluentMySQL
+
+extension Articles: MySQLModel {
+    // Table name
+    public static var name: String {
+        return "Articles" // Make explicit
+    }
+}
 
 // Relation
 extension Articles {

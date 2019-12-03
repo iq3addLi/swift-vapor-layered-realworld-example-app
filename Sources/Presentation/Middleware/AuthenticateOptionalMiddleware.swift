@@ -8,6 +8,7 @@
 import Domain
 import Vapor
 
+/// Middleware to processes where authentication is optional
 struct AuthenticateOptionalMiddleware: Middleware {
 
     let useCase = AuthenticateMiddlewareUseCase()

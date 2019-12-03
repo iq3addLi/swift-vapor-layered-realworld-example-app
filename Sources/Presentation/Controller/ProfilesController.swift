@@ -8,10 +8,10 @@
 import Domain
 import Vapor
 
-/// dummy comment
+/// Controller For Profile processing
 struct ProfilesController {
 
-    let useCase = ProfilesUseCase()
+    private let useCase = ProfilesUseCase()
 
     // GET /profiles/{{USERNAME}}
     // Auth optional

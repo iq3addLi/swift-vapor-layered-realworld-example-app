@@ -5,6 +5,7 @@
 //  Created by iq3AddLi on 2019/09/12.
 //
 
+/// Representation of Comments table
 public final class Comments {
     public var id: Int?
     public var body: String
@@ -23,14 +24,7 @@ public final class Comments {
     }
 }
 
-import FluentMySQL
-
-extension Comments: MySQLModel {
-    // Table name
-    public static var name: String {
-        return "Comments"
-    }
-
+extension Comments {
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Comments` (
@@ -47,7 +41,15 @@ extension Comments: MySQLModel {
     }
 }
 
-// extension Comments: MySQLMigration{}
+
+import FluentMySQL
+
+extension Comments: MySQLModel {
+    // Table name
+    public static var name: String {
+        return "Comments"
+    }
+}
 
 // Relation
 extension Comments {

@@ -5,6 +5,7 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
+/// Representation of Follows table
 public final class Follows {
     public var id: Int?
     public var followee: Int
@@ -16,14 +17,8 @@ public final class Follows {
     }
 }
 
-import FluentMySQL
 
-extension Follows: MySQLModel {
-    // Table name
-    public static var name: String {
-        return "Follows"
-    }
-
+extension Follows {
     public static func create(on connection: MySQLConnection) -> Future<Void> {
         connection.raw("""
             CREATE TABLE IF NOT EXISTS `Follows` (
@@ -38,7 +33,16 @@ extension Follows: MySQLModel {
     }
 }
 
-// extension Follows: MySQLMigration{}
+
+import FluentMySQL
+
+extension Follows: MySQLModel {
+    // Table name
+    public static var name: String {
+        return "Follows"
+    }
+}
+
 
 // Relation
 extension Follows {

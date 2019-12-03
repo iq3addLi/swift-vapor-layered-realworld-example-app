@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/09/11.
 //
 
-/// <#Description#>
+/// Use cases for Articles
 public class ArticlesUseCase: UseCase {
     private let conduit: ConduitRepository = ConduitMySQLRepository()
 

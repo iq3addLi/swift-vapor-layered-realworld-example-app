@@ -7,6 +7,10 @@
 
 import DatabaseKit
 
+/// Standalone DatabaseConnectionPool Cache
+///
+/// DatabaseKit.DatabaseConnectionPoolCache is a ServiceType. Registered as a Vapor Container and can only be handled from Vapor.Request. This is modified so that it can be used separately from Vapor.
+/// - warnings: Assumes the use of thread variables. Therefore, this class cannot be used in the main thread.
 internal final class StandaloneDatabaseConnectionPoolCache<Database> where Database: DatabaseKit.Database {
 
     /// The source databases.

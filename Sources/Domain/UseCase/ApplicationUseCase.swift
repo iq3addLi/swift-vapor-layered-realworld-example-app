@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/09/11.
 //
 
-/// <#Description#>
+/// Use cases for starting server applications
 public class ApplicationUseCase: UseCase {
     private let framework: FrameworkRepository = VaporFrameworkRepository()
     private let conduit: ConduitRepository = ConduitMySQLRepository()

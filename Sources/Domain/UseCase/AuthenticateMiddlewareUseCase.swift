@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/07.
 //
 
-/// <#Description#>
+/// Use cases for authentication middlewares
 public struct AuthenticateMiddlewareUseCase: UseCase {
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()

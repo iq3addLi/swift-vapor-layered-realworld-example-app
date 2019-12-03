@@ -9,7 +9,7 @@
 
 import Core // Supply Codable for Date
 
-/// dummy comment
+/// Representation of a row combining Articles and authors and favorite information about them.
 public final class ArticlesAndAuthorWithFavoritedRow: Codable {
     // Article
 

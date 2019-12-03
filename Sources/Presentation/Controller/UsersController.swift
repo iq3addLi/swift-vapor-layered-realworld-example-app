@@ -8,10 +8,10 @@
 import Domain
 import Vapor
 
-/// dummy comment
+/// Controller For User processing
 struct UsersController {
 
-    let useCase = UsersUseCase()
+    private let useCase = UsersUseCase()
 
     // POST /users
     func postUser(_ request: Request) throws -> Future<Response> {

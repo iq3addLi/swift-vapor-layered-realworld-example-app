@@ -7,6 +7,7 @@
 
 import Vapor
 
+/// FrameworkRepository implemented in Vapor
 class VaporFrameworkRepository: FrameworkRepository {
     
     private lazy var services = {
