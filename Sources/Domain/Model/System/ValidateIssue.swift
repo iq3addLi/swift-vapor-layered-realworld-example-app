@@ -7,7 +7,9 @@
 
 import Foundation
 
-/// <#Description#>
+/// Issue found during validation
+///
+/// Realworld production is a full inspection. It was made to make the same behavior.
 struct ValidateIssue {
 
     /// <#Description#>
@@ -29,7 +31,7 @@ extension Array where Element == ValidateIssue {
     }
 }
 
-/// <#Description#>
+/// Error expressing Validation result according to Realworld specification.
 public struct ValidationError: Swift.Error, Codable {
     public var errors: [String: [String]]
 }

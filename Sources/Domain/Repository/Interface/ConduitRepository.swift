@@ -5,9 +5,7 @@
 //  Created by iq3AddLi on 2019/09/12.
 //
 
-import Async
-
-/// <#Description#>
+/// Definition of the functions that the Conduit service should have.
 protocol ConduitRepository: Repository {
 
     // MARK: Setup

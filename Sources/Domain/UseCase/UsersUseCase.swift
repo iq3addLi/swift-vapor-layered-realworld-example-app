@@ -12,10 +12,7 @@ public struct UsersUseCase: UseCase {
 
     /// <#Description#>
     public init() {}
-}
-
-import Async
-extension UsersUseCase {
+    
 
     /// <#Description#>
     /// - parameters:
@@ -29,7 +26,7 @@ extension UsersUseCase {
             .map { tuple -> UserResponse in
                 let (id, user) = tuple
                 // Issued JWT
-                let token = try jwt.issuedJWTToken(id: id, username: user.username)
+                let token = try jwt.issueJWT(id: id, username: user.username)
                 // Return response
                 return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
             }
@@ -50,7 +47,7 @@ extension UsersUseCase {
             .map { tuple -> UserResponse in  /* MEMO: Closure tuple parameter '(Int, User)' does not support destructuring when Swift 5.1 */
                 let (id, user) = tuple
                 // Issued JWT
-                let token = try jwt.issuedJWTToken(id: id, username: user.username)
+                let token = try jwt.issueJWT(id: id, username: user.username)
                 // Return response
                 return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
             }
@@ -67,7 +64,7 @@ extension UsersUseCase {
     public func currentUser( token: String ) throws -> Future<UserResponse> {
 
         // Verify and expand payload
-        let payload = try jwt.verifyJWTToken(token: token)
+        let payload = try jwt.verifyJWT(token: token)
 
         // Search user in storage
         return conduit.searchUser(id: payload.id)

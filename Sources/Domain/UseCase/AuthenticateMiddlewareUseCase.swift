@@ -7,7 +7,6 @@
 
 /// <#Description#>
 public struct AuthenticateMiddlewareUseCase: UseCase {
-
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()
 
@@ -23,13 +22,10 @@ public struct AuthenticateMiddlewareUseCase: UseCase {
     ///  <#Description#>
     public func payload(by token: String ) throws -> SessionPayload {
         // Verify and expand payload
-        return try jwt.verifyJWTToken(token: token)
+        return try jwt.verifyJWT(token: token)
     }
-}
-
-import Async
-extension AuthenticateMiddlewareUseCase {
-
+    
+    
     /// <#Description#>
     /// - parameters:
     ///     - token: <#token description#>
@@ -40,7 +36,7 @@ extension AuthenticateMiddlewareUseCase {
     public func user(by token: String ) throws -> Future<(Int, User)> {
 
         // Verify and expand payload
-        let payload = try jwt.verifyJWTToken(token: token)
+        let payload = try jwt.verifyJWT(token: token)
 
         // Search user in storage
         return conduit.searchUser(id: payload.id)

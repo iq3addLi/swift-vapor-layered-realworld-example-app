@@ -8,9 +8,11 @@
 import Foundation
 
 extension DateFormatter {
+    
+    /// DataFormatter that handles milliseconds.
+    ///
+    /// DateEncodingStrategy.iso8601 does not handle milliseconds, so this Formatter is prepared.
     static var iso8601withFractionalSeconds: DateFormatter {
-//        let formatter = ISO8601DateFormatter() // ISO8601DateFormatter is not DateFormatter:(
-//        formatter.formatOptions.insert(.withFractionalSeconds)
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
         formatter.locale = Locale(identifier: "en_US_POSIX")

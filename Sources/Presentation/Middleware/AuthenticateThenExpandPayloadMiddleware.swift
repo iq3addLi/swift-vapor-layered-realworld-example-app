@@ -5,8 +5,8 @@
 //  Created by iq3AddLi on 2019/10/07.
 //
 
-import Vapor
 import Domain
+import Vapor
 
 struct AuthenticateThenExpandPayloadMiddleware: Middleware {
 
@@ -15,14 +15,13 @@ struct AuthenticateThenExpandPayloadMiddleware: Middleware {
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         guard let token = request.http.headers.tokenAuthorization?.token else {
-            // Abort
             throw Abort( .badRequest )
         }
 
         // Verify then expand payload
         let payload = try useCase.payload(by: token)
 
-        // Add ralay service value
+        // Add relay service value
         let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
         entity.id = payload.id
         entity.username = payload.username

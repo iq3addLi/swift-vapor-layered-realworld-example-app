@@ -5,9 +5,7 @@
 //  Created by iq3AddLi on 2019/10/03.
 //
 
-import Foundation
-
-/// <#Description#>
+/// Repository that defines the processing to JWT
 protocol JWTRepository: Repository {
 
     /// <#Description#>
@@ -15,11 +13,11 @@ protocol JWTRepository: Repository {
     /// - Parameter username: <#username description#>
     /// - returns:
     ///    <#Description#>  
-    func issuedJWTToken( id: Int, username: String ) throws -> String
+    func issueJWT( id: Int, username: String ) throws -> String
 
     /// <#Description#>
     /// - Parameter token: <#token description#>
     /// - returns:
     ///    <#Description#>
-    func verifyJWTToken( token: String ) throws -> SessionPayload
+    func verifyJWT( token: String ) throws -> SessionPayload
 }

@@ -8,11 +8,10 @@
 /// <#Description#>
 public struct ProfilesUseCase: UseCase {
     private let conduit: ConduitRepository = ConduitMySQLRepository()
+    
+    /// <#Description#>
     public init() {}
-}
-
-import Async
-extension ProfilesUseCase {
+    
 
     /// <#Description#>
     /// - parameters:

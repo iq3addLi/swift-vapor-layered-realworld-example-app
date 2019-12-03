@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/03.
 //
 
-/// dummy comment
+/// The payload part of JWT
 public struct SessionPayload {
 
     /// dummy comment

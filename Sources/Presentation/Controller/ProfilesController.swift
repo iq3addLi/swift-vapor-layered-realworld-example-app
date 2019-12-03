@@ -5,8 +5,8 @@
 //  Created by iq3AddLi on 2019/09/11.
 //
 
-import Vapor
 import Domain
+import Vapor
 
 /// dummy comment
 struct ProfilesController {
@@ -34,7 +34,7 @@ struct ProfilesController {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
 
         // Into domain logic
         return useCase.follow(to: username, from: userId)
@@ -49,7 +49,7 @@ struct ProfilesController {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
 
         // Into domain logic
         return useCase.unfollow(to: username, from: userId)

@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/21.
 //
 
-/// dummy comment
+/// An enum that expresses conditions when searching for articles
 public enum ArticleCondition {
     case global
     case feed(Int) // followerId

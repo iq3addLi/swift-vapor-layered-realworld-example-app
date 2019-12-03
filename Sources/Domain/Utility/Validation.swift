@@ -5,7 +5,6 @@
 //  Created by iq3AddLi on 2019/11/18.
 //
 
-import Async
 import Validation
 
 /// This class has the validation function required for this project.

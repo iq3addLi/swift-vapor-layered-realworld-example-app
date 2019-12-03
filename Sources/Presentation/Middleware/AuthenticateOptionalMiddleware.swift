@@ -5,15 +5,14 @@
 //  Created by iq3AddLi on 2019/10/07.
 //
 
-import Vapor
 import Domain
+import Vapor
 
 struct AuthenticateOptionalMiddleware: Middleware {
 
     let useCase = AuthenticateMiddlewareUseCase()
 
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
-
         // Get Authentication: Token *
         var payload: SessionPayload?
         let token = request.http.headers.tokenAuthorization?.token
@@ -21,7 +20,7 @@ struct AuthenticateOptionalMiddleware: Middleware {
             payload = try useCase.payload(by: token)
         }
 
-        // Write/erase ralay service value
+        // Write relay service value
         let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
         entity.id = payload?.id
         entity.username = payload?.username

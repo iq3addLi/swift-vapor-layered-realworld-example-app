@@ -11,10 +11,7 @@ public class ArticlesUseCase: UseCase {
 
     /// <#Description#>
     public init() {}
-}
-
-import Async
-extension ArticlesUseCase {
+    
 
     /// <#Description#>
     /// - parameters:

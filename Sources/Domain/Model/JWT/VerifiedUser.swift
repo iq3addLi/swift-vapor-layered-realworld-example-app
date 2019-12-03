@@ -5,8 +5,13 @@
 //  Created by iq3AddLi on 2019/10/07.
 //
 
-/// dummy comment
-public final class AuthedUser {
+/// Authenticated user information
+///
+/// APIs that require the logged-in user's own information to complete the process automatically query the user information through Middleware and relay the information to the controller.
+/// @see AuthenticateThenSearchUserMiddleware for detail.
+/// ### Note
+/// User is a struct and has no id. This class was prepared because we wanted to use it without changing the swagger definition.
+public final class VerifiedUser {
     /// dummy comment
     public var id: Int
 
@@ -24,35 +29,32 @@ public final class AuthedUser {
 
     /// dummy comment
     public var image: String
-//    public var favorites: [Int]
-//    public var following: [Int]
 
     /// dummy comment
-    public init(id: Int = 0, email: String = "", token: String = "", username: String = "", bio: String = "", image: String = ""/*, favorites: [Int] = [], following: [Int] = []*/) {
+    public init(id: Int = 0, email: String = "", token: String = "", username: String = "", bio: String = "", image: String = "") {
         self.id = id
         self.email = email
         self.token = token
         self.username = username
         self.bio = bio
         self.image = image
-//        self.favorites = favorites
-//        self.following = following
     }
 }
 
-extension AuthedUser {
+extension VerifiedUser {
     /// dummy comment
-    public func toResponse() -> User {
+    public var user: User {
         return User(email: email, token: token, username: username, bio: bio, image: image)
     }
 }
 
 import Vapor
-//extension AuthedUser: Service{}
 // MEMO: <s>struct is can't be Service</s>
 // When you want to relay a variable from Middleware to Request, you cannot make it a struct. To create a copy.
 // Do not try to do the same with Service. To continue using the memory address registered with register()
-extension AuthedUser: ServiceType {
+extension VerifiedUser: ServiceType {
+    
+    /// @see ServiceType
     public static func makeService(for container: Container) throws -> Self {
         return .init()
     }

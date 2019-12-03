@@ -5,8 +5,8 @@
 //  Created by iq3AddLi on 2019/09/11.
 //
 
-import Vapor
 import Domain
+import Vapor
 
 /// dummy comment
 struct UsersController {
@@ -40,8 +40,8 @@ struct UsersController {
 
     // GET /user Auth then search user
     func getUser(_ request: Request) throws -> Future<Response> {
-        let user = try request.privateContainer.make(AuthedUser.self)
-        let response = UserResponse(user: user.toResponse())
+        let user = try request.privateContainer.make(VerifiedUser.self).user
+        let response = UserResponse(user: user)
         // Create response
         return request.response( response, as: .json).encode(status: .ok, for: request)
     }

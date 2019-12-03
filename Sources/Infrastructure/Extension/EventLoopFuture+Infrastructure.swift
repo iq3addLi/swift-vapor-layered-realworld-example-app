@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/23.
 //
 
-import Async
+import NIO
 
 /// dummy comment
 public extension Array where Element == EventLoopFuture<Void> {

@@ -10,8 +10,8 @@ import FluentMySQL
 
 extension MySQLDatabaseManager {
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Returns the result of querying MySQL Database for Users
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter email: <#email description#>
     func selectUser(on connection: MySQLConnection, email: String) -> Future<Users?> {
         Users
@@ -21,8 +21,8 @@ extension MySQLDatabaseManager {
             .map { $0.first }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Returns the result of querying MySQL Database for Users
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter id: <#id description#>
     func selectUser(on connection: MySQLConnection, id: Int) -> Future<Users?> {
         Users
@@ -31,7 +31,11 @@ extension MySQLDatabaseManager {
             .all()
             .map { $0.first }
     }
-
+    
+    /// Returns the result of querying MySQL Database for Users
+    /// - Parameters:
+    ///   - connection: A valid connection to MySQL
+    ///   - username: <#username description#>
     func selectUser(on connection: MySQLConnection, username: String) -> Future<Users?> {
         Users
             .query(on: connection)
@@ -40,8 +44,8 @@ extension MySQLDatabaseManager {
             .map { $0.first }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Insert Users into MySQL Database
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter username: <#username description#>
     /// - Parameter email: <#email description#>
     /// - Parameter hash: <#hash description#>
@@ -51,8 +55,8 @@ extension MySQLDatabaseManager {
             .save(on: connection)
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Update Users into MySQL Database
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter id: <#id description#>
     /// - Parameter email: <#email description#>
     /// - Parameter bio: <#bio description#>
@@ -64,7 +68,7 @@ extension MySQLDatabaseManager {
             .first()
             .map { users -> Users in
                 guard let user = users else {
-                    throw Error("Update process is failed. User not found.")
+                    throw Error("Update process is failed. User not found.", status: 404)
                 }
                 return user
             }
@@ -76,8 +80,8 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Query MySQL Database for Profile
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter username: <#username description#>
     /// - Parameter userId: <#userId description#>
     func selectProfile(on connection: MySQLConnection, username: String, readIt userId: Int? = nil) -> Future<Profile?> {
@@ -92,8 +96,8 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Insert follow into MySQL Database
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter username: <#username description#>
     /// - Parameter userId: <#userId description#>
     func insertFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile> {
@@ -104,7 +108,7 @@ extension MySQLDatabaseManager {
             .all()
             .flatMap { rows -> Future<Follows> in
                 guard let row = rows.first else {
-                    throw Error("Insert process is failed. Followee is not found.")
+                    throw Error("Insert process is failed. Followee is not found.", status: 404)
                 }
                 followee = row
                 return Follows(id: nil, followee: row.id!, follower: userId).save(on: connection)
@@ -114,11 +118,14 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Delete follow into MySQL Database
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter username: <#username description#>
     /// - Parameter userId: <#userId description#>
+    /// - warnings:
+    ///  In MySQL implementation, no error occurs even if User does not exist. It is possible to confirm that User exists in advance.
     func deleteFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile> {
+        // Note:
         connection
             .raw( RawSQLQueries.deleteFollows(followee: username, follower: userId) )
             .all()
@@ -127,14 +134,14 @@ extension MySQLDatabaseManager {
             }
             .map { rows in
                 guard let user = rows.first else {
-                    throw Error("Delete process is failed. Followee is not found. Logically impossible.")
+                    throw Error("Delete process is failed. Followee is not found. Logically impossible.", status: 500)
                 }
                 return Profile(username: user.username, bio: user.bio, image: user.image, following: user.following ?? false)
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Insert favorite into MySQL Database
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter userId: <#userId description#>
     /// - Parameter articleSlug: <#articleSlug description#>
     func insertFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article> {
@@ -146,14 +153,14 @@ extension MySQLDatabaseManager {
             }
             .map { rows in
                 guard let row = rows.first else {
-                    throw Error("Insert process is failed. Article is not found. Logically impossible.")
+                    throw Error("Insert process is failed. Article is not found. Logically impossible.", status: 500)
                 }
                 return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Delete favorite into MySQL Database
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter userId: <#userId description#>
     /// - Parameter articleSlug: <#articleSlug description#>
     func deleteFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article> {
@@ -165,14 +172,14 @@ extension MySQLDatabaseManager {
             }
             .map { rows in
                 guard let row = rows.first else {
-                    throw Error("Delete process is failed. Article is not found. Logically impossible.")
+                    throw Error("Delete process is failed. Article is not found. Logically impossible.", status: 500)
                 }
                 return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Queries MySQL Database for Comments on Articles.
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter articleSlug: <#articleSlug description#>
     /// - Parameter userId: <#userId description#>
     func selectComments(on connection: MySQLConnection, for articleSlug: String, readit userId: Int? = nil) -> Future<[Comment]> {
@@ -186,8 +193,8 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Insert Comments to Articles in MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter articleSlug: <#articleSlug description#>
     /// - Parameter body: <#body description#>
     /// - Parameter userId: <#userId description#>
@@ -199,7 +206,7 @@ extension MySQLDatabaseManager {
             .all()
             .flatMap { articles -> Future<Comments> in
                 guard let article = articles.first else {
-                    throw Error( "No article to comment was found")
+                    throw Error( "No article to comment was found", status: 404)
                 }
                 return Comments(body: body, author: userId, article: article.id! ).save(on: connection)
             }
@@ -208,7 +215,7 @@ extension MySQLDatabaseManager {
             }
             .flatMap { comments -> Future<Users> in
                 guard let comment = comments.first else {
-                    throw Error( "The comment was saved successfully, but fluent did not return a value.")
+                    throw Error( "The comment was saved successfully, but fluent did not return a value.", status: 500)
                 }
                 inserted = comment
                 return comment.commentedUser.get(on: connection)
@@ -218,8 +225,8 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Delete Comments in MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter commentId: <#commentId description#>
     func deleteComments(on connection: MySQLConnection, commentId: Int ) -> Future<Void> {
         connection
@@ -228,8 +235,8 @@ extension MySQLDatabaseManager {
             .map { _ in return }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Query MySQL Database for Articles.
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter condition: <#condition description#>
     /// - Parameter userId: <#userId description#>
     /// - Parameter offset: <#offset description#>
@@ -245,8 +252,8 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Insert Articles into MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter author: <#author description#>
     /// - Parameter title: <#title description#>
     /// - Parameter slug: <#slug description#>
@@ -271,14 +278,14 @@ extension MySQLDatabaseManager {
             }
             .map { articles -> Article in
                 guard let article = articles.first else {
-                    throw Error( "The article was saved successfully, but fluent did not return a value.")
+                    throw Error( "The article was saved successfully, but fluent did not return a value.", status: 500)
                 }
                 return article
             }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Update Articles into MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter slug: <#slug description#>
     /// - Parameter title: <#title description#>
     /// - Parameter description: <#description description#>
@@ -292,7 +299,7 @@ extension MySQLDatabaseManager {
             .all()
             .flatMap { rows -> Future<Articles> in
                 guard let target = rows.first else {
-                    throw Error( "Update process is failed. Article is not found. Logically impossible.")
+                    throw Error( "Update process is failed. Article is not found. Logically impossible.", status: 500)
                 }
 
                 // Update Article
@@ -309,7 +316,7 @@ extension MySQLDatabaseManager {
         }
         let pickArticleClosure: ([Article]) throws -> Article = { articles in
             guard let article = articles.first else {
-                throw Error("Update process is successed. But article is not found. Logically impossible.")
+                throw Error("Update process is successed. But article is not found. Logically impossible.", status: 500)
             }
             return article
         }
@@ -340,8 +347,8 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Delete Articles in MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL
     /// - Parameter slug: <#slug description#>
     func deleteArticle(on connection: MySQLConnection, slug: String ) -> Future<Void> {
         connection
@@ -350,8 +357,8 @@ extension MySQLDatabaseManager {
             .map { _ in return }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Query MySQL Database for all tags.
+    /// - Parameter connection: A valid connection to MySQL
     func selectTags(on connection: MySQLConnection) -> Future<[String]> {
         connection
             .raw( RawSQLQueries.selectTags() )

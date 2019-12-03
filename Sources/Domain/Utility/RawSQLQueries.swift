@@ -6,6 +6,8 @@
 //
 
 /// Object that generates raw SQL.
+///
+/// ### Note
 /// I wanted to get enough information in one query.
 /// The reason for using raw query is that the following function was not found in Fluent.
 /// * Sub query

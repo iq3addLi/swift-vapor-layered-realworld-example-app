@@ -5,8 +5,8 @@
 //  Created by iq3AddLi on 2019/09/11.
 //
 
-import Vapor
 import Domain
+import Vapor
 
 /// dummy comment
 struct ArticlesController {
@@ -125,7 +125,7 @@ struct ArticlesController {
         let slug = try request.parameters.next(String.self)
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
 
         // Into domain logic
         return useCase.favorite(by: userId, for: slug)
@@ -141,7 +141,7 @@ struct ArticlesController {
         let slug = try request.parameters.next(String.self)
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
 
         // Into domain logic
         return useCase.unfavorite(by: userId, for: slug)
@@ -170,7 +170,7 @@ struct ArticlesController {
         let slug = try request.parameters.next(String.self)
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Required
+        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
 
         // Get parameter by body
         let useCase = self.useCase

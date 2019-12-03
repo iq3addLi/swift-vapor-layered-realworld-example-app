@@ -68,4 +68,16 @@ public class MySQLDatabaseManager {
             }
         }
     }
+    
+    public func instantCommunication<T>( closure: @escaping (MySQLConnection) -> Future<T> ) -> Future<T> {
+        var connection: MySQLConnection?
+        return requestConnectionOnInstantEventLoop()
+            .flatMap { conn in
+                connection = conn
+                return closure(conn)
+            }
+            .always { [weak self] in
+                if let conn = connection { self?.correctInstantEventLoop(connection: conn) }
+            }
+    }
 }

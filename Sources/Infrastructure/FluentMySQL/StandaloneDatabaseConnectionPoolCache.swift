@@ -6,7 +6,6 @@
 //
 
 import DatabaseKit
-import Async
 
 internal final class StandaloneDatabaseConnectionPoolCache<Database> where Database: DatabaseKit.Database {
 

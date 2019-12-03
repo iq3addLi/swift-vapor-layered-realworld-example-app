@@ -6,42 +6,63 @@
 //
 
 import Infrastructure
-import FluentMySQL
 
 extension MySQLDatabaseManager {
 
+    
+    /// Get a valid connection to MySQL from the manager and send a query.
+    /// - Parameter email: <#email description#>
     func selectUser(email: String) -> Future<Users?> {
         communication { connection in
             self.selectUser(on: connection, email: email)
         }
     }
 
+    
+    /// Get a valid connection to MySQL from the manager and send a query.
+    /// - Parameter id: <#id description#>
     func selectUser(id: Int) -> Future<Users?> {
         communication { connection in
             self.selectUser(on: connection, id: id)
         }
     }
 
+    
+    /// Get a valid connection to MySQL from the manager and send a query.
+    /// - Parameter name: <#name description#>
     func selectUser(name: String) -> Future<Users?> {
         communication { connection in
             self.selectUser(on: connection, username: name)
         }
     }
 
+    
+    /// Get a valid connection to MySQL from the manager and send a query.
+    /// - Parameters:
+    ///   - username: <#username description#>
+    ///   - email: <#email description#>
+    ///   - hash: <#hash description#>
+    ///   - salt: <#salt description#>
     func insertUser(name username: String, email: String, hash: String, salt: String) -> Future<Users> {
         startTransaction { connection in
             self.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt)
         }
     }
 
+    
+    /// Get a valid connection to MySQL from the manager and send a query.
+    /// - Parameters:
+    ///   - id: <#id description#>
+    ///   - email: <#email description#>
+    ///   - bio: <#bio description#>
+    ///   - image: <#image description#>
     func updateUser(id: Int, email: String?, bio: String?, image: String?) -> Future<Users> {
         startTransaction { connection in
             self.updateUser(on: connection, id: id, email: email, bio: bio, image: image)
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter username: <#username description#>
     /// - Parameter userId: <#userId description#>
     func selectProfile(username: String, readIt userId: Int? = nil) -> Future<Profile?> {
@@ -50,8 +71,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter username: <#username description#>
     /// - Parameter userId: <#userId description#>
     func insertFollow(followee username: String, follower userId: Int ) -> Future<Profile> {
@@ -60,8 +80,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter username: <#username description#>
     /// - Parameter userId: <#userId description#>
     func deleteFollow(followee username: String, follower userId: Int ) -> Future<Profile> {
@@ -70,8 +89,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter userId: <#userId description#>
     /// - Parameter articleSlug: <#articleSlug description#>
     func insertFavorite(by userId: Int, for articleSlug: String) -> Future<Article> {
@@ -80,8 +98,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter userId: <#userId description#>
     /// - Parameter articleSlug: <#articleSlug description#>
     func deleteFavorite(by userId: Int, for articleSlug: String) -> Future<Article> {
@@ -90,8 +107,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter articleSlug: <#articleSlug description#>
     /// - Parameter userId: <#userId description#>
     func selectComments(for articleSlug: String, readit userId: Int? = nil) -> Future<[Comment]> {
@@ -100,8 +116,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter articleSlug: <#articleSlug description#>
     /// - Parameter body: <#body description#>
     /// - Parameter userId: <#userId description#>
@@ -111,8 +126,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter commentId: <#commentId description#>
     func deleteComments(commentId: Int ) -> Future<Void> {
         startTransaction { connection in
@@ -120,8 +134,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter condition: <#condition description#>
     /// - Parameter userId: <#userId description#>
     /// - Parameter offset: <#offset description#>
@@ -132,8 +145,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter author: <#author description#>
     /// - Parameter title: <#title description#>
     /// - Parameter slug: <#slug description#>
@@ -147,8 +159,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter slug: <#slug description#>
     /// - Parameter title: <#title description#>
     /// - Parameter description: <#description description#>
@@ -161,8 +172,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter slug: <#slug description#>
     func deleteArticle(slug: String ) -> Future<Void> {
         startTransaction { connection in
@@ -170,8 +180,7 @@ extension MySQLDatabaseManager {
         }
     }
 
-    /// <#Description#>
-    /// - Parameter connection: <#connection description#>
+    /// Get a valid connection to MySQL from the manager and send a query.
     func selectTags() -> Future<[String]> {
         communication { connection in
             self.selectTags(on: connection)

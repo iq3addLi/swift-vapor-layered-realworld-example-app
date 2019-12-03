@@ -7,7 +7,11 @@
 
 import Vapor
 
-/// dummy comment
+/// Order for defining routing
+///
+/// It was defined as a specification when ordering routing from the presentation layer to the domain layer.
+/// ### Note
+/// If possible, I wanted to define this class as an abstract order that does not depend on the framework, but I abandoned it because it was difficult in Vapor.
 public struct APICollection {
 
     /// dummy comment

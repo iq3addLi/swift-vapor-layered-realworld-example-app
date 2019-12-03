@@ -5,8 +5,8 @@
 //  Created by iq3AddLi on 2019/09/11.
 //
 
-import Vapor
 import Domain
+import Vapor
 
 /// dummy comment
 struct TagsController {

@@ -1,4 +1,4 @@
-min_acl: public
+min_acl: private
 clean: true
 output: docs
 author: iq3AddLi

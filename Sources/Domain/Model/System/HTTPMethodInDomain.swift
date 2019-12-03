@@ -5,10 +5,14 @@
 //  Created by iq3AddLi on 2019/10/04.
 //
 
-// MEMO: I'm want hotly for enum subsets features in Swift.😊
-// https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20160530/020054.html
 
-/// dummy comment
+
+/// HTTPMethod in domain
+///
+/// ### Note
+/// Continuing from the namespace is Domain.HTTPMethodInDomain. This may seem verbose. I named it because I didn't want to confuse it with NIOHTTP1.HTTPMethod.
+/// ### Extra
+/// I'm want hotly for [enum subsets features](https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20160530/020054.html) in Swift.😊
 public enum HTTPMethodInDomain {
     case get
     case put

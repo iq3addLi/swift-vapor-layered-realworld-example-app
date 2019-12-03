@@ -8,32 +8,26 @@
 import Infrastructure
 import CryptoSwift
 import SwiftSlug
-import Async
-import FluentMySQL
+import NIO
 
-/// <#Description#>
+/// ConduitRepository implemented in MySQL
+///
+/// ### Extras
+/// An instance is created for each UseCase, which is obviously useless. It's a good idea to make it a singleton, but it is left as it is because the property has no side effects.
 struct ConduitMySQLRepository: ConduitRepository {
 
     let database = MySQLDatabaseManager.default
 
     /// <#Description#>
     func ifneededPreparetion() throws {
-
-        var connection: MySQLConnection?
-        return try database.requestConnectionOnInstantEventLoop()
-            .flatMap { conn in
-                connection = conn
-                return Articles.create(on: conn)
-                    .flatMap { Comments.create(on: conn) }
-                    .flatMap { Favorites.create(on: conn) }
-                    .flatMap { Follows.create(on: conn) }
-                    .flatMap { Tags.create(on: conn) }
-                    .flatMap { Users.create(on: conn) }
-            }
-            .always {
-                self.database.correctInstantEventLoop(connection: connection!)
-            }
-            .wait()
+        try database.instantCommunication { connection in
+             Articles.create(on: connection)
+                .flatMap { Comments.create(on: connection) }
+                .flatMap { Favorites.create(on: connection) }
+                .flatMap { Follows.create(on: connection) }
+                .flatMap { Tags.create(on: connection) }
+                .flatMap { Users.create(on: connection) }
+            }.wait()
     }
 
     /// <#Description#>
@@ -70,7 +64,7 @@ struct ConduitMySQLRepository: ConduitRepository {
         }
         return currentEventLoop.submit { () -> (String, String) in
                 let salt = AES.randomIV(16).toHexString()
-                let hash = try PKCS5.PBKDF2(password: Array(password.utf8), salt: Array(salt.utf8), keyLength: 32).calculate().toHexString()
+                let hash = try PKCS5.PBKDF2(password: Array(password.utf8), salt: Array(salt.utf8), keyLength: 32).calculate().toHexString() // Note: Too late for debug, but not for release.
                 return (salt, hash)
             }
             .flatMap { saltWithHash in
@@ -88,11 +82,11 @@ struct ConduitMySQLRepository: ConduitRepository {
         database.selectUser(email: email)
             .map { userOrNil -> Users in
                 guard let user = userOrNil else {
-                    throw Error( "User not found.")
+                    throw Error( "User not found.", status: 404)
                 }
                 let inputtedHash = try PKCS5.PBKDF2(password: Array(password.utf8), salt: Array(user.salt.utf8), keyLength: 32).calculate().toHexString()
                 guard user.hash == inputtedHash else {
-                    throw Error( "Password is wrong.")
+                    throw ValidationError(errors: ["email or password": ["is invalid"]])
                 }
                 return user
             }
@@ -107,7 +101,7 @@ struct ConduitMySQLRepository: ConduitRepository {
         database.selectUser(id: id)
             .map { userOrNil in
                 guard let user = userOrNil else {
-                    throw Error( "User not found.") // Serious
+                    throw Error( "User not found.", status: 404) // Serious
                 }
                 return ( user.id!, User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image) )
             }
@@ -133,7 +127,7 @@ struct ConduitMySQLRepository: ConduitRepository {
         database.selectProfile(username: username, readIt: readingUserId)
             .map { profileOrNil in
                 guard let profile = profileOrNil else {
-                    throw Error( "User not found.")
+                    throw Error( "User not found.", status: 404)
                 }
                 return profile
             }

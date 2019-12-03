@@ -11,10 +11,7 @@ public struct TagsUseCase: UseCase {
 
     /// <#Description#>
     public init() {}
-}
-
-import Async
-extension TagsUseCase {
+    
 
     /// <#Description#>
     /// - returns:

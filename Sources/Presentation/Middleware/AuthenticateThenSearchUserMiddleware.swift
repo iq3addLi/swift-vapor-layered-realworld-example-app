@@ -5,8 +5,8 @@
 //  Created by iq3AddLi on 2019/10/07.
 //
 
-import Vapor
 import Domain
+import Vapor
 
 struct AuthenticateThenSearchUserMiddleware: Middleware {
 
@@ -15,17 +15,6 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         guard let token = request.http.headers.tokenAuthorization?.token else {
-
-            // Erase ralay service value
-            let relay = (try request.privateContainer.make(AuthedUser.self))
-            relay.id = 0
-            relay.email = ""
-            relay.username = ""
-            relay.token = ""
-            relay.bio = ""
-            relay.image = ""
-
-            // Abort
             throw Abort( .badRequest )
         }
 
@@ -35,7 +24,7 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
                 let (id, user) = tuple
 
                 // Add ralay service value
-                let relay = (try request.privateContainer.make(AuthedUser.self))
+                let relay = (try request.privateContainer.make(VerifiedUser.self))
                 relay.id = id
                 relay.email = user.email
                 relay.username = user.username
