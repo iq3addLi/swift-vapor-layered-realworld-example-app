@@ -9,6 +9,7 @@ import Infrastructure
 
 extension MySQLDatabaseManager {
 
+    // MARK: Functions
     
     /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameter email: <#email description#>

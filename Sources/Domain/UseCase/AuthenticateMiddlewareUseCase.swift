@@ -7,9 +7,14 @@
 
 /// Use cases for authentication middlewares
 public struct AuthenticateMiddlewareUseCase: UseCase {
+    
+    // MARK: Properties
+    
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()
 
+    // MARK: Functions
+    
     /// <#Description#>
     public init() {}
 

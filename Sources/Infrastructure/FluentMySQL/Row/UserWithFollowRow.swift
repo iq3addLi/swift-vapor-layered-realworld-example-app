@@ -7,6 +7,8 @@
 
 /// Representation of a row combining Users and Follows information about them.
 public final class UserWithFollowRow: Codable {
+    
+    // MARK: Properties
 
     // dummy comment
     public let id: Int
@@ -26,6 +28,8 @@ public final class UserWithFollowRow: Codable {
     // dummy comment
     public let following: Bool?
 
+    // MARK: Functions
+    
     // dummy comment
     public init(id: Int, username: String, email: String, bio: String, image: String, following: Bool?) {
         self.id = id

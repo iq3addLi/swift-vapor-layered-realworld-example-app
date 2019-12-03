@@ -11,8 +11,11 @@ import Vapor
 /// Controller For User processing
 struct UsersController {
 
+    // MARK: Properties
     private let useCase = UsersUseCase()
 
+    // MARK: Functions
+    
     // POST /users
     func postUser(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase

@@ -6,9 +6,13 @@
 //
 
 /// Use cases for Articles
-public class ArticlesUseCase: UseCase {
+public struct ArticlesUseCase: UseCase {
+    
+    // MARK: Properties
     private let conduit: ConduitRepository = ConduitMySQLRepository()
 
+    // MARK: Functions
+    
     /// <#Description#>
     public init() {}
     

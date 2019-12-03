@@ -9,6 +9,8 @@
 /// A repository that abstracts requests to the backend framework.
 protocol FrameworkRepository: Repository {
     
+    // MARK: Functions
+    
     func initalize()
     
     func routing( collections: [APICollection] )

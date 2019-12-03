@@ -6,9 +6,14 @@
 //
 
 /// Use cases for starting server applications
-public class ApplicationUseCase: UseCase {
+public struct ApplicationUseCase: UseCase {
+    
+    // MARK: Properties
+    
     private let framework: FrameworkRepository = VaporFrameworkRepository()
     private let conduit: ConduitRepository = ConduitMySQLRepository()
+    
+    // MARK: Functions
     
     /// <#Description#>
     public init() {}

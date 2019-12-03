@@ -7,7 +7,16 @@
 
 /// Generic extension for String
 extension String {
-
+    
+    // MARK: Properties
+    
+    /// Make the string camel case
+    public var camelcased: String {
+        self.replacingOccurrences(of: "[, _-]", with: " ", options: .regularExpression).capitalized.split(separator: " ").joined()
+    }
+    
+    // MARK: Functions
+    
     /// Returns a random string
     /// - Parameter length: The length of the string
     public static func random(length: Int) -> String {
@@ -15,8 +24,4 @@ extension String {
         return String( (0..<length).map { _ in letters.randomElement()! })
     }
 
-    /// Make the string camel case
-    public var camelcased: String {
-        self.replacingOccurrences(of: "[, _-]", with: " ", options: .regularExpression).capitalized.split(separator: " ").joined()
-    }
 }

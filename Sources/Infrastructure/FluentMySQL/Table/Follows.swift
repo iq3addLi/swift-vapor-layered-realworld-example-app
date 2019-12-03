@@ -7,9 +7,15 @@
 
 /// Representation of Follows table
 public final class Follows {
+    
+    // MARK: Properties
+    
     public var id: Int?
     public var followee: Int
     public var follower: Int
+    
+    // MARK: Functions
+    
     public init( id: Int?, followee: Int, follower: Int ) {
         self.id = id
         self.followee = followee

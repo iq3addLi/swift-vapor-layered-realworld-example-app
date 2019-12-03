@@ -16,8 +16,11 @@ import NIO
 /// An instance is created for each UseCase, which is obviously useless. It's a good idea to make it a singleton, but it is left as it is because the property has no side effects.
 struct ConduitMySQLRepository: ConduitRepository {
 
+    // MARK: Properties
     let database = MySQLDatabaseManager.default
 
+    // MARK: Functions
+    
     /// <#Description#>
     func ifneededPreparetion() throws {
         try database.instantCommunication { connection in

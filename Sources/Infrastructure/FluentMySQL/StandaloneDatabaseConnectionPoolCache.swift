@@ -11,8 +11,10 @@ import DatabaseKit
 ///
 /// DatabaseKit.DatabaseConnectionPoolCache is a ServiceType. Registered as a Vapor Container and can only be handled from Vapor.Request. This is modified so that it can be used separately from Vapor.
 /// - warnings: Assumes the use of thread variables. Therefore, this class cannot be used in the main thread.
-internal final class StandaloneDatabaseConnectionPoolCache<Database> where Database: DatabaseKit.Database {
+final class StandaloneDatabaseConnectionPoolCache<Database> where Database: DatabaseKit.Database {
 
+    // MARK: Properties
+    
     /// The source databases.
     private let database: Database
 
@@ -22,8 +24,10 @@ internal final class StandaloneDatabaseConnectionPoolCache<Database> where Datab
     /// The cached connection pools on thread.
     private let threadVariablePools: ThreadSpecificVariable<DatabaseConnectionPool<Database>> // Note: https://github.com/apple/swift-nio/blob/2.10.1/Sources/NIO/Thread.swift#L154-L157 has deinit, but https://github.com/apple/swift-nio/blob/1.14.1/Sources/NIO/Thread.swift hasn't deinit. So do it manually.
 
+    // MARK: Functions
+    
     /// Creates a new `DatabaseConnectionPoolCache`.
-    internal init(database: Database, config: DatabaseConnectionPoolConfig) {
+    init(database: Database, config: DatabaseConnectionPoolConfig) {
         self.database = database
         self.config = config
         self.threadVariablePools = ThreadSpecificVariable<DatabaseConnectionPool<Database>>()
@@ -33,7 +37,7 @@ internal final class StandaloneDatabaseConnectionPoolCache<Database> where Datab
         threadVariablePools.release()
     }
 
-    internal func requestConnectionToPool() -> Future<Database.Connection> {
+    func requestConnectionToPool() -> Future<Database.Connection> {
         guard let eventLoop = MultiThreadedEventLoopGroup.currentEventLoop else {
             fatalError("connectionOnCurrentEventLoop() is need execute on EventLoopGroup.")
         }
@@ -44,7 +48,7 @@ internal final class StandaloneDatabaseConnectionPoolCache<Database> where Datab
         }()).requestConnection()
     }
 
-    internal func releaseConnectionToPool(connection: Database.Connection) {
+    func releaseConnectionToPool(connection: Database.Connection) {
         guard let pool = threadVariablePools.currentValue else {
             fatalError("A connection pool was not found.")
         }

@@ -10,6 +10,8 @@ import NIO
 /// Extension for Array EventLoopFuture
 public extension Array where Element == EventLoopFuture<Void> {
 
+    // MARK: Functions
+    
     /// Serialize Future array
     ///
     /// - warning: May be used only when the result of Future can be discarded

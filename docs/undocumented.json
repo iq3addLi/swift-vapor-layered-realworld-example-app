@@ -905,161 +905,140 @@
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/ConduitMySQLRepository.swift",
-      "line": 19,
+      "line": 20,
       "symbol": "ConduitMySQLRepository.database",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/Interface/FrameworkRepository.swift",
-      "line": 12,
+      "line": 14,
       "symbol": "FrameworkRepository.initalize()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/Interface/FrameworkRepository.swift",
-      "line": 14,
+      "line": 16,
       "symbol": "FrameworkRepository.routing(collections:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/Interface/FrameworkRepository.swift",
-      "line": 16,
+      "line": 18,
       "symbol": "FrameworkRepository.applicationLaunch(hostname:port:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/JWTWithVaporRepository.swift",
-      "line": 13,
+      "line": 14,
       "symbol": "JWTWithVaporRepository.secret",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/VaporFrameworkRepository.swift",
-      "line": 13,
+      "line": 15,
       "symbol": "VaporFrameworkRepository.services",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/VaporFrameworkRepository.swift",
-      "line": 16,
+      "line": 18,
       "symbol": "VaporFrameworkRepository.application",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/VaporFrameworkRepository.swift",
-      "line": 18,
-      "symbol": "VaporFrameworkRepository.initalize()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/VaporFrameworkRepository.swift",
-      "line": 43,
-      "symbol": "VaporFrameworkRepository.routing(collections:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Repository/VaporFrameworkRepository.swift",
-      "line": 65,
-      "symbol": "VaporFrameworkRepository.applicationLaunch(hostname:port:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ApplicationUseCase.swift",
-      "line": 10,
+      "line": 13,
       "symbol": "ApplicationUseCase.framework",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ApplicationUseCase.swift",
-      "line": 11,
+      "line": 14,
       "symbol": "ApplicationUseCase.conduit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ArticlesUseCase.swift",
-      "line": 10,
+      "line": 12,
       "symbol": "ArticlesUseCase.conduit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/AuthenticateMiddlewareUseCase.swift",
-      "line": 10,
+      "line": 13,
       "symbol": "AuthenticateMiddlewareUseCase.conduit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/AuthenticateMiddlewareUseCase.swift",
-      "line": 11,
+      "line": 14,
       "symbol": "AuthenticateMiddlewareUseCase.jwt",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ProfilesUseCase.swift",
-      "line": 10,
+      "line": 13,
       "symbol": "ProfilesUseCase.conduit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/TagsUseCase.swift",
-      "line": 10,
+      "line": 13,
       "symbol": "TagsUseCase.conduit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/UsersUseCase.swift",
-      "line": 10,
+      "line": 13,
       "symbol": "UsersUseCase.conduit",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/UsersUseCase.swift",
-      "line": 11,
+      "line": 14,
       "symbol": "UsersUseCase.jwt",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift",
-      "line": 32,
+      "line": 36,
       "symbol": "StandaloneDatabaseConnectionPoolCache.deinit",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift",
-      "line": 36,
+      "line": 40,
       "symbol": "StandaloneDatabaseConnectionPoolCache.requestConnectionToPool()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift",
-      "line": 47,
+      "line": 51,
       "symbol": "StandaloneDatabaseConnectionPoolCache.releaseConnectionToPool(connection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift",
-      "line": 56,
+      "line": 60,
       "symbol": "ThreadSpecificVariable.release()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

@@ -7,6 +7,9 @@
 
 /// Representation of Comments table
 public final class Comments {
+    
+    // MARK: Properties
+    
     public var id: Int?
     public var body: String
     public var author: Int
@@ -14,6 +17,8 @@ public final class Comments {
     public var createdAt: Date?
     public var updatedAt: Date?
 
+    // MARK: Functions
+    
     public init( id: Int? = nil, body: String, author: Int, article: Int, createdAt: Date? = nil, updatedAt: Date? = nil ) {
         self.id = id
         self.body = body

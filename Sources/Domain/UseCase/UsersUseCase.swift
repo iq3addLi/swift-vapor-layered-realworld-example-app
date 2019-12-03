@@ -7,9 +7,14 @@
 
 /// Use cases for Users
 public struct UsersUseCase: UseCase {
+    
+    // MARK: Properties
+    
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     private let jwt: JWTRepository = JWTWithVaporRepository()
 
+    // MARK: Functions
+    
     /// <#Description#>
     public init() {}
     

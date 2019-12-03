@@ -10,6 +10,8 @@ import FluentMySQL
 
 extension MySQLDatabaseManager {
 
+    // MARK: Functions
+    
     /// Returns the result of querying MySQL Database for Users
     /// - Parameter connection: A valid connection to MySQL
     /// - Parameter email: <#email description#>

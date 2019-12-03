@@ -11,8 +11,12 @@ import Vapor
 /// Middleware to processes that requires authentication and ask for JWT Payload Relay
 struct AuthenticateThenExpandPayloadMiddleware: Middleware {
 
+    // MARK: Properties
+    
     let useCase = AuthenticateMiddlewareUseCase()
 
+    // MARK: Functions
+    
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         guard let token = request.http.headers.tokenAuthorization?.token else {

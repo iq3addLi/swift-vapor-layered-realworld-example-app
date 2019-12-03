@@ -10,12 +10,15 @@ import Validation
 /// This class has the validation function required for this project.
 ///
 /// [vapor/validation](https://github.com/vapor/validation) is adopted as Infrastructure.
-/// This class was prepared because [realworld's production implementation](https://conduit.productionready.io/api) validation was an exhaustive check.
+/// This class was prepared because realworld's production implementation (https://conduit.productionready.io/api) validation was an exhaustive check. At first, Validatable was used.
 ///
+/// ### Extras
 /// As an aside, I like vapor/validation. This is because there is a usage that is loosely coupled to vapor/vapor.
 /// If it is an add-in to vapor/vapor Package like fluent, I think it is better. Looking [here](https://github.com/vapor/vapor/blob/4.0.0-beta.1/Package.swift), I expect it will probably be in the future.
 final class Validation {
 
+    // MARK: Functions
+    
     /// Returns validation processing as Future.
     /// - Parameter validator: Validation.Validator\<String\> responsible for validation
     /// - Parameter key: The name of the parameter to validate
@@ -39,7 +42,7 @@ final class Validation {
 
 // MARK: By purpose
 extension Validation {
-
+    
     /// Returns lower bound validation processing as Future.
     /// - Parameter range: Lower bound as PartialRangeFrom\<Int\>
     /// - Parameter key: The name of the parameter to validate
@@ -97,9 +100,9 @@ extension Validation {
     }
 }
 
-// MARK: Full verification
-extension Validation {
 
+extension Validation {
+    
     /// Execute multiple validation futures in the current thread.
     /// - Parameter validations: An array of validation Future
     /// - warning:
@@ -120,11 +123,13 @@ extension Validation {
     }
 }
 
+
 import Infrastructure
-import FluentMySQL
 
 extension MySQLDatabaseManager {
 
+    // MARK: Validations
+    
     /// Query the DB to see if it is a unique username
     /// - Parameter username: Unique check target
     /// - returns:

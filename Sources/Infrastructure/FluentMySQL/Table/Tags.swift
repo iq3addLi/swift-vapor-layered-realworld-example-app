@@ -7,9 +7,15 @@
 
 /// Representation of Tags table
 public final class Tags {
+    
+    // MARK: Properties
+    
     public var id: Int?
     public var article: Int
     public var tag: String
+    
+    // MARK: Functions
+    
     public init( id: Int?, article: Int, tag: String ) {
         self.id = id
         self.article = article

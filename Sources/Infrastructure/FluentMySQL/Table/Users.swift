@@ -7,6 +7,9 @@
 
 /// Representation of Users table
 public final class Users {
+    
+    // MARK: Properties
+    
     public var id: Int?
     public var username: String
     public var email: String
@@ -15,6 +18,8 @@ public final class Users {
     public var hash: String // hashed password
     public var salt: String
 
+    // MARK: Functions
+    
     public init(id: Int?, username: String, email: String, bio: String = "", image: String = "", hash: String, salt: String) {
         self.id = id
         self.username = username

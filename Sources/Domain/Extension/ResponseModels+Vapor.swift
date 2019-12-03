@@ -22,7 +22,12 @@ extension User: LosslessHTTPBodyRepresentable {}
 extension UserResponse: LosslessHTTPBodyRepresentable {}
 extension EmptyResponse: LosslessHTTPBodyRepresentable {}
 
+///
 extension LosslessHTTPBodyRepresentable where Self: Codable {
+    
+    // MARK: Functions
+    
+    /// <#Description#>
     public func convertToHTTPBody() -> HTTPBody {
         return try! HTTPBody(data: JSONEncoder.custom(dates: .formatted(.iso8601withFractionalSeconds)).encode(self))
     }

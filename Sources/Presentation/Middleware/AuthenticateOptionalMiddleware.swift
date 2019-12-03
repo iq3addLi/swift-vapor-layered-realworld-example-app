@@ -11,8 +11,12 @@ import Vapor
 /// Middleware to processes where authentication is optional
 struct AuthenticateOptionalMiddleware: Middleware {
 
+    // MARK: Properties
+    
     let useCase = AuthenticateMiddlewareUseCase()
 
+    // MARK: Functions
+    
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         var payload: SessionPayload?

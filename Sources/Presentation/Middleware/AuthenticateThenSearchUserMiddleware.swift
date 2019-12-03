@@ -11,8 +11,12 @@ import Vapor
 /// Middleware to process that requires authentication and ask for relay of authenticated user information
 struct AuthenticateThenSearchUserMiddleware: Middleware {
 
+    // MARK: Properties
+    
     let useCase = AuthenticateMiddlewareUseCase()
 
+    // MARK: Functions
+    
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         guard let token = request.http.headers.tokenAuthorization?.token else {

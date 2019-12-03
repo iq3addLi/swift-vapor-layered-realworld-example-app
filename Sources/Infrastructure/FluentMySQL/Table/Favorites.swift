@@ -7,9 +7,15 @@
 
 /// Representation of Favorites table
 public final class Favorites {
+    
+    // MARK: Properties
+    
     public var id: Int?
     public var article: Int
     public var user: Int
+    
+    // MARK: Functions
+    
     public init( id: Int?, article: Int, user: Int ) {
         self.id = id
         self.article = article

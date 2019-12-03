@@ -9,7 +9,9 @@ import MySQL
 
 /// Class that manages operations to MySQL
 public class MySQLDatabaseManager {
-
+    
+    // MARK: Properties
+    
     public static var `default` = {
         MySQLDatabaseManager()
     }()
@@ -24,6 +26,8 @@ public class MySQLDatabaseManager {
         MySQLDatabase(config: MySQLDatabaseConfig.fromEnvironment)
     }()
 
+    // MARK: Functions
+    
     /// dummy comment
     public init() {}
 

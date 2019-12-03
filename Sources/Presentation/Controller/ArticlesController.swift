@@ -11,8 +11,11 @@ import Vapor
 /// Controller For Article processing
 struct ArticlesController {
 
+    // MARK: Properties
     private let useCase = ArticlesUseCase()
 
+    // MARK: Functions
+    
     // GET /articles
     //     /articles?offset=100&limit=3)
     //     /articles?author=johnjacob

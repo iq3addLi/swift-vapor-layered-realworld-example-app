@@ -7,6 +7,8 @@
 
 /// Representation of a row of tag
 public final class TagOnlyRow: Codable {
+    
+    // MARK: Properties
 
     // dummy comment
     public let tag: String

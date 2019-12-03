@@ -11,8 +11,11 @@ import Vapor
 /// Controller For Tag processing
 struct TagsController {
 
+    // MARK: Properties
     private let useCase = TagsUseCase()
 
+    // MARK: Functions
+    
     // GET /tags
     func getTags(_ request: Request) throws -> Future<Response> {
         useCase.allTags()

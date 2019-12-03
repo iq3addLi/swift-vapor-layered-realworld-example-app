@@ -9,6 +9,8 @@ import Foundation
 
 extension DateFormatter {
     
+    // MARK: Properties
+    
     /// DataFormatter that handles milliseconds.
     ///
     /// DateEncodingStrategy.iso8601 does not handle milliseconds, so this Formatter is prepared.

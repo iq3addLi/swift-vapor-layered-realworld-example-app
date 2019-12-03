@@ -11,8 +11,11 @@ import Vapor
 /// Controller For Profile processing
 struct ProfilesController {
 
+    // MARK: Properties
     private let useCase = ProfilesUseCase()
 
+    // MARK: Functions
+    
     // GET /profiles/{{USERNAME}}
     // Auth optional
     func getProfile(_ request: Request) throws -> Future<Response> {

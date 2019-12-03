@@ -11,7 +11,7 @@ import Domain
 /// - throws:
 ///  <#Description#>
 public func applciationMain() throws {
-
+    
     let useCase = ApplicationUseCase()
 
     // Application initialize

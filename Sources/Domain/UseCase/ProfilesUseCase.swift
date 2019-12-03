@@ -7,7 +7,12 @@
 
 /// Use cases for Profiles
 public struct ProfilesUseCase: UseCase {
+    
+    // MARK: Properties
+    
     private let conduit: ConduitRepository = ConduitMySQLRepository()
+    
+    // MARK: Functions
     
     /// <#Description#>
     public init() {}

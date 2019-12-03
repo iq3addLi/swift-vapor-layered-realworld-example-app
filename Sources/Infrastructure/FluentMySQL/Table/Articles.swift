@@ -7,6 +7,9 @@
 
 /// Representation of Articles table
 public final class Articles {
+    
+    // MARK: Properties
+    
     public var id: Int?
     public var slug: String
     public var title: String
@@ -16,6 +19,8 @@ public final class Articles {
     public var createdAt: Date?
     public var updatedAt: Date?
 
+    // MARK: Functions
+    
     public init( id: Int?, slug: String, title: String, description: String, body: String, author: Int, createdAt: Date? = nil, updatedAt: Date? = nil ) {
         self.id = id
         self.slug = slug

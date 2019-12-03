@@ -7,8 +7,13 @@
 
 /// Use cases for Tags
 public struct TagsUseCase: UseCase {
+    
+    // MARK: Properties
+    
     private let conduit: ConduitRepository = ConduitMySQLRepository()
 
+    // MARK: Functions
+    
     /// <#Description#>
     public init() {}
     

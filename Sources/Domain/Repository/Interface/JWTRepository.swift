@@ -8,6 +8,8 @@
 /// Repository that defines the processing to JWT
 protocol JWTRepository: Repository {
 
+    // MARK: Functions
+    
     /// <#Description#>
     /// - Parameter id: <#id description#>
     /// - Parameter username: <#username description#>

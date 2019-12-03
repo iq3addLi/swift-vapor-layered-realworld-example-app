@@ -9,6 +9,8 @@ import HTTP
 
 extension HTTPHeaders {
 
+    // MARK: Properties
+    
     /// Access or set the `Authorization: Token ...` header.
     public var tokenAuthorization: BearerAuthorization? {
         get {

@@ -10,8 +10,11 @@ import JWT
 /// JWTRepository implemented in vapor/jwt-kit
 struct JWTWithVaporRepository: JWTRepository {
 
+    // MARK: Properties
     let secret = "secret" // TODO: Prepare a changeable function
 
+    // MARK: Functions
+    
     /// Issue a JWT.
     /// - Parameter id: <#id description#>
     /// - Parameter username: <#username description#>

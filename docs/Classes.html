@@ -54,12 +54,6 @@
             <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/ApplicationUseCase.html">ApplicationUseCase</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/ArticlesUseCase.html">ArticlesUseCase</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/StandaloneDatabaseConnectionPoolCache.html">StandaloneDatabaseConnectionPoolCache</a>
               </li>
               <li class="nav-group-task">
@@ -149,10 +143,16 @@
                 <a class="nav-group-task-link" href="Structs/APICollection.html">APICollection</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/ApplicationUseCase.html">ApplicationUseCase</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Article.html">Article</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/Article/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/ArticlesUseCase.html">ArticlesUseCase</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/AuthenticateMiddlewareUseCase.html">AuthenticateMiddlewareUseCase</a>
@@ -411,70 +411,6 @@ See AuthenticateThenExpandPayloadMiddleware for details</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:6Domain18ApplicationUseCaseC"></a>
-                    <a name="//apple_ref/swift/Class/ApplicationUseCase" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Domain18ApplicationUseCaseC">ApplicationUseCase</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Use cases for starting server applications</p>
-
-                        <a href="Classes/ApplicationUseCase.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ApplicationUseCase</span> <span class="p">:</span> <span class="kt"><a href="Protocols.html#/s:6Domain7UseCaseP">UseCase</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:6Domain15ArticlesUseCaseC"></a>
-                    <a name="//apple_ref/swift/Class/ArticlesUseCase" class="dashAnchor"></a>
-                    <a class="token" href="#/s:6Domain15ArticlesUseCaseC">ArticlesUseCase</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Use cases for Articles</p>
-
-                        <a href="Classes/ArticlesUseCase.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ArticlesUseCase</span> <span class="p">:</span> <span class="kt"><a href="Protocols.html#/s:6Domain7UseCaseP">UseCase</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:6Domain10ValidationC"></a>
                     <a name="//apple_ref/swift/Class/Validation" class="dashAnchor"></a>
                     <a class="token" href="#/s:6Domain10ValidationC">Validation</a>
@@ -488,7 +424,8 @@ See AuthenticateThenExpandPayloadMiddleware for details</p>
                         <p>This class has the validation function required for this project.</p>
 
 <p><a href="https://github.com/vapor/validation">vapor/validation</a> is adopted as Infrastructure.
-This class was prepared because <a href="https://conduit.productionready.io/api">realworld&rsquo;s production implementation</a> validation was an exhaustive check.</p>
+This class was prepared because realworld&rsquo;s production implementation (<a href="https://conduit.productionready.io/api">https://conduit.productionready.io/api</a>) validation was an exhaustive check. At first, Validatable was used.</p>
+<h3 id='extras' class='heading'>Extras</h3>
 
 <p>As an aside, I like vapor/validation. This is because there is a usage that is loosely coupled to vapor/vapor.
 If it is an add-in to vapor/vapor Package like fluent, I think it is better. Looking <a href="https://github.com/vapor/vapor/blob/4.0.0-beta.1/Package.swift">here</a>, I expect it will probably be in the future.</p>
@@ -537,7 +474,7 @@ If it is an add-in to vapor/vapor Package like fluent, I think it is better. Loo
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">internal</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">StandaloneDatabaseConnectionPoolCache</span><span class="o">&lt;</span><span class="kt">Database</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Database</span> <span class="p">:</span> <span class="kt">Database</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">class</span> <span class="kt">StandaloneDatabaseConnectionPoolCache</span><span class="o">&lt;</span><span class="kt">Database</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Database</span> <span class="p">:</span> <span class="kt">Database</span></code></pre>
 
                         </div>
                       </div>

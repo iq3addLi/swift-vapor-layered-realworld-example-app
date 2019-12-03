@@ -11,6 +11,9 @@ import Core // Supply Codable for Date
 
 /// Representation of a row combining Articles and authors and favorite information about them.
 public final class ArticlesAndAuthorWithFavoritedRow: Codable {
+    
+    // MARK: Properties
+    
     // Article
 
     // dummy comment
@@ -59,6 +62,8 @@ public final class ArticlesAndAuthorWithFavoritedRow: Codable {
     // dummy comment
     public let tagCSV: String?
 
+    // MARK: Functions
+    
     // dummy comment
     public init( id: Int?, slug: String, title: String, description: String, body: String, favoritesCount: Int, favorited: Bool?, author: Int, createdAt: Date = Date(), updatedAt: Date = Date(), username: String, bio: String, image: String, following: Bool?, tagCSV: String? ) {
         self.id = id

@@ -10,11 +10,17 @@ import Vapor
 /// FrameworkRepository implemented in Vapor
 class VaporFrameworkRepository: FrameworkRepository {
     
+    // MARK: Properties
+    
     private lazy var services = {
         return Services.default()
     }()
     private var application: Vapor.Application?
 
+    // MARK: Functions
+    
+    
+    /// <#Description#>
     func initalize() {
         
         var services = self.services
@@ -40,6 +46,9 @@ class VaporFrameworkRepository: FrameworkRepository {
         services.register(VerifiedUserEntity.self)
     }
     
+    
+    /// <#Description#>
+    /// - Parameter collections: <#collections description#>
     func routing(collections: [APICollection]) {
         
         var services = self.services
@@ -62,6 +71,11 @@ class VaporFrameworkRepository: FrameworkRepository {
         services.register(router, as: Router.self)
     }
     
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - hostname: <#hostname description#>
+    ///   - port: <#port description#>
     func applicationLaunch(hostname: String, port: Int) throws {
         
         var services = self.services
