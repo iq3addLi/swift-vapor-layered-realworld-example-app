@@ -10,7 +10,7 @@ import Vapor
 /// Extensions required by Domain
 extension AbortError {
 
-    // MARK: Functions
+    // MARK: As Response
     
     /// Convert Vapor.AbortError to Response.
     /// - Parameter request: A request for response
@@ -29,7 +29,7 @@ extension AbortError {
 /// Extensions required by Domain
 extension Debuggable {
 
-    // MARK: Functions
+    // MARK: As Response
     
     /// Convert Core.Debuggable to Response.
     /// - Parameter request: A request for response
@@ -50,6 +50,8 @@ extension Debuggable {
 /// Extensions required by Domain
 extension ValidationError {
     
+    // MARK: As Response
+    
     /// Convert validation errors to Response.
     /// - Parameter request: A request for response
     func toResponse(for request: Request) throws -> Response {
@@ -63,6 +65,8 @@ extension ValidationError {
 
 /// Extensions required by Domain
 extension Error {
+    
+    // MARK: As Response
     
     /// Convert Domain.Error to Response
     /// - Parameter request: A request for response

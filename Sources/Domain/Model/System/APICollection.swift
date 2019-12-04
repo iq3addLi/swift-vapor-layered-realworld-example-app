@@ -7,7 +7,7 @@
 
 import Vapor
 
-/// Order for defining routing
+/// Order for defining routing.
 ///
 /// It was defined as a specification when ordering routing from the presentation layer to the domain layer.
 /// ### Note
@@ -16,21 +16,27 @@ public struct APICollection {
 
     // MARK: Properties
     
-    /// dummy comment
+    /// HTTPMethod to which API responds.
     public let method: HTTPMethodInDomain
 
-    /// dummy comment
+    /// See `PathComponentsRepresentable`.
     public let paths: PathComponentsRepresentable
 
-    /// dummy comment
+    /// API processing.
     public let closure: (Request) throws -> Future<Response>
 
-    /// dummy comment
+    /// Middleware that performs processing between Framework and Controller.
     public let middlewares: [Middleware]
 
-    // MARK: Functions
+    // MARK: Initializer
     
-    /// dummy comment
+    
+    /// Default initializer.
+    /// - Parameters:
+    ///   - method: HTTPMethod to which API responds.
+    ///   - paths: See `PathComponentsRepresentable`.
+    ///   - closure: API processing.
+    ///   - middlewares: Middleware that performs processing between Framework and Controller.
     public init(method: HTTPMethodInDomain,
                 paths: PathComponentsRepresentable,
                 closure: @escaping (Request) throws -> Future<Response>,

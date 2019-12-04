@@ -14,7 +14,7 @@ public struct HTTPErrorResponse: Codable {
     let status: String
     let error: String
     
-    // MARK: Functions
+    // MARK: Initializer
     public init(_ status: String, error: String){
         self.status = status
         self.error = error

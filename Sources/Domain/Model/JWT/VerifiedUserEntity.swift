@@ -15,21 +15,23 @@ public final class VerifiedUserEntity {
     
     // MARK: Properties
     
-    /// dummy comment
+    /// Same as `SessionPayload`s id
     public var id: Int?
 
-    /// dummy comment
+    /// Same as `SessionPayload`s username
     public var username: String?
 
-    /// dummy comment
+    /// JWT used for authentication
     public var token: String?
 }
 
 import Vapor
+// MARK: Implementation as ServiceType
+
 extension VerifiedUserEntity: ServiceType {
     
-    // MARK: Functions
-    
+    /// Implementation as ServiceType
+    /// - Parameter container:  See `ServiceType`
     public static func makeService(for container: Container) throws -> Self {
         return .init()
     }

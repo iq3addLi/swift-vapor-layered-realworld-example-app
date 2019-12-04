@@ -10,7 +10,7 @@ public struct ApplicationUseCase: UseCase {
     
     // MARK: Properties
     
-    private let framework: FrameworkRepository = VaporFrameworkRepository()
+    private let framework: RESTApplicationRepository = VaporApplicationRepository()
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     
     // MARK: Functions

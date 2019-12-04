@@ -10,14 +10,13 @@ protocol JWTRepository: Repository {
 
     // MARK: Functions
     
-    /// <#Description#>
-    /// - Parameter id: <#id description#>
-    /// - Parameter username: <#username description#>
-    /// - returns:
-    ///    <#Description#>  
+    /// JWTRepository must implement JWT issuing.
+    /// - Parameters:
+    ///   - id: <#id description#>
+    ///   - username: <#username description#>
     func issueJWT( id: Int, username: String ) throws -> String
 
-    /// <#Description#>
+    /// JWTRepository must implement JWT verify.
     /// - Parameter token: <#token description#>
     /// - returns:
     ///    <#Description#>

@@ -8,19 +8,28 @@
 import Vapor
 
 /// FrameworkRepository implemented in Vapor
-class VaporFrameworkRepository: FrameworkRepository {
+class VaporApplicationRepository: RESTApplicationRepository {
     
     // MARK: Properties
     
+    /// See `Services`
     private lazy var services = {
         return Services.default()
     }()
+    
+    /// See `Vapor.Application`
     private var application: Vapor.Application?
 
+    
     // MARK: Functions
     
     
-    /// <#Description#>
+    /// Perform initialization processing for Vapor.
+    ///
+    /// In this function:
+    /// * Configure CORS to respond from different domains.
+    /// * Configure `ErrorMidlleware` to convert an error that occurred in the controller to a response that conforms to Realworld specifications.
+    /// * Set `ServiceType` to relay from Middleware to Controller.
     func initalize() {
         
         var services = self.services
@@ -47,8 +56,8 @@ class VaporFrameworkRepository: FrameworkRepository {
     }
     
     
-    /// <#Description#>
-    /// - Parameter collections: <#collections description#>
+    /// Vapor's Router initialization process.
+    /// - Parameter collections: Routing instruction array. See `APICollection`.
     func routing(collections: [APICollection]) {
         
         var services = self.services
@@ -72,7 +81,7 @@ class VaporFrameworkRepository: FrameworkRepository {
     }
     
     
-    /// <#Description#>
+    /// Start `Vapor.Application`.
     /// - Parameters:
     ///   - hostname: <#hostname description#>
     ///   - port: <#port description#>
@@ -93,9 +102,10 @@ class VaporFrameworkRepository: FrameworkRepository {
     }
     
     
-    /// <#Description#>
-    /// - Parameter request: <#request description#>
-    /// - Parameter error: <#error description#>
+    /// Error handler provided for this project.
+    /// - Parameters:
+    ///   - request: <#request description#>
+    ///   - error: <#error description#>
     private func errorToResponse( request: Request, error: Swift.Error ) -> Response {
 
         do {

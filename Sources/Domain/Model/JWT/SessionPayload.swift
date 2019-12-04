@@ -10,18 +10,22 @@ public struct SessionPayload {
 
     // MARK: Properties
     
-    /// dummy comment
+    /// Issuer id
     public let id: Int
 
-    /// dummy comment
+    /// Issuer username
     public let username: String
 
-    /// dummy comment
+    /// JWT expiration date
     public let exp: ExpirationClaim
 
-    // MARK: Functions
+    // MARK: Initializer
     
-    /// dummy comment
+    /// Default initializer
+    /// - Parameters:
+    ///   - id: Issuer id
+    ///   - username: Issuer username
+    ///   - exp: JWT expiration date
     public init(id: Int, username: String, expireAfterSec exp: Int) {
         self.id = id
         self.username = username
@@ -29,9 +33,14 @@ public struct SessionPayload {
     }
 }
 
+
 import JWT
+
+// MARK: Implementation as JWTPayload
 extension SessionPayload: JWTPayload {
-    /// dummy comment
+
+    /// Implementation as JWTPayload
+    /// - Parameter signer: See `JWTPayload`
     public func verify(using signer: JWTSigner) throws {
         try exp.verifyNotExpired()
     }

@@ -7,35 +7,28 @@
 
 import Foundation
 
-/// Issue found during validation
+/// Issue found during validation.
 ///
 /// Realworld production is a full inspection. It was made to make the same behavior.
 struct ValidateIssue {
 
     // MARK: Properties
     
-    /// <#Description#>
+    /// The name of the property where the issue was detected.
     let key: String
 
-    /// <#Description#>
+    /// Report of issue.
     let report: String
 }
 
+// MARK: Export to ValidationError
+
 extension Array where Element == ValidateIssue {
-
-    // MARK: Functions
     
-    /// <#Description#>
+    /// Export to `ValidationError`
     func generateError() -> ValidationError {
-        var errors: [String: [String]] = [:]
-        self.forEach { issue in
-            errors[issue.key] = self.filter { issue.key == $0.key }.map { $0.report }
-        }
-        return ValidationError( errors: errors )
+        ValidationError( errors: reduce(into: [String: [String]]()) { result, issue in
+            result[issue.key] = ( result[issue.key] ?? [] ) + [ issue.report ]
+        })
     }
-}
-
-/// Error expressing Validation result according to Realworld specification.
-public struct ValidationError: Swift.Error, Codable {
-    public var errors: [String: [String]]
 }

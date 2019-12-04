@@ -99,10 +99,10 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// Insert follow into MySQL Database
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter username: A user name of followee
-    /// - Parameter userId: A user id of follower
+    /// Insert follow into MySQL Database。.
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter username: A user name of followee.
+    /// - Parameter userId: A user id of follower.
     func insertFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile> {
         var followee: Users?
         return Users
@@ -121,10 +121,10 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// Delete follow into MySQL Database
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter username: A user name of followee
-    /// - Parameter userId: A user id of follower
+    /// Delete follow into MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter username: A user name of followee.
+    /// - Parameter userId: A user id of follower.
     /// - warnings:
     ///  In MySQL implementation, no error occurs even if User does not exist. It is possible to confirm that User exists in advance.
     func deleteFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile> {
@@ -142,10 +142,10 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// Insert favorite into MySQL Database
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter userId: A favorite userId
-    /// - Parameter articleSlug: A slug of favorite article
+    /// Insert favorite into MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter userId: A favorite userId.
+    /// - Parameter articleSlug: A slug of favorite article.
     func insertFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article> {
         connection
             .raw( RawSQLQueries.insertFavorites(for: articleSlug, by: userId ) )
@@ -161,10 +161,10 @@ extension MySQLDatabaseManager {
             }
     }
 
-    /// Delete favorite into MySQL Database
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter userId: Id of the user to remove favorite
-    /// - Parameter articleSlug: Slug of article to remove favorite
+    /// Delete favorite into MySQL Database.
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter userId: Id of the user to remove favorite.
+    /// - Parameter articleSlug: Slug of article to remove favorite.
     func deleteFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article> {
         connection
             .raw( RawSQLQueries.deleteFavorites(for: articleSlug, by: userId ) )
@@ -181,9 +181,9 @@ extension MySQLDatabaseManager {
     }
 
     /// Queries MySQL Database for Comments on Articles.
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter articleSlug: Slug of the commented article
-    /// - Parameter userId: Subject user id. If nil, follow contains invalid information
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter articleSlug: Slug of the commented article.
+    /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     func selectComments(on connection: MySQLConnection, for articleSlug: String, readit userId: Int? = nil) -> Future<[Comment]> {
         connection
             .raw( RawSQLQueries.selectComments(for: articleSlug, readIt: userId) )
@@ -196,10 +196,10 @@ extension MySQLDatabaseManager {
     }
 
     /// Insert Comments to Articles in MySQL Database.
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter articleSlug: Slug of the article to comment
-    /// - Parameter body: Body of comment
-    /// - Parameter userId: Id of comment author
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter articleSlug: Slug of the article to comment.
+    /// - Parameter body: Body of comment.
+    /// - Parameter userId: Id of comment author.
     func insertComment(on connection: MySQLConnection, for articleSlug: String, body: String, author userId: Int) -> Future<Comment> {
         var inserted: Comments?
         return Articles
@@ -228,8 +228,8 @@ extension MySQLDatabaseManager {
     }
 
     /// Delete Comments in MySQL Database.
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter commentId: ID of comment to remove
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter commentId: ID of comment to remove.
     func deleteComments(on connection: MySQLConnection, commentId: Int ) -> Future<Void> {
         connection
             .raw( RawSQLQueries.deleteComments( id: commentId ) )
@@ -238,11 +238,11 @@ extension MySQLDatabaseManager {
     }
 
     /// Query MySQL Database for Articles.
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter condition: Condition used to search for articles
-    /// - Parameter userId: Subject user id. If nil, follow contains invalid information
-    /// - Parameter offset: Offset to search results. nil means unspecified
-    /// - Parameter limit: Limit to search results. nil means unspecified
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter condition: Condition used to search for articles.
+    /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
+    /// - Parameter offset: Offset to search results. nil means unspecified.
+    /// - Parameter limit: Limit to search results. nil means unspecified.
     func selectArticles(on connection: MySQLConnection, condition: ArticleCondition, readIt userId: Int? = nil, offset: Int? = nil, limit: Int? = nil) -> Future<[Article]> {
         connection
             .raw( RawSQLQueries.selectArticles(condition: condition, readIt: userId, offset: offset, limit: limit) )
@@ -255,14 +255,14 @@ extension MySQLDatabaseManager {
     }
 
     /// Insert Articles into MySQL Database.
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter author: Id of the new article author
-    /// - Parameter title: Title of the new article
-    /// - Parameter slug: Slug of the new article
-    /// - Parameter description: Description of the new article
-    /// - Parameter body: Body of the new article
-    /// - Parameter tags: Array of tag strings attached to new article
-    /// - Parameter userId: Subject user id. If nil, follow contains invalid information
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter author: Id of the new article author.
+    /// - Parameter title: Title of the new article.
+    /// - Parameter slug: Slug of the new article.
+    /// - Parameter description: Description of the new article.
+    /// - Parameter body: Body of the new article.
+    /// - Parameter tags: Array of tag strings attached to new article.
+    /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     func insertArticle(on connection: MySQLConnection, author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article> {
 
         let eventLoop = connection.eventLoop
@@ -287,13 +287,13 @@ extension MySQLDatabaseManager {
     }
 
     /// Update Articles into MySQL Database.
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter slug: Slug of article to be updated
-    /// - Parameter title: Title of article to be updated, nil means unspecified
-    /// - Parameter description: Description of article to be updated, nil means unspecified
-    /// - Parameter body: Body of article to be updated, nil means unspecified
-    /// - Parameter tagList: Array of tag strings attached to be updated article, nil means unspecified
-    /// - Parameter userId: Subject user id. If nil, follow contains invalid information
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter slug: Slug of article to be updated.
+    /// - Parameter title: Title of article to be updated, nil means unspecified.
+    /// - Parameter description: Description of article to be updated, nil means unspecified.
+    /// - Parameter body: Body of article to be updated, nil means unspecified.
+    /// - Parameter tagList: Array of tag strings attached to be updated article, nil means unspecified.
+    /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     func updateArticle(on connection: MySQLConnection, slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article> {
         // Define update article process
         let future = Articles.query(on: connection)
@@ -350,8 +350,8 @@ extension MySQLDatabaseManager {
     }
 
     /// Delete Articles in MySQL Database.
-    /// - Parameter connection: A valid connection to MySQL
-    /// - Parameter slug: Slug of article to be deleted
+    /// - Parameter connection: A valid connection to MySQL.
+    /// - Parameter slug: Slug of article to be deleted.
     func deleteArticle(on connection: MySQLConnection, slug: String ) -> Future<Void> {
         connection
             .raw( RawSQLQueries.deleteArticles(slug: slug) )
@@ -360,7 +360,7 @@ extension MySQLDatabaseManager {
     }
 
     /// Query MySQL Database for all tags.
-    /// - Parameter connection: A valid connection to MySQL
+    /// - Parameter connection: A valid connection to MySQL.
     func selectTags(on connection: MySQLConnection) -> Future<[String]> {
         connection
             .raw( RawSQLQueries.selectTags() )
