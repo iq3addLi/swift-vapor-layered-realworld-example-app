@@ -1,8 +1,0 @@
-min_acl: private
-clean: true
-output: docs
-author: iq3AddLi
-github_url: https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app
-theme: fullwidth 
-module: # https://github.com/realm/jazzy/issues/382 🤔
-    Domain 
