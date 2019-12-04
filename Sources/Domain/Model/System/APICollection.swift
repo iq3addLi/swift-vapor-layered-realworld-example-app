@@ -14,6 +14,8 @@ import Vapor
 /// If possible, I wanted to define this class as an abstract order that does not depend on the framework, but I abandoned it because it was difficult in Vapor.
 public struct APICollection {
 
+    // MARK: Properties
+    
     /// dummy comment
     public let method: HTTPMethodInDomain
 
@@ -26,6 +28,8 @@ public struct APICollection {
     /// dummy comment
     public let middlewares: [Middleware]
 
+    // MARK: Functions
+    
     /// dummy comment
     public init(method: HTTPMethodInDomain,
                 paths: PathComponentsRepresentable,

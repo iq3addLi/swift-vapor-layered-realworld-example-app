@@ -1,6 +1,13 @@
 {
   "warnings": [
     {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Extension/Users+Domain.swift",
+      "line": 12,
+      "symbol": "Users.profile(following:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/LoginUser.swift",
       "line": 11,
       "symbol": "LoginUser.email",
@@ -604,21 +611,21 @@
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/HTTPErrorResponse.swift",
-      "line": 12,
+      "line": 14,
       "symbol": "HTTPErrorResponse.status",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/HTTPErrorResponse.swift",
-      "line": 13,
+      "line": 15,
       "symbol": "HTTPErrorResponse.error",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/HTTPErrorResponse.swift",
-      "line": 14,
+      "line": 18,
       "symbol": "HTTPErrorResponse.init(_:error:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -792,13 +799,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/User.swift",
-      "line": 28,
-      "symbol": "Users.profile(following:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/UserResponse.swift",
       "line": 11,
       "symbol": "UserResponse.user",
@@ -814,91 +814,91 @@
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/ArticleCondition.swift",
-      "line": 10,
+      "line": 12,
       "symbol": "ArticleCondition.global",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/ArticleCondition.swift",
-      "line": 11,
+      "line": 13,
       "symbol": "ArticleCondition.feed(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/ArticleCondition.swift",
-      "line": 12,
+      "line": 14,
       "symbol": "ArticleCondition.favorite(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/ArticleCondition.swift",
-      "line": 13,
+      "line": 15,
       "symbol": "ArticleCondition.tag(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/ArticleCondition.swift",
-      "line": 14,
+      "line": 16,
       "symbol": "ArticleCondition.author(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/ArticleCondition.swift",
-      "line": 15,
+      "line": 17,
       "symbol": "ArticleCondition.slug(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/Error.swift",
-      "line": 10,
+      "line": 13,
       "symbol": "Error.reason",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/Error.swift",
-      "line": 11,
+      "line": 14,
       "symbol": "Error.status",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/HTTPMethodInDomain.swift",
-      "line": 17,
+      "line": 19,
       "symbol": "HTTPMethodInDomain.get",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/HTTPMethodInDomain.swift",
-      "line": 18,
+      "line": 20,
       "symbol": "HTTPMethodInDomain.put",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/HTTPMethodInDomain.swift",
-      "line": 19,
+      "line": 21,
       "symbol": "HTTPMethodInDomain.post",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/HTTPMethodInDomain.swift",
-      "line": 20,
+      "line": 22,
       "symbol": "HTTPMethodInDomain.delete",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/System/ValidateIssue.swift",
-      "line": 36,
+      "line": 40,
       "symbol": "ValidationError.errors",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"

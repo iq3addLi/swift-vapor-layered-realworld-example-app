@@ -25,8 +25,6 @@ public enum RawSQLQueries {}
 // MARK: Articles
 extension RawSQLQueries {
     
-    // MARK: Functions
-    
     /// Returns the query. Inquires about articles according to the argument conditions.
     /// - Parameter condition: Information that shows what criteria to search for articles.
     /// - Parameter userId: ID of the user reading this article. If nil, following is false.

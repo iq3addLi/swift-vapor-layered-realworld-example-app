@@ -7,12 +7,13 @@
 
 import Infrastructure
 
+/// Extensions required by Domain
 extension MySQLDatabaseManager {
 
-    // MARK: Functions
+    // MARK: Manage connection
     
     /// Get a valid connection to MySQL from the manager and send a query.
-    /// - Parameter email: <#email description#>
+    /// - Parameter email: A email address. Information to identify the user.
     func selectUser(email: String) -> Future<Users?> {
         communication { connection in
             self.selectUser(on: connection, email: email)
@@ -21,7 +22,7 @@ extension MySQLDatabaseManager {
 
     
     /// Get a valid connection to MySQL from the manager and send a query.
-    /// - Parameter id: <#id description#>
+    /// - Parameter id: A user id. Information to identify the user.
     func selectUser(id: Int) -> Future<Users?> {
         communication { connection in
             self.selectUser(on: connection, id: id)
@@ -30,7 +31,7 @@ extension MySQLDatabaseManager {
 
     
     /// Get a valid connection to MySQL from the manager and send a query.
-    /// - Parameter name: <#name description#>
+    /// - Parameter name: A user name. Information to identify the user.
     func selectUser(name: String) -> Future<Users?> {
         communication { connection in
             self.selectUser(on: connection, username: name)
@@ -40,10 +41,10 @@ extension MySQLDatabaseManager {
     
     /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - email: <#email description#>
-    ///   - hash: <#hash description#>
-    ///   - salt: <#salt description#>
+    ///   - username: New user name to register
+    ///   - email: New email to register
+    ///   - hash: Hashed password
+    ///   - salt: Salt used when hashing
     func insertUser(name username: String, email: String, hash: String, salt: String) -> Future<Users> {
         startTransaction { connection in
             self.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt)
@@ -53,10 +54,10 @@ extension MySQLDatabaseManager {
     
     /// Get a valid connection to MySQL from the manager and send a query.
     /// - Parameters:
-    ///   - id: <#id description#>
-    ///   - email: <#email description#>
-    ///   - bio: <#bio description#>
-    ///   - image: <#image description#>
+    ///   - id: ID of User to be updated
+    ///   - email: New email. No update if nil.
+    ///   - bio: New bio. No update if nil.
+    ///   - image: New image. No update if nil.
     func updateUser(id: Int, email: String?, bio: String?, image: String?) -> Future<Users> {
         startTransaction { connection in
             self.updateUser(on: connection, id: id, email: email, bio: bio, image: image)
@@ -64,8 +65,8 @@ extension MySQLDatabaseManager {
     }
 
     /// Get a valid connection to MySQL from the manager and send a query.
-    /// - Parameter username: <#username description#>
-    /// - Parameter userId: <#userId description#>
+    /// - Parameter username: A user name. Information to identify the user
+    /// - Parameter userId: Subject user id. If nil, follow contains invalid information
     func selectProfile(username: String, readIt userId: Int? = nil) -> Future<Profile?> {
         communication { connection in
             self.selectProfile(on: connection, username: username, readIt: userId)
@@ -73,8 +74,8 @@ extension MySQLDatabaseManager {
     }
 
     /// Get a valid connection to MySQL from the manager and send a query.
-    /// - Parameter username: <#username description#>
-    /// - Parameter userId: <#userId description#>
+    /// - Parameter username: A user name of followee
+    /// - Parameter userId: A user id of follower
     func insertFollow(followee username: String, follower userId: Int ) -> Future<Profile> {
         startTransaction { connection in
             self.insertFollow(on: connection, followee: username, follower: userId)
@@ -82,7 +83,7 @@ extension MySQLDatabaseManager {
     }
 
     /// Get a valid connection to MySQL from the manager and send a query.
-    /// - Parameter username: <#username description#>
+    /// - Parameter username: A user name of followee.
     /// - Parameter userId: <#userId description#>
     func deleteFollow(followee username: String, follower userId: Int ) -> Future<Profile> {
         startTransaction { connection in

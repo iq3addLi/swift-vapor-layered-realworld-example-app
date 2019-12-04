@@ -12,6 +12,9 @@
 /// ### Note
 /// SessionPayload is a struct and has an exp that does not require a relay. I thought I should have another class.
 public final class VerifiedUserEntity {
+    
+    // MARK: Properties
+    
     /// dummy comment
     public var id: Int?
 
@@ -24,6 +27,9 @@ public final class VerifiedUserEntity {
 
 import Vapor
 extension VerifiedUserEntity: ServiceType {
+    
+    // MARK: Functions
+    
     public static func makeService(for container: Container) throws -> Self {
         return .init()
     }

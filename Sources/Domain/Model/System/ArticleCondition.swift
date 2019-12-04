@@ -7,6 +7,8 @@
 
 /// An enum that expresses conditions when searching for articles
 public enum ArticleCondition {
+    
+    // MARK: Cases
     case global
     case feed(Int) // followerId
     case favorite(String) // username

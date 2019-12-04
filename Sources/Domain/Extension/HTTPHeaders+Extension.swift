@@ -7,6 +7,7 @@
 
 import HTTP
 
+/// Extensions required by Domain
 extension HTTPHeaders {
 
     // MARK: Properties

@@ -8,6 +8,8 @@
 /// The payload part of JWT
 public struct SessionPayload {
 
+    // MARK: Properties
+    
     /// dummy comment
     public let id: Int
 
@@ -17,6 +19,8 @@ public struct SessionPayload {
     /// dummy comment
     public let exp: ExpirationClaim
 
+    // MARK: Functions
+    
     /// dummy comment
     public init(id: Int, username: String, expireAfterSec exp: Int) {
         self.id = id

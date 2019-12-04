@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Extensions required by Domain
 extension DateFormatter {
     
     // MARK: Properties

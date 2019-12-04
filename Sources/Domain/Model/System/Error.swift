@@ -7,9 +7,14 @@
 
 /// Domain layer's error
 struct Error: Swift.Error {
+    
+    // MARK: Properties
+    
     let reason: String
     let status: Int
 
+    // MARK: Functions
+    
     ///
     /// - Parameter reason: <#reason description#>
     init(_ reason: String, status: Int = 404) {

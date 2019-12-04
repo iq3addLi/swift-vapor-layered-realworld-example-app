@@ -12,6 +12,8 @@ import Foundation
 /// Realworld production is a full inspection. It was made to make the same behavior.
 struct ValidateIssue {
 
+    // MARK: Properties
+    
     /// <#Description#>
     let key: String
 
@@ -21,6 +23,8 @@ struct ValidateIssue {
 
 extension Array where Element == ValidateIssue {
 
+    // MARK: Functions
+    
     /// <#Description#>
     func generateError() -> ValidationError {
         var errors: [String: [String]] = [:]

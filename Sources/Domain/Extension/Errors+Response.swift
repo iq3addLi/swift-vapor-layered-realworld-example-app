@@ -7,7 +7,7 @@
 
 import Vapor
 
-
+/// Extensions required by Domain
 extension AbortError {
 
     // MARK: Functions
@@ -26,6 +26,7 @@ extension AbortError {
 }
 
 
+/// Extensions required by Domain
 extension Debuggable {
 
     // MARK: Functions
@@ -46,9 +47,8 @@ extension Debuggable {
 }
 
 
+/// Extensions required by Domain
 extension ValidationError {
-
-    // MARK: Functions
     
     /// Convert validation errors to Response.
     /// - Parameter request: A request for response
@@ -61,9 +61,8 @@ extension ValidationError {
 }
 
 
+/// Extensions required by Domain
 extension Error {
-
-    // MARK: Functions
     
     /// Convert Domain.Error to Response
     /// - Parameter request: A request for response

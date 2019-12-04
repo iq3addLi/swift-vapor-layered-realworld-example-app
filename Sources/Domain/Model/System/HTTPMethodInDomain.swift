@@ -14,6 +14,8 @@
 /// ### Extra
 /// I'm want hotly for [enum subsets features](https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20160530/020054.html) in Swift.😊
 public enum HTTPMethodInDomain {
+    // MARK: Cases
+    
     case get
     case put
     case post
@@ -24,6 +26,8 @@ import NIOHTTP1
 
 extension HTTPMethodInDomain {
 
+    // MARK: Properties
+    
     /// dummy comment
     public var raw: HTTPMethod {
         switch self {

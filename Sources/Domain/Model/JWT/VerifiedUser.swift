@@ -10,8 +10,11 @@
 /// APIs that require the logged-in user's own information to complete the process automatically query the user information through Middleware and relay the information to the controller.
 /// @see AuthenticateThenSearchUserMiddleware for detail.
 /// ### Note
-/// User is a struct and has no id. This class was prepared because we wanted to use it without changing the swagger definition.
+/// User is a struct and has no id. This class was prepared because I wanted to use it without changing the swagger definition.
 public final class VerifiedUser {
+    
+    // MARK: Properties
+    
     /// dummy comment
     public var id: Int
 
@@ -30,6 +33,7 @@ public final class VerifiedUser {
     /// dummy comment
     public var image: String
 
+    // MARK: Functions
     /// dummy comment
     public init(id: Int = 0, email: String = "", token: String = "", username: String = "", bio: String = "", image: String = "") {
         self.id = id
@@ -40,6 +44,7 @@ public final class VerifiedUser {
         self.image = image
     }
 }
+
 
 extension VerifiedUser {
     /// dummy comment
