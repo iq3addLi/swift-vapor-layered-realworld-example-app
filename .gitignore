@@ -1,2 +1,6 @@
 .build
 swift-vapor-layered-realworld-example.xcodeproj
+.swiftpm
+build
+mysql_data
+pulumi
