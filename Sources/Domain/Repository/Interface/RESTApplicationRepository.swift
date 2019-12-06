@@ -32,6 +32,6 @@ protocol RESTApplicationRepository: Repository {
     ///   - hostname: Host name where the server starts. ex. `"127.0.0.1"`.
     ///   - port: Server port number. ex. `80`.
     /// - throws:
-    ///    <#Description#> 
+    ///    It's assumed that some error will be thrown if the application server fails to launch.
     func applicationLaunch(hostname: String, port: Int) throws
 }

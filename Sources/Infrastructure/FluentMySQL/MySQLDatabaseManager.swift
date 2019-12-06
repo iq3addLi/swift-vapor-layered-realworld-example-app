@@ -41,10 +41,11 @@ public class MySQLDatabaseManager {
     ///
     /// `MySQLDatabase` requires that the connection request be made with NIO.Thread. You can use this method when you want to request a connection from the main thread. Temporary threads are not automatically shut down. If you don't need to manually shut down, you should use `instantCommunication`.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `MySQLConnection`.
     /// - warnings:
     ///    Never call it from NIO.Thread.
     public func newConnectionOnInstantEventLoop() -> Future<MySQLConnection> {
+        print("Launch instant thread.")
         return database.newConnection(on: MultiThreadedEventLoopGroup(numberOfThreads: 1))
     }
 
@@ -53,13 +54,11 @@ public class MySQLDatabaseManager {
     ///
     /// This method is paired with `newConnectionOnInstantEventLoop`. The created connection should be cleaned up with this method. `InstantCommunication` uses this method after executing the closure.
     /// - Parameter connection: Connections that have been used.
-    /// - returns:
-    ///    <#Description#>
     /// - warnings:
     ///    Never call it from NIO.Thread.
     public func correctInstantEventLoop(connection: MySQLConnection) {
         connection.eventLoop.shutdownGracefully { (error) in
-            print("\(error != nil ? error!.localizedDescription : "shutdownGracefully was successed.")")
+            print("\(error != nil ? error!.localizedDescription : "A shutdownGracefully by instant thread was successed.")")
         }
     }
     
@@ -68,7 +67,7 @@ public class MySQLDatabaseManager {
     /// Similar to `communication`. This is supposed to be called from Main Thread.
     /// - Parameter closure: Receiving active conection closure.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `closure`'s return value.
     /// - warnings:
     ///    Never call it from NIO.Thread.
     public func instantCommunication<T>( closure: @escaping (MySQLConnection) -> Future<T> ) -> Future<T> {
@@ -90,7 +89,7 @@ public class MySQLDatabaseManager {
     ///
     /// This is supposed to be called on `NIO.Thread`. Connections called with this method must later notify the ConnectionPool that use has ended. Notify that the use has ended with `releaseConnection`. If you don't need to manually release, you should use `communication` or `transaction`.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `MySQLConnection`.
     /// - warnings:
     ///    Never call it from main thread.
     public func requestConnection() -> Future<MySQLConnection> {
@@ -102,7 +101,7 @@ public class MySQLDatabaseManager {
     /// This method is paired with `requestConnection`. The requested connection should be released with this method. `communication` and `transaction` uses this method after executing the closure.
     /// - Parameter connection: Connections that have been used.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `MySQLConnection`.
     /// - warnings:
     ///    Never call it from main thread.
     public func releaseConnection(_ connection: MySQLConnection) {
@@ -115,7 +114,7 @@ public class MySQLDatabaseManager {
     /// Request and release a connection. In the meantime, you can specify a closure that uses connection.
     /// - Parameter closure: Receiving active conection closure.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `closure`'s return value.
     /// - warnings:
     ///    Never call it from main thread.
     public func communication<T>( closure: @escaping (MySQLConnection) -> Future<T> ) -> Future<T> {
@@ -135,7 +134,7 @@ public class MySQLDatabaseManager {
     /// Similar to `communication`. The difference is that the MySQL transaction feature is enabled. This should be used when running CUD Operations.
     /// - Parameter closure: Receiving active conection closure.
     /// - returns:
-    ///    <#Description#>   
+    ///    The `Future` that returns `closure`'s return value. 
     /// - warnings:
     ///    Never call it from main thread.
     public func transaction<T>( closure: @escaping (MySQLConnection) -> Future<T> ) -> Future<T> {

@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/09/27.
 //
 
-/// Use cases for Users
+/// Use cases for Users.
 public struct UsersUseCase: UseCase {
     
     // MARK: Properties
@@ -47,7 +47,7 @@ public struct UsersUseCase: UseCase {
     /// - parameters:
     ///     - form: Please pass the information used for user registration with `NewUser`.
     /// - throws:
-    ///    <#Description#> 
+    ///    See `JWTWithVaporRepository.issueJWT(id:username:)`.
     /// - returns:
     ///    The `Future` that returns `UserResponse`.
     public func register(user form: NewUser ) throws -> Future<UserResponse> {

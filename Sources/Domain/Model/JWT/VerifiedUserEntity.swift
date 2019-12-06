@@ -33,7 +33,7 @@ extension VerifiedUserEntity: ServiceType {
     /// Implementation as ServiceType.
     /// - Parameter container:  See `ServiceType`.
     /// - throws:
-    ///    <#Description#> 
+    ///    Instance with no value. 
     public static func makeService(for container: Container) throws -> Self {
         return .init()
     }

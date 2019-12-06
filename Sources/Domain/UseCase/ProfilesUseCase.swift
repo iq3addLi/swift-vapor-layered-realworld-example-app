@@ -16,7 +16,7 @@ public struct ProfilesUseCase: UseCase {
     
     // MARK: Initalizer
     
-    /// Default initializer
+    /// Default initializer.
     public init() {}
     
     

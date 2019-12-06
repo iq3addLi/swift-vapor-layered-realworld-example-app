@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/09/27.
 //
 
-/// Use cases for Tags
+/// Use cases for Tags.
 public struct TagsUseCase: UseCase {
     
     // MARK: Properties

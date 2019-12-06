@@ -83,7 +83,7 @@ class VaporApplicationRepository: RESTApplicationRepository {
     ///   - hostname: Host name where the server starts. ex. `"127.0.0.1"`.
     ///   - port: Server port number. ex. `80`.
     /// - throws:
-    ///    <#Description#> 
+    ///    See `Application.init(config:environment:services:)`.
     func applicationLaunch(hostname: String, port: Int) throws {
         
         var services = self.services
@@ -108,7 +108,7 @@ class VaporApplicationRepository: RESTApplicationRepository {
     ///   - request: See `ErrorMiddleware.closure`.
     ///   - error: See `ErrorMiddleware.closure`.
     /// - returns:
-    ///    <#Description#>   
+    ///    A `Vapor.Response` that converted the error that reached this method according to the specifications of the project
     private func errorToResponse( request: Request, error: Swift.Error ) -> Response {
 
         do {

@@ -9,7 +9,7 @@ import Domain
 
 /// This application is start here🏃‍♂️
 /// - throws:
-///  <#Description#>
+///  See `ApplicationUseCase.initialize()` and `ApplicationUseCase.launch()`
 public func applciationMain() throws {
     
     // The use case for application

@@ -26,12 +26,12 @@ struct AuthenticateOptionalMiddleware: Middleware {
     ///
     /// No error is thrown if JWT verify fails. Service is empty.
     /// - Parameters:
-    ///   - request: See `Middleware`
-    ///   - next: See `Middleware`
+    ///   - request: See `Vapor.Request`.
+    ///   - next: A next responder. See `Responder`.   
     /// - throws:
-    ///    <#Description#>
+    ///    When JWT is sent but verification fails.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`. 
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         var payload: SessionPayload?

@@ -21,11 +21,11 @@ struct UsersController {
     // MARK: Controller for users
     
     /// POST /users
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    Normally, no error is thrown in this function.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func postUser(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
         return try request.content.decode(json: NewUserRequest.self, using: .custom(dates: .iso8601))
@@ -38,11 +38,11 @@ struct UsersController {
     }
 
     /// POST /users/login
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`. 
     /// - throws:
-    ///    <#Description#>
+    ///    Normally, no error is thrown in this function.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func login(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
         return try request.content.decode(json: LoginUserRequest.self, using: .custom(dates: .iso8601))
@@ -58,11 +58,11 @@ struct UsersController {
     /// GET /user
     ///
     /// Auth then search user.
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    Normally, no error is thrown in this function.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func getUser(_ request: Request) throws -> Future<Response> {
         let user = try request.privateContainer.make(VerifiedUser.self).user
         let response = UserResponse(user: user)
@@ -73,11 +73,11 @@ struct UsersController {
     /// PUT /user
     ///
     /// Auth then expand payload.
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    Normally, no error is thrown in this function.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`. 
     func updateUser(_ request: Request) throws -> Future<Response> {
 
         // Get relayed parameter

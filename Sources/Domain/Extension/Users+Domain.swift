@@ -15,7 +15,7 @@ extension Users {
     /// Export to `Profile`.
     /// - Parameter following: Follow infomation. Missing properties in `Users`.
     /// - returns:
-    ///    <#Description#>   
+    ///     A `Profile` that has the same values as this instance.
     public func profile( following: Bool) -> Profile {
         return Profile(username: username, bio: bio, image: image, following: following)
     }

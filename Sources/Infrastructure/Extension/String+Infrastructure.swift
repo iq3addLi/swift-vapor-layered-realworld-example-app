@@ -20,7 +20,7 @@ extension String {
     /// Returns a random string.
     /// - Parameter length: The length of the string.
     /// - returns:
-    ///    <#Description#>   
+    ///    A random string of length `length`. It consists of alphabets and numbers.
     public static func random(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String( (0..<length).map { _ in letters.randomElement()! })

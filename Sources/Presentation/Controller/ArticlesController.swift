@@ -23,16 +23,17 @@ struct ArticlesController {
     
     /// GET /articles
     ///
-    /// Auth optional
+    /// Auth optional.
     /// ### get query examples
     /// * /articles?offset=100&limit=3)
     /// * /articles?author=johnjacob
     /// * /articles?favorited=jane
     /// * /articles?tag=dragons
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    See `Container.make()`
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func getArticles(_ request: Request) throws -> Future<Response> {
         // Get parameter by query
         let offset = request.query[ Int.self, at: "offset" ]
@@ -53,11 +54,12 @@ struct ArticlesController {
 
     /// POST /articles
     ///
-    /// Auth then expand payload
+    /// Auth then expand payload.
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    Normally, no error is thrown in this function. 
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func postArticle(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
         // Get parameter by body
@@ -74,12 +76,12 @@ struct ArticlesController {
 
     /// GET /articles/{{slug}}
     ///
-    /// Auth optional
-    /// - Parameter request: <#request description#>
+    /// Auth optional.
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func getArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -97,11 +99,11 @@ struct ArticlesController {
     /// DELETE /articles/{{slug}}
     ///
     /// Auth then expand payload
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func deleteArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -116,11 +118,11 @@ struct ArticlesController {
     /// PUT /articles/{{slug}}
     ///
     /// Auth then expand payload
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func updateArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -142,11 +144,11 @@ struct ArticlesController {
     /// GET /articles/feed
     ///
     /// Auth then expand payload
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func getArticlesMyFeed(_ request: Request) throws -> Future<Response> {
         // Get parameter by query
         let offset = request.query[ Int.self, at: "offset" ]
@@ -164,11 +166,11 @@ struct ArticlesController {
     /// POST /articles/{{slug}}/favorite
     ///
     /// Auth then expand payload
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func postFavorite(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -186,11 +188,11 @@ struct ArticlesController {
     /// DELETE /articles/{{slug}}/favorite
     ///
     /// Auth then expand payload
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func deleteFavorite(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -208,11 +210,11 @@ struct ArticlesController {
     /// GET /articles/{{slug}}/comments
     ///
     /// Auth optional
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func getComments(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -226,12 +228,12 @@ struct ArticlesController {
 
     /// POST /articles/{{slug}}/comments
     ///
-    /// Auth then expand payload
-    /// - Parameter request: <#request description#>
+    /// Auth then expand payload.
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func postComment(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -252,12 +254,12 @@ struct ArticlesController {
 
     /// DELETE /articles/{{slug}}/comments/{{commentId}}
     ///
-    /// Auth required
-    /// - Parameter request: <#request description#>
+    /// Auth required.
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func deleteComment(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)

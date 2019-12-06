@@ -21,14 +21,16 @@ struct AuthenticateThenExpandPayloadMiddleware: Middleware {
     
     // MARK: Implementation as a Middleware
     
-    /// <#Description#>
+    /// Middleware processing.
     /// - Parameters:
-    ///   - request: <#request description#>
-    ///   - next: <#next description#>
+    ///   - request: See `Vapor.Request`.
+    ///   - next: A next responder. See `Responder`.
     /// - throws:
-    ///    <#Description#>
+    ///    Error is thrown in the following cases.
+    ///    * HTTPHeader has no Authorization.
+    ///    * JWT validation fails.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`. 
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         guard let token = request.http.headers.tokenAuthorization?.token else {

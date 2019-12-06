@@ -24,11 +24,11 @@ struct ProfilesController {
     /// GET /profiles/{{USERNAME}}
     ///
     /// Auth optional
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func getProfile(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)
@@ -45,11 +45,11 @@ struct ProfilesController {
     /// POST /profiles/{{USERNAME}}/follow
     ///
     /// Auth then expand payload.
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`.
     func follow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)
@@ -66,11 +66,11 @@ struct ProfilesController {
     /// DELETE /profiles/{{USERNAME}}/follow
     ///
     /// Auth then expand payload.
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    When URL parameters cannot be obtained with the expected type.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`. 
     func unfollow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)

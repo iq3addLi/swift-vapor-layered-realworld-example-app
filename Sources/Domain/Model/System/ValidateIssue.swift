@@ -27,7 +27,7 @@ extension Array where Element == ValidateIssue {
     
     /// Export to `ValidationError`.
     /// - returns:
-    ///    <#Description#>   
+    ///    A `ValidateError` that aggregates an array of` ValidateIssue`.
     func generateError() -> ValidationError {
         ValidationError( errors: reduce(into: [String: [String]]()) { result, issue in
             result[issue.key] = ( result[issue.key] ?? [] ) + [ issue.report ]

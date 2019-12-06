@@ -22,9 +22,9 @@ struct JWTWithVaporRepository: JWTRepository {
     ///   - id: Id of the user whose password has been verified.
     ///   - username: Name of the user whose password has been verified.
     /// - throws:
-    ///    <#Description#>
+    ///    See `JWT.init(payload:)` and `JWT.sign(using:)`.
     /// - returns:
-    ///    <#Description#> 
+    ///    JWT as `String`.
     func issueJWT( id: Int, username: String ) throws -> String {
 
         // create payload
@@ -43,9 +43,9 @@ struct JWTWithVaporRepository: JWTRepository {
     /// verify a JWT.
     /// - Parameter token: string of JWT.
     /// - throws:
-    ///    <#Description#>
+    ///    See `JWT.init(from:verifiedUsing:)`.
     /// - returns:
-    ///    <#Description#>
+    ///    A payload section of JWT as `SessionPayload`.
     func verifyJWT( token: String ) throws -> SessionPayload {
         // Verify and expand
         return try JWT<SessionPayload>(from: token, verifiedUsing: .hs256(key: secret)).payload

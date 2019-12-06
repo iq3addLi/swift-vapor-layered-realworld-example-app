@@ -25,9 +25,8 @@ public struct ApplicationUseCase: UseCase {
     
     /// This use case has work of project initialization.
     /// - throws:
-    ///    <#Description#>
+    ///    See `ConduitMySQLRepository.ifneededPreparetion()`.
     public func initialize() throws {
-
         try conduit.ifneededPreparetion()
         framework.initalize()
     }
@@ -40,7 +39,7 @@ public struct ApplicationUseCase: UseCase {
 
     /// This use case has work of application launch.
     /// - throws:
-    ///    <#Description#> 
+    ///    See `VaporApplicationRepository.applicationLaunch(hostname:port:)`.
     public func launch() throws {
         try framework.applicationLaunch(hostname: "0.0.0.0", port: 8080)
     }

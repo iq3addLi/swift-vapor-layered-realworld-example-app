@@ -15,9 +15,9 @@ extension AbortError {
     /// Convert Vapor.AbortError to Response.
     /// - Parameter request: A request for response.
     /// - throws:
-    ///    <#Description#>
+    ///    When HTTPBody generation fails. It cannot happen logically.
     /// - returns:
-    ///    <#Description#>
+    ///    A representation of this instance as `Response`.
     func toResponse(for request: Request) throws -> Response {
         // this is an abort error, we should use its status, reason, and headers
         let response = request.response(http: .init(status: status, headers: headers))
@@ -37,9 +37,9 @@ extension Debuggable {
     /// Convert Core.Debuggable to Response.
     /// - Parameter request: A request for response.
     /// - throws:
-    ///    <#Description#>
+    ///    When HTTPBody generation fails. It cannot happen logically.
     /// - returns:
-    ///    <#Description#>
+    ///    A representation of this instance as `Response`.
     func toResponse(for request: Request) throws -> Response {
         // if not release mode, and error is debuggable, provide debug
         // info directly to the developer
@@ -61,9 +61,9 @@ extension ValidationError {
     /// Convert validation errors to Response.
     /// - Parameter request: A request for response.
     /// - throws:
-    ///    <#Description#>
+    ///    When HTTPBody generation fails. It cannot happen logically.
     /// - returns:
-    ///    <#Description#>
+    ///    A representation of this instance as `Response`.
     func toResponse(for request: Request) throws -> Response {
         let response = request.response(http: .init(status: .badRequest, headers: [:]))
         response.http.body = try HTTPBody(data: JSONEncoder().encode(self))
@@ -81,9 +81,9 @@ extension Error {
     /// Convert Domain.Error to Response.
     /// - Parameter request: A request for response.
     /// - throws:
-    ///    <#Description#> 
+    ///    When HTTPBody generation fails. It cannot happen logically.
     /// - returns:
-    ///    <#Description#>   
+    ///    A representation of this instance as `Response`.
     func toResponse(for request: Request) throws -> Response {
         // reason property should be collected as a log
         let httpStatus = HTTPResponseStatus(statusCode: status)

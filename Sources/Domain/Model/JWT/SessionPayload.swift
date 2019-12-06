@@ -42,7 +42,7 @@ extension SessionPayload: JWTPayload {
     /// JWT is verified using the vapor/jwt-kit function.
     /// - Parameter signer: See `JWTPayload`.
     /// - throws:
-    ///    <#Description#> 
+    ///    See `ExpirationClaim.verifyNotExpired()`.
     public func verify(using signer: JWTSigner) throws {
         try exp.verifyNotExpired()
     }

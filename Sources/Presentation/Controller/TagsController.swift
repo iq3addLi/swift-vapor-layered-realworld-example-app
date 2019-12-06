@@ -22,11 +22,11 @@ struct TagsController {
     // MARK: Controller for tags
     
     // GET /tags
-    /// - Parameter request: <#request description#>
+    /// - Parameter request: See `Vapor.Request`.
     /// - throws:
-    ///    <#Description#>
+    ///    Normally, no error is thrown in this function.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `Response`. 
     func getTags(_ request: Request) throws -> Future<Response> {
         useCase.allTags()
             .map { response in

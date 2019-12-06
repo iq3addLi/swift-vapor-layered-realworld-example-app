@@ -76,9 +76,9 @@ extension VerifiedUser: ServiceType {
     
     /// See `ServiceType`.
     /// - throws:
-    ///    <#Description#> 
+    ///    Conforms to protocol. It does not happen logically.
     /// - returns:
-    ///    <#Description#>   
+    ///    Instance with no value.
     public static func makeService(for container: Container) throws -> Self {
         return .init()
     }

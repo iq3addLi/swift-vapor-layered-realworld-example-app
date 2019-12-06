@@ -15,18 +15,16 @@ protocol JWTRepository: Repository {
     ///   - id: Id of the user whose password has been verified.
     ///   - username: Name of the user whose password has been verified.
     /// - throws:
-    ///    <#Description#> 
+    ///    It's assumed that an error will be thrown when PWT is issued.
     /// - returns:
-    ///    <#Description#>
+    ///    Expected to return the issued JWT as `String`.
     func issueJWT( id: Int, username: String ) throws -> String
 
     /// JWTRepository must implement JWT verify.
     /// - Parameter token: string of JWT.
-    /// - returns:
-    ///    <#Description#>
     /// - throws:
-    ///  An error is thrown in the following cases:
-    /// * Deployment failed because the secret is incorrect.
-    /// * JWT has expired.
+    ///    It is assumed that Error will be thrown when validation fails.
+    /// - returns:
+    ///    Expected to return JWT payload section as `SessionPayload` after validation processing.
     func verifyJWT( token: String ) throws -> SessionPayload
 }

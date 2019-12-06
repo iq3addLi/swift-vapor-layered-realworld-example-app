@@ -29,7 +29,7 @@ extension LosslessHTTPBodyRepresentable where Self: Codable {
     
     /// Convert to HTTPBody.
     /// - returns:
-    ///    <#Description#>   
+    ///    See `HTTPBody`
     public func convertToHTTPBody() -> HTTPBody {
         return try! HTTPBody(data: JSONEncoder.custom(dates: .formatted(.iso8601withFractionalSeconds)).encode(self))
     }

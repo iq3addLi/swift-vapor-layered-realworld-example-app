@@ -19,17 +19,22 @@ public extension Array where Element == EventLoopFuture<Void> {
     /// - returns:
     ///    One future that implements array futures in series. If the array is empty, .none is returned.
     func serializedFuture() -> EventLoopFuture<Void>? {
-        var serializedFuture: EventLoopFuture<Void>?
+//        var serializedFuture: EventLoopFuture<Void>?
+//
+//        self.forEach { future in
+//            if serializedFuture != nil {
+//                serializedFuture = serializedFuture.flatMap { _ in future }
+//            } else {
+//                serializedFuture = future
+//            }
+//        }
+//
+//        return serializedFuture
 
-        self.forEach { future in
-            if serializedFuture != nil {
-                serializedFuture = serializedFuture.flatMap { _ in future }
-            } else {
-                serializedFuture = future
-            }
+        self.reduce(into: self.first) { (future, next) in
+            guard future != next else { return }
+            _ = future.flatMap { _ in next }
         }
-
-        return serializedFuture
     }
 
 }
