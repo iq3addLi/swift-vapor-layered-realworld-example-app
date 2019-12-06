@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MySQLDatabaseManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/MySQLDatabaseManager" class="dashAnchor"></a>
+
+    <a title="MySQLDatabaseManager Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Infrastructure Docs
+        </a>
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Infrastructure Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      MySQLDatabaseManager Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Articles.html">Articles</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ArticlesAndAuthorWithFavoritedRow.html">ArticlesAndAuthorWithFavoritedRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CommentWithAuthorRow.html">CommentWithAuthorRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Comments.html">Comments</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Favorites.html">Favorites</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Follows.html">Follows</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MySQLDatabaseManager.html">MySQLDatabaseManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/StandaloneDatabaseConnectionPoolCache.html">StandaloneDatabaseConnectionPoolCache</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/TagOnlyRow.html">TagOnlyRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Tags.html">Tags</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/UserWithFollowRow.html">UserWithFollowRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Users.html">Users</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/MySQLDatabaseConfig.html">MySQLDatabaseConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>MySQLDatabaseManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MySQLDatabaseManager</span></code></pre>
+
+                </div>
+              </div>
+            <p>Class that manages operations to MySQL.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC7defaultACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/default" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC7defaultACvpZ">default</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Standard global instance of this class.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">var</span> <span class="p">`</span><span class="nv">default</span><span class="p">`:</span> <span class="kt">MySQLDatabaseManager</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L16">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC19connectionPoolCache33_9CFB6AD55055FA196940B1503C73FA96LLAA028StandaloneDatabaseConnectionfG0Cy0B3SQL0bC0CGvp"></a>
+                    <a name="//apple_ref/swift/Property/connectionPoolCache" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC19connectionPoolCache33_9CFB6AD55055FA196940B1503C73FA96LLAA028StandaloneDatabaseConnectionfG0Cy0B3SQL0bC0CGvp">connectionPoolCache</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>MySQL connectionPool cache. See <code><a href="../Classes/StandaloneDatabaseConnectionPoolCache.html">StandaloneDatabaseConnectionPoolCache</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">connectionPoolCache</span><span class="p">:</span> <span class="kt"><a href="../Classes/StandaloneDatabaseConnectionPoolCache.html">StandaloneDatabaseConnectionPoolCache</a></span><span class="o">&lt;</span><span class="kt">MySQLDatabase</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L21">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC8database33_9CFB6AD55055FA196940B1503C73FA96LL0B3SQL0bC0Cvp"></a>
+                    <a name="//apple_ref/swift/Property/database" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC8database33_9CFB6AD55055FA196940B1503C73FA96LL0B3SQL0bC0Cvp">database</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>See <code>MySQLDatabase</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">database</span><span class="p">:</span> <span class="kt">MySQLDatabase</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L28">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializer"></a>
+                <a name="//apple_ref/swift/Section/Initializer" class="dashAnchor"></a>
+                <a href="#/Initializer">
+                  <h3 class="section-name">Initializer</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerCACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default initializer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L35">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Operations%20from%20main%20thread"></a>
+                <a name="//apple_ref/swift/Section/Operations from main thread" class="dashAnchor"></a>
+                <a href="#/Operations%20from%20main%20thread">
+                  <h3 class="section-name">Operations from main thread</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC31newConnectionOnInstantEventLoop3NIO0iJ6FutureCy0B3SQL0B13SQLConnectionCGyF"></a>
+                    <a name="//apple_ref/swift/Method/newConnectionOnInstantEventLoop()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC31newConnectionOnInstantEventLoop3NIO0iJ6FutureCy0B3SQL0B13SQLConnectionCGyF">newConnectionOnInstantEventLoop()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request connection on new temporary Thread.</p>
+
+<p><code>MySQLDatabase</code> requires that the connection request be made with NIO.Thread. You can use this method when you want to request a connection from the main thread. Temporary threads are not automatically shut down. If you don&rsquo;t need to manually shut down, you should use <code>instantCommunication</code>.</p>
+
+<ul>
+<li>warnings:
+Never call it from NIO.Thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">newConnectionOnInstantEventLoop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">MySQLConnection</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Future</code> that returns <code>MySQLConnection</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L47-L50">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC23correctInstantEventLoop10connectiony0B3SQL0B13SQLConnectionC_tF"></a>
+                    <a name="//apple_ref/swift/Method/correctInstantEventLoop(connection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC23correctInstantEventLoop10connectiony0B3SQL0B13SQLConnectionC_tF">correctInstantEventLoop(connection:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Shutdown eventLoop of connection.</p>
+
+<p>This method is paired with <code>newConnectionOnInstantEventLoop</code>. The created connection should be cleaned up with this method. <code>InstantCommunication</code> uses this method after executing the closure.</p>
+
+<ul>
+<li>warnings:
+Never call it from NIO.Thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">correctInstantEventLoop</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">MySQLConnection</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Connections that have been used.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L59-L63">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC20instantCommunication7closure3NIO15EventLoopFutureCyxGAI0B3SQL0B13SQLConnectionCc_tlF"></a>
+                    <a name="//apple_ref/swift/Method/instantCommunication(closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC20instantCommunication7closure3NIO15EventLoopFutureCyxGAI0B3SQL0B13SQLConnectionCc_tlF">instantCommunication(closure:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Communication with MySQL on a temporary Thread.</p>
+
+<p>Similar to <code>communication</code>. This is supposed to be called from Main Thread.</p>
+
+<ul>
+<li>warnings:
+Never call it from NIO.Thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">instantCommunication</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span> <span class="nv">closure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">MySQLConnection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Receiving active conection closure.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Future</code> that returns <code>closure</code>&lsquo;s return value.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L73-L83">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Operations%20from%20NIO.Thread"></a>
+                <a name="//apple_ref/swift/Section/Operations from NIO.Thread" class="dashAnchor"></a>
+                <a href="#/Operations%20from%20NIO.Thread">
+                  <h3 class="section-name">Operations from NIO.Thread</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC17requestConnection3NIO15EventLoopFutureCy0B3SQL0B13SQLConnectionCGyF"></a>
+                    <a name="//apple_ref/swift/Method/requestConnection()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC17requestConnection3NIO15EventLoopFutureCy0B3SQL0B13SQLConnectionCGyF">requestConnection()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request connection.</p>
+
+<p>This is supposed to be called on <code>NIO.Thread</code>. Connections called with this method must later notify the ConnectionPool that use has ended. Notify that the use has ended with <code>releaseConnection</code>. If you don&rsquo;t need to manually release, you should use <code>communication</code> or <code>transaction</code>.</p>
+
+<ul>
+<li>warnings:
+Never call it from main thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">requestConnection</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">MySQLConnection</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Future</code> that returns <code>MySQLConnection</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L95-L97">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC17releaseConnectionyy0B3SQL0B13SQLConnectionCF"></a>
+                    <a name="//apple_ref/swift/Method/releaseConnection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC17releaseConnectionyy0B3SQL0B13SQLConnectionCF">releaseConnection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Release connection.</p>
+
+<p>This method is paired with <code>requestConnection</code>. The requested connection should be released with this method. <code>communication</code> and <code>transaction</code> uses this method after executing the closure.</p>
+
+<ul>
+<li>warnings:
+Never call it from main thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">releaseConnection</span><span class="p">(</span><span class="n">_</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt">MySQLConnection</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Connections that have been used.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Future</code> that returns <code>MySQLConnection</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L107-L110">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC13communication7closure3NIO15EventLoopFutureCyxGAI0B3SQL0B13SQLConnectionCc_tlF"></a>
+                    <a name="//apple_ref/swift/Method/communication(closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC13communication7closure3NIO15EventLoopFutureCyxGAI0B3SQL0B13SQLConnectionCc_tlF">communication(closure:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Communication with MySQL.</p>
+
+<p>Request and release a connection. In the meantime, you can specify a closure that uses connection.</p>
+
+<ul>
+<li>warnings:
+Never call it from main thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">communication</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span> <span class="nv">closure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">MySQLConnection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Receiving active conection closure.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Future</code> that returns <code>closure</code>&lsquo;s return value.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L120-L130">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure20MySQLDatabaseManagerC11transaction7closure3NIO15EventLoopFutureCyxGAI0B3SQL0B13SQLConnectionCc_tlF"></a>
+                    <a name="//apple_ref/swift/Method/transaction(closure:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure20MySQLDatabaseManagerC11transaction7closure3NIO15EventLoopFutureCyxGAI0B3SQL0B13SQLConnectionCc_tlF">transaction(closure:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Communication with MySQL with Transaction enabled.</p>
+
+<p>Similar to <code>communication</code>. The difference is that the MySQL transaction feature is enabled. This should be used when running CUD Operations.</p>
+
+<ul>
+<li>warnings:
+Never call it from main thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">transaction</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span> <span class="nv">closure</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">MySQLConnection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>closure</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Receiving active conection closure.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Future</code> that returns <code>closure</code>&lsquo;s return value.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/MySQLDatabaseManager.swift#L140-L146">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="https://github.com/iq3addLi/" target="_blank" rel="external">iq3 @ +Li, Inc.</a>. All rights reserved. (Last updated: 2019-12-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

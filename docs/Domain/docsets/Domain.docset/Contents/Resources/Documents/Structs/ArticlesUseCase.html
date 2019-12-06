@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ArticlesUseCase Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Struct/ArticlesUseCase" class="dashAnchor"></a>
+
+    <a title="ArticlesUseCase Structure Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Domain Docs
+        </a>
+         (70% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Domain Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      ArticlesUseCase Structure Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/StandaloneDatabaseConnectionPoolCache.html">StandaloneDatabaseConnectionPoolCache</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Validation.html">Validation</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VaporApplicationRepository.html">VaporApplicationRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VerifiedUser.html">VerifiedUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VerifiedUserEntity.html">VerifiedUserEntity</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ArticleCondition.html">ArticleCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/HTTPMethodInDomain.html">HTTPMethodInDomain</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/RawSQLQueries.html">RawSQLQueries</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/AbortError.html">AbortError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/DateFormatter.html">DateFormatter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Debuggable.html">Debuggable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/HTTPHeaders.html">HTTPHeaders</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/LosslessHTTPBodyRepresentable.html">LosslessHTTPBodyRepresentable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/MySQLDatabaseManager.html">MySQLDatabaseManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Users.html">Users</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ConduitRepository.html">ConduitRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/JWTRepository.html">JWTRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/RESTApplicationRepository.html">RESTApplicationRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:6Domain10RepositoryP">Repository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:6Domain7UseCaseP">UseCase</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/APICollection.html">APICollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ApplicationUseCase.html">ApplicationUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Article.html">Article</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Article/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ArticlesUseCase.html">ArticlesUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AuthenticateMiddlewareUseCase.html">AuthenticateMiddlewareUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Comment.html">Comment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Comment/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ConduitMySQLRepository.html">ConduitMySQLRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/EmptyResponse.html">EmptyResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Error.html">Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/GenericErrorModel.html">GenericErrorModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/GenericErrorModelErrors.html">GenericErrorModelErrors</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/HTTPErrorResponse.html">HTTPErrorResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/JWTWithVaporRepository.html">JWTWithVaporRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LoginUser.html">LoginUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LoginUserRequest.html">LoginUserRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/MultipleArticlesResponse.html">MultipleArticlesResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/MultipleCommentsResponse.html">MultipleCommentsResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewArticle.html">NewArticle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewArticle/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewArticleRequest.html">NewArticleRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewComment.html">NewComment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewCommentRequest.html">NewCommentRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewUser.html">NewUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewUserRequest.html">NewUserRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Profile.html">Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ProfileResponse.html">ProfileResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ProfilesUseCase.html">ProfilesUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SessionPayload.html">SessionPayload</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SingleCommentResponse.html">SingleCommentResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/TagsResponse.html">TagsResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/TagsUseCase.html">TagsUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateArticle.html">UpdateArticle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateArticle/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateArticleRequest.html">UpdateArticleRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateUser.html">UpdateUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateUserRequest.html">UpdateUserRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UserResponse.html">UserResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UsersUseCase.html">UsersUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ValidateIssue.html">ValidateIssue</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ValidationError.html">ValidationError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:6Domain6Futurea">Future</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:6Domain7Promisea">Promise</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>ArticlesUseCase</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ArticlesUseCase</span> <span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:6Domain7UseCaseP">UseCase</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Use cases for Articles.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV7conduit33_3C8D43A67755A60F24C47A7BA0FBAEA7LLAA17ConduitRepository_pvp"></a>
+                    <a name="//apple_ref/swift/Property/conduit" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV7conduit33_3C8D43A67755A60F24C47A7BA0FBAEA7LLAA17ConduitRepository_pvp">conduit</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="k">let</span> <span class="nv">conduit</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ConduitRepository.html">ConduitRepository</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializer"></a>
+                <a name="//apple_ref/swift/Section/Initializer" class="dashAnchor"></a>
+                <a href="#/Initializer">
+                  <h3 class="section-name">Initializer</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseVACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseVACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default initializer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L17">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Use%20cases%20for%20articles"></a>
+                <a name="//apple_ref/swift/Section/Use cases for articles" class="dashAnchor"></a>
+                <a href="#/Use%20cases%20for%20articles">
+                  <h3 class="section-name">Use cases for articles</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV03getB06author6feeder9favorited3tag6offset5limit13readingUserId3NIO15EventLoopFutureCyAA08MultipleB8ResponseVGSSSg_SiSgA2r3StF"></a>
+                    <a name="//apple_ref/swift/Method/getArticles(author:feeder:favorited:tag:offset:limit:readingUserId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV03getB06author6feeder9favorited3tag6offset5limit13readingUserId3NIO15EventLoopFutureCyAA08MultipleB8ResponseVGSSSg_SiSgA2r3StF">getArticles(author:feeder:favorited:tag:offset:limit:readingUserId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of article search.</p>
+
+<p>It is not considered that multiple conditions are passed at the same time.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getArticles</span><span class="p">(</span><span class="nv">author</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">feeder</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="n">favorited</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">tag</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">limit</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">readingUserId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/MultipleArticlesResponse.html">MultipleArticlesResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>author</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of author with Int.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>feeder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the Id of the user who owns the feed with Int.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the username of the user doing the favorite with String.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tag</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the tag with string.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>offset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>When specifying offset, put Int here.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>limit</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>When specifying limit, put Int here.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>readingUserId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of the user reading the article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/MultipleArticlesResponse.html">MultipleArticlesResponse</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L35-L50">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV10getArticle4slug13readingUserId3NIO15EventLoopFutureCyAA06SingleF8ResponseVGSS_SiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/getArticle(slug:readingUserId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV10getArticle4slug13readingUserId3NIO15EventLoopFutureCyAA06SingleF8ResponseVGSS_SiSgtF">getArticle(slug:readingUserId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of receiving the slug and get article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getArticle</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">readingUserId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L58-L66">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV11postArticle_6author3NIO15EventLoopFutureCyAA06SingleF8ResponseVGAA03NewF0V_SitF"></a>
+                    <a name="//apple_ref/swift/Method/postArticle(_:author:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV11postArticle_6author3NIO15EventLoopFutureCyAA06SingleF8ResponseVGAA03NewF0V_SitF">postArticle(_:author:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of article posting.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">postArticle</span><span class="p">(</span><span class="n">_</span> <span class="nv">article</span><span class="p">:</span> <span class="kt"><a href="../Structs/NewArticle.html">NewArticle</a></span><span class="p">,</span> <span class="n">author</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>article</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the content of the article to be posted with <code><a href="../Structs/NewArticle.html">NewArticle</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of author with Int.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></code>. That&rsquo;s what you just posted.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L74-L79">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV13updateArticle4slug5title11description4body7tagList13readingUserId3NIO15EventLoopFutureCyAA06SingleF8ResponseVGSS_SSSgA2QSaySSGSgSiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/updateArticle(slug:title:description:body:tagList:readingUserId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV13updateArticle4slug5title11description4body7tagList13readingUserId3NIO15EventLoopFutureCyAA06SingleF8ResponseVGSS_SSSgA2QSaySSGSgSiSgtF">updateArticle(slug:title:description:body:tagList:readingUserId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of article updating.</p>
+<h3 id='extras' class='heading'>Extras</h3>
+
+<p>I might have wanted to reduce the dependency on a particular type, but it was okay to use a domain model here. 😇</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateArticle</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">body</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">tagList</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?,</span> <span class="nv">readingUserId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>slug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the slug of the article to be updated.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>title</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the title of the article. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>description</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the description of the article. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>body</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the body of the article. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tagList</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the tags of the article. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>readingUserId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of the user reading the article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></code>. That is what you just updated.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L94-L99">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV13deleteArticle4slug3NIO15EventLoopFutureCyytGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/deleteArticle(slug:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV13deleteArticle4slug3NIO15EventLoopFutureCyytGSS_tF">deleteArticle(slug:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of article deleteing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deleteArticle</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>slug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the slug of the article to be deleted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code>Void</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L106-L108">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV8favorite2by3for3NIO15EventLoopFutureCyAA21SingleArticleResponseVGSi_SStF"></a>
+                    <a name="//apple_ref/swift/Method/favorite(by:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV8favorite2by3for3NIO15EventLoopFutureCyAA21SingleArticleResponseVGSi_SStF">favorite(by:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of favorite for article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">favorite</span><span class="p">(</span><span class="n">by</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="k">for</span> <span class="nv">articleSlug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of the user do the favorite.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>articleSlug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the slug of favorite article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L116-L121">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV10unfavorite2by3for3NIO15EventLoopFutureCyAA21SingleArticleResponseVGSi_SStF"></a>
+                    <a name="//apple_ref/swift/Method/unfavorite(by:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV10unfavorite2by3for3NIO15EventLoopFutureCyAA21SingleArticleResponseVGSi_SStF">unfavorite(by:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of unfavorite for article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">unfavorite</span><span class="p">(</span><span class="n">by</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="k">for</span> <span class="nv">articleSlug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of the user do the unfavorite.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>articleSlug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the slug of unfavorite article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L129-L134">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV11getComments4slug3NIO15EventLoopFutureCyAA08MultipleF8ResponseVGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getComments(slug:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV11getComments4slug3NIO15EventLoopFutureCyAA08MultipleF8ResponseVGSS_tF">getComments(slug:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of get comments from article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getComments</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/MultipleCommentsResponse.html">MultipleCommentsResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>slug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the slug of the commented article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/MultipleCommentsResponse.html">MultipleCommentsResponse</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L141-L146">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV11postComment4slug4body6author3NIO15EventLoopFutureCyAA06SingleF8ResponseVGSS_SSSitF"></a>
+                    <a name="//apple_ref/swift/Method/postComment(slug:body:author:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV11postComment4slug4body6author3NIO15EventLoopFutureCyAA06SingleF8ResponseVGSS_SSSitF">postComment(slug:body:author:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of post comment to article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">postComment</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">author</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/SingleCommentResponse.html">SingleCommentResponse</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>slug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the slug of articles to comment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>body</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the body of the comment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>author</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of the author.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code><a href="../Structs/SingleCommentResponse.html">SingleCommentResponse</a></code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L155-L160">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain15ArticlesUseCaseV13deleteComment4slug2id3NIO15EventLoopFutureCyytGSS_SitF"></a>
+                    <a name="//apple_ref/swift/Method/deleteComment(slug:id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain15ArticlesUseCaseV13deleteComment4slug2id3NIO15EventLoopFutureCyytGSS_SitF">deleteComment(slug:id:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This use case has work of delete comment to article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">deleteComment</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>slug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the slug of articles to uncomment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Please pass the id of the comment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> that returns <code>Void</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/UseCase/ArticlesUseCase.swift#L168-L170">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="https://github.com/iq3addLi/" target="_blank" rel="external">iq3 @ +Li, Inc.</a>. All rights reserved. (Last updated: 2019-12-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

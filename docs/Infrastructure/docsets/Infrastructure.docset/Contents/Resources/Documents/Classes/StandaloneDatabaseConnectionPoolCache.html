@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>StandaloneDatabaseConnectionPoolCache Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/StandaloneDatabaseConnectionPoolCache" class="dashAnchor"></a>
+
+    <a title="StandaloneDatabaseConnectionPoolCache Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Infrastructure Docs
+        </a>
+         (100% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Infrastructure Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      StandaloneDatabaseConnectionPoolCache Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Articles.html">Articles</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ArticlesAndAuthorWithFavoritedRow.html">ArticlesAndAuthorWithFavoritedRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/CommentWithAuthorRow.html">CommentWithAuthorRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Comments.html">Comments</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Favorites.html">Favorites</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Follows.html">Follows</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/MySQLDatabaseManager.html">MySQLDatabaseManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/StandaloneDatabaseConnectionPoolCache.html">StandaloneDatabaseConnectionPoolCache</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/TagOnlyRow.html">TagOnlyRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Tags.html">Tags</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/UserWithFollowRow.html">UserWithFollowRow</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Users.html">Users</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/MySQLDatabaseConfig.html">MySQLDatabaseConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>StandaloneDatabaseConnectionPoolCache</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">class</span> <span class="kt">StandaloneDatabaseConnectionPoolCache</span><span class="o">&lt;</span><span class="kt">Database</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Database</span> <span class="p">:</span> <span class="kt">Database</span></code></pre>
+
+                </div>
+              </div>
+            <p>Standalone DatabaseConnectionPool Cache</p>
+
+<p>DatabaseKit.DatabaseConnectionPoolCache is a ServiceType. Registered as a Vapor Container and can only be handled from Vapor.Request. This is modified so that it can be used separately from Vapor.</p>
+<h3 id='note' class='heading'>Note</h3>
+
+<p><a href="https://github.com/apple/swift-nio/blob/2.10.1/Sources/NIO/Thread.swift#L154-L157">https://github.com/apple/swift-nio/blob/2.10.1/Sources/NIO/Thread.swift#L154-L157</a> has deinit, but <a href="https://github.com/apple/swift-nio/blob/1.14.1/Sources/NIO/Thread.swift">https://github.com/apple/swift-nio/blob/1.14.1/Sources/NIO/Thread.swift</a> hasn&rsquo;t deinit.</p>
+
+<ul>
+<li>warnings: Assumes the use of thread variables. Therefore, this class cannot be used in the main thread.</li>
+</ul>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC8database33_2F34F4CC759A786D6FC89EAE9D7AB771LLxvp"></a>
+                    <a name="//apple_ref/swift/Property/database" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC8database33_2F34F4CC759A786D6FC89EAE9D7AB771LLxvp">database</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The source databases.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="k">let</span> <span class="nv">database</span><span class="p">:</span> <span class="kt">Database</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift#L22">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC6config33_2F34F4CC759A786D6FC89EAE9D7AB771LL0C3Kit0cdE6ConfigVvp"></a>
+                    <a name="//apple_ref/swift/Property/config" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC6config33_2F34F4CC759A786D6FC89EAE9D7AB771LL0C3Kit0cdE6ConfigVvp">config</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The pool configuration settings.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="k">let</span> <span class="nv">config</span><span class="p">:</span> <span class="kt">DatabaseConnectionPoolConfig</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift#L25">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC19threadVariablePools33_2F34F4CC759A786D6FC89EAE9D7AB771LL3NIO014ThreadSpecificH0Vy0C3Kit0cdE0CyxGGvp"></a>
+                    <a name="//apple_ref/swift/Property/threadVariablePools" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC19threadVariablePools33_2F34F4CC759A786D6FC89EAE9D7AB771LL3NIO014ThreadSpecificH0Vy0C3Kit0cdE0CyxGGvp">threadVariablePools</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The cached connection pools on thread.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private</span> <span class="k">let</span> <span class="nv">threadVariablePools</span><span class="p">:</span> <span class="kt">ThreadSpecificVariable</span><span class="o">&lt;</span><span class="kt">DatabaseConnectionPool</span><span class="o">&lt;</span><span class="kt">Database</span><span class="o">&gt;&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift#L28">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializer"></a>
+                <a name="//apple_ref/swift/Section/Initializer" class="dashAnchor"></a>
+                <a href="#/Initializer">
+                  <h3 class="section-name">Initializer</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC8database6configACyxGx_0C3Kit0cdE6ConfigVtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(database:config:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC8database6configACyxGx_0C3Kit0cdE6ConfigVtcfc">init(database:config:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a new <code>DatabaseConnectionPoolCache</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="nf">init</span><span class="p">(</span><span class="nv">database</span><span class="p">:</span> <span class="kt">Database</span><span class="p">,</span> <span class="nv">config</span><span class="p">:</span> <span class="kt">DatabaseConnectionPoolConfig</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift#L33-L37">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Connection%20and%20pool%20management"></a>
+                <a name="//apple_ref/swift/Section/Connection and pool management" class="dashAnchor"></a>
+                <a href="#/Connection%20and%20pool%20management">
+                  <h3 class="section-name">Connection and pool management</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC07requestd2ToE03NIO15EventLoopFutureCy0D0QzGyF"></a>
+                    <a name="//apple_ref/swift/Method/requestConnectionToPool()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC07requestd2ToE03NIO15EventLoopFutureCy0D0QzGyF">requestConnectionToPool()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request a Connection from the Pool.</p>
+
+<p>If a Pool has never been created with Thread, create a Pool and create a new connection.</p>
+
+<ul>
+<li>warnings:
+Never call it from main thread.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">requestConnectionToPool</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Future</span><span class="o">&lt;</span><span class="kt">Database</span><span class="o">.</span><span class="kt">Connection</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code>Future</code> that returns <code>Database.Connection</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift#L48-L57">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC07released2ToE010connectiony0D0Qz_tF"></a>
+                    <a name="//apple_ref/swift/Method/releaseConnectionToPool(connection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14Infrastructure37StandaloneDatabaseConnectionPoolCacheC07released2ToE010connectiony0D0Qz_tF">releaseConnectionToPool(connection:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Tell the pool that you have finished using connection.</p>
+
+<p>This method does not disconnect the connection. Connection is maintained by the pool. See <code>DatabaseConnectionPool</code> for detail.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">releaseConnectionToPool</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">Database</span><span class="o">.</span><span class="kt">Connection</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A end of use connection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Infrastructure/Sources/Infrastructure/FluentMySQL/StandaloneDatabaseConnectionPoolCache.swift#L63-L68">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="https://github.com/iq3addLi/" target="_blank" rel="external">iq3 @ +Li, Inc.</a>. All rights reserved. (Last updated: 2019-12-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

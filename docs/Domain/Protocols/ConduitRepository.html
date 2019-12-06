@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ConduitRepository Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Protocol/ConduitRepository" class="dashAnchor"></a>
+
+    <a title="ConduitRepository Protocol Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          Domain Docs
+        </a>
+         (70% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">Domain Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      ConduitRepository Protocol Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/StandaloneDatabaseConnectionPoolCache.html">StandaloneDatabaseConnectionPoolCache</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Validation.html">Validation</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VaporApplicationRepository.html">VaporApplicationRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VerifiedUser.html">VerifiedUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/VerifiedUserEntity.html">VerifiedUserEntity</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/ArticleCondition.html">ArticleCondition</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/HTTPMethodInDomain.html">HTTPMethodInDomain</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/RawSQLQueries.html">RawSQLQueries</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/AbortError.html">AbortError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/DateFormatter.html">DateFormatter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Debuggable.html">Debuggable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/HTTPHeaders.html">HTTPHeaders</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/LosslessHTTPBodyRepresentable.html">LosslessHTTPBodyRepresentable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/MySQLDatabaseManager.html">MySQLDatabaseManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Users.html">Users</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ConduitRepository.html">ConduitRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/JWTRepository.html">JWTRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/RESTApplicationRepository.html">RESTApplicationRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:6Domain10RepositoryP">Repository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:6Domain7UseCaseP">UseCase</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/APICollection.html">APICollection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ApplicationUseCase.html">ApplicationUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Article.html">Article</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Article/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ArticlesUseCase.html">ArticlesUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AuthenticateMiddlewareUseCase.html">AuthenticateMiddlewareUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Comment.html">Comment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Comment/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ConduitMySQLRepository.html">ConduitMySQLRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/EmptyResponse.html">EmptyResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Error.html">Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/GenericErrorModel.html">GenericErrorModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/GenericErrorModelErrors.html">GenericErrorModelErrors</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/HTTPErrorResponse.html">HTTPErrorResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/JWTWithVaporRepository.html">JWTWithVaporRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LoginUser.html">LoginUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LoginUserRequest.html">LoginUserRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/MultipleArticlesResponse.html">MultipleArticlesResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/MultipleCommentsResponse.html">MultipleCommentsResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewArticle.html">NewArticle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewArticle/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewArticleRequest.html">NewArticleRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewComment.html">NewComment</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewCommentRequest.html">NewCommentRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewUser.html">NewUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/NewUserRequest.html">NewUserRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Profile.html">Profile</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ProfileResponse.html">ProfileResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ProfilesUseCase.html">ProfilesUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SessionPayload.html">SessionPayload</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SingleArticleResponse.html">SingleArticleResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SingleCommentResponse.html">SingleCommentResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/TagsResponse.html">TagsResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/TagsUseCase.html">TagsUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateArticle.html">UpdateArticle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateArticle/CodingKeys.html">– CodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateArticleRequest.html">UpdateArticleRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateUser.html">UpdateUser</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UpdateUserRequest.html">UpdateUserRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/User.html">User</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UserResponse.html">UserResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/UsersUseCase.html">UsersUseCase</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ValidateIssue.html">ValidateIssue</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ValidationError.html">ValidationError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:6Domain6Futurea">Future</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:6Domain7Promisea">Promise</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>ConduitRepository</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">protocol</span> <span class="kt">ConduitRepository</span> <span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:6Domain10RepositoryP">Repository</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Definition of the functions that the Conduit service should have.</p>
+
+<p>This Repository definition does not depend on a specific storage, but depends on <code>SwiftNIO</code>.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Setup"></a>
+                <a name="//apple_ref/swift/Section/Setup" class="dashAnchor"></a>
+                <a href="#/Setup">
+                  <h3 class="section-name">Setup</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP19ifneededPreparetionyyKF"></a>
+                    <a name="//apple_ref/swift/Method/ifneededPreparetion()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP19ifneededPreparetionyyKF">ifneededPreparetion()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Prepare if necessary.</p>
+
+<p>This name is used because initialization may not be necessary depending on the implementation.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    This function is expected to throw an error in some process related to initialization.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">ifneededPreparetion</span><span class="p">()</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L20">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Users"></a>
+                <a name="//apple_ref/swift/Section/Users" class="dashAnchor"></a>
+                <a href="#/Users">
+                  <h3 class="section-name">Users</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP8validate8username5email8password3NIO15EventLoopFutureCyytGSS_S2StKF"></a>
+                    <a name="//apple_ref/swift/Method/validate(username:email:password:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP8validate8username5email8password3NIO15EventLoopFutureCyytGSS_S2StKF">validate(username:email:password:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must implement input property validation.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    This function is expected to throw an error in some process related to validation.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">email</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>It&rsquo;s a property to be verified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>email</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>It&rsquo;s a property to be verified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>password</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>It&rsquo;s a property to be verified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L33">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP12registerUser4name5email8password3NIO15EventLoopFutureCySi_AA0E0VtGSS_S2StF"></a>
+                    <a name="//apple_ref/swift/Method/registerUser(name:email:password:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP12registerUser4name5email8password3NIO15EventLoopFutureCySi_AA0E0VtGSS_S2StF">registerUser(name:email:password:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement a user registration process.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">registerUser</span><span class="p">(</span><span class="n">name</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">email</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt"><a href="../Structs/User.html">User</a></span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Request the name of the user to use in the service.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>email</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Request email for use within the service.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>password</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Requests the password that the registrant uses in the service.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Since <code><a href="../Structs/User.html">User</a></code> in Swagger Spec does not contain id, it is expected to return separately.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L42">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP8authUser5email8password3NIO15EventLoopFutureCySi_AA0E0VtGSS_SStF"></a>
+                    <a name="//apple_ref/swift/Method/authUser(email:password:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP8authUser5email8password3NIO15EventLoopFutureCySi_AA0E0VtGSS_SStF">authUser(email:password:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement a user authentication process.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">authUser</span><span class="p">(</span><span class="nv">email</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt"><a href="../Structs/User.html">User</a></span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>email</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Used to identify the user.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>password</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Used for authentication.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Since <code><a href="../Structs/User.html">User</a></code> in Swagger Spec does not contain id, it is expected to return separately.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L50">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP10searchUser2id3NIO15EventLoopFutureCySi_AA0E0VtGSi_tF"></a>
+                    <a name="//apple_ref/swift/Method/searchUser(id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP10searchUser2id3NIO15EventLoopFutureCySi_AA0E0VtGSi_tF">searchUser(id:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement a user search by id.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">searchUser</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt"><a href="../Structs/User.html">User</a></span><span class="p">)</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Used to identify the user.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Since <code><a href="../Structs/User.html">User</a></code> in Swagger Spec does not contain id, it is expected to return separately.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L56">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP10updateUser2id5email8username3bio5image3NIO15EventLoopFutureCyAA0E0VGSi_SSSgA3PtF"></a>
+                    <a name="//apple_ref/swift/Method/updateUser(id:email:username:bio:image:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP10updateUser2id5email8username3bio5image3NIO15EventLoopFutureCyAA0E0VGSi_SSSgA3PtF">updateUser(id:email:username:bio:image:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement update process for user&rsquo;s infomation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updateUser</span><span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">email</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">bio</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/User.html">User</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Used to identify the user.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>email</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The updated email. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The updated username. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bio</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The updated bio. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>image</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The updated image. Nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/User.html">User</a></code> after being updated.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L66">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Profiles"></a>
+                <a name="//apple_ref/swift/Section/Profiles" class="dashAnchor"></a>
+                <a href="#/Profiles">
+                  <h3 class="section-name">Profiles</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP13searchProfile8username13readingUserId3NIO15EventLoopFutureCyAA0E0VGSS_SiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/searchProfile(username:readingUserId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP13searchProfile8username13readingUserId3NIO15EventLoopFutureCyAA0E0VGSS_SiSgtF">searchProfile(username:readingUserId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement search for profile.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">searchProfile</span><span class="p">(</span><span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">readingUserId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Profile.html">Profile</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Used to identify the user.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>readingUserId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>User&rsquo;s Id that referenced Profile.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/Profile.html">Profile</a></code> as search result.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L76">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP6follow8followee8follower3NIO15EventLoopFutureCyAA7ProfileVGSS_SitF"></a>
+                    <a name="//apple_ref/swift/Method/follow(followee:follower:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP6follow8followee8follower3NIO15EventLoopFutureCyAA7ProfileVGSS_SitF">follow(followee:follower:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement user follow.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">follow</span><span class="p">(</span><span class="n">followee</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">follower</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Profile.html">Profile</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Followee&rsquo;s user name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Follower&rsquo;s user Id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/Profile.html">Profile</a></code> after being followed.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L84">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP8unfollow8followee8follower3NIO15EventLoopFutureCyAA7ProfileVGSS_SitF"></a>
+                    <a name="//apple_ref/swift/Method/unfollow(followee:follower:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP8unfollow8followee8follower3NIO15EventLoopFutureCyAA7ProfileVGSS_SitF">unfollow(followee:follower:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement user unfollow.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unfollow</span><span class="p">(</span><span class="n">followee</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">follower</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Profile.html">Profile</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>username</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Followee&rsquo;s user name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Follower&rsquo;s user Id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/Profile.html">Profile</a></code> after being unfollowed.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L92">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Favorites"></a>
+                <a name="//apple_ref/swift/Section/Favorites" class="dashAnchor"></a>
+                <a href="#/Favorites">
+                  <h3 class="section-name">Favorites</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP8favorite2by3for3NIO15EventLoopFutureCyAA7ArticleVGSi_SStF"></a>
+                    <a name="//apple_ref/swift/Method/favorite(by:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP8favorite2by3for3NIO15EventLoopFutureCyAA7ArticleVGSi_SStF">favorite(by:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement favorite for article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">favorite</span><span class="p">(</span><span class="n">by</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="k">for</span> <span class="nv">articleSlug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Article.html">Article</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Favorite user id.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>articleSlug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Slug of favorite article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/Profile.html">Profile</a></code> after the favorites are added.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L102">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP10unfavorite2by3for3NIO15EventLoopFutureCyAA7ArticleVGSi_SStF"></a>
+                    <a name="//apple_ref/swift/Method/unfavorite(by:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP10unfavorite2by3for3NIO15EventLoopFutureCyAA7ArticleVGSi_SStF">unfavorite(by:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement unfavorite for article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">unfavorite</span><span class="p">(</span><span class="n">by</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="k">for</span> <span class="nv">articleSlug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Article.html">Article</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Favorite user name.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>articleSlug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Slug of favorite article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/Profile.html">Profile</a></code> after the favorites are removed.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L110">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Comments"></a>
+                <a name="//apple_ref/swift/Section/Comments" class="dashAnchor"></a>
+                <a href="#/Comments">
+                  <h3 class="section-name">Comments</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP8comments3for3NIO15EventLoopFutureCySayAA7CommentVGGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/comments(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP8comments3for3NIO15EventLoopFutureCySayAA7CommentVGGSS_tF">comments(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement search comment from article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">comments</span><span class="p">(</span><span class="k">for</span> <span class="nv">articleSlug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Comment.html">Comment</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>articleSlug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Slug of the article to comment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code>[Comment]</code> as search result.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L118">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP10addComment3for4body6author3NIO15EventLoopFutureCyAA0E0VGSS_SSSitF"></a>
+                    <a name="//apple_ref/swift/Method/addComment(for:body:author:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP10addComment3for4body6author3NIO15EventLoopFutureCyAA0E0VGSS_SSSitF">addComment(for:body:author:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement comment to article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addComment</span><span class="p">(</span><span class="k">for</span> <span class="nv">articleSlug</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">author</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Comment.html">Comment</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>articleSlug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Slug of the article to comment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>body</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Body of comment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Id of comment author.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/User.html">User</a></code> after being added.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L127">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP13deleteComment3for2id3NIO15EventLoopFutureCyytGSS_SitF"></a>
+                    <a name="//apple_ref/swift/Method/deleteComment(for:id:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP13deleteComment3for2id3NIO15EventLoopFutureCyytGSS_SitF">deleteComment(for:id:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement uncomment to article.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deleteComment</span><span class="p">(</span><span class="k">for</span> <span class="nv">articleSlug</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>articleSlug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Slug of the article to comment.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Id of comment to remove.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L135">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Articles"></a>
+                <a name="//apple_ref/swift/Section/Articles" class="dashAnchor"></a>
+                <a href="#/Articles">
+                  <h3 class="section-name">Articles</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP8articles9condition13readingUserId6offset5limit3NIO15EventLoopFutureCySayAA7ArticleVGGAA0O9ConditionO_SiSgA2RtF"></a>
+                    <a name="//apple_ref/swift/Method/articles(condition:readingUserId:offset:limit:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP8articles9condition13readingUserId6offset5limit3NIO15EventLoopFutureCySayAA7ArticleVGGAA0O9ConditionO_SiSgA2RtF">articles(condition:readingUserId:offset:limit:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement search for articles.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">articles</span><span class="p">(</span><span class="nv">condition</span><span class="p">:</span> <span class="kt"><a href="../Enums/ArticleCondition.html">ArticleCondition</a></span><span class="p">,</span> <span class="nv">readingUserId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?,</span> <span class="nv">offset</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?,</span> <span class="nv">limit</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt"><a href="../Structs/Article.html">Article</a></span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>condition</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Condition used to search for articles.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>readingUserId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Subject user id. If nil, follow contains invalid information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>offset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Offset to search results. nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>limit</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Limit to search results. nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code>[Article]</code> as search result.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L147">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP10addArticle6userId5title11discription4body7tagList3NIO15EventLoopFutureCyAA0E0VGSi_S3SSaySSGtF"></a>
+                    <a name="//apple_ref/swift/Method/addArticle(userId:title:discription:body:tagList:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP10addArticle6userId5title11discription4body7tagList3NIO15EventLoopFutureCyAA0E0VGSi_S3SSaySSGtF">addArticle(userId:title:discription:body:tagList:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement article post.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">addArticle</span><span class="p">(</span><span class="n">userId</span> <span class="nv">author</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">discription</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">tagList</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Article.html">Article</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>author</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Id of the new article author.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>title</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Title of the new article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>discription</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Description of the new article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>body</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Body of the new article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tagList</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Array of tag strings attached to new article.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/Article.html">Article</a></code> after being added.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L158">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP13deleteArticle4slug3NIO15EventLoopFutureCyytGSS_tF"></a>
+                    <a name="//apple_ref/swift/Method/deleteArticle(slug:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP13deleteArticle4slug3NIO15EventLoopFutureCyytGSS_tF">deleteArticle(slug:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement article delete.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deleteArticle</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt">Void</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>slug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Slug of article to be deleted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L164">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP13updateArticle4slug5title11description4body7tagList6readIt3NIO15EventLoopFutureCyAA0E0VGSS_SSSgA2QSaySSGSgSiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/updateArticle(slug:title:description:body:tagList:readIt:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP13updateArticle4slug5title11description4body7tagList6readIt3NIO15EventLoopFutureCyAA0E0VGSS_SSSgA2QSaySSGSgSiSgtF">updateArticle(slug:title:description:body:tagList:readIt:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement article update.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updateArticle</span><span class="p">(</span><span class="nv">slug</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">body</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">tagList</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?,</span> <span class="n">readIt</span> <span class="nv">userId</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/Article.html">Article</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>slug</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Slug of article to be updated.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>title</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Title of article to be updated, nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>description</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Description of article to be updated, nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>body</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Body of article to be updated, nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tagList</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Array of tag strings attached to be updated article, nil means unspecified.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userId</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Subject user id. If nil, follow contains invalid information.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code><a href="../Structs/Article.html">Article</a></code> after being updated.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L176">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Tags"></a>
+                <a name="//apple_ref/swift/Section/Tags" class="dashAnchor"></a>
+                <a href="#/Tags">
+                  <h3 class="section-name">Tags</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:6Domain17ConduitRepositoryP7allTags3NIO15EventLoopFutureCySaySSGGyF"></a>
+                    <a name="//apple_ref/swift/Method/allTags()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:6Domain17ConduitRepositoryP7allTags3NIO15EventLoopFutureCySaySSGGyF">allTags()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Conduit must to implement tags search.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">allTags</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></span><span class="o">&lt;</span><span class="p">[</span><span class="kt">String</span><span class="p">]</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <code><a href="../Typealiases.html#/s:6Domain6Futurea">Future</a></code> where implementation will be implemented. Expected to return a <code>[String]</code> as search result.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/iq3addLi/swift-vapor-layered-realworld-example-app/docs/Domain/Sources/Domain/Repository/Interface/ConduitRepository.swift#L183">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="https://github.com/iq3addLi/" target="_blank" rel="external">iq3 @ +Li, Inc.</a>. All rights reserved. (Last updated: 2019-12-06)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

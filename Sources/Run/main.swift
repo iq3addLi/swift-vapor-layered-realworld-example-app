@@ -1,3 +1,0 @@
-import Presentation
-
-try applciationMain()

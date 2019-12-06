@@ -1,0 +1,810 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/LoginUser.swift",
+      "line": 11,
+      "symbol": "LoginUser.email",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/LoginUser.swift",
+      "line": 12,
+      "symbol": "LoginUser.password",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/LoginUser.swift",
+      "line": 14,
+      "symbol": "LoginUser.init(email:password:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/LoginUserRequest.swift",
+      "line": 11,
+      "symbol": "LoginUserRequest.user",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/LoginUserRequest.swift",
+      "line": 13,
+      "symbol": "LoginUserRequest.init(user:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 11,
+      "symbol": "NewArticle.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 12,
+      "symbol": "NewArticle._description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 13,
+      "symbol": "NewArticle.body",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 14,
+      "symbol": "NewArticle.tagList",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 16,
+      "symbol": "NewArticle.init(title:_description:body:tagList:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 23,
+      "symbol": "NewArticle.CodingKeys",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 24,
+      "symbol": "NewArticle.CodingKeys.title",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 25,
+      "symbol": "NewArticle.CodingKeys._description",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 26,
+      "symbol": "NewArticle.CodingKeys.body",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticle.swift",
+      "line": 27,
+      "symbol": "NewArticle.CodingKeys.tagList",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticleRequest.swift",
+      "line": 11,
+      "symbol": "NewArticleRequest.article",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewArticleRequest.swift",
+      "line": 13,
+      "symbol": "NewArticleRequest.init(article:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewComment.swift",
+      "line": 11,
+      "symbol": "NewComment.body",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewComment.swift",
+      "line": 13,
+      "symbol": "NewComment.init(body:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewCommentRequest.swift",
+      "line": 11,
+      "symbol": "NewCommentRequest.comment",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewCommentRequest.swift",
+      "line": 13,
+      "symbol": "NewCommentRequest.init(comment:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewUser.swift",
+      "line": 11,
+      "symbol": "NewUser.username",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewUser.swift",
+      "line": 12,
+      "symbol": "NewUser.email",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewUser.swift",
+      "line": 13,
+      "symbol": "NewUser.password",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewUser.swift",
+      "line": 15,
+      "symbol": "NewUser.init(username:email:password:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewUserRequest.swift",
+      "line": 11,
+      "symbol": "NewUserRequest.user",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/NewUserRequest.swift",
+      "line": 13,
+      "symbol": "NewUserRequest.init(user:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 11,
+      "symbol": "UpdateArticle.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 12,
+      "symbol": "UpdateArticle._description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 13,
+      "symbol": "UpdateArticle.body",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 14,
+      "symbol": "UpdateArticle.tagList",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 16,
+      "symbol": "UpdateArticle.init(title:_description:body:tagList:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 23,
+      "symbol": "UpdateArticle.CodingKeys",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 24,
+      "symbol": "UpdateArticle.CodingKeys.title",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 25,
+      "symbol": "UpdateArticle.CodingKeys._description",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 26,
+      "symbol": "UpdateArticle.CodingKeys.body",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticle.swift",
+      "line": 27,
+      "symbol": "UpdateArticle.CodingKeys.tagList",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticleRequest.swift",
+      "line": 11,
+      "symbol": "UpdateArticleRequest.article",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateArticleRequest.swift",
+      "line": 13,
+      "symbol": "UpdateArticleRequest.init(article:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUser.swift",
+      "line": 11,
+      "symbol": "UpdateUser.email",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUser.swift",
+      "line": 12,
+      "symbol": "UpdateUser.token",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUser.swift",
+      "line": 13,
+      "symbol": "UpdateUser.username",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUser.swift",
+      "line": 14,
+      "symbol": "UpdateUser.bio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUser.swift",
+      "line": 15,
+      "symbol": "UpdateUser.image",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUser.swift",
+      "line": 17,
+      "symbol": "UpdateUser.init(email:token:username:bio:image:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUserRequest.swift",
+      "line": 11,
+      "symbol": "UpdateUserRequest.user",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Request/UpdateUserRequest.swift",
+      "line": 13,
+      "symbol": "UpdateUserRequest.init(user:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 13,
+      "symbol": "Article.slug",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 14,
+      "symbol": "Article.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 15,
+      "symbol": "Article._description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 16,
+      "symbol": "Article.body",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 17,
+      "symbol": "Article.tagList",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 18,
+      "symbol": "Article.createdAt",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 19,
+      "symbol": "Article.updatedAt",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 20,
+      "symbol": "Article.favorited",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 21,
+      "symbol": "Article.favoritesCount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 22,
+      "symbol": "Article.author",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 24,
+      "symbol": "Article.init(slug:title:_description:body:tagList:createdAt:updatedAt:favorited:favoritesCount:author:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 37,
+      "symbol": "Article.CodingKeys",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 38,
+      "symbol": "Article.CodingKeys.slug",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 39,
+      "symbol": "Article.CodingKeys.title",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 40,
+      "symbol": "Article.CodingKeys._description",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 41,
+      "symbol": "Article.CodingKeys.body",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 42,
+      "symbol": "Article.CodingKeys.tagList",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 43,
+      "symbol": "Article.CodingKeys.createdAt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 44,
+      "symbol": "Article.CodingKeys.updatedAt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 45,
+      "symbol": "Article.CodingKeys.favorited",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 46,
+      "symbol": "Article.CodingKeys.favoritesCount",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Article.swift",
+      "line": 47,
+      "symbol": "Article.CodingKeys.author",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 13,
+      "symbol": "Comment._id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 14,
+      "symbol": "Comment.createdAt",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 15,
+      "symbol": "Comment.updatedAt",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 16,
+      "symbol": "Comment.body",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 17,
+      "symbol": "Comment.author",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 19,
+      "symbol": "Comment.init(_id:createdAt:updatedAt:body:author:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 27,
+      "symbol": "Comment.CodingKeys",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 28,
+      "symbol": "Comment.CodingKeys._id",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 29,
+      "symbol": "Comment.CodingKeys.createdAt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 30,
+      "symbol": "Comment.CodingKeys.updatedAt",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 31,
+      "symbol": "Comment.CodingKeys.body",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Comment.swift",
+      "line": 32,
+      "symbol": "Comment.CodingKeys.author",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/GenericErrorModel.swift",
+      "line": 11,
+      "symbol": "GenericErrorModel.errors",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/GenericErrorModel.swift",
+      "line": 13,
+      "symbol": "GenericErrorModel.init(errors:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/GenericErrorModelErrors.swift",
+      "line": 11,
+      "symbol": "GenericErrorModelErrors.body",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/GenericErrorModelErrors.swift",
+      "line": 13,
+      "symbol": "GenericErrorModelErrors.init(body:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/HTTPErrorResponse.swift",
+      "line": 22,
+      "symbol": "HTTPErrorResponse.init(_:error:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/MultipleArticlesResponse.swift",
+      "line": 11,
+      "symbol": "MultipleArticlesResponse.articles",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/MultipleArticlesResponse.swift",
+      "line": 12,
+      "symbol": "MultipleArticlesResponse.articlesCount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/MultipleArticlesResponse.swift",
+      "line": 14,
+      "symbol": "MultipleArticlesResponse.init(articles:articlesCount:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/MultipleCommentsResponse.swift",
+      "line": 11,
+      "symbol": "MultipleCommentsResponse.comments",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/MultipleCommentsResponse.swift",
+      "line": 13,
+      "symbol": "MultipleCommentsResponse.init(comments:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Profile.swift",
+      "line": 11,
+      "symbol": "Profile.username",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Profile.swift",
+      "line": 12,
+      "symbol": "Profile.bio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Profile.swift",
+      "line": 13,
+      "symbol": "Profile.image",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Profile.swift",
+      "line": 14,
+      "symbol": "Profile.following",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/Profile.swift",
+      "line": 16,
+      "symbol": "Profile.init(username:bio:image:following:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/ProfileResponse.swift",
+      "line": 11,
+      "symbol": "ProfileResponse.profile",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/ProfileResponse.swift",
+      "line": 13,
+      "symbol": "ProfileResponse.init(profile:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/SingleArticleResponse.swift",
+      "line": 11,
+      "symbol": "SingleArticleResponse.article",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/SingleArticleResponse.swift",
+      "line": 13,
+      "symbol": "SingleArticleResponse.init(article:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/SingleCommentResponse.swift",
+      "line": 11,
+      "symbol": "SingleCommentResponse.comment",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/SingleCommentResponse.swift",
+      "line": 13,
+      "symbol": "SingleCommentResponse.init(comment:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/TagsResponse.swift",
+      "line": 11,
+      "symbol": "TagsResponse.tags",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/TagsResponse.swift",
+      "line": 13,
+      "symbol": "TagsResponse.init(tags:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/User.swift",
+      "line": 11,
+      "symbol": "User.email",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/User.swift",
+      "line": 12,
+      "symbol": "User.token",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/User.swift",
+      "line": 13,
+      "symbol": "User.username",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/User.swift",
+      "line": 14,
+      "symbol": "User.bio",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/User.swift",
+      "line": 15,
+      "symbol": "User.image",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/User.swift",
+      "line": 17,
+      "symbol": "User.init(email:token:username:bio:image:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/UserResponse.swift",
+      "line": 11,
+      "symbol": "UserResponse.user",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/Model/Response/UserResponse.swift",
+      "line": 13,
+      "symbol": "UserResponse.init(user:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ApplicationUseCase.swift",
+      "line": 14,
+      "symbol": "ApplicationUseCase.framework",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ApplicationUseCase.swift",
+      "line": 17,
+      "symbol": "ApplicationUseCase.conduit",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/arakane/github/swift-vapor-layered-realworld-example-app/Sources/Domain/UseCase/ArticlesUseCase.swift",
+      "line": 12,
+      "symbol": "ArticlesUseCase.conduit",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/arakane/github/swift-vapor-layered-realworld-example-app"
+}
