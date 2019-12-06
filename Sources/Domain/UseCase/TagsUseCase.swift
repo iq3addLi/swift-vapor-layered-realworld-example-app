@@ -10,17 +10,21 @@ public struct TagsUseCase: UseCase {
     
     // MARK: Properties
     
+    /// See `ConduitMySQLRepository`.
     private let conduit: ConduitRepository = ConduitMySQLRepository()
 
-    // MARK: Functions
     
-    /// <#Description#>
+    // MARK: Initializer
+    
+    /// Default initializer.
     public init() {}
-    
 
-    /// <#Description#>
+    
+    // MARK: Use cases for tags
+    
+    /// This use case has work of get all tags in services.
     /// - returns:
-    ///    <#Description#> 
+    ///    The `Future` that returns `TagsResponse`.
     public func allTags() -> Future<TagsResponse> {
         conduit.allTags()
             .map { tags in

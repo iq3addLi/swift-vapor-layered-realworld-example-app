@@ -10,20 +10,26 @@ public struct UsersUseCase: UseCase {
     
     // MARK: Properties
     
+    /// See `ConduitMySQLRepository`.
     private let conduit: ConduitRepository = ConduitMySQLRepository()
+    
+    /// See `JWTWithVaporRepository`.
     private let jwt: JWTRepository = JWTWithVaporRepository()
 
-    // MARK: Functions
     
-    /// <#Description#>
+    // MARK: Initializer
+    
+    /// Default initializer.
     public init() {}
     
 
-    /// <#Description#>
+    // MARK: Use cases for users
+    
+    /// This use case has work of user login.
     /// - parameters:
-    ///     - form: <#form description#>
+    ///     - form: Please pass the information used for authentication with `LoginUser`.
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `UserResponse`.
     public func login( form: LoginUser ) -> Future<UserResponse> {
         let jwt = self.jwt
         // Search User
@@ -37,11 +43,13 @@ public struct UsersUseCase: UseCase {
             }
     }
 
-    /// <#Description#>
+    /// This use case has work of user registration.
     /// - parameters:
-    ///     - form: <#form description#>
+    ///     - form: Please pass the information used for user registration with `NewUser`.
+    /// - throws:
+    ///    <#Description#> 
     /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `UserResponse`.
     public func register(user form: NewUser ) throws -> Future<UserResponse> {
         let jwt = self.jwt
         let conduit = self.conduit
@@ -60,50 +68,13 @@ public struct UsersUseCase: UseCase {
         }
     }
 
-    /// <#Description#>
+    /// This use case has work of `User` updating.
     /// - parameters:
-    ///     - token: <#token description#>
+    ///     - userId: Please pass the id of the user to be updated.
+    ///     - token: Please pass the authenticated JWT used for this session.
+    ///     - user: Please pass the information used for user updating with `UpdateUser`.
     /// - returns:
-    ///    <#Description#>
-    /// - throws:
-    ///  <#Description#> 
-    public func currentUser( token: String ) throws -> Future<UserResponse> {
-
-        // Verify and expand payload
-        let payload = try jwt.verifyJWT(token: token)
-
-        // Search user in storage
-        return conduit.searchUser(id: payload.id)
-            .map { tuple in
-                let (_, user) = tuple
-                // Return response
-                return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
-            }
-    }
-
-    /// <#Description#>
-    /// - parameters:
-    ///      - userId: <#userId description#>
-    ///      - token: <#token description#>
-    /// - returns:
-    ///    <#Description#>
-    public func current( userId: Int, token: String ) -> Future<UserResponse> {
-
-        conduit.searchUser(id: userId)
-            .map { tuple in
-                let (_, user) = tuple
-                // Return response
-                return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
-            }
-    }
-
-    /// <#Description#>
-    /// - parameters:
-    ///     - userId: <#userId description#>
-    ///     - token: <#token description#>
-    ///     - user: <#user description#>
-    /// - returns:
-    ///    <#Description#>
+    ///    The `Future` that returns `UserResponse`. 
     public func update(userId: Int, token: String, updateUser user: UpdateUser ) -> Future<UserResponse> {
 
         // Update user in storage

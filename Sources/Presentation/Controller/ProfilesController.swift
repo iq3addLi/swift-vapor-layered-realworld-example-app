@@ -12,12 +12,23 @@ import Vapor
 struct ProfilesController {
 
     // MARK: Properties
+    
+    /// The use case for profiles.
+    ///
+    /// See `ProfilesUseCase`.
     private let useCase = ProfilesUseCase()
 
-    // MARK: Functions
     
-    // GET /profiles/{{USERNAME}}
-    // Auth optional
+    // MARK: Controller for profiles
+    
+    /// GET /profiles/{{USERNAME}}
+    ///
+    /// Auth optional
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func getProfile(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)
@@ -31,8 +42,14 @@ struct ProfilesController {
             }
     }
 
-    // POST /profiles/{{USERNAME}}/follow
-    // Auth then expand payload
+    /// POST /profiles/{{USERNAME}}/follow
+    ///
+    /// Auth then expand payload.
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func follow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)
@@ -46,8 +63,14 @@ struct ProfilesController {
             }
     }
 
-    // DELETE /profiles/{{USERNAME}}/follow
-    // Auth then expand payload
+    /// DELETE /profiles/{{USERNAME}}/follow
+    ///
+    /// Auth then expand payload.
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func unfollow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let username = try request.parameters.next(String.self)

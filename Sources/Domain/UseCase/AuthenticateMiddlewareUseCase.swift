@@ -5,39 +5,45 @@
 //  Created by iq3AddLi on 2019/10/07.
 //
 
-/// Use cases for authentication middlewares
+/// Use cases for authentication middlewares.
 public struct AuthenticateMiddlewareUseCase: UseCase {
     
     // MARK: Properties
     
+    /// See `ConduitMySQLRepository`.
     private let conduit: ConduitRepository = ConduitMySQLRepository()
+    
+    /// See `JWTWithVaporRepository`.
     private let jwt: JWTRepository = JWTWithVaporRepository()
 
-    // MARK: Functions
     
-    /// <#Description#>
+    // MARK: Initializer
+    
+    /// Default Initializer.
     public init() {}
 
-    /// <#Description#>
+    // MARK: Use cases for authentication
+    
+    /// This use case has work of expand payload from JWT.
     /// - parameters:
-    ///     - token: <#token description#>
-    /// - returns:
-    ///    <#Description#>
+    ///     - token: Please pass in the JWT that expand payload.
     /// - throws:
-    ///  <#Description#>
+    ///   See `JWTRepository.verifyJWT`.
+    /// - returns:
+    ///   See `SessionPayload`.
     public func payload(by token: String ) throws -> SessionPayload {
         // Verify and expand payload
         return try jwt.verifyJWT(token: token)
     }
     
     
-    /// <#Description#>
+    /// This use case has work of receiving the JWT and get `User`'s infomation.
     /// - parameters:
-    ///     - token: <#token description#>
-    /// - returns:
-    ///    <#Description#>
+    ///     - token: Please pass in the JWT that expand payload.
     /// - throws:
-    ///  <#Description#> 
+    ///   See `JWTRepository.verifyJWT`.
+    /// - returns:
+    ///   The `Future` that returns `(Int, User)`. Int is `User`'s Id.
     public func user(by token: String ) throws -> Future<(Int, User)> {
 
         // Verify and expand payload

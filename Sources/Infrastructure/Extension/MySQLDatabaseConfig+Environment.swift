@@ -7,10 +7,10 @@
 
 import FluentMySQL
 
-/// Extension for MySQLDatabaseConfig
+/// Extension for MySQLDatabaseConfig.
 extension MySQLDatabaseConfig {
 
-    // MARK: Properties
+    // MARK: Use environment
     
     /// Generate Config from environment variables.
     static var fromEnvironment: Self {

@@ -13,10 +13,22 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
 
     // MARK: Properties
     
+    /// The use case for authentication.
+    ///
+    /// See `AuthenticateMiddlewareUseCase`.
     let useCase = AuthenticateMiddlewareUseCase()
 
-    // MARK: Functions
     
+    // MARK: Implementation as a Middleware
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - request: <#request description#>
+    ///   - next: <#next description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
         // Get Authentication: Token *
         guard let token = request.http.headers.tokenAuthorization?.token else {

@@ -12,11 +12,21 @@ import Vapor
 struct TagsController {
 
     // MARK: Properties
+    
+    /// The use case for tags.
+    ///
+    /// See `TagsUseCase`.
     private let useCase = TagsUseCase()
 
-    // MARK: Functions
+    
+    // MARK: Controller for tags
     
     // GET /tags
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func getTags(_ request: Request) throws -> Future<Response> {
         useCase.allTags()
             .map { response in

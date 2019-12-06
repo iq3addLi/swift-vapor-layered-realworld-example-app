@@ -24,12 +24,14 @@ protocol RESTApplicationRepository: Repository {
     func initalize()
     
     /// RESTApplicationRepository must to accept routing instructions.
-    /// - Parameter collections: <#collections description#>
+    /// - Parameter collections: Routing instruction array. See `APICollection`. 
     func routing( collections: [APICollection] )
     
     /// RESTApplicationRepository must implement server application launch.
     /// - Parameters:
-    ///   - hostname: <#hostname description#>
-    ///   - port: <#port description#>
+    ///   - hostname: Host name where the server starts. ex. `"127.0.0.1"`.
+    ///   - port: Server port number. ex. `80`.
+    /// - throws:
+    ///    <#Description#> 
     func applicationLaunch(hostname: String, port: Int) throws
 }

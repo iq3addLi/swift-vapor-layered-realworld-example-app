@@ -5,21 +5,26 @@
 //  Created by iq3AddLi on 2019/09/11.
 //
 
-/// Use cases for starting server applications
+/// Use cases for starting server applications.
 public struct ApplicationUseCase: UseCase {
     
     // MARK: Properties
     
+    // See `VaporApplicationRepository`.
     private let framework: RESTApplicationRepository = VaporApplicationRepository()
+    
+    // See `ConduitMySQLRepository`.
     private let conduit: ConduitRepository = ConduitMySQLRepository()
     
-    // MARK: Functions
+    // MARK: Initalizer
     
-    /// <#Description#>
+    /// Default initializer.
     public init() {}
 
-    /// <#Description#>
-    /// - returns:
+    // MARK: Use cases for application
+    
+    /// This use case has work of project initialization.
+    /// - throws:
     ///    <#Description#>
     public func initialize() throws {
 
@@ -27,16 +32,15 @@ public struct ApplicationUseCase: UseCase {
         framework.initalize()
     }
 
-    /// <#Description#>
-    /// - parameters:
-    ///     - collections: <#collections description#>
-    /// - returns:
-    ///    (dummy)
+    /// This use case has work of routing instruction.
+    /// - Parameter collections: Routing instruction array. See `APICollection`. 
     public func routing( collections: [APICollection] ) {
         framework.routing(collections: collections)
     }
 
-    /// <#Description#>
+    /// This use case has work of application launch.
+    /// - throws:
+    ///    <#Description#> 
     public func launch() throws {
         try framework.applicationLaunch(hostname: "0.0.0.0", port: 8080)
     }

@@ -7,7 +7,7 @@
 
 /// Error expressing Validation result according to Realworld specification.
 ///
-/// ### example
+/// ### Example when returned as Response
 ///```
 ///{
 ///    "errors": {

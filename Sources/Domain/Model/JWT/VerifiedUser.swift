@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/07.
 //
 
-/// Authenticated user information
+/// Authenticated user information.
 ///
 /// APIs that require the logged-in user's own information to complete the process automatically query the user information through Middleware and relay the information to the controller.
 /// @see AuthenticateThenSearchUserMiddleware for detail.
@@ -15,34 +15,34 @@ public final class VerifiedUser {
     
     // MARK: Properties
     
-    /// Same as `User`s id
+    /// Same as `User`s id.
     public var id: Int
 
-    /// Same as `User`s email
+    /// Same as `User`s email.
     public var email: String
 
-    /// JWT used for authentication
+    /// JWT used for authentication.
     public var token: String
 
-    /// Same as `User`s username
+    /// Same as `User`s username.
     public var username: String
 
-    /// Same as `User`s bio
+    /// Same as `User`s bio.
     public var bio: String
 
-    /// Same as `User`s image
+    /// Same as `User`s image.
     public var image: String
 
     // MARK: Initalizer
     
-    /// Default initalizer
+    /// Default initalizer.
     /// - Parameters:
-    ///   - id: `User`s Id
-    ///   - email: `User`s email
-    ///   - token: Verified JWT
-    ///   - username: `User`s username
-    ///   - bio: `User`s bio
-    ///   - image: `User`s image
+    ///   - id: `User`s Id.
+    ///   - email: `User`s email.
+    ///   - token: Verified JWT.
+    ///   - username: `User`s username.
+    ///   - bio: `User`s bio.
+    ///   - image: `User`s image.
     public init(id: Int = 0, email: String = "", token: String = "", username: String = "", bio: String = "", image: String = "") {
         self.id = id
         self.email = email
@@ -57,7 +57,7 @@ public final class VerifiedUser {
 // MARK: Export to User
 
 extension VerifiedUser {
-    /// Export to `User`
+    /// Export to `User`.
     public var user: User {
         return User(email: email, token: token, username: username, bio: bio, image: image)
     }
@@ -67,14 +67,18 @@ import Vapor
 
 // MARK: Implementation as ServiceType
 
-/// Implementation as ServiceType
+/// Implementation as ServiceType.
 ///
 /// ### Extras
 /// When you want to relay a variable from Middleware to Request, you cannot make it a struct. To create a copy.
-/// Do not try to do the same with Service. To continue using the memory address registered with register()
+/// Do not try to do the same with Service. To continue using the memory address registered with register().
 extension VerifiedUser: ServiceType {
     
-    /// @see `ServiceType`
+    /// See `ServiceType`.
+    /// - throws:
+    ///    <#Description#> 
+    /// - returns:
+    ///    <#Description#>   
     public static func makeService(for container: Container) throws -> Self {
         return .init()
     }

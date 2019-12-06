@@ -7,22 +7,21 @@
 
 import Vapor
 
-/// FrameworkRepository implemented in Vapor
+/// FrameworkRepository implemented in Vapor.
 class VaporApplicationRepository: RESTApplicationRepository {
     
     // MARK: Properties
     
-    /// See `Services`
+    /// See `Services`.
     private lazy var services = {
         return Services.default()
     }()
     
-    /// See `Vapor.Application`
+    /// See `Vapor.Application`.
     private var application: Vapor.Application?
 
     
     // MARK: Functions
-    
     
     /// Perform initialization processing for Vapor.
     ///
@@ -55,7 +54,6 @@ class VaporApplicationRepository: RESTApplicationRepository {
         services.register(VerifiedUserEntity.self)
     }
     
-    
     /// Vapor's Router initialization process.
     /// - Parameter collections: Routing instruction array. See `APICollection`.
     func routing(collections: [APICollection]) {
@@ -80,11 +78,12 @@ class VaporApplicationRepository: RESTApplicationRepository {
         services.register(router, as: Router.self)
     }
     
-    
     /// Start `Vapor.Application`.
     /// - Parameters:
-    ///   - hostname: <#hostname description#>
-    ///   - port: <#port description#>
+    ///   - hostname: Host name where the server starts. ex. `"127.0.0.1"`.
+    ///   - port: Server port number. ex. `80`.
+    /// - throws:
+    ///    <#Description#> 
     func applicationLaunch(hostname: String, port: Int) throws {
         
         var services = self.services
@@ -103,9 +102,13 @@ class VaporApplicationRepository: RESTApplicationRepository {
     
     
     /// Error handler provided for this project.
+    ///
+    /// See `ErrorMiddleware` for detail.
     /// - Parameters:
-    ///   - request: <#request description#>
-    ///   - error: <#error description#>
+    ///   - request: See `ErrorMiddleware.closure`.
+    ///   - error: See `ErrorMiddleware.closure`.
+    /// - returns:
+    ///    <#Description#>   
     private func errorToResponse( request: Request, error: Swift.Error ) -> Response {
 
         do {

@@ -12,11 +12,20 @@ import Vapor
 struct UsersController {
 
     // MARK: Properties
+    
+    /// The use case for users.
+    ///
+    /// See `UsersUseCase`.
     private let useCase = UsersUseCase()
 
-    // MARK: Functions
+    // MARK: Controller for users
     
-    // POST /users
+    /// POST /users
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func postUser(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
         return try request.content.decode(json: NewUserRequest.self, using: .custom(dates: .iso8601))
@@ -28,7 +37,12 @@ struct UsersController {
             }
     }
 
-    // POST /users/login
+    /// POST /users/login
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func login(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
         return try request.content.decode(json: LoginUserRequest.self, using: .custom(dates: .iso8601))
@@ -41,7 +55,14 @@ struct UsersController {
             }
     }
 
-    // GET /user Auth then search user
+    /// GET /user
+    ///
+    /// Auth then search user.
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func getUser(_ request: Request) throws -> Future<Response> {
         let user = try request.privateContainer.make(VerifiedUser.self).user
         let response = UserResponse(user: user)
@@ -49,7 +70,14 @@ struct UsersController {
         return request.response( response, as: .json).encode(status: .ok, for: request)
     }
 
-    // PUT /user Auth then expand payload
+    /// PUT /user
+    ///
+    /// Auth then expand payload.
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func updateUser(_ request: Request) throws -> Future<Response> {
 
         // Get relayed parameter

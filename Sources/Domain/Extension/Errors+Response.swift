@@ -7,13 +7,17 @@
 
 import Vapor
 
-/// Extensions required by Domain
-extension AbortError {
+// MARK: As Response
 
-    // MARK: As Response
+/// Extensions required by Domain.
+extension AbortError {
     
     /// Convert Vapor.AbortError to Response.
-    /// - Parameter request: A request for response
+    /// - Parameter request: A request for response.
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func toResponse(for request: Request) throws -> Response {
         // this is an abort error, we should use its status, reason, and headers
         let response = request.response(http: .init(status: status, headers: headers))
@@ -25,14 +29,17 @@ extension AbortError {
     }
 }
 
+// MARK: As Response
 
-/// Extensions required by Domain
+/// Extensions required by Domain.
 extension Debuggable {
-
-    // MARK: As Response
     
     /// Convert Core.Debuggable to Response.
-    /// - Parameter request: A request for response
+    /// - Parameter request: A request for response.
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func toResponse(for request: Request) throws -> Response {
         // if not release mode, and error is debuggable, provide debug
         // info directly to the developer
@@ -46,14 +53,17 @@ extension Debuggable {
     }
 }
 
+// MARK: As Response
 
-/// Extensions required by Domain
+/// Extensions required by Domain.
 extension ValidationError {
     
-    // MARK: As Response
-    
     /// Convert validation errors to Response.
-    /// - Parameter request: A request for response
+    /// - Parameter request: A request for response.
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func toResponse(for request: Request) throws -> Response {
         let response = request.response(http: .init(status: .badRequest, headers: [:]))
         response.http.body = try HTTPBody(data: JSONEncoder().encode(self))
@@ -63,13 +73,17 @@ extension ValidationError {
 }
 
 
-/// Extensions required by Domain
+// MARK: As Response
+
+/// Extensions required by Domain.
 extension Error {
     
-    // MARK: As Response
-    
-    /// Convert Domain.Error to Response
-    /// - Parameter request: A request for response
+    /// Convert Domain.Error to Response.
+    /// - Parameter request: A request for response.
+    /// - throws:
+    ///    <#Description#> 
+    /// - returns:
+    ///    <#Description#>   
     func toResponse(for request: Request) throws -> Response {
         // reason property should be collected as a log
         let httpStatus = HTTPResponseStatus(statusCode: status)

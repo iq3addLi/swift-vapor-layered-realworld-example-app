@@ -24,6 +24,8 @@ struct ConduitMySQLRepository: ConduitRepository {
     // MARK: Preparetion
     
     /// Create a table in the DB.
+    /// - throws:
+    ///    <#Description#>
     func ifneededPreparetion() throws {
         try database.instantCommunication { connection in
              Articles.create(on: connection)
@@ -45,6 +47,10 @@ struct ConduitMySQLRepository: ConduitRepository {
     ///   - username: Username to be verified.
     ///   - email: Email to be verified.
     ///   - password: Password to be verified.
+    /// - throws:
+    ///    <#Description#> 
+    /// - returns:
+    ///    <#Description#>
     func validate(username: String, email: String, password: String) throws -> Future<Void> {
         let validation = Validation()
         return validation.reduce([
@@ -70,6 +76,8 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - Parameter username: A username.
     /// - Parameter email: A email.
     /// - Parameter password: A password.
+    /// - returns:
+    ///    <#Description#>
     func registerUser(name username: String, email: String, password: String) -> Future<(Int, User)> {
 
         guard let currentEventLoop = MultiThreadedEventLoopGroup.currentEventLoop else {
@@ -93,6 +101,8 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - Parameters:
     ///   - email: A email.
     ///   - password: A password.
+    /// - returns:
+    ///    <#Description#>
     func authUser(email: String, password: String) -> Future<(Int, User)> {
         database.selectUser(email: email)
             .map { userOrNil -> Users in
@@ -111,7 +121,9 @@ struct ConduitMySQLRepository: ConduitRepository {
     }
 
     /// Implementation of user search using MySQL.
-    /// - Parameter id: `User`s Id
+    /// - Parameter id: `User`s Id.
+    /// - returns:
+    ///    <#Description#>
     func searchUser(id: Int) -> Future<(Int, User)> {
         database.selectUser(id: id)
             .map { userOrNil in
@@ -124,11 +136,13 @@ struct ConduitMySQLRepository: ConduitRepository {
 
     /// Implementation of update user's infomation using MySQL.
     /// - Parameters:
-    ///   - id: User's id
-    ///   - email: A email
-    ///   - username: A username
-    ///   - bio: A bio
-    ///   - image: An image URL
+    ///   - id: User's id.
+    ///   - email: A email.
+    ///   - username: A username.
+    ///   - bio: A bio.
+    ///   - image: An image URL.
+    /// - returns:
+    ///    <#Description#>
     func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> Future<User> {
         database.updateUser(id: id, email: email, bio: bio, image: image)
             .map { user in
@@ -138,8 +152,10 @@ struct ConduitMySQLRepository: ConduitRepository {
 
     /// Implementation of search profile using MySQL.
     /// - Parameters:
-    ///   - username: A username
-    ///   - readingUserId: User's Id that referenced Profile
+    ///   - username: A username.
+    ///   - readingUserId: User's Id that referenced Profile.
+    /// - returns:
+    ///    <#Description#>
     func searchProfile(username: String, readingUserId: Int?) -> Future<Profile> {
         database.selectProfile(username: username, readIt: readingUserId)
             .map { profileOrNil in
@@ -152,76 +168,96 @@ struct ConduitMySQLRepository: ConduitRepository {
 
     /// Implementation of user follow using MySQL.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - userId: <#userId description#>
+    ///   - username: Followee's user name.
+    ///   - userId: Follower's user Id.
+    /// - returns:
+    ///    <#Description#>
     func follow(followee username: String, follower userId: Int) -> Future<Profile> {
         database.insertFollow(followee: username, follower: userId)
     }
 
     /// Implementation of user unfollow using MySQL.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - userId: <#userId description#>
+    ///   - username: Followee's user name.
+    ///   - userId: Follower's user Id.
+    /// - returns:
+    ///    <#Description#>
     func unfollow(followee username: String, follower userId: Int) -> Future<Profile> {
         database.deleteFollow(followee: username, follower: userId)
     }
 
     /// Implementation of favorite to article using MySQL.
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - articleSlug: <#articleSlug description#>
+    ///   - userId: Favorite user id.
+    ///   - articleSlug: Slug of favorite article.
+    /// - returns:
+    ///    <#Description#>
     func favorite(by userId: Int, for articleSlug: String) -> Future<Article> {
         database.insertFavorite(by: userId, for: articleSlug)
     }
 
     /// Implementation of unfavorite to article using MySQL.
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - articleSlug: <#articleSlug description#>
+    ///   - userId: Favorite user id.
+    ///   - articleSlug: Slug of favorite article.
+    /// - returns:
+    ///    <#Description#>
     func unfavorite(by userId: Int, for articleSlug: String) -> Future<Article> {
         database.deleteFavorite(by: userId, for: articleSlug)
     }
 
     /// Implementation of get comments of article using MySQL.
-    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter articleSlug: Slug of the article to comment.
+    /// - returns:
+    ///    <#Description#>
     func comments(for articleSlug: String) -> Future<[Comment]> {
         database.selectComments(for: articleSlug)
     }
 
     /// Implementation of comment to article using MySQL.
     /// - Parameters:
-    ///   - articleSlug: <#articleSlug description#>
-    ///   - body: <#body description#>
-    ///   - userId: <#userId description#>
+    ///   - articleSlug: Slug of the article to comment.
+    ///   - body: Body of comment.
+    ///   - userId: Id of comment author.
+    /// - returns:
+    ///    <#Description#>
     func addComment(for articleSlug: String, body: String, author userId: Int) -> Future<Comment> {
         database.insertComment(for: articleSlug, body: body, author: userId)
     }
 
     /// Implementation of uncomment to article using MySQL.
+    ///
+    /// The Repository requires Slug, which was not necessary in the MySQL implementation.
     /// - Parameters:
-    ///   - articleSlug: <#articleSlug description#>
-    ///   - id: <#id description#>
-    func deleteComment(for articleSlug: String, id: Int) -> Future<Void> { // Slug is not required for MySQL implementation.
+    ///   - articleSlug: Slug of the article to comment.
+    ///   - id: Id of comment to remove.
+    /// - returns:
+    ///    <#Description#>
+    func deleteComment(for articleSlug: String, id: Int) -> Future<Void> {
         database.deleteComments(commentId: id)
     }
     
     /// Implementation of get articles using MySQL.
     /// - Parameters:
-    ///   - condition: <#condition description#>
-    ///   - readingUserId: <#readingUserId description#>
-    ///   - offset: <#offset description#>
-    ///   - limit: <#limit description#>
+    ///   - condition: Condition used to search for articles.
+    ///   - readingUserId: Subject user id. If nil, follow contains invalid information.
+    ///   - offset: Offset to search results. nil means unspecified.
+    ///   - limit: Limit to search results. nil means unspecified.
+    /// - returns:
+    ///    <#Description#>
     func articles( condition: ArticleCondition, readingUserId: Int? = nil, offset: Int? = nil, limit: Int? = nil ) -> Future<[Article]> {
         database.selectArticles(condition: condition, readIt: readingUserId, offset: offset, limit: limit)
     }
 
     /// Implementation of add article using MySQL.
     /// - Parameters:
-    ///   - author: <#author description#>
-    ///   - title: <#title description#>
-    ///   - discription: <#discription description#>
-    ///   - body: <#body description#>
-    ///   - tagList: <#tagList description#>
+    ///   - author: Id of the new article author.
+    ///   - title: Title of the new article.
+    ///   - discription: Description of the new article.
+    ///   - body: Body of the new article.
+    ///   - tagList: Array of tag strings attached to new article.
+    /// - returns:
+    ///    <#Description#>
     func addArticle(userId author: Int, title: String, discription: String, body: String, tagList: [String]) -> Future<Article> {
         guard let currentEventLoop = MultiThreadedEventLoopGroup.currentEventLoop else {
             fatalError("The currentEventLoop is not found. There may be a bug.")
@@ -239,19 +275,23 @@ struct ConduitMySQLRepository: ConduitRepository {
     }
 
     /// Implementation of delete article using MySQL.
-    /// - Parameter slug: <#slug description#>
+    /// - Parameter slug: Slug of article to be deleted.
+    /// - returns:
+    ///    <#Description#>
     func deleteArticle( slug: String ) -> Future<Void> {
         database.deleteArticle(slug: slug)
     }
 
     /// Implementation of update article using MySQL.
     /// - Parameters:
-    ///   - slug: <#slug description#>
-    ///   - title: <#title description#>
-    ///   - description: <#description description#>
-    ///   - body: <#body description#>
-    ///   - tagList: <#tagList description#>
-    ///   - userId: <#userId description#>
+    ///   - slug: Slug of article to be updated.
+    ///   - title: Title of article to be updated, nil means unspecified.
+    ///   - description: Description of article to be updated, nil means unspecified.
+    ///   - body: Body of article to be updated, nil means unspecified.
+    ///   - tagList: Array of tag strings attached to be updated article, nil means unspecified.
+    ///   - userId: Subject user id. If nil, follow contains invalid information.
+    /// - returns:
+    ///    <#Description#>
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article> {
         database.updateArticle(slug: slug, title: title, description: description, body: body, tagList: tagList != nil ? { tagList in
             // Trim whitespace, camecased and remove duplicate element
@@ -260,6 +300,8 @@ struct ConduitMySQLRepository: ConduitRepository {
     }
 
     /// Implementation of get tags using MySQL.
+    /// - returns:
+    ///    <#Description#>   
     func allTags() -> Future<[String]> {
         database.selectTags()
     }

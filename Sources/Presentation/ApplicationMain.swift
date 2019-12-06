@@ -12,10 +12,8 @@ import Domain
 ///  <#Description#>
 public func applciationMain() throws {
     
+    // The use case for application
     let useCase = ApplicationUseCase()
-
-    // Application initialize
-    try useCase.initialize()
 
     // Controllers
     let articles = ArticlesController()
@@ -27,8 +25,11 @@ public func applciationMain() throws {
     let authThenSearchUser = AuthenticateThenSearchUserMiddleware()
     let authThenExpandPayload = AuthenticateThenExpandPayloadMiddleware()
     let authOptional = AuthenticateOptionalMiddleware()
-
-    // Application Routing
+    
+    // Application initialize
+    try useCase.initialize()
+    
+    // Application routing
     useCase.routing(collections: [
         // User and Authentication
         .init(method: .post, paths: ["users"], closure: users.postUser ),
@@ -62,6 +63,6 @@ public func applciationMain() throws {
         .init(method: .get, paths: ["tags"], closure: tags.getTags )
     ])
 
-    // application launch
+    // Application launching
     try useCase.launch()
 }

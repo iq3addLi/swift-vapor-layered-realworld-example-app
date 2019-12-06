@@ -26,10 +26,11 @@ public enum RawSQLQueries {}
 extension RawSQLQueries {
     
     /// Returns the query. Inquires about articles according to the argument conditions.
-    /// - Parameter condition: Information that shows what criteria to search for articles.
-    /// - Parameter userId: ID of the user reading this article. If nil, following is false.
-    /// - Parameter offset: Search result offset. Nil is not set.
-    /// - Parameter limit: Search result limit. Nil is unlimited.
+    /// - Parameters:
+    ///   - condition: Information that shows what criteria to search for articles.
+    ///   - userId: ID of the user reading this article. If nil, following is false.
+    ///   - offset: Search result offset. Nil is not set.
+    ///   - limit: Search result limit. Nil is unlimited.
     /// - returns:
     ///    SQL query string.
     public static func selectArticles(condition: ArticleCondition, readIt userId: Int?, offset: Int? = nil, limit: Int? = nil) -> String {
@@ -126,8 +127,9 @@ extension RawSQLQueries {
 extension RawSQLQueries {
 
     /// Returns the query. Inquiries about users and their follow-up information.
-    /// - Parameter name: Username to search for.
-    /// - Parameter id: User's ID searching for the user. If nil, following is false.
+    /// - Parameters:
+    ///   - name: Username to search for.
+    ///   - id: User's ID searching for the user. If nil, following is false.
     /// - returns:
     ///    SQL query string.
     public static func selectUser(name: String, follower id: Int?) -> String {
@@ -141,8 +143,9 @@ extension RawSQLQueries {
     }
 
     /// Returns the query. Inquiries about users and their follow-up information.
-    /// - Parameter userId: User's ID to search for.
-    /// - Parameter id: User's ID searching for the user. If nil, following is false.
+    /// - Parameters:
+    ///   - userId: User's ID to search for.
+    ///   - id: User's ID searching for the user. If nil, following is false.
     /// - returns:
     ///    SQL query string.
     public static func selectUser(id userId: Int, follower id: Int?) -> String {
@@ -162,8 +165,9 @@ extension RawSQLQueries {
 extension RawSQLQueries {
 
     /// Returns the query. Get comments associated with an article.
-    /// - Parameter articleSlug: Article's slug to be commented.
-    /// - Parameter userId: User who gets the comment. If nil, following is false.
+    /// - Parameters:
+    ///   - articleSlug: Article's slug to be commented.
+    ///   - userId: User who gets the comment. If nil, following is false.
     /// - returns:
     ///    SQL query string.
     public static func selectComments(for articleSlug: String, readIt userId: Int? = nil) -> String {
@@ -180,9 +184,10 @@ extension RawSQLQueries {
     }
 
     /// Returns the query. Inserts a comment associated with an article.
-    /// - Parameter articleSlug: Article's slug to be commented.
-    /// - Parameter body: A comment body.
-    /// - Parameter userId: User's ID to comment.
+    /// - Parameters:
+    ///   - articleSlug: Article's slug to be commented.
+    ///   - body: A comment body.
+    ///   - userId: User's ID to comment.
     /// - returns:
     ///    SQL query string.
     public static func insertComments(for articleSlug: String, body: String, author userId: Int ) -> String {
@@ -215,8 +220,9 @@ extension RawSQLQueries {
 extension RawSQLQueries {
 
     /// Returns the query. Insert follow information associated with a user.
-    /// - Parameter username: Username to be followed.
-    /// - Parameter id: User's Id to follow.
+    /// - Parameters:
+    ///   - username: Username to be followed.
+    ///   - id: User's Id to follow.
     /// - returns:
     ///    SQL query string.
     public static func insertFollows(followee username: String, follower id: Int) -> String {
@@ -231,8 +237,9 @@ extension RawSQLQueries {
     }
 
     /// Returns the query. Delete follow information associated with a user.
-    /// - Parameter username: Username to be unfollowed.
-    /// - Parameter id: User's Id to unfollow.
+    /// - Parameters:
+    ///   - username: Username to be unfollowed.
+    ///   - id: User's Id to unfollow.
     /// - returns:
     ///    SQL query string.
     public static func deleteFollows(followee username: String, follower id: Int) -> String {
@@ -250,8 +257,9 @@ extension RawSQLQueries {
 extension RawSQLQueries {
 
     /// Returns the query. Inserts favorite information associated with an article.
-    /// - Parameter articleSlug: Article's slug to be favorited.
-    /// - Parameter userId: User's Id to favorite.
+    /// - Parameters:
+    ///   - articleSlug: Article's slug to be favorited.
+    ///   - userId: User's Id to favorite.
     /// - returns:
     ///    SQL query string.
     public static func insertFavorites(for articleSlug: String, by userId: Int) -> String {
@@ -264,10 +272,11 @@ extension RawSQLQueries {
         )
         """
     }
-
+    
     /// Returns the query. This deletes favorite information associated with an article.
-    /// - Parameter articleSlug: Article's slug to be unfavorited.
-    /// - Parameter userId: User's Id to unfavorite.
+    /// - Parameters:
+    ///   - articleSlug: `Article`'s slug to be unfavorited.
+    ///   - userId: `User`'s Id to unfavorite.
     /// - returns:
     ///    SQL query string.
     public static func deleteFavorites(for articleSlug: String, by userId: Int) -> String {

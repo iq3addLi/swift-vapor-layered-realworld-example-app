@@ -7,12 +7,15 @@
 
 import Infrastructure
 
-/// Extensions required by Domain
+// MARK: Export to Domain model
+
+/// Extensions required by Domain.
 extension Users {
     
-    // Mark: Export to Domain model
-    /// Export to `Profile`
+    /// Export to `Profile`.
     /// - Parameter following: Follow infomation. Missing properties in `Users`.
+    /// - returns:
+    ///    <#Description#>   
     public func profile( following: Bool) -> Profile {
         return Profile(username: username, bio: bio, image: image, following: following)
     }

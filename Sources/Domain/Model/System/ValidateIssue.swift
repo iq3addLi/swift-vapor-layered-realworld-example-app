@@ -25,7 +25,9 @@ struct ValidateIssue {
 
 extension Array where Element == ValidateIssue {
     
-    /// Export to `ValidationError`
+    /// Export to `ValidationError`.
+    /// - returns:
+    ///    <#Description#>   
     func generateError() -> ValidationError {
         ValidationError( errors: reduce(into: [String: [String]]()) { result, issue in
             result[issue.key] = ( result[issue.key] ?? [] ) + [ issue.report ]

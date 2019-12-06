@@ -8,29 +8,33 @@
 /// Representation of a row combining Users and Follows information about them.
 public final class UserWithFollowRow: Codable {
     
-    // MARK: Properties
+    // MARK: Users
 
-    // dummy comment
+    /// Same as `Users`'s id.
     public let id: Int
 
-    // dummy comment
+    /// Same as `Users`'s username.
     public let username: String
 
-    // dummy comment
+    /// Same as `Users`'s email.
     public let email: String
 
-    // dummy comment
+    /// Same as `Users`'s bio.
     public let bio: String
 
-    // dummy comment
+    /// Same as `Users`'s image.
     public let image: String
 
-    // dummy comment
+    
+    // MARK: Related to Follows
+    
+    /// Whether the person who referenced this user information is following this user.
     public let following: Bool?
 
-    // MARK: Functions
     
-    // dummy comment
+    // MARK: Initializer
+    
+    /// Default initializer.
     public init(id: Int, username: String, email: String, bio: String, image: String, following: Bool?) {
         self.id = id
         self.username = username

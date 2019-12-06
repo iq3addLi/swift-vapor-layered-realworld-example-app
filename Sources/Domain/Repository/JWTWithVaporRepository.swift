@@ -7,17 +7,24 @@
 
 import JWT
 
-/// JWTRepository implemented in vapor/jwt-kit
+/// JWTRepository implemented in vapor/jwt-kit.
 struct JWTWithVaporRepository: JWTRepository {
 
     // MARK: Properties
+    
+    /// A secret
     let secret = "secret" // TODO: Prepare a changeable function
 
     // MARK: Functions
     
     /// Issue a JWT.
-    /// - Parameter id: <#id description#>
-    /// - Parameter username: <#username description#>
+    /// - Parameters:
+    ///   - id: Id of the user whose password has been verified.
+    ///   - username: Name of the user whose password has been verified.
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#> 
     func issueJWT( id: Int, username: String ) throws -> String {
 
         // create payload
@@ -34,7 +41,11 @@ struct JWTWithVaporRepository: JWTRepository {
     }
 
     /// verify a JWT.
-    /// - Parameter token: <#token description#>
+    /// - Parameter token: string of JWT.
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func verifyJWT( token: String ) throws -> SessionPayload {
         // Verify and expand
         return try JWT<SessionPayload>(from: token, verifiedUsing: .hs256(key: secret)).payload

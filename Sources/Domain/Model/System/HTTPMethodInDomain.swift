@@ -15,16 +15,16 @@
 public enum HTTPMethodInDomain {
     // MARK: Cases
     
-    /// Same as `NIO.HTTPMethod.GET`
+    /// Same as `NIO.HTTPMethod.GET`.
     case get
     
-    /// Same as `NIO.HTTPMethod.PUT`
+    /// Same as `NIO.HTTPMethod.PUT`.
     case put
     
-    /// Same as `NIO.HTTPMethod.POST`
+    /// Same as `NIO.HTTPMethod.POST`.
     case post
     
-    /// Same as `NIO.HTTPMethod.DELETE`
+    /// Same as `NIO.HTTPMethod.DELETE`.
     case delete
 }
 
@@ -33,7 +33,7 @@ import NIOHTTP1
 // MARK: Compatibility with HTTPMethod
 extension HTTPMethodInDomain {
     
-    /// Convert to HTTPMethod
+    /// Convert to HTTPMethod.
     public var raw: HTTPMethod {
         switch self {
         case .get: return .GET

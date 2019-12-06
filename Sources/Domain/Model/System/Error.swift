@@ -7,7 +7,7 @@
 
 /// Domain layer's error.
 ///
-/// TODO: It's not good to leave it as it is if I want to improve it.😓
+/// TODO: It's not good to leave it as it's if I want to improve it.😓
 struct Error: Swift.Error {
     
     // MARK: Properties

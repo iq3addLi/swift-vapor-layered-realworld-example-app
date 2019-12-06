@@ -7,35 +7,39 @@
 
 import Core // Supply Codable for Date
 
-/// Representation of a row combining Comments and Users
+/// Representation of a row combining Comments and Users.
 public final class CommentWithAuthorRow: Codable {
-    // MARK: Properties
     
-    // Comment
-
-    // dummy comment
+    
+    // MARK: Comments
+    
+    /// Same as `Comments`'s id.
     public let id: Int
 
-    // dummy comment
+    /// Same as `Comments`'s createdAt.
     public let createdAt: Date
 
-    // dummy comment
+    /// Same as `Comments`'s updatedAt.
     public let updatedAt: Date
 
-    // dummy comment
+    /// Same as `Comments`'s body.
     public let body: String
 
-    // Profile
+    
+    // MARK: Users
 
-    // dummy comment
+    /// Same as `Users`'s username.
     public let username: String
 
-    // dummy comment
+    /// Same as `Users`'s bio.
     public let bio: String
 
-    // dummy comment
+    /// Same as `Users`'s image.
     public let image: String
 
-    // dummy comment
+    
+    // MARK: Related to Follows
+    
+    /// Whether the author of the comment is followed.
     public let following: Bool?
 }

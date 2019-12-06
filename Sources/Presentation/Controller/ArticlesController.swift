@@ -8,20 +8,31 @@
 import Domain
 import Vapor
 
-/// Controller For Article processing
+/// Controller For Article processing.
 struct ArticlesController {
 
     // MARK: Properties
+    
+    /// The use case for articles.
+    ///
+    /// See `ArticlesUseCase`.
     private let useCase = ArticlesUseCase()
 
-    // MARK: Functions
     
-    // GET /articles
-    //     /articles?offset=100&limit=3)
-    //     /articles?author=johnjacob
-    //     /articles?favorited=jane
-    //     /articles?tag=dragons
-    //  <Auth optional>
+    // MARK: Controller for articles
+    
+    /// GET /articles
+    ///
+    /// Auth optional
+    /// ### get query examples
+    /// * /articles?offset=100&limit=3)
+    /// * /articles?author=johnjacob
+    /// * /articles?favorited=jane
+    /// * /articles?tag=dragons
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func getArticles(_ request: Request) throws -> Future<Response> {
         // Get parameter by query
         let offset = request.query[ Int.self, at: "offset" ]
@@ -40,8 +51,13 @@ struct ArticlesController {
                 }
     }
 
-    // POST /articles
-    //  <Auth then expand payload>
+    /// POST /articles
+    ///
+    /// Auth then expand payload
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func postArticle(_ request: Request) throws -> Future<Response> {
         let useCase = self.useCase
         // Get parameter by body
@@ -56,8 +72,14 @@ struct ArticlesController {
             }
     }
 
-    // GET /articles/{{slug}}
-    //  <Auth optional>
+    /// GET /articles/{{slug}}
+    ///
+    /// Auth optional
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func getArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -72,8 +94,14 @@ struct ArticlesController {
             }
     }
 
-    // DELETE /articles/{{slug}}
-    //  <Auth then expand payload>
+    /// DELETE /articles/{{slug}}
+    ///
+    /// Auth then expand payload
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func deleteArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -85,8 +113,14 @@ struct ArticlesController {
             }
     }
 
-    // PUT /articles/{{slug}}
-    //  <Auth then expand payload>
+    /// PUT /articles/{{slug}}
+    ///
+    /// Auth then expand payload
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func updateArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -105,8 +139,14 @@ struct ArticlesController {
             }
     }
 
-    // GET /articles/feed
-    //  <Auth then expand payload>
+    /// GET /articles/feed
+    ///
+    /// Auth then expand payload
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func getArticlesMyFeed(_ request: Request) throws -> Future<Response> {
         // Get parameter by query
         let offset = request.query[ Int.self, at: "offset" ]
@@ -121,8 +161,14 @@ struct ArticlesController {
             }
     }
 
-    // POST /articles/{{slug}}/favorite
-    //  <Auth then expand payload>
+    /// POST /articles/{{slug}}/favorite
+    ///
+    /// Auth then expand payload
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func postFavorite(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -137,8 +183,14 @@ struct ArticlesController {
             }
     }
 
-    // DELETE /articles/{{slug}}/favorite
-    //  <Auth then expand payload>
+    /// DELETE /articles/{{slug}}/favorite
+    ///
+    /// Auth then expand payload
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func deleteFavorite(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -153,8 +205,14 @@ struct ArticlesController {
             }
     }
 
-    // GET /articles/{{slug}}/comments
-    //  <Auth optional>
+    /// GET /articles/{{slug}}/comments
+    ///
+    /// Auth optional
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func getComments(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -166,8 +224,14 @@ struct ArticlesController {
             }
     }
 
-    // POST /articles/{{slug}}/comments
-    //  <Auth then expand payload>
+    /// POST /articles/{{slug}}/comments
+    ///
+    /// Auth then expand payload
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func postComment(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)
@@ -186,8 +250,14 @@ struct ArticlesController {
             }
     }
 
-    // DELETE /articles/{{slug}}/comments/{{commentId}}
-    //  <Auth required>
+    /// DELETE /articles/{{slug}}/comments/{{commentId}}
+    ///
+    /// Auth required
+    /// - Parameter request: <#request description#>
+    /// - throws:
+    ///    <#Description#>
+    /// - returns:
+    ///    <#Description#>
     func deleteComment(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         let slug = try request.parameters.next(String.self)

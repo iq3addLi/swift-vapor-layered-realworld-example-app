@@ -12,45 +12,55 @@ protocol ConduitRepository: Repository {
 
     // MARK: Setup
 
-    /// Prepare if necessary
+    /// Prepare if necessary.
     ///
     /// This name is used because initialization may not be necessary depending on the implementation.
+    /// - throws:
+    ///    <#Description#>
     func ifneededPreparetion() throws
 
     // MARK: Users
 
     /// Conduit must implement input property validation.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - email: <#email description#>
-    ///   - password: <#password description#>
+    ///   - username: It's a property to be verified.
+    ///   - email: It's a property to be verified.
+    ///   - password: It's a property to be verified.
+    /// - throws:
+    ///    <#Description#> 
+    /// - returns:
+    ///    <#Description#>
     func validate(username: String, email: String, password: String) throws -> Future<Void>
 
     /// Conduit must to implement a user registration process.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - email: <#email description#>
-    ///   - password: <#password description#>
+    ///   - username: Request the name of the user to use in the service.
+    ///   - email: Request email for use within the service.
+    ///   - password: Requests the password that the registrant uses in the service.
+    /// - returns:
+    ///    <#Description#>
     func registerUser(name username: String, email: String, password: String) -> Future<(Int, User)>
 
     /// Conduit must to implement a user authentication process.
     /// - Parameters:
-    ///   - email: <#email description#>
-    ///   - password: <#password description#>
+    ///   - email: Used to identify the user.
+    ///   - password: Used for authentication.
+    /// - returns:
+    ///    <#Description#>
     func authUser(email: String, password: String) -> Future<(Int, User)>
 
     /// Conduit must to implement a user search by id.
-    /// - Parameter id: <#id description#>
+    /// - Parameter id: Used to identify the user.
     /// - returns:
     ///    <#Description#>
     func searchUser(id: Int) -> Future<(Int, User)>
 
     /// Conduit must to implement update process for user's infomation.
-    /// - Parameter id: <#id description#>
-    /// - Parameter email: <#email description#>
-    /// - Parameter username: <#username description#>
-    /// - Parameter bio: <#bio description#>
-    /// - Parameter image: <#image description#>
+    /// - Parameter id: Used to identify the user.
+    /// - Parameter email: The updated email. Nil means unspecified.
+    /// - Parameter username: The updated username. Nil means unspecified.
+    /// - Parameter bio: The updated bio. Nil means unspecified.
+    /// - Parameter image: The updated image. Nil means unspecified.
     /// - returns:
     ///    <#Description#>
     func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> Future<User>
@@ -59,90 +69,110 @@ protocol ConduitRepository: Repository {
 
     /// Conduit must to implement search for profile.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - readingUserId: <#readingUserId description#>
+    ///   - username: Used to identify the user.
+    ///   - readingUserId: User's Id that referenced Profile.
+    /// - returns:
+    ///    <#Description#>
     func searchProfile(username: String, readingUserId: Int?) -> Future<Profile>
 
     /// Conduit must to implement user follow.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - userId: <#userId description#>
+    ///   - username: Followee's user name.
+    ///   - userId: Follower's user Id.
+    /// - returns:
+    ///    <#Description#>
     func follow(followee username: String, follower userId: Int) -> Future<Profile>
 
     /// Conduit must to implement user unfollow.
     /// - Parameters:
-    ///   - username: <#username description#>
-    ///   - userId: <#userId description#>
+    ///   - username: Followee's user name.
+    ///   - userId: Follower's user Id.
+    /// - returns:
+    ///    <#Description#>
     func unfollow(followee username: String, follower userId: Int) -> Future<Profile>
 
     // MARK: Favorites
 
     /// Conduit must to implement favorite for article.
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - articleSlug: <#articleSlug description#>
+    ///   - userId: Favorite user id.
+    ///   - articleSlug: Slug of favorite article.
+    /// - returns:
+    ///    <#Description#>
     func favorite(by userId: Int, for articleSlug: String) -> Future<Article>
 
     /// Conduit must to implement unfavorite for article.
     /// - Parameters:
-    ///   - userId: <#userId description#>
-    ///   - articleSlug: <#articleSlug description#>
+    ///   - userId: Favorite user name.
+    ///   - articleSlug: Slug of favorite article.
+    /// - returns:
+    ///    <#Description#>
     func unfavorite(by userId: Int, for articleSlug: String) -> Future<Article>
 
     // MARK: Comments
 
     /// Conduit must to implement search comment from article.
-    /// - Parameter articleSlug: <#articleSlug description#>
+    /// - Parameter articleSlug: Slug of the article to comment.
     /// - returns:
     ///    <#Description#>
     func comments(for articleSlug: String) -> Future<[Comment]>
 
     /// Conduit must to implement comment to article.
     /// - Parameters:
-    ///   - articleSlug: <#articleSlug description#>
-    ///   - body: <#body description#>
-    ///   - userId: <#userId description#>
+    ///   - articleSlug: Slug of the article to comment.
+    ///   - body: Body of comment.
+    ///   - userId: Id of comment author.
+    /// - returns:
+    ///    <#Description#>
     func addComment(for articleSlug: String, body: String, author userId: Int) -> Future<Comment>
 
     /// Conduit must to implement uncomment to article.
     /// - Parameters:
-    ///   - articleSlug: <#articleSlug description#>
-    ///   - id: <#id description#>
+    ///   - articleSlug: Slug of the article to comment.
+    ///   - id: Id of comment to remove.
+    /// - returns:
+    ///    <#Description#>
     func deleteComment(for articleSlug: String, id: Int) -> Future<Void>
 
     // MARK: Articles
 
     /// Conduit must to implement search for articles.
     /// - Parameters:
-    ///   - condition: <#condition description#>
-    ///   - readingUserId: <#readingUserId description#>
-    ///   - offset: <#offset description#>
-    ///   - limit: <#limit description#>
+    ///   - condition: Condition used to search for articles.
+    ///   - readingUserId: Subject user id. If nil, follow contains invalid information.
+    ///   - offset: Offset to search results. nil means unspecified.
+    ///   - limit: Limit to search results. nil means unspecified.
+    /// - returns:
+    ///    <#Description#>
     func articles( condition: ArticleCondition, readingUserId: Int?, offset: Int?, limit: Int? ) -> Future<[Article]>
 
     /// Conduit must to implement article post.
     /// - Parameters:
-    ///   - author: <#author description#>
-    ///   - title: <#title description#>
-    ///   - discription: <#discription description#>
-    ///   - body: <#body description#>
-    ///   - tagList: <#tagList description#>
+    ///   - author: Id of the new article author.
+    ///   - title: Title of the new article.
+    ///   - discription: Description of the new article.
+    ///   - body: Body of the new article.
+    ///   - tagList: Array of tag strings attached to new article.
+    /// - returns:
+    ///    <#Description#>   
     func addArticle(userId author: Int, title: String, discription: String, body: String, tagList: [String]) -> Future<Article>
 
     /// Conduit must to implement article delete.
-    /// - Parameter slug: <#slug description#>
+    /// - Parameter slug: Slug of article to be deleted.
     /// - returns:
     ///    <#Description#>
     func deleteArticle( slug: String ) -> Future<Void>
 
     /// Conduit must to implement article update.
     /// - Parameters:
-    ///   - slug: <#slug description#>
-    ///   - title: <#title description#>
-    ///   - description: <#description description#>
-    ///   - body: <#body description#>
-    ///   - tagList: <#tagList description#>
-    ///   - userId: <#userId description#>
+    ///   - slug: Slug of article to be updated.
+    ///   - title: Title of article to be updated, nil means unspecified.
+    ///   - description: Description of article to be updated, nil means unspecified.
+    ///   - body: Body of article to be updated, nil means unspecified.
+    ///   - tagList: Array of tag strings attached to be updated article, nil means unspecified.
+    ///   - userId: Subject user id. If nil, follow contains invalid information.
+    /// - returns:
+    ///    <#Description#>
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article>
 
     // MARK: Tags
