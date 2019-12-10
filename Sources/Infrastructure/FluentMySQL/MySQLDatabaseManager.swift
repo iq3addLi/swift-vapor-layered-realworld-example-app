@@ -42,7 +42,7 @@ public class MySQLDatabaseManager {
     /// `MySQLDatabase` requires that the connection request be made with NIO.Thread. You can use this method when you want to request a connection from the main thread. Temporary threads are not automatically shut down. If you don't need to manually shut down, you should use `instantCommunication`.
     /// - returns:
     ///    The `Future` that returns `MySQLConnection`.
-    /// - warnings:
+    /// - warning:
     ///    Never call it from NIO.Thread.
     public func newConnectionOnInstantEventLoop() -> Future<MySQLConnection> {
         print("Launch instant thread.")
@@ -65,10 +65,11 @@ public class MySQLDatabaseManager {
     /// Communication with MySQL on a temporary Thread.
     ///
     /// Similar to `communication`. This is supposed to be called from Main Thread.
-    /// - Parameter closure: Receiving active conection closure.
+    /// - Parameters:
+    ///   - closure: Receiving active conection closure.
     /// - returns:
     ///    The `Future` that returns `closure`'s return value.
-    /// - warnings:
+    /// - warning:
     ///    Never call it from NIO.Thread.
     public func instantCommunication<T>( closure: @escaping (MySQLConnection) -> Future<T> ) -> Future<T> {
         var connection: MySQLConnection?

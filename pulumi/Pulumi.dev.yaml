@@ -4,3 +4,4 @@ config:
   swift-vapor-layered-realworld-example-app:mysqlPassword:
     secure: AAABAM63I8NG20WXkkGcOOVGxHws/DS9+lYUeY2Hf7PvdGOhbZGxMPEZig+K
   swift-vapor-layered-realworld-example-app:mysqlUser: mysqluser
+  swift-vapor-layered-realworld-example-app:secretForJWT: secret

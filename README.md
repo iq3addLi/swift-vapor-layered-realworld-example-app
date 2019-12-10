@@ -39,13 +39,22 @@ $ swift build -c release
 $ docker-compose up
 ```
 
-### Set environments for MySQL
+### Generate secret for JWT
 
 ```bash
-$ export MYSQL_HOSTNAME=0.0.0.0
-$ export MYSQL_USERNAME=mysqluser
-$ export MYSQL_PASSWORD=mysqlpass
-$ export MYSQL_DATABASE=mysqldatabase
+$ echo "Your rememberable word" | md5
+```
+
+This can be your favorite method.
+
+### Set environment variables
+
+```bash
+$ export SECRET_FOR_JWT={{ secret for JWT }} \
+  MYSQL_HOSTNAME=0.0.0.0 \
+	MYSQL_USERNAME=mysqluser \
+  MYSQL_PASSWORD=mysqlpass \
+  MYSQL_DATABASE=mysqldatabase
 ```
 
 This setting values is editable, but it needs to match the setting in [docker-compose.yml](./docker-compose.yml).
@@ -77,10 +86,10 @@ $ docker build -t realworld:latest .
 ### Set environments for MySQL
 
 ```bash
-$ export MYSQL_USERNAME=mysqluser
-$ export MYSQL_PASSWORD=mysqlpass
-$ export MYSQL_DATABASE=mysqldatabase
-$ export MYSQL_ROOTPASS=rootpass
+$ export MYSQL_USERNAME=mysqluser \
+  MYSQL_PASSWORD=mysqlpass \
+  MYSQL_DATABASE=mysqldatabase \
+  MYSQL_ROOTPASS=rootpass
 ```
 
 This setting values is editable.  Note that the value set at the beginning is recorded. 
@@ -112,7 +121,8 @@ $ docker network inspect bridge | grep IPv4Address
 $ docker run \
   --rm \
   -p 8080:80 \
-  -e MYSQL_HOSTNAME=<<host part of MySQL address>>\
+  -e SECRET_FOR_JWT={{ secret for JWT }}\
+  -e MYSQL_HOSTNAME={{ host part of MySQL address }}\
   -e MYSQL_USERNAME=${MYSQL_USERNAME}\
   -e MYSQL_PASSWORD=${MYSQL_PASSWORD}\
   -e MYSQL_DATABASE=${MYSQL_DATABASE}\
@@ -125,7 +135,7 @@ $ docker run \
 
 ```bash
 $ docker ps
-$ docker stop <<CONTAINER ID or NAME for MySQL>> <<CONTAINER ID or NAME for RealWorld App>>
+$ docker stop {{ CONTAINER ID or NAME for MySQL }} {{ CONTAINER ID or NAME for RealWorld App }}
 ```
 
 
@@ -141,10 +151,19 @@ $ docker stop <<CONTAINER ID or NAME for MySQL>> <<CONTAINER ID or NAME for Real
 
 ```bash
 $ set +o history # disable record to bash_history 
-$ export AWS_ACCESS_KEY_ID=<<Your access key id of AWS account>>
-$ export AWS_SECRET_ACCESS_KEY=<<Your access key secret of AWS account>>
+$ export AWS_ACCESS_KEY_ID={{ Your access key id of AWS account }}
+$ export AWS_SECRET_ACCESS_KEY={{ Your access key secret of AWS account }}
 $ set -o history
 $ clear # flush terminal
+```
+
+### Set config to Pulumi.dev.yaml[Optional]
+
+```bash
+$ pulumi config set mysqlDatabase mysqldatabase
+$ pulumi config set --secret mysqlPassword mysqlPass
+$ pulumi config set mysqlUser mysqluser
+$ pulumi config set secretForJWT {{ secret for JWT }}
 ```
 
 ### Preview pulumi stack
@@ -178,7 +197,6 @@ $ pulumi destroy --yes
 ```
 
 ⚠️ MySQL storage is volatile.
-
 
 
 

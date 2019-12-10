@@ -13,7 +13,15 @@ struct JWTWithVaporRepository: JWTRepository {
     // MARK: Properties
     
     /// A secret
-    let secret = "secret" // TODO: Prepare a changeable function
+    let secret: String
+    
+    /// Default initializer.
+    public init(){
+        guard let secret = ProcessInfo.processInfo.environment["SECRET_FOR_JWT"] else {
+            fatalError("'SECRET_FOR_JWT' must be set as an environment variable to start the application.")
+        }
+        self.secret = secret
+    }
 
     // MARK: Functions
     

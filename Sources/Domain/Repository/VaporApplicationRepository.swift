@@ -7,7 +7,7 @@
 
 import Vapor
 
-/// FrameworkRepository implemented in Vapor.
+/// REST Application implemented in Vapor.
 class VaporApplicationRepository: RESTApplicationRepository {
     
     // MARK: Properties

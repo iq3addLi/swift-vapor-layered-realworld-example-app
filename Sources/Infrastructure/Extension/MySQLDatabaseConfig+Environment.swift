@@ -20,7 +20,10 @@ extension MySQLDatabaseConfig {
             let password = ProcessInfo.processInfo.environment["MYSQL_PASSWORD"],
             let database = ProcessInfo.processInfo.environment["MYSQL_DATABASE"]
         else {
-            return Self.root(database: "default")
+            fatalError("""
+                        The environment variable for MySQL must be set to start the application.
+                        "MYSQL_HOSTNAME", "MYSQL_USERNAME", "MYSQL_PASSWORD" and "MYSQL_DATABASE".
+                        """)
         }
         return MySQLDatabaseConfig(hostname: hostname, username: username, password: password, database: database)
     }

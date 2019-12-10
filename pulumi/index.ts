@@ -10,6 +10,7 @@ const mysqlUsername = config.require("mysqlUser")
 const mysqlPassword = config.requireSecret("mysqlPassword")
 const mysqlDatabase = config.require("mysqlDatabase")
 
+const secretForJWT = config.require("secretForJWT")
 
 // Create a VPC and a Cluster in it
 const vpc = new awsx.ec2.Vpc( prefix + "-vpc", {
@@ -65,6 +66,7 @@ const appTaskDefinition = new awsx.ecs.FargateTaskDefinition( appPrefix + "-task
             { name: "MYSQL_PASSWORD", value: mysqlPassword },
             { name: "MYSQL_DATABASE", value: mysqlDatabase },
             { name: "MYSQL_HOSTNAME", value: mysqlHost },
+            { name: "SECRET_FOR_JWT", value: secretForJWT }
         ]
     }
 })
