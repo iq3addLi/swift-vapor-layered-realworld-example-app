@@ -1,5 +1,3 @@
-⚠️   *This project is still under development. Several bugs have been confirmed. The development is expected to be completed around December 7th.*
-
 [![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.1-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/docs)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
 
 # ![RealWorld Example App](logo.png)
@@ -202,5 +200,31 @@ $ pulumi destroy --yes
 
 # Getting started
 
-> *Now writing ...*
+## Entrance
+
+[Source/realworld/main.swift](Source/realworld/main.swift) is code of entrance. From here you can follow the entire code!
+
+
+
+## Connect with Frontend Realworld
+
+Change your Realworld frontend Server host settings.  If you are using the Riot v4 version, see [here](https://github.com/iq3addLi/riot_v4_realworld_example_app#change-api-server).
+
+
+
+# Structures
+
+> Now writting...
+
+
+
+# Impression using Vapor
+
+> Now writting...
+
+
+
+# introspection
+
+> Now writting...
 
