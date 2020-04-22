@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift",
         "state": {
           "branch": null,
-          "revision": "4ccfe9034a07af4b153657ba1cdac702ffcf8f2f",
-          "version": "1.1.2"
+          "revision": "39f08ac5269361a50c08ce1e2f41989bfc4b1ec8",
+          "version": "1.3.1"
         }
       },
       {
@@ -69,13 +69,13 @@
         "repositoryURL": "https://github.com/vapor/http.git",
         "state": {
           "branch": null,
-          "revision": "3808ed0401379b6e9f4a053f03090ea9d658caa9",
-          "version": "3.2.1"
+          "revision": "fba1329cd430e2f9a3f995b317b04f268d8b2978",
+          "version": "3.3.2"
         }
       },
       {
         "package": "JWT",
-        "repositoryURL": "https://github.com/vapor/jwt-kit",
+        "repositoryURL": "https://github.com/iq3addLi/jwt-kit",
         "state": {
           "branch": null,
           "revision": "2e225c722bf26407c1c4bd11d341e48759f46095",
@@ -132,8 +132,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "ba7970fe396e8198b84c6c1b44b38a1d4e2eb6bd",
-          "version": "1.14.1"
+          "revision": "8da5c5a4e6c5084c296b9f39dc54f00be146e0fa",
+          "version": "1.14.2"
         }
       },
       {
@@ -204,8 +204,8 @@
         "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "92a58a9a84e4330500b99fe355a94d29f67abe58",
-          "version": "3.3.1"
+          "revision": "642f3d4d1f0eafad651c85524d0d1c698b55399f",
+          "version": "3.3.3"
         }
       },
       {
