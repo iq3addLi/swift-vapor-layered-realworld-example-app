@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/11/14.
 //
 
-import FluentMySQL
+import FluentMySQLDriver
 
 /// Extension for MySQLDatabaseConfig.
 extension MySQLDatabaseConfig {

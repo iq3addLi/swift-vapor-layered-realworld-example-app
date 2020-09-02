@@ -18,7 +18,7 @@ protocol ConduitRepository: Repository {
     /// - throws:
     ///    This function is expected to throw an error in some process related to initialization.
     func ifneededPreparetion() throws
-
+/*
     // MARK: Users
 
     /// Conduit must implement input property validation.
@@ -174,7 +174,7 @@ protocol ConduitRepository: Repository {
     /// - returns:
     ///    The `Future` where implementation will be implemented. Expected to return a `Article` after being updated.
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article>
-
+*/
     // MARK: Tags
 
     /// Conduit must to implement tags search.

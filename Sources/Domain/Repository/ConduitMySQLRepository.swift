@@ -19,7 +19,12 @@ struct ConduitMySQLRepository: ConduitRepository {
     // MARK: Properties
     
     /// Use this to instruct the database.
-    let database = MySQLDatabaseManager.default
+    let database = MySQLDatabaseManager(
+       hostname: "127.0.0.1",
+       username: "mysqluser",
+       password: "mysqluserpass",
+       database: "mysqldatabase"
+   )
 
     // MARK: Preparetion
     
@@ -27,16 +32,16 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - throws:
     ///    This does not happen in this implementation.
     func ifneededPreparetion() throws {
-        try database.instantCommunication { connection in
-             Articles.create(on: connection)
-                .flatMap { Comments.create(on: connection) }
-                .flatMap { Favorites.create(on: connection) }
-                .flatMap { Follows.create(on: connection) }
-                .flatMap { Tags.create(on: connection) }
-                .flatMap { Users.create(on: connection) }
-            }.wait()
+//        try database.instantCommunication { connection in
+//             Articles.create(on: connection)
+//                .flatMap { Comments.create(on: connection) }
+//                .flatMap { Favorites.create(on: connection) }
+//                .flatMap { Follows.create(on: connection) }
+//                .flatMap { Tags.create(on: connection) }
+//                .flatMap { Users.create(on: connection) }
+//            }.wait()
     }
-    
+    /*
     // MARK: Validation
     
     /// Use Vapor validation.
@@ -68,6 +73,7 @@ struct ConduitMySQLRepository: ConduitRepository {
                 throw issues.generateError()
             }
         }
+        MultiThreadedEventLoopGroup.currentEventLoop!.future()
     }
 
     // MARK: Query for Database
@@ -298,6 +304,7 @@ struct ConduitMySQLRepository: ConduitRepository {
             Array( Set(tagList.map { $0.camelcased }))
         }(tagList!) : nil, readIt: userId)
     }
+    */
 
     /// Implementation of get tags using MySQL.
     /// - returns:

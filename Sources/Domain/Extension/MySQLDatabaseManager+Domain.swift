@@ -6,13 +6,16 @@
 //
 
 import Infrastructure
-import FluentMySQL
+
+import SQLKit
+import MySQLNIO
+import FluentMySQLDriver
 
 // MARK: Functions In Domain
 
 /// Extensions required by Domain.
 extension MySQLDatabaseManager {
-
+    /*
     /// Returns the result of querying MySQL Database for Users.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter email: A email address. Information to identify the user.
@@ -315,7 +318,7 @@ extension MySQLDatabaseManager {
                 return article
             }
     }
-
+ 
     /// Update Articles into MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter slug: Slug of article to be updated.
@@ -380,26 +383,27 @@ extension MySQLDatabaseManager {
                 .map( pickArticleClosure )
         }
     }
-
+     */
     /// Delete Articles in MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter slug: Slug of article to be deleted.
     /// - returns:
     ///    The `Future` that returns `Void`.
-    func deleteArticle(on connection: MySQLConnection, slug: String ) -> Future<Void> {
-        connection
-            .raw( RawSQLQueries.deleteArticles(slug: slug) )
-            .all()
-            .map { _ in return }
+    func deleteArticle(slug: String ) -> Future<Void> {
+        fluent.transaction { database in
+            (database as! SQLDatabase)
+                .raw( SQLQueryString( RawSQLQueries.deleteArticles(slug: slug)) )
+                .all()
+                .map { _ in return }
+        }
     }
-
     /// Query MySQL Database for all tags.
     /// - Parameter connection: A valid connection to MySQL.
     /// - returns:
     ///    The `Future` that returns array of tag as `[String]`.
-    func selectTags(on connection: MySQLConnection) -> Future<[String]> {
-        connection
-            .raw( RawSQLQueries.selectTags() )
+    func selectTags() -> Future<[String]> {
+        sql
+            .raw( SQLQueryString(RawSQLQueries.selectTags()) )
             .all(decoding: TagOnlyRow.self )
             .map { rows in rows.map { $0.tag } }
     }

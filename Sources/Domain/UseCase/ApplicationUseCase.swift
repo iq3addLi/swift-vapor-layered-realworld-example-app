@@ -14,7 +14,7 @@ public struct ApplicationUseCase: UseCase {
     private let framework: RESTApplicationRepository = VaporApplicationRepository()
     
     // See `ConduitMySQLRepository`.
-    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    // private let conduit: ConduitRepository = ConduitMySQLRepository()
     
     // MARK: Initalizer
     
@@ -27,7 +27,7 @@ public struct ApplicationUseCase: UseCase {
     /// - throws:
     ///    See `ConduitMySQLRepository.ifneededPreparetion()`.
     public func initialize() throws {
-        try conduit.ifneededPreparetion()
+        // try conduit.ifneededPreparetion()
         framework.initalize()
     }
 
@@ -41,6 +41,6 @@ public struct ApplicationUseCase: UseCase {
     /// - throws:
     ///    See `VaporApplicationRepository.applicationLaunch(hostname:port:)`.
     public func launch() throws {
-        try framework.applicationLaunch(hostname: "0.0.0.0", port: 8080)
+        try framework.applicationLaunch(hostname: "0.0.0.0", port: 8080) // FIXME: from Envronments
     }
 }

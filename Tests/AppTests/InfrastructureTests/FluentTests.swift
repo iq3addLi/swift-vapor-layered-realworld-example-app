@@ -6,7 +6,7 @@
 //
 
 import XCTest
-import FluentMySQL
+import FluentMySQLDriver
 
 @testable import Domain
 import Infrastructure
