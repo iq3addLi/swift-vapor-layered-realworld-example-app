@@ -23,18 +23,20 @@ public final class VerifiedUserEntity {
 
     /// JWT used for authentication.
     public var token: String?
+    
+    public init( id: Int?, username: String?, token: String?){
+        self.id = id
+        self.username = username
+        self.token = token
+    }
 }
 
 import Vapor
-// MARK: Implementation as ServiceType
 
-extension VerifiedUserEntity: ServiceType {
-    
-    /// Implementation as ServiceType.
-    /// - Parameter container:  See `ServiceType`.
-    /// - throws:
-    ///    Instance with no value. 
-    public static func makeService(for container: Container) throws -> Self {
-        return .init()
+// MARK: Storageable
+
+extension VerifiedUserEntity {
+    public struct Key: StorageKey{
+        public typealias Value = VerifiedUserEntity
     }
 }

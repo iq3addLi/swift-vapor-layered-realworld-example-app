@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/18.
 //
 
-import Core // Supply Codable for Date
+import Foundation
 
 /// Representation of a row combining Comments and Users.
 public final class CommentWithAuthorRow: Codable {

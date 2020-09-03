@@ -5,7 +5,8 @@
 //  Created by iq3AddLi on 2019/11/18.
 //
 
-import Validation
+
+import Vapor
 
 /// This class has the validation function required for this project.
 ///
@@ -33,7 +34,9 @@ final class Validation {
         }
 
         return eventLoop.submit { () -> ValidateIssue? in
-            do { try validator.validate(value) } catch { return ValidateIssue(key: key, report: report) }
+            if validator.validate(value).isFailure{
+                return ValidateIssue(key: key, report: report)
+            }
             return nil
         }
     }
@@ -117,7 +120,7 @@ extension Validation {
             fatalError("The current event loop is not found.")
         }
 
-        return EventLoopFuture.reduce([], validations, eventLoop: eventLoop) { (results, result) -> [ValidateIssue] in
+        return EventLoopFuture.reduce([], validations, on: eventLoop) { (results, result) -> [ValidateIssue] in
             guard let result = result else { return results }
             var mutableResults = results
             mutableResults.append(result)
@@ -137,11 +140,9 @@ extension MySQLDatabaseManager {
     /// - returns:
     ///    Futures that may return issue found as a result of validation.
     func isUnique(username: String) -> Future<ValidateIssue?> {
-        selectUser(name: username)
+        selectUser(username: username)
             .map {
-                guard $0 == nil
-                    else { return ValidateIssue(key: "username", report: "has already been taken" ) }
-                return nil
+                $0 == nil ? ValidateIssue(key: "username", report: "has already been taken" ) : nil
             }
     }
 
@@ -152,9 +153,7 @@ extension MySQLDatabaseManager {
     func isUnique(email: String) -> Future<ValidateIssue?> {
         selectUser(email: email)
             .map {
-                guard $0 == nil
-                    else { return ValidateIssue(key: "email", report: "has already been taken" ) }
-                return nil
+                $0 == nil ? ValidateIssue(key: "email", report: "has already been taken" ) : nil
             }
     }
 }

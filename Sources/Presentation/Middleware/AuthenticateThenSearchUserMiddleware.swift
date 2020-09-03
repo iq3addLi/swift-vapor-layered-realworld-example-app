@@ -28,28 +28,33 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
     /// - throws:
     ///    See `Container.make()`.
     /// - returns:
-    ///    The `Future` that returns `Response`. 
-    func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
+    ///    The `Future` that returns `Response`.
+    func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
         // Get Authentication: Token *
-        guard let token = request.http.headers.tokenAuthorization?.token else {
-            throw Abort( .badRequest )
+        guard let token = request.headers.tokenAuthorization?.token else {
+            return request.eventLoop.makeFailedFuture(Error("failed"))
         }
 
         // Verify then search user
-        return try useCase.user(by: token)
+        do{
+            return try useCase.user(by: token)
             .flatMap { tuple in
                 let (id, user) = tuple
 
                 // Add ralay service value
-                let relay = (try request.privateContainer.make(VerifiedUser.self))
-                relay.id = id
-                relay.email = user.email
-                relay.username = user.username
-                relay.token = token
-                relay.bio = user.bio
-                relay.image = user.image
+                request.storage[VerifiedUser.Key] = VerifiedUser(
+                    id: id,
+                    email: user.email,
+                    token: token,
+                    username: user.username,
+                    bio: user.bio,
+                    image: user.image
+                )
 
-                return try next.respond(to: request)
+                return next.respond(to: request)
             }
+        }catch{
+            return request.eventLoop.makeFailedFuture(Error("failed"))
+        }
     }
 }

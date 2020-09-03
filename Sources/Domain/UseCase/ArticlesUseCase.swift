@@ -57,7 +57,7 @@ public struct ArticlesUseCase: UseCase {
     ///    The `Future` that returns `SingleArticleResponse`.
     public func getArticle( slug: String, readingUserId: Int? ) -> Future<SingleArticleResponse> {
         conduit.articles(condition: .slug(slug), readingUserId: readingUserId, offset: nil, limit: nil)
-            .map { articles in
+            .flatMapThrowing { articles in
                 guard let article = articles.first else {
                     throw Error("Article by slug is not found.")
                 }

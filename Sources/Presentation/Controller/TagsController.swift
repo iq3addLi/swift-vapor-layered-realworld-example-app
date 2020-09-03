@@ -29,8 +29,8 @@ struct TagsController {
     ///    The `Future` that returns `Response`. 
     func getTags(_ request: Request) throws -> Future<Response> {
         useCase.allTags()
-            .map { response in
-                request.response( response, as: .json)
+            .flatMapThrowing { tags in
+                try Response( tags )
             }
     }
 }

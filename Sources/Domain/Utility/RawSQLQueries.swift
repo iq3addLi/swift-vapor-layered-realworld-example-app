@@ -24,7 +24,7 @@ public enum RawSQLQueries {}
 
 // MARK: Articles
 extension RawSQLQueries {
-    /*
+    
     /// Returns the query. Inquires about articles according to the argument conditions.
     /// - Parameters:
     ///   - condition: Information that shows what criteria to search for articles.
@@ -102,7 +102,7 @@ extension RawSQLQueries {
         )
         """
     }
-*/
+
     /// Returns the query. It deletes an article and related tags and favorite information.
     /// - Parameter slug: Article's slug for delete.
     /// - returns:
@@ -119,7 +119,7 @@ extension RawSQLQueries {
             Articles.slug = "\(slug)"
         """
     }
-/*
+
     // Insert is performed by SQLQueryBuilder
 }
 
@@ -287,7 +287,7 @@ extension RawSQLQueries {
             article = (select id from Articles where slug = "\(articleSlug)") and
             user = \(userId)
         """
-    }*/
+    }
 }
 
 // MARK: Tags

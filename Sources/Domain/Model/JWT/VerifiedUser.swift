@@ -65,6 +65,15 @@ extension VerifiedUser {
 
 import Vapor
 
+// MARK: Storageable
+
+extension VerifiedUser {
+    public struct Key: StorageKey{
+        public typealias Value = VerifiedUser
+    }
+}
+
+
 // MARK: Implementation as ServiceType
 
 /// Implementation as ServiceType.
@@ -72,14 +81,14 @@ import Vapor
 /// ### Extras
 /// When you want to relay a variable from Middleware to Request, you cannot make it a struct. To create a copy.
 /// Do not try to do the same with Service. To continue using the memory address registered with register().
-extension VerifiedUser: ServiceType {
-    
-    /// See `ServiceType`.
-    /// - throws:
-    ///    Conforms to protocol. It does not happen logically.
-    /// - returns:
-    ///    Instance with no value.
-    public static func makeService(for container: Container) throws -> Self {
-        return .init()
-    }
-}
+//extension VerifiedUser: ServiceType {
+//
+//    /// See `ServiceType`.
+//    /// - throws:
+//    ///    Conforms to protocol. It does not happen logically.
+//    /// - returns:
+//    ///    Instance with no value.
+//    public static func makeService(for container: Container) throws -> Self {
+//        return .init()
+//    }
+//}

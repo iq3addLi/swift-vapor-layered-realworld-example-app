@@ -31,21 +31,23 @@ struct AuthenticateThenExpandPayloadMiddleware: Middleware {
     ///    * JWT validation fails.
     /// - returns:
     ///    The `Future` that returns `Response`. 
-    func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
+    func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
         // Get Authentication: Token *
-        guard let token = request.http.headers.tokenAuthorization?.token else {
-            throw Abort( .badRequest )
+        guard let token = request.headers.tokenAuthorization?.token else {
+            return request.eventLoop.makeFailedFuture(Error("failed"))
         }
 
         // Verify then expand payload
-        let payload = try useCase.payload(by: token)
+        let payload: SessionPayload
+        do {
+            payload = try useCase.payload(by: token)
+        }catch{
+            return request.eventLoop.makeFailedFuture(Error("failed"))
+        }
 
-        // Add relay service value
-        let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
-        entity.id = payload.id
-        entity.username = payload.username
-        entity.token = token
-
-        return try next.respond(to: request)
+        // stored relay service value
+        request.storage[VerifiedUserEntity.Key] = VerifiedUserEntity(id: payload.id, username: payload.username, token: token)
+        
+        return next.respond(to: request)
     }
 }

@@ -16,15 +16,15 @@ public func applciationMain() throws {
     let useCase = ApplicationUseCase()
     
     // Controllers
-//    let articles = ArticlesController()
+    let articles = ArticlesController()
 //    let users = UsersController()
 //    let profiles = ProfilesController()
-//    let tags = TagsController()
+    let tags = TagsController()
 
     // Middlewares
 //    let authThenSearchUser = AuthenticateThenSearchUserMiddleware()
-//    let authThenExpandPayload = AuthenticateThenExpandPayloadMiddleware()
-//    let authOptional = AuthenticateOptionalMiddleware()
+    let authThenExpandPayload = AuthenticateThenExpandPayloadMiddleware()
+    let authOptional = AuthenticateOptionalMiddleware()
     
     // Application initialize
     try useCase.initialize()
@@ -42,25 +42,25 @@ public func applciationMain() throws {
 //        .init(method: .post, paths: ["profiles", String.parameter, "follow"], closure: profiles.follow, middlewares: [authThenExpandPayload]  ),
 //        .init(method: .delete, paths: ["profiles", String.parameter, "follow"], closure: profiles.unfollow, middlewares: [authThenExpandPayload]  ),
 //
-//        // Articles
-//        .init(method: .get, paths: ["articles"], closure: articles.getArticles, middlewares: [authOptional] ),
-//        .init(method: .post, paths: ["articles"], closure: articles.postArticle, middlewares: [authThenExpandPayload] ),
-//        .init(method: .get, paths: ["articles", String.parameter], closure: articles.getArticle, middlewares: [authOptional] ),
-//        .init(method: .delete, paths: ["articles", String.parameter], closure: articles.deleteArticle, middlewares: [authThenExpandPayload]  ),
-//        .init(method: .put, paths: ["articles", String.parameter], closure: articles.updateArticle, middlewares: [authThenExpandPayload] ),
-//        .init(method: .get, paths: ["articles", "feed"], closure: articles.getArticlesMyFeed, middlewares: [authThenExpandPayload] ),
-//
-//        // Comments
-//        .init(method: .get, paths: ["articles", String.parameter, "comments"], closure: articles.getComments, middlewares: [authOptional] ),
-//        .init(method: .post, paths: ["articles", String.parameter, "comments"], closure: articles.postComment, middlewares: [authThenExpandPayload] ),
-//        .init(method: .delete, paths: ["articles", String.parameter, "comments", Int.parameter], closure: articles.deleteComment, middlewares: [authThenExpandPayload] ),
-//
-//        // Favorites
-//        .init(method: .post, paths: ["articles", String.parameter, "favorite"], closure: articles.postFavorite, middlewares: [authThenExpandPayload] ),
-//        .init(method: .delete, paths: ["articles", String.parameter, "favorite"], closure: articles.deleteFavorite, middlewares: [authThenExpandPayload] ),
+        // Articles
+        .init(method: .get, paths: ["articles"], closure: articles.getArticles, middlewares: [authOptional] ),
+        .init(method: .post, paths: ["articles"], closure: articles.postArticle, middlewares: [authThenExpandPayload] ),
+        .init(method: .get, paths: ["articles", ":slug"], closure: articles.getArticle, middlewares: [authOptional] ),
+        .init(method: .delete, paths: ["articles", ":slug"], closure: articles.deleteArticle, middlewares: [authThenExpandPayload] ),
+        .init(method: .put, paths: ["articles", ":slug"], closure: articles.updateArticle, middlewares: [authThenExpandPayload] ),
+        .init(method: .get, paths: ["articles", "feed"], closure: articles.getArticlesMyFeed, middlewares: [authThenExpandPayload] ),
+
+        // Comments
+        .init(method: .get, paths: ["articles", ":slug", "comments"], closure: articles.getComments, middlewares: [authOptional] ),
+        .init(method: .post, paths: ["articles", ":slug", "comments"], closure: articles.postComment, middlewares: [authThenExpandPayload] ),
+        .init(method: .delete, paths: ["articles", ":slug", "comments", ":commentId"], closure: articles.deleteComment, middlewares: [authThenExpandPayload] ),
+
+        // Favorites
+        .init(method: .post, paths: ["articles", ":slug", "favorite"], closure: articles.postFavorite, middlewares: [authThenExpandPayload] ),
+        .init(method: .delete, paths: ["articles", ":slug", "favorite"], closure: articles.deleteFavorite, middlewares: [authThenExpandPayload] ),
 
         // Tags
-//        .init(method: .get, paths: ["tags"], closure: tags.getTags )
+        .init(method: .get, paths: ["tags"], closure: tags.getTags )
     ])
 
     // Application launching

@@ -5,6 +5,8 @@
 //  Created by iq3AddLi on 2019/10/03.
 //
 
+import Foundation
+
 /// The payload part of JWT.
 public struct SessionPayload {
 
@@ -34,7 +36,7 @@ public struct SessionPayload {
 }
 
 
-import JWT
+import JWTKit
 
 // MARK: Implementation as JWTPayload
 extension SessionPayload: JWTPayload {

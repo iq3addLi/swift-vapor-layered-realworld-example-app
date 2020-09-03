@@ -11,33 +11,34 @@ import SQLKit
 import MySQLNIO
 import FluentMySQLDriver
 
+
 // MARK: Functions In Domain
 
 /// Extensions required by Domain.
 extension MySQLDatabaseManager {
-    /*
+
     /// Returns the result of querying MySQL Database for Users.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter email: A email address. Information to identify the user.
     /// - returns:
     ///    The `Future` that returns `Users` or nil. Nil is when not found user.
-    func selectUser(on connection: MySQLConnection, email: String) -> Future<Users?> {
+    func selectUser(email: String) -> Future<Users?> {
         Users
-            .query(on: connection)
-            .filter(\Users.email == email)
+            .query(on: fluent)
+            .filter(\.$email == email)
             .all()
             .map { $0.first }
     }
-
+    
     /// Returns the result of querying MySQL Database for Users.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter id: A user id. Information to identify the user.
     /// - returns:
     ///    The `Future` that returns `Users` or nil. Nil is when not found user.
-    func selectUser(on connection: MySQLConnection, id: Int) -> Future<Users?> {
+    func selectUser(id: Int) -> Future<Users?> {
         Users
-            .query(on: connection)
-            .filter(\Users.id == id)
+            .query(on: fluent)
+            .filter(\.$id == id)
             .all()
             .map { $0.first }
     }
@@ -48,14 +49,14 @@ extension MySQLDatabaseManager {
     ///   - username: A user name. Information to identify the user.
     /// - returns:
     ///    The `Future` that returns `Users` or nil. Nil is when not found user.
-    func selectUser(on connection: MySQLConnection, username: String) -> Future<Users?> {
+    func selectUser(username: String) -> Future<Users?> {
         Users
-            .query(on: connection)
-            .filter(\Users.username == username)
+            .query(on: fluent)
+            .filter(\.$username == username)
             .all()
             .map { $0.first }
     }
-
+    
     /// Insert Users into MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter username: New user name to register.
@@ -64,9 +65,10 @@ extension MySQLDatabaseManager {
     /// - Parameter salt: Salt used when hashing.
     /// - returns:
     ///    The `Future` that returns `Users`.
-    func insertUser(on connection: MySQLConnection, name username: String, email: String, hash: String, salt: String) -> Future<Users> {
-        Users(id: nil, username: username, email: email, hash: hash, salt: salt)
-            .save(on: connection)
+    func insertUser(name username: String, email: String, hash: String, salt: String) -> Future<Users> {
+        let users = Users(id: nil, username: username, email: email, hash: hash, salt: salt)
+        return users.save(on: fluent)
+                    .map { users }
     }
 
     /// Update Users into MySQL Database.
@@ -77,34 +79,38 @@ extension MySQLDatabaseManager {
     /// - Parameter image: New image. No update if nil.
     /// - returns:
     ///    The `Future` that returns `Users`.
-    func updateUser(on connection: MySQLConnection, id: Int, email: String?, bio: String?, image: String?) -> Future<Users> {
-        Users
-            .query(on: connection)
-            .filter(\Users.id == id)
-            .first()
-            .map { users -> Users in
-                guard let user = users else {
-                    throw Error("Update process is failed. User not found.", status: 404)
+    func updateUser(id: Int, email: String?, bio: String?, image: String?) -> Future<Users> {
+        fluent.transaction { fluent in
+            Users
+                .query(on: fluent)
+                .filter(\.$id == id)
+                .first()
+                .flatMapThrowing { users -> Users in
+                    guard let user = users else {
+                        throw Error("Update process is failed. User not found.")
+                    }
+                    return user
                 }
-                return user
-            }
-            .flatMap { user in
-                if let email = email { user.email = email }
-                if let bio = bio { user.bio = bio }
-                if let image = image { user.image = image }
-                return user.update(on: connection )
-            }
+                .flatMap { [weak self] user in
+                    email.map{ user.email = $0 }
+                    bio.map{ user.bio = $0 }
+                    image.map{ user.image = $0 }
+                    return user.update(on: self!.fluent )
+                                .map{ user }
+                }
+        }
     }
-
+    
+    
     /// Query MySQL Database for Profile.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter username: A user name. Information to identify the user.
     /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     /// - returns:
     ///    The `Future` that returns `Profile` or nil. Nil is when not found user.
-    func selectProfile(on connection: MySQLConnection, username: String, readIt userId: Int? = nil) -> Future<Profile?> {
-        connection
-            .raw( RawSQLQueries.selectUser(name: username, follower: userId) )
+    func selectProfile(username: String, readIt userId: Int? = nil) -> Future<Profile?> {
+        sql
+            .raw( SQLQueryString( RawSQLQueries.selectUser(name: username, follower: userId)) )
             .all(decoding: UserWithFollowRow.self )
             .map { rows in
                 guard let row = rows.first else {
@@ -114,30 +120,37 @@ extension MySQLDatabaseManager {
             }
     }
 
+
     /// Insert follow into MySQL Database。.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter username: A user name of followee.
     /// - Parameter userId: A user id of follower.
     /// - returns:
     ///    The `Future` that returns `Profile`.
-    func insertFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile> {
+    func insertFollow(followee username: String, follower userId: Int ) -> Future<Profile> {
         var followee: Users?
-        return Users
-            .query(on: connection)
-            .filter(\Users.username == username)
-            .all()
-            .flatMap { rows -> Future<Follows> in
-                guard let row = rows.first else {
-                    throw Error("Insert process is failed. Followee is not found.", status: 404)
+        var follow: Follows?
+        return fluent.transaction { fluent in
+            Users
+                .query(on: fluent)
+                .filter(\.$username == username)
+                .all()
+                .flatMapThrowing { users -> Follows in
+                    guard let user = users.first else {
+                        throw Error("Insert process is failed. Followee is not found.")
+                    }
+                    followee = user
+                    return Follows(id: nil, followee: user.id!, follower: userId)
+                }.flatMap { aFollow -> Future<Void> in
+                    follow = aFollow
+                    return aFollow.save(on: fluent)
                 }
-                followee = row
-                return Follows(id: nil, followee: row.id!, follower: userId).save(on: connection)
-            }
-            .map { follow in
-                Profile(username: followee!.username, bio: followee!.bio, image: followee!.image, following: follow.followee == followee!.id )
-            }
+        }.map { _ in
+            Profile(username: followee!.username, bio: followee!.bio, image: followee!.image, following: follow!.followee == followee!.id )
+        }
     }
 
+    
     /// Delete follow into MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter username: A user name of followee.
@@ -146,61 +159,68 @@ extension MySQLDatabaseManager {
     ///  In MySQL implementation, no error occurs even if User does not exist. It is possible to confirm that User exists in advance.
     /// - returns:
     ///    The `Future` that returns `Profile`.
-    func deleteFollow(on connection: MySQLConnection, followee username: String, follower userId: Int ) -> Future<Profile> {
-        connection
-            .raw( RawSQLQueries.deleteFollows(followee: username, follower: userId) )
-            .all()
-            .flatMap { _ in
-                connection.raw( RawSQLQueries.selectUser(name: username, follower: userId) ).all(decoding: UserWithFollowRow.self)
-            }
-            .map { rows in
-                guard let user = rows.first else {
-                    throw Error("Delete process is failed. Followee is not found. Logically impossible.", status: 500)
+    func deleteFollow( followee username: String, follower userId: Int ) -> Future<Profile> {
+        fluent.transaction { fluent in
+            (fluent as! SQLDatabase)
+                .raw(SQLQueryString( RawSQLQueries.deleteFollows(followee: username, follower: userId) ))
+                .all(decoding: UserWithFollowRow.self )
+                .flatMapThrowing { rows in
+                    guard let user = rows.first else {
+                        throw Error("Delete process is failed. Followee is not found. Logically impossible.", status: 500)
+                    }
+                    return Profile(username: user.username, bio: user.bio, image: user.image, following: user.following ?? false)
                 }
-                return Profile(username: user.username, bio: user.bio, image: user.image, following: user.following ?? false)
-            }
+        }
     }
-
+    
     /// Insert favorite into MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter userId: A favorite userId.
     /// - Parameter articleSlug: A slug of favorite article.
     /// - returns:
     ///    The `Future` that returns `Article`.
-    func insertFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article> {
-        connection
-            .raw( RawSQLQueries.insertFavorites(for: articleSlug, by: userId ) )
-            .all()
-            .flatMap { _ in
-                connection.raw( RawSQLQueries.selectArticles(condition: .slug(articleSlug), readIt: userId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self)
-            }
-            .map { rows in
-                guard let row = rows.first else {
-                    throw Error("Insert process is failed. Article is not found. Logically impossible.", status: 500)
+    func insertFavorite(by userId: Int, for articleSlug: String) -> Future<Article> {
+        fluent.transaction { fluent in
+            (fluent as! MySQLDatabase)
+                .query( RawSQLQueries.insertFavorites(for: articleSlug, by: userId ) )
+                .flatMap { _ in
+                    (fluent as! SQLDatabase)
+                        .raw( SQLQueryString(RawSQLQueries.selectArticles(condition: .slug(articleSlug), readIt: userId)) )
+                        .all(decoding: ArticlesAndAuthorWithFavoritedRow.self)
+                }.flatMapThrowing { rows -> Article in
+                    guard let row = rows.first else {
+                        throw Error("Insert process is failed. Article is not found. Logically impossible.", status: 500)
+                    }
+                    return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
                 }
-                return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
-            }
+        }
     }
-
+    
+    
     /// Delete favorite into MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter userId: Id of the user to remove favorite.
     /// - Parameter articleSlug: Slug of article to remove favorite.
     /// - returns:
     ///    The `Future` that returns `Article`.
-    func deleteFavorite(on connection: MySQLConnection, by userId: Int, for articleSlug: String) -> Future<Article> {
-        connection
-            .raw( RawSQLQueries.deleteFavorites(for: articleSlug, by: userId ) )
-            .all()
-            .flatMap { _ in
-                connection.raw( RawSQLQueries.selectArticles(condition: .slug(articleSlug), readIt: userId) ).all(decoding: ArticlesAndAuthorWithFavoritedRow.self)
-            }
-            .map { rows in
-                guard let row = rows.first else {
-                    throw Error("Delete process is failed. Article is not found. Logically impossible.", status: 500)
+    func deleteFavorite(by userId: Int, for articleSlug: String) -> Future<Article> {
+        
+        fluent.transaction { fluent in
+            (fluent as! SQLDatabase)
+                .raw( SQLQueryString( RawSQLQueries.deleteFavorites(for: articleSlug, by: userId )) )
+                .all()
+                .flatMap { _ in
+                    (fluent as! SQLDatabase)
+                        .raw( SQLQueryString( RawSQLQueries.selectArticles(condition: .slug(articleSlug), readIt: userId)) )
+                        .all(decoding: ArticlesAndAuthorWithFavoritedRow.self)
                 }
-                return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
-            }
+                .flatMapThrowing { rows in
+                    guard let row = rows.first else {
+                        throw Error("Delete process is failed. Article is not found. Logically impossible.", status: 500)
+                    }
+                    return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
+                }
+        }
     }
 
     /// Queries MySQL Database for Comments on Articles.
@@ -209,9 +229,9 @@ extension MySQLDatabaseManager {
     /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     /// - returns:
     ///    The `Future` that returns `[Comment]`.
-    func selectComments(on connection: MySQLConnection, for articleSlug: String, readit userId: Int? = nil) -> Future<[Comment]> {
-        connection
-            .raw( RawSQLQueries.selectComments(for: articleSlug, readIt: userId) )
+    func selectComments(for articleSlug: String, readit userId: Int? = nil) -> Future<[Comment]> {
+        sql
+            .raw( SQLQueryString( RawSQLQueries.selectComments(for: articleSlug, readIt: userId)) )
             .all(decoding: CommentWithAuthorRow.self)
             .map { rows in
                 rows.map { comment in
@@ -220,6 +240,7 @@ extension MySQLDatabaseManager {
             }
     }
 
+    
     /// Insert Comments to Articles in MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter articleSlug: Slug of the article to comment.
@@ -227,45 +248,60 @@ extension MySQLDatabaseManager {
     /// - Parameter userId: Id of comment author.
     /// - returns:
     ///    The `Future` that returns `Comment`.
-    func insertComment(on connection: MySQLConnection, for articleSlug: String, body: String, author userId: Int) -> Future<Comment> {
-        var inserted: Comments?
-        return Articles
-            .query(on: connection)
-            .filter(\Articles.slug == articleSlug)
-            .all()
-            .flatMap { articles -> Future<Comments> in
-                guard let article = articles.first else {
-                    throw Error( "No article to comment was found", status: 404)
+    func insertComment(for articleSlug: String, body: String, author userId: Int) -> Future<Comment> {
+        fluent.transaction{ fluent -> Future<Comments> in
+            Articles
+                .query(on: fluent)
+                .filter( \.$slug == articleSlug )
+                .all()
+                .flatMapThrowing { articles in
+                    guard let article = articles.first else {
+                        throw Error( "No article to comment was found")
+                    }
+                    return Comments(body: body, author: userId, article: article.id! )
                 }
-                return Comments(body: body, author: userId, article: article.id! ).save(on: connection)
-            }
-            .flatMap { comment in
-                Comments.query(on: connection).filter(\Comments.id == comment.id!).all()
-            }
-            .flatMap { comments -> Future<Users> in
-                guard let comment = comments.first else {
-                    throw Error( "The comment was saved successfully, but fluent did not return a value.", status: 500)
+                .flatMap { (comments: Comments) in
+                    comments.save(on: fluent).flatMap{ _ -> Future<[Comments]> in
+                        Comments.query(on: fluent)
+                            .filter(\.$id == comments.id!)
+                            .all()
+                    }
                 }
-                inserted = comment
-                return comment.commentedUser.get(on: connection)
-            }
-            .map { author in
-                Comment(_id: inserted!.id!, createdAt: inserted!.createdAt!, updatedAt: inserted!.updatedAt!, body: inserted!.body, author: Profile(username: author.username, bio: author.bio, image: author.image, following: false /* Because It's own. */))
-            }
+                .flatMapThrowing { comments -> Comments in
+                    guard let comment = comments.first else {
+                        throw Error( "The comment was saved successfully, but fluent did not return a value. Done rollback.", status: 500)
+                    }
+                    return comment
+                }
+        }.map { comment in
+            Comment(_id: comment.id!,
+                    createdAt: comment.createdAt!,
+                    updatedAt: comment.updatedAt!,
+                    body: comment.body,
+                    author: Profile(
+                        username: comment.author.username,
+                        bio: comment.author.bio,
+                        image: comment.author.image,
+                        following: false /* Because It's own. */
+                )
+            )
+        }
     }
-
     /// Delete Comments in MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter commentId: ID of comment to remove.
     /// - returns:
     ///    The `Future` that returns `Void`.
-    func deleteComments(on connection: MySQLConnection, commentId: Int ) -> Future<Void> {
-        connection
-            .raw( RawSQLQueries.deleteComments( id: commentId ) )
+    func deleteComments(commentId: Int ) -> Future<Void> {
+        fluent.transaction { fluent in
+            (fluent as! SQLDatabase)
+            .raw( SQLQueryString(RawSQLQueries.deleteComments( id: commentId )) )
             .all()
             .map { _ in return }
+        }
     }
-
+    
+    
     /// Query MySQL Database for Articles.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter condition: Condition used to search for articles.
@@ -274,9 +310,9 @@ extension MySQLDatabaseManager {
     /// - Parameter limit: Limit to search results. nil means unspecified.
     /// - returns:
     ///    The `Future` that returns `[Article]`.
-    func selectArticles(on connection: MySQLConnection, condition: ArticleCondition, readIt userId: Int? = nil, offset: Int? = nil, limit: Int? = nil) -> Future<[Article]> {
-        connection
-            .raw( RawSQLQueries.selectArticles(condition: condition, readIt: userId, offset: offset, limit: limit) )
+    func selectArticles( condition: ArticleCondition, readIt userId: Int? = nil, offset: Int? = nil, limit: Int? = nil) -> Future<[Article]> {
+        sql
+            .raw( SQLQueryString( RawSQLQueries.selectArticles(condition: condition, readIt: userId, offset: offset, limit: limit) ) )
             .all(decoding: ArticlesAndAuthorWithFavoritedRow.self)
             .map { rows in
                 rows.map { row in
@@ -296,29 +332,34 @@ extension MySQLDatabaseManager {
     /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     /// - returns:
     ///    The `Future` that returns `Article`.
-    func insertArticle(on connection: MySQLConnection, author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article> {
-
-        let eventLoop = connection.eventLoop
-        return Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
-            .save(on: connection)
-            .flatMap { article -> Future<Void> in
-                let insertTags = tags.map { Tags(id: nil, article: article.id!, tag: $0 ).save(on: connection).map { _ in return } }
-                switch insertTags.serializedFuture() {
+    func insertArticle( author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article> {
+        fluent.transaction { fluent in
+            let article = Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
+            return article
+                .save(on: fluent)
+                .flatMap { _ -> Future<Void> in
+                    let insertTags = tags.map {
+                        Tags(id: nil, article: article.id!, tag: $0 )
+                            .save(on: fluent)
+                            .map { _ in return }
+                    }
+                    switch insertTags.serializedFuture() {
                     case .some(let futures): return futures
-                    case .none: return eventLoop.newSucceededFuture(result: Void())
+                    case .none: return fluent.eventLoop.makeSucceededFuture(Void())
+                    }
                 }
-            }
-            .flatMap { [weak self] _ -> Future<[Article]> in
-                self!.selectArticles(on: connection, condition: .slug(slug), readIt: userId )
-            }
-            .map { articles -> Article in
-                guard let article = articles.first else {
-                    throw Error( "The article was saved successfully, but fluent did not return a value.", status: 500)
+                .flatMap { [weak self] _ -> Future<[Article]> in
+                    self!.selectArticles(condition: .slug(slug) )
                 }
-                return article
-            }
+                .flatMapThrowing { articles in
+                    guard let article = articles.first else {
+                        throw Error( "The article was saved successfully, but fluent did not return a value.", status: 500)
+                    }
+                    return article
+                }
+        }
     }
- 
+
     /// Update Articles into MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter slug: Slug of article to be updated.
@@ -329,61 +370,69 @@ extension MySQLDatabaseManager {
     /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     /// - returns:
     ///    The `Future` that returns `Article`.
-    func updateArticle(on connection: MySQLConnection, slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article> {
+    func updateArticle(slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article> {
+        
+        let fluent = self.fluent
+        
         // Define update article process
-        let future = Articles.query(on: connection)
-            .filter(\Articles.slug == slug)
-            .all()
-            .flatMap { rows -> Future<Articles> in
-                guard let target = rows.first else {
-                    throw Error( "Update process is failed. Article is not found. Logically impossible.", status: 500)
+        let updating = Articles
+                .query(on: fluent)
+                .filter(\.$slug == slug)
+                .all()
+                .flatMapThrowing { rows -> Articles in
+                    guard let row = rows.first else {
+                        throw Error( "Update process is failed. Article is not found. Logically impossible.", status: 500)
+                    }
+                    return row
                 }
+                .flatMap { article -> EventLoopFuture<Articles> in
+                    title.map { article.title = $0 }
+                    description.map { article.description = $0 }
+                    body.map { article.body = $0 }
 
-                // Update Article
-                if let t = title { target.title = t }
-                if let d = description { target.description = d }
-                if let b = body { target.body = b }
-
-                return target.update(on: connection)
-            }
-
+                    return article
+                        .update(on: fluent)
+                        .map{ article }
+                }
+        
         // Define finishing process
-        let getArticlesClosure: (Any) -> Future<[Article]> = { [weak self](_) -> Future<[Article]> in
-            self!.selectArticles(on: connection, condition: .slug(slug), readIt: userId)
+        let getArticles: () -> Future<[Article]> = { [weak self] in
+            self!.selectArticles(condition: .slug(slug), readIt: userId)
         }
-        let pickArticleClosure: ([Article]) throws -> Article = { articles in
+        let pickArticle: ([Article]) throws -> Article = { articles in
             guard let article = articles.first else {
                 throw Error("Update process is successed. But article is not found. Logically impossible.", status: 500)
             }
             return article
         }
-
-        // has tagList?
-        if let tagList = tagList {
-            // Update Tags
-            let eventLoop = future.eventLoop
-            var articleId: Int?
-            return future
-                .flatMap { article -> EventLoopFuture<[Tags]> in
-                    articleId = article.id
-                    return try article.tags.query(on: connection).all()
-                }
-                .flatMap { tags -> EventLoopFuture<Void> in
-                    let deleteFutures = tags.filter { tagList.contains($0.tag) == false }
-                                            .map { $0.delete(on: connection) }
-                    let saveFutures = tagList.filter { tags.map { $0.tag }.contains($0) == false }
-                                            .map { Tags(id: nil, article: articleId!, tag: $0).save(on: connection).transform(to: Void()) }
-                    return (deleteFutures + saveFutures).serializedFuture() ?? eventLoop.newSucceededFuture(result: Void())
-                }
-                .flatMap( getArticlesClosure )
-                .map( pickArticleClosure )
-        } else {
-            return future
-                .flatMap( getArticlesClosure )
-                .map( pickArticleClosure )
+        
+        // case of no tags updating
+        guard let tagStrings = tagList else {
+            return fluent.transaction{ _ in updating }
+                .map{ _ in return }
+                .flatMap( getArticles )
+                .flatMapThrowing( pickArticle )
         }
+
+        // case of has tags updating
+        let eventLoop = updating.eventLoop
+        return fluent.transaction{ fluent in
+            updating
+                .flatMap { articles in
+                    let tags = articles.tags
+                    let deletings = tags
+                                        .filter { tagStrings.contains($0.tag) == false }
+                                        .map { $0.delete(on: fluent) }
+                    let insertings = tagStrings
+                                        .filter { tags.map { $0.tag }.contains($0) == false }
+                                        .map { Tags(id: nil, article: articles.id!, tag: $0).save(on: fluent) }
+                    return (deletings + insertings).serializedFuture() ?? eventLoop.makeSucceededFuture(Void())
+                }
+            }
+            .flatMap( getArticles )
+            .flatMapThrowing( pickArticle )
     }
-     */
+    
     /// Delete Articles in MySQL Database.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter slug: Slug of article to be deleted.

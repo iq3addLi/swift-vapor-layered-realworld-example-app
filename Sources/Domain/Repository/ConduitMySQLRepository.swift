@@ -6,9 +6,12 @@
 //
 
 import Infrastructure
+
 import CryptoSwift
 import SwiftSlug
 import NIO
+import MySQLNIO
+import Vapor
 
 /// ConduitRepository implemented in MySQL.
 ///
@@ -32,16 +35,18 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - throws:
     ///    This does not happen in this implementation.
     func ifneededPreparetion() throws {
-//        try database.instantCommunication { connection in
-//             Articles.create(on: connection)
-//                .flatMap { Comments.create(on: connection) }
-//                .flatMap { Favorites.create(on: connection) }
-//                .flatMap { Follows.create(on: connection) }
-//                .flatMap { Tags.create(on: connection) }
-//                .flatMap { Users.create(on: connection) }
-//            }.wait()
+        try database.fluent.transaction { fluent -> EventLoopFuture<Void> in
+            let database = fluent as! MySQLDatabase
+            return Articles.create(on: database)
+                .flatMap { Comments.create(on: database) }
+                .flatMap { Favorites.create(on: database) }
+                .flatMap { Follows.create(on: database) }
+                .flatMap { Tags.create(on: database) }
+                .flatMap { Users.create(on: database) }
+        }
+        .wait()
     }
-    /*
+    
     // MARK: Validation
     
     /// Use Vapor validation.
@@ -56,7 +61,7 @@ struct ConduitMySQLRepository: ConduitRepository {
     ///    If any problem is found, throw a `ValidationError`.
     /// - returns:
     ///    The `Future` that returns `Void`. If the process was successful, no problem was found.
-    func validate(username: String, email: String, password: String) throws -> Future<Void> {
+    func validate(username: String, email: String, password: String) -> Future<Void> {
         let validation = Validation()
         return validation.reduce([
             validation.blank(key: "username", value: username),
@@ -68,14 +73,14 @@ struct ConduitMySQLRepository: ConduitRepository {
             database.isUnique(email: email),
             validation.blank(key: "password", value: password),
             validation.count(8..., key: "password", value: password)
-        ]).map { issues in
+        ]).flatMapThrowing { issues in
             if issues.count > 0 {
                 throw issues.generateError()
             }
         }
-        MultiThreadedEventLoopGroup.currentEventLoop!.future()
     }
 
+ 
     // MARK: Query for Database
     
     /// Implementation of user registration using MySQL.
@@ -110,8 +115,9 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - returns:
     ///    The `Future` that returns `(Int, User)`. `Int` is user's id.
     func authUser(email: String, password: String) -> Future<(Int, User)> {
-        database.selectUser(email: email)
-            .map { userOrNil -> Users in
+        database
+            .selectUser(email: email)
+            .flatMapThrowing{ userOrNil -> Users in
                 guard let user = userOrNil else {
                     throw Error( "User not found.", status: 404)
                 }
@@ -131,10 +137,11 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - returns:
     ///    The `Future` that returns `(Int, User)`. `Int` is user's id.
     func searchUser(id: Int) -> Future<(Int, User)> {
-        database.selectUser(id: id)
-            .map { userOrNil in
+        database
+            .selectUser(id: id)
+            .flatMapThrowing { userOrNil in
                 guard let user = userOrNil else {
-                    throw Error( "User not found.", status: 404) // Serious
+                    throw Error( "User not found.") // Serious
                 }
                 return ( user.id!, User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image) )
             }
@@ -150,7 +157,8 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - returns:
     ///    The `Future` that returns `User`.
     func updateUser(id: Int, email: String?, username: String?, bio: String?, image: String? ) -> Future<User> {
-        database.updateUser(id: id, email: email, bio: bio, image: image)
+        database
+            .updateUser(id: id, email: email, bio: bio, image: image)
             .map { user in
                 User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image)
             }
@@ -163,10 +171,11 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - returns:
     ///    The `Future` that returns `Profile`.
     func searchProfile(username: String, readingUserId: Int?) -> Future<Profile> {
-        database.selectProfile(username: username, readIt: readingUserId)
-            .map { profileOrNil in
+        database
+            .selectProfile(username: username, readIt: readingUserId)
+            .flatMapThrowing { profileOrNil in
                 guard let profile = profileOrNil else {
-                    throw Error( "User not found.", status: 404)
+                    throw Error( "User not found.")
                 }
                 return profile
             }
@@ -273,10 +282,13 @@ struct ConduitMySQLRepository: ConduitRepository {
                 try title.convertedToSlug() + "-" + .random(length: 8)
             }
             .flatMap { slug in
-                self.database.insertArticle(author: author, title: title, slug: slug, description: discription, body: body, tags: { tagList in
-                    // Trim whitespace, camecased and remove duplicate element
-                    Array( Set(tagList.map { $0.camelcased }))
-                }(tagList))
+                self.database.insertArticle(
+                    author: author, title: title, slug: slug, description: discription, body: body,
+                    tags: { tagList in
+                        // Trim whitespace, camecased and remove duplicate element
+                        Array( Set(tagList.map { $0.camelcased }))
+                    }(tagList)
+                )
             }
     }
 
@@ -299,12 +311,15 @@ struct ConduitMySQLRepository: ConduitRepository {
     /// - returns:
     ///    The `Future` that returns `Article`.
     func updateArticle( slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article> {
-        database.updateArticle(slug: slug, title: title, description: description, body: body, tagList: tagList != nil ? { tagList in
-            // Trim whitespace, camecased and remove duplicate element
-            Array( Set(tagList.map { $0.camelcased }))
-        }(tagList!) : nil, readIt: userId)
+        database.updateArticle(
+            slug: slug, title: title, description: description, body: body,
+            tagList: tagList != nil ? { tagList in
+                        // Trim whitespace, camecased and remove duplicate element
+                        Array( Set(tagList.map { $0.camelcased }))
+                    }(tagList!) : nil,
+            readIt: userId
+        )
     }
-    */
 
     /// Implementation of get tags using MySQL.
     /// - returns:
