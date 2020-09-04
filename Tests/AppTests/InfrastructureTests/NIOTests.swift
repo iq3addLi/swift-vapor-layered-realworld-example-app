@@ -57,23 +57,23 @@ final class NIOTests: XCTestCase {
     func testPromise() throws {
         // Create EventLoopGroup
         let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
-        
+
         let promises = [ "Hello", "World", "!!" ].map { string -> EventLoopPromise<String> in
             let eventloop = evGroup.next()
-            let promise = eventloop.newPromise(String.self)
+            let promise = eventloop.makePromise(of: String.self)
             eventloop.execute {
-                promise.succeed(result: string)
+                promise.succeed(string)
             }
             return promise
         }
-        let future = EventLoopFuture.reduce("", promises.map{ $0.futureResult }, eventLoop: evGroup.next()) { (concated: String, text: String) in
+        let future = EventLoopFuture.reduce("", promises.map{ $0.futureResult }, on: evGroup.next()) { (concated: String, text: String) in
             return concated + text
         }
         let result = try future.wait()
-        
+
         // Examining
         XCTAssertTrue(result == "HelloWorld!!")
-        
+
         try evGroup.syncShutdownGracefully()
     }
     
@@ -91,11 +91,11 @@ final class NIOTests: XCTestCase {
             return "!!"
         }
         let eventloop = evGroup.next()
-        let succeeded = eventloop.newSucceededFuture(result: "")
+        let succeeded = eventloop.makeSucceededFuture("")
         
         // Note: that all futures are executed when fold and reduce are called.
         let future = succeeded.fold([future1, future2, future3]) { (concated, text) -> EventLoopFuture<String> in
-            eventloop.newSucceededFuture(result: concated + text)
+            eventloop.makeSucceededFuture(concated + text)
         }
         let result = try future.wait() // Note: Only the combiningFunction is executed here
         
@@ -118,7 +118,7 @@ final class NIOTests: XCTestCase {
         let future3 = evGroup.next().submit {
             return "!!"
         }
-        let future = EventLoopFuture.reduce("", [future1, future2, future3], eventLoop: evGroup.next()) { (concated: String, text: String) in
+        let future = EventLoopFuture.reduce("", [future1, future2, future3], on: evGroup.next()) { (concated: String, text: String) in
             return concated + text
         }
         let result = try future.wait()
@@ -145,7 +145,7 @@ final class NIOTests: XCTestCase {
         }
         
         // When all finished future
-        let future = EventLoopFuture.whenAll([future1, future2, future3], eventLoop: evGroup.next()).map { strings in
+        let future = EventLoopFuture.whenAllSucceed([future1, future2, future3], on: evGroup.next()).map { strings in
             return strings.joined()
         }
         
@@ -174,7 +174,7 @@ final class NIOTests: XCTestCase {
         }
         
         // When all finished future
-        let future = EventLoopFuture.whenAll([future1, future2, future3], eventLoop: evGroup.next())
+        let future = EventLoopFuture.whenAllSucceed([future1, future2, future3], on: evGroup.next())
         
         // run
         do{

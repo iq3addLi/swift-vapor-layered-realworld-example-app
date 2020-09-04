@@ -20,9 +20,7 @@ final class CryptoTests: XCTestCase {
         // Calculate hash
         let bytes = try PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, keyLength: 32, variant: .sha256).calculate()
         let newHash = bytes.toHexString()
-//        guard let newHash = String(bytes: bytes, encoding: .utf8) else{
-//            XCTFail(); return
-//        }
+        
         // Examing
         XCTAssertTrue(newHash == hash)
     }
