@@ -17,12 +17,12 @@ public func applciationMain() throws {
     
     // Controllers
     let articles = ArticlesController()
-//    let users = UsersController()
+    let users = UsersController()
     let profiles = ProfilesController()
     let tags = TagsController()
 
     // Middlewares
-//    let authThenSearchUser = AuthenticateThenSearchUserMiddleware()
+    let authThenSearchUser = AuthenticateThenSearchUserMiddleware()
     let authThenExpandPayload = AuthenticateThenExpandPayloadMiddleware()
     let authOptional = AuthenticateOptionalMiddleware()
     
@@ -32,11 +32,11 @@ public func applciationMain() throws {
     // Application routing
     useCase.routing(collections: [
         // User and Authentication
-//        .init(method: .post, paths: ["users"], closure: users.postUser ),
-//        .init(method: .post, paths: ["users", "login"], closure: users.login ),
-//        .init(method: .get, paths: ["user"], closure: users.getUser, middlewares: [authThenSearchUser]  ),
-//        .init(method: .put, paths: ["user"], closure: users.updateUser, middlewares: [authThenExpandPayload] ),
-//
+        .init(method: .post, paths: ["users"], closure: users.postUser ),
+        .init(method: .post, paths: ["users", "login"], closure: users.login ),
+        .init(method: .get, paths: ["user"], closure: users.getUser, middlewares: [authThenSearchUser]  ),
+        .init(method: .put, paths: ["user"], closure: users.updateUser, middlewares: [authThenExpandPayload] ),
+
         // Profile
         .init(method: .get, paths: ["profiles", ":username"], closure: profiles.getProfile, middlewares: [authOptional]  ),
         .init(method: .post, paths: ["profiles", ":username", "follow"], closure: profiles.follow, middlewares: [authThenExpandPayload]  ),

@@ -27,13 +27,13 @@ struct UsersController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func postUser(_ request: Request) throws -> Future<Response> {
-        let useCase = self.useCase
-        return try request.content.decode(json: NewUserRequest.self, using: .custom(dates: .iso8601))
-            .flatMap { newUserRequest -> EventLoopFuture<UserResponse> in
-                try useCase.register(user: newUserRequest.user)
-            }
-            .map { response in
-                request.response( response, as: .json)
+        
+        // Get parameter by body
+        let req = try request.content.decode(NewUserRequest.self, using: JSONDecoder.custom(dates: .iso8601))
+        
+        return try useCase.register(user: req.user)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
@@ -44,14 +44,13 @@ struct UsersController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func login(_ request: Request) throws -> Future<Response> {
-        let useCase = self.useCase
-        return try request.content.decode(json: LoginUserRequest.self, using: .custom(dates: .iso8601))
-            .flatMap { req in
-                // Log-in user
-                useCase.login(form: req.user)
-            }
-            .map { response in
-                request.response( response, as: .json)
+        
+        // Get parameter by body
+        let req = try request.content.decode(LoginUserRequest.self, using: JSONDecoder.custom(dates: .iso8601))
+        
+        return useCase.login(form: req.user)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
@@ -64,10 +63,16 @@ struct UsersController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func getUser(_ request: Request) throws -> Future<Response> {
-        let user = try request.privateContainer.make(VerifiedUser.self).user
+
+        // Get relayed parameter
+        guard let user = request.storage[VerifiedUser.Key.self]?.user else {
+            fatalError("Middleware not passed authenticated user.") // Require
+        }
+        
         let response = UserResponse(user: user)
+        
         // Create response
-        return request.response( response, as: .json).encode(status: .ok, for: request)
+        return request.eventLoop.makeSucceededFuture( try Response( response ) )
     }
 
     /// PUT /user
@@ -79,19 +84,18 @@ struct UsersController {
     /// - returns:
     ///    The `Future` that returns `Response`. 
     func updateUser(_ request: Request) throws -> Future<Response> {
-
+        
+        // Get parameter by body
+        let req = try request.content.decode(UpdateUserRequest.self, using: JSONDecoder.custom(dates: .iso8601))
+        
         // Get relayed parameter
-        let user = (try request.privateContainer.make(VerifiedUserEntity.self))
+        guard let user = request.storage[VerifiedUserEntity.Key.self] else {
+            fatalError("Middleware not passed authenticated user.") // Require
+        }
 
-        // Parse json body
-        let useCase = self.useCase
-        return try request.content.decode(json: UpdateUserRequest.self, using: .custom(dates: .iso8601))
-            .flatMap { req in
-                // Verify then update user
-                useCase.update(userId: user.id!, token: user.token!, updateUser: req.user )
-            }
-            .map { response in
-                request.response( response, as: .json)
+        return useCase.update(userId: user.id!, token: user.token!, updateUser: req.user )
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 

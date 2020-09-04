@@ -34,8 +34,7 @@ public struct UsersUseCase: UseCase {
         let jwt = self.jwt
         // Search User
         return conduit.authUser(email: form.email, password: form.password)
-            .map { tuple -> UserResponse in
-                let (id, user) = tuple
+            .flatMapThrowing { id, user -> UserResponse in
                 // Issued JWT
                 let token = try jwt.issueJWT(id: id, username: user.username)
                 // Return response
@@ -58,8 +57,7 @@ public struct UsersUseCase: UseCase {
         return try conduit.validate(username: form.username, email: form.email, password: form.password)
             .flatMap {
                 conduit.registerUser(name: form.username, email: form.email, password: form.password)
-            .map { tuple -> UserResponse in  /* MEMO: Closure tuple parameter '(Int, User)' does not support destructuring when Swift 5.1 */
-                let (id, user) = tuple
+            .flatMapThrowing { id, user -> UserResponse in
                 // Issued JWT
                 let token = try jwt.issueJWT(id: id, username: user.username)
                 // Return response

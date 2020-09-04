@@ -38,8 +38,7 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
         // Verify then search user
         do{
             return try useCase.user(by: token)
-            .flatMap { tuple in
-                let (id, user) = tuple
+            .flatMap { id, user in
 
                 // Add ralay service value
                 request.storage[VerifiedUser.Key] = VerifiedUser(
