@@ -9,7 +9,7 @@
 public struct ArticlesUseCase: UseCase {
     
     // MARK: Properties
-    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository.shared
 
     // MARK: Initializer
     

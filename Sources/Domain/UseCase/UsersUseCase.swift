@@ -11,7 +11,7 @@ public struct UsersUseCase: UseCase {
     // MARK: Properties
     
     /// See `ConduitMySQLRepository`.
-    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository.shared
     
     /// See `JWTWithVaporRepository`.
     private let jwt: JWTRepository = JWTWithVaporRepository()

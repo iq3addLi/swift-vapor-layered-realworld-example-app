@@ -19,15 +19,13 @@ import Vapor
 /// An instance is created for each UseCase, which is obviously useless. It's a good idea to make it a singleton, but it is left as it is because the property has no side effects.
 struct ConduitMySQLRepository: ConduitRepository {
 
+    static var shared = ConduitMySQLRepository()
+    private init() {}
+    
     // MARK: Properties
     
     /// Use this to instruct the database.
-    let database = MySQLDatabaseManager(
-       hostname: "127.0.0.1",
-       username: "mysqluser",
-       password: "mysqluserpass",
-       database: "mysqldatabase"
-   )
+    let database = MySQLDatabaseManager.environmental
 
     // MARK: Preparetion
     

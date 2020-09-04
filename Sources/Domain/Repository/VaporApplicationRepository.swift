@@ -13,10 +13,18 @@ class VaporApplicationRepository: RESTApplicationRepository {
     // MARK: Properties
 
     /// See `Vapor.Application`.
-    lazy private var application: Vapor.Application = {
-       Application()
-    }()
-
+    private let application: Vapor.Application
+    
+    
+    init(){
+        // reply envronments
+        do{
+            let env = try Environment.detect()
+            application = Application(env)
+        }catch{
+            fatalError("Environment not found. Specify the environment with --env.")
+        }
+    }
     
     // MARK: Functions
     
@@ -26,21 +34,21 @@ class VaporApplicationRepository: RESTApplicationRepository {
     /// * Configure CORS to respond from different domains.
     /// * Configure `ErrorMidlleware` to convert an error that occurred in the controller to a response that conforms to Realworld specifications.
     /// * Set `ServiceType` to relay from Middleware to Controller.
-    func initalize() {
-
+    func initialize() throws{
+        
         // Set custom CORS middleware
         let corsConfig = CORSMiddleware.Configuration(
             allowedOrigin: .all,
             allowedMethods: [.GET, .POST, .PUT, .OPTIONS, .DELETE],
             allowedHeaders: [.accept, .authorization, .contentType, .origin, .xRequestedWith]
         )
-        let corsMiddleware = CORSMiddleware(configuration: corsConfig)
+        let cors = CORSMiddleware(configuration: corsConfig)
 
         // Set custom error handler
-        let errorHandleMiddleware = ErrorMiddleware(errorToResponse)
+        let errorHandle = ErrorMiddleware( errorToResponse )
         
-        application.middleware.use( corsMiddleware )
-        application.middleware.use( errorHandleMiddleware )
+        application.middleware.use( cors )
+        application.middleware.use( errorHandle )
     }
     
     /// Vapor's Router initialization process.
@@ -67,7 +75,14 @@ class VaporApplicationRepository: RESTApplicationRepository {
     ///   - port: Server port number. ex. `80`.
     /// - throws:
     ///    See `Application.init(config:environment:services:)`.
-    func applicationLaunch(hostname: String, port: Int) throws {
+    func applicationLaunch() throws {
+        
+        // read hostname and port from environment
+        guard
+            let hostname = Environment.get("HOSTNAME"),
+            let portStr = Environment.get("PORT"), let port = Int(portStr) else {
+            throw Error("Your environment not contain HOSTNAME or PORT.")
+        }
         
         // Set server config
         application.http.server.configuration = HTTPServer.Configuration(
@@ -90,34 +105,38 @@ class VaporApplicationRepository: RESTApplicationRepository {
     ///    A `Vapor.Response` that converted the error that reached this method according to the specifications of the project
     private func errorToResponse( request: Request, error: Swift.Error ) -> Response {
 
-//        do {
-//            // inspect the error type
-//            switch error {
-//            case let abort as AbortError: return try abort.toResponse(for: request)
-//            case let validation as ValidationError: return try validation.toResponse(for: request)
-//            case let debuggable as Debuggable: return try debuggable.toResponse(for: request)
-//            case let domainError as Domain.Error: return try domainError.toResponse(for: request)
-//            default:
-//                // not an abort error, and not debuggable or in dev mode
-//                // just deliver a generic 500 to avoid exposing any sensitive error info
-//                let response = request.response(http: .init(status: .internalServerError, headers: [:]))
-//                response.http.body = try HTTPBody(data: JSONEncoder().encode(GenericErrorModel(errors: GenericErrorModelErrors(body: [error.localizedDescription]))))
-//                response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
-//                return response
-//            }
-//        } catch {
-//            let response = request.response(http: .init(status: .internalServerError, headers: [:]))
-//            response.http.body = HTTPBody(string: "Oops: \(error)")
-//            response.http.headers.replaceOrAdd(name: .contentType, value: "text/plain; charset=utf-8")
-//            return response
-//        }
+        do {
+            // inspect the error type
+            switch error {
+            case let abort as AbortError:
+                return try abort.toResponse()
+            case let validation as ValidationError:
+                return try validation.toResponse()
+            case let domainError as Domain.Error:
+                return try domainError.toResponse()
+            default:
+                // not an abort error, and not debuggable or in dev mode
+                // just deliver a generic 500 to avoid exposing any sensitive error info
+                return Response(
+                    status: .internalServerError,
+                    headers: .jsonType,
+                    body: try Response.Body( GenericErrorModelErrors(body: [error.localizedDescription]) )
+                )
+            }
+        } catch {
+            return Response(
+                status: .internalServerError,
+                headers: .plainTextType,
+                body: .init(string: "Oops😣: \(error)")
+            )
+        }
+    }
+}
 
-        // Dummy
-        Response(
-            status: .ok,
-            version: .init(major: 2, minor: 0),
-            headers: .init([("Content-Type", "text/plain; charset=utf-8")]),
-            body: .init(string: "This response is dummy😣")
-        )
+
+extension Response.Body{
+    
+    init<T>(_ encodable: T) throws where T: Encodable{
+        self.init(data: try JSONEncoder().encode(encodable))
     }
 }

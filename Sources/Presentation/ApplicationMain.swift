@@ -7,13 +7,16 @@
 
 import Domain
 
+/// The use case for application
+private let useCase: ApplicationUseCase = ApplicationUseCase()
+
 /// This application is start here🏃‍♂️
 /// - throws:
 ///  See `ApplicationUseCase.initialize()` and `ApplicationUseCase.launch()`
 public func applciationMain() throws {
     
-    // The use case for application
-    let useCase = ApplicationUseCase()
+    // Application initialize
+    try useCase.initialize()
     
     // Controllers
     let articles = ArticlesController()
@@ -25,9 +28,6 @@ public func applciationMain() throws {
     let authThenSearchUser = AuthenticateThenSearchUserMiddleware()
     let authThenExpandPayload = AuthenticateThenExpandPayloadMiddleware()
     let authOptional = AuthenticateOptionalMiddleware()
-    
-    // Application initialize
-    try useCase.initialize()
     
     // Application routing
     useCase.routing(collections: [
@@ -63,6 +63,6 @@ public func applciationMain() throws {
         .init(method: .get, paths: ["tags"], closure: tags.getTags )
     ])
 
-    // Application launching
+    // Application launching (hostname and port from .env)
     try useCase.launch()
 }

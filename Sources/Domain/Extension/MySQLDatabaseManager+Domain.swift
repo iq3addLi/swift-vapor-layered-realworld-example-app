@@ -7,6 +7,7 @@
 
 import Infrastructure
 
+import Foundation
 import SQLKit
 import MySQLNIO
 import FluentMySQLDriver
@@ -17,6 +18,27 @@ import FluentMySQLDriver
 /// Extensions required by Domain.
 extension MySQLDatabaseManager {
 
+    /// Standard global instance of this class.
+    public static var environmental: Self {
+        guard
+            let hostname = ProcessInfo.processInfo.environment["MYSQL_HOSTNAME"],
+            let username = ProcessInfo.processInfo.environment["MYSQL_USERNAME"],
+            let password = ProcessInfo.processInfo.environment["MYSQL_PASSWORD"],
+            let database = ProcessInfo.processInfo.environment["MYSQL_DATABASE"]
+        else {
+            fatalError("""
+            The environment variable for MySQL must be set to start the application.
+            "MYSQL_HOSTNAME", "MYSQL_USERNAME", "MYSQL_PASSWORD" and "MYSQL_DATABASE".
+            """)
+        }
+        return Self(
+            hostname: hostname,
+            username: username,
+            password: password,
+            database: database
+        )
+    }
+    
     /// Returns the result of querying MySQL Database for Users.
     /// - Parameter connection: A valid connection to MySQL.
     /// - Parameter email: A email address. Information to identify the user.
@@ -191,7 +213,8 @@ extension MySQLDatabaseManager {
                     guard let row = rows.first else {
                         throw Error("Insert process is failed. Article is not found. Logically impossible.", status: 500)
                     }
-                    return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false))
+                    return Article(slug: row.slug, title: row.title, _description: row.description, body: row.body, tagList: row.tagCSV?.components(separatedBy: ",") ?? [], createdAt: row.createdAt, updatedAt: row.updatedAt, favorited: row.favorited ?? false, favoritesCount: row.favoritesCount, author: Profile(username: row.username, bio: row.bio, image: row.image, following: row.following ?? false)
+                    )
                 }
         }
     }

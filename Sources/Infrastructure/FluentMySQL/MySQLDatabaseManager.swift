@@ -12,17 +12,6 @@ import FluentMySQLDriver
 public final class MySQLDatabaseManager {
     
     // MARK: Properties
-    
-    /// Standard global instance of this class.
-    public static var `default` = {
-        MySQLDatabaseManager(
-            hostname: "localhost",
-            username: "root",
-            password: "root",
-            database: "database"
-        )
-    }()
-    
     private let databases: Databases
     
     private let databaseId: DatabaseID
@@ -77,7 +66,8 @@ public final class MySQLDatabaseManager {
 extension MySQLDatabaseManager{
     
     public var fluent: FluentKit.Database {
-        guard let database = databases.database(databaseId, logger: logger, on: databases.eventLoopGroup.next()) else{
+        let eventLoop = databases.eventLoopGroup.next()
+        guard let database = databases.database(databaseId, logger: logger, on: eventLoop) else{
             fatalError("Database create is failed.")
         }
         return database

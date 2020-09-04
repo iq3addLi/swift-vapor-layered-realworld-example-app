@@ -11,7 +11,7 @@ public struct TagsUseCase: UseCase {
     // MARK: Properties
     
     /// See `ConduitMySQLRepository`.
-    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository.shared
 
     
     // MARK: Initializer
