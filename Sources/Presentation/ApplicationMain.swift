@@ -18,7 +18,7 @@ public func applciationMain() throws {
     // Controllers
     let articles = ArticlesController()
 //    let users = UsersController()
-//    let profiles = ProfilesController()
+    let profiles = ProfilesController()
     let tags = TagsController()
 
     // Middlewares
@@ -37,11 +37,11 @@ public func applciationMain() throws {
 //        .init(method: .get, paths: ["user"], closure: users.getUser, middlewares: [authThenSearchUser]  ),
 //        .init(method: .put, paths: ["user"], closure: users.updateUser, middlewares: [authThenExpandPayload] ),
 //
-//        // Profile
-//        .init(method: .get, paths: ["profiles", String.parameter], closure: profiles.getProfile, middlewares: [authOptional]  ),
-//        .init(method: .post, paths: ["profiles", String.parameter, "follow"], closure: profiles.follow, middlewares: [authThenExpandPayload]  ),
-//        .init(method: .delete, paths: ["profiles", String.parameter, "follow"], closure: profiles.unfollow, middlewares: [authThenExpandPayload]  ),
-//
+        // Profile
+        .init(method: .get, paths: ["profiles", ":username"], closure: profiles.getProfile, middlewares: [authOptional]  ),
+        .init(method: .post, paths: ["profiles", ":username", "follow"], closure: profiles.follow, middlewares: [authThenExpandPayload]  ),
+        .init(method: .delete, paths: ["profiles", ":username", "follow"], closure: profiles.unfollow, middlewares: [authThenExpandPayload]  ),
+
         // Articles
         .init(method: .get, paths: ["articles"], closure: articles.getArticles, middlewares: [authOptional] ),
         .init(method: .post, paths: ["articles"], closure: articles.postArticle, middlewares: [authThenExpandPayload] ),

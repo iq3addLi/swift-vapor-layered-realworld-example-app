@@ -21,7 +21,7 @@ struct ProfilesController {
     
     // MARK: Controller for profiles
     
-    /// GET /profiles/{{USERNAME}}
+    /// GET /profiles/:username
     ///
     /// Auth optional
     /// - Parameter request: See `Vapor.Request`.
@@ -30,19 +30,24 @@ struct ProfilesController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func getProfile(_ request: Request) throws -> Future<Response> {
+        
         // Get parameter by URL
-        let username = try request.parameters.next(String.self)
+        guard let username = request.parameters.get("username") else{
+            // Error を throw
+            fatalError("URL parameters contains mistake.")
+        }
+        
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id // Optional
+        let userId = request.storage[VerifiedUserEntity.Key.self]?.id // Optional
 
         // Into domain logic
         return useCase.profile(by: username, readingUserId: userId)
-            .map { response in
-                request.response( response, as: .json)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
-    /// POST /profiles/{{USERNAME}}/follow
+    /// POST /profiles/:username/follow
     ///
     /// Auth then expand payload.
     /// - Parameter request: See `Vapor.Request`.
@@ -52,18 +57,24 @@ struct ProfilesController {
     ///    The `Future` that returns `Response`.
     func follow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
-        let username = try request.parameters.next(String.self)
+        guard let username = request.parameters.get("username") else{
+            // Error を throw
+            fatalError("URL parameters contains mistake.")
+        }
+        
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
+        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
+            fatalError("Middleware not passed authenticated user.") // Require
+        }
 
         // Into domain logic
         return useCase.follow(to: username, from: userId)
-            .map { response in
-                request.response( response, as: .json)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
-    /// DELETE /profiles/{{USERNAME}}/follow
+    /// DELETE /profiles/:username/follow
     ///
     /// Auth then expand payload.
     /// - Parameter request: See `Vapor.Request`.
@@ -73,14 +84,20 @@ struct ProfilesController {
     ///    The `Future` that returns `Response`. 
     func unfollow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
-        let username = try request.parameters.next(String.self)
+        guard let username = request.parameters.get("username") else{
+            // Error を throw
+            fatalError("URL parameters contains mistake.")
+        }
+        
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
+        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
+            fatalError("Middleware not passed authenticated user.") // Require
+        }
 
         // Into domain logic
         return useCase.unfollow(to: username, from: userId)
-            .map { response in
-                request.response( response, as: .json)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 }
