@@ -17,8 +17,8 @@ import FluentMySQLDriver
  << Create database for UnitTests >>
  
  CREATE DATABASE database_for_unittest;
- CREATE USER 'unittest_user'@'127.0.0.1' IDENTIFIED BY 'unittest_userpass';
- GRANT ALL ON database_for_unittest.* TO 'unittest_user'@'127.0.0.1';
+ CREATE USER 'unittest_user'@'%' IDENTIFIED BY 'unittest_userpass';
+ GRANT ALL ON database_for_unittest.* TO 'unittest_user'@'%';
  
  */
 
@@ -34,23 +34,40 @@ let manager: MySQLDatabaseManager = {
 final class MySQLFluentTests: XCTestCase {
     
     static override func setUp() {
-        // generate test data
         do{
+            // generate test tables
             let database = manager.mysql
-            return try Articles.create(on: database)
+            try Articles.create(on: database)
                 .flatMap { Comments.create(on: database) }
                 .flatMap { Favorites.create(on: database) }
                 .flatMap { Follows.create(on: database) }
                 .flatMap { Tags.create(on: database) }
                 .flatMap { Users.create(on: database) }
                 .wait()
+
+            // generate test data
+            
+            // Test data for select
+            let user1 = try manager.insertUser(name: "user_1", email: "user_1@realworld_test.app", hash: "dummy", salt: "dummy").wait()
+            
+            // Test data for update
+            _ = try manager.insertUser(name: "user_2", email: "user_2@realworld_test.app", hash: "dummy", salt: "dummy").wait()
+            
+            // Test data for user relation
+            let user3 = try manager.insertUser(name: "user_3", email: "user_3@realworld_test.app", hash: "dummy", salt: "dummy").wait()
+            let _ = try manager.insertFollow(followee: user1.username, follower: user3.id!).wait() // follow_user3_to_user1
+            let _ = try manager.insertUser(name: "user_4", email: "user_4@realworld_test.app", hash: "dummy", salt: "dummy").wait()
+            
+            // Test data for articles
+            let _ = try manager.insertArticle(author: user1.id!, title: "art_1", slug: "slug_1", description: "dummy", body: "dummy", tags: []).wait()
+            
         }catch{
             fatalError("\(#function)\n\(error)")
         }
     }
     
     static override func tearDown() {
-        // clean test data
+        // clean test tables
         do{
             let database = manager.sql
             try database.drop(table: Articles.schema ).run().wait()
@@ -67,6 +84,11 @@ final class MySQLFluentTests: XCTestCase {
     static let allTests = [
         ("testSelectUserByEmail", testSelectUserByEmail),
         ("testInsertUser", testInsertUser),
+        ("testSelectUserById", testSelectUserById),
+        ("testUpdateUser", testUpdateUser),
+        ("testSelectProfileByUsername", testSelectProfileByUsername),
+        ("testInsertFollowsByUsername", testInsertFollowsByUsername),
+        ("testDeleteFollowsByUsername", testDeleteFollowsByUsername),
     ]
     
     func testSelectUserByEmail() throws {
@@ -87,17 +109,14 @@ final class MySQLFluentTests: XCTestCase {
         // Variables
         let username = String.random(length: 8)
         let email = "\(username)@realworld_test.com"
-        let hash = "hash_salt"
-        let salt = "_salt"
         
         // Quering
-        let user = try manager.insertUser(name: username, email: email, hash: hash, salt: salt).wait()
+        let user = try manager.insertUser(name: username, email: email, hash: "dummy", salt: "dummy").wait()
         
         // Examining
         XCTAssertTrue(user.id != .none)
         XCTAssertTrue(user.username == username)
     }
-    
     
     func testSelectUserById() throws {
         // Variables
@@ -110,26 +129,26 @@ final class MySQLFluentTests: XCTestCase {
         XCTAssertTrue(user.username == "user_1")
     }
     
-    
     func testUpdateUser() throws {
         // Variables
-        let readItUser = 1
-        let email = "updated"
-        let bio   = "updated"
-        let image = "updated"
+        let readItUser = 2
+        let email = "updated@realworld_test.com"
+        let bio   = "This bio is dummy."
+        let image = "https://dummy.com/dummy_image.jpg"
 
         // Quering
         let user = try manager.updateUser(id: readItUser, email: email, bio: bio, image: image).wait()
         
         // Examining
-        XCTAssertTrue(user.email == "updated")
-        XCTAssertTrue(user.bio == "updated")
-        XCTAssertTrue(user.image == "updated")
+        XCTAssertTrue(user.username == "user_2")
+        XCTAssertTrue(user.email == email)
+        XCTAssertTrue(user.bio == bio)
+        XCTAssertTrue(user.image == image)
     }
     
     func testSelectProfileByUsername() throws {
         // Variables
-        let readItUser = 2
+        let readItUser = 3
         let tergetUserName = "user_1"
         
         // Quering
@@ -145,41 +164,60 @@ final class MySQLFluentTests: XCTestCase {
     func testInsertFollowsByUsername() throws {
         // Variables
         let readItUser = 1
-        let tergetUserName = "user_2"
+        let followerUserName = "user_1"
+        let followeeUserName = "user_4"
         
         // Quering
-        let profile = try manager.insertFollow(followee: tergetUserName, follower: readItUser).wait()
+        let followee = try manager.insertFollow(followee: followeeUserName, follower: readItUser).wait() // follow user_1 to user_4
+        guard let follower = try manager.selectProfile(username: followerUserName).wait() else{
+            XCTFail(); return
+        }
         
         // Examining
-        XCTAssertTrue(profile.following)
+        XCTAssertTrue(followee.username == followeeUserName)
+        XCTAssertTrue(followee.following) // user_1 is follow to user_4
+        XCTAssertTrue(follower.username == followerUserName)
+        XCTAssertFalse(follower.following) // user_4 is not follow to user_1
     }
 
     
     func testDeleteFollowsByUsername() throws {
         // Variables
-        let readItUser = 2
-        let tergetUserName = "user_1"
+        let followeeUserName = "user_1"
+        let followerUserId = 2
+        let followerUserName = "user_2"
         
-        // Quering
-        let profile = try manager.deleteFollow(followee: tergetUserName, follower: readItUser).wait()
+        // Follow
+        let followee = try manager.insertFollow(followee: followeeUserName, follower: followerUserId).wait()
+        guard let follower = try manager.selectProfile(username: followerUserName).wait() else{
+            XCTFail(); return
+        }
         
         // Examining
-        XCTAssertTrue(profile.following == false)
+        XCTAssertTrue(followee.following) // user_1 is not follow to user_2
+        XCTAssertFalse(follower.following) // user_2 is follow to user_1
+        
+        // Unfollow
+        let exFollowee = try manager.deleteFollow(followee: followeeUserName, follower: followerUserId).wait()
+        
+        // Examining
+        XCTAssertFalse(exFollowee.following) // user_2 is not follow to user_1
     }
     
     func testInsertFavoriteBySlug() throws {
         // Variables
         let readItUser = 2
-        let tergetArticleSlug = "slug_3"
+        let favoriteArticleSlug = "slug_1"
         
         // Quering
-        let article = try manager.insertFavorite(by: readItUser, for: tergetArticleSlug).wait()
+        let article = try manager.insertFavorite(by: readItUser, for: favoriteArticleSlug).wait()
         
         // Examining
         XCTAssertTrue(article.favorited )
         XCTAssertTrue(article.favoritesCount == 1)
     }
     
+    /*
     func testDeleteFavoritesByUsername() throws {
         // Variables
         let readItUser = 1
@@ -459,5 +497,6 @@ final class MySQLFluentTests: XCTestCase {
         // Examing
         XCTAssertTrue(tags.count == 2)
     }
+ */
 }
 

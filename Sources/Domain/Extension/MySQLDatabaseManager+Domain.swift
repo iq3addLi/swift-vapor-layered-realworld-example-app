@@ -129,7 +129,7 @@ extension MySQLDatabaseManager {
     /// - Parameter username: A user name. Information to identify the user.
     /// - Parameter userId: Subject user id. If nil, follow contains invalid information.
     /// - returns:
-    ///    The `Future` that returns `Profile` or nil. Nil is when not found user.
+    ///    `Future` which return `Profile` of a user as seen by this user.
     func selectProfile(username: String, readIt userId: Int? = nil) -> Future<Profile?> {
         sql
             .raw( SQLQueryString( RawSQLQueries.selectUser(name: username, follower: userId)) )
@@ -148,10 +148,10 @@ extension MySQLDatabaseManager {
     /// - Parameter username: A user name of followee.
     /// - Parameter userId: A user id of follower.
     /// - returns:
-    ///    The `Future` that returns `Profile`.
+    ///   `Future` which return `Profile` of followee as seen by follower.
     func insertFollow(followee username: String, follower userId: Int ) -> Future<Profile> {
         var followee: Users?
-        var follow: Follows?
+        // var follow: Follows?
         return fluent.transaction { fluent in
             Users
                 .query(on: fluent)
@@ -164,11 +164,11 @@ extension MySQLDatabaseManager {
                     followee = user
                     return Follows(id: nil, followee: user.id!, follower: userId)
                 }.flatMap { aFollow -> Future<Void> in
-                    follow = aFollow
+                    // follow = aFollow
                     return aFollow.save(on: fluent)
                 }
         }.map { _ in
-            Profile(username: followee!.username, bio: followee!.bio, image: followee!.image, following: follow!.$followee.id == followee!.id )
+            Profile(username: followee!.username, bio: followee!.bio, image: followee!.image, following: true /*follow!.$follower.id == userId // simplified */ )
         }
     }
 
@@ -180,13 +180,17 @@ extension MySQLDatabaseManager {
     /// - warnings:
     ///  In MySQL implementation, no error occurs even if User does not exist. It is possible to confirm that User exists in advance.
     /// - returns:
-    ///    The `Future` that returns `Profile`.
+    ///   `Future` which return `Profile` of followee as seen by follower.
     func deleteFollow( followee username: String, follower userId: Int ) -> Future<Profile> {
         fluent.transaction { fluent in
-            (fluent as! SQLDatabase)
-                .raw(SQLQueryString( RawSQLQueries.deleteFollows(followee: username, follower: userId) ))
-                .all(decoding: UserWithFollowRow.self )
-                .flatMapThrowing { rows in
+            (fluent as! MySQLDatabase)
+                .query( RawSQLQueries.deleteFollows(followee: username, follower: userId ))
+                .flatMap{ _ in
+                    (fluent as! SQLDatabase)
+                    .raw(SQLQueryString( RawSQLQueries.selectUser(name: username, follower: userId) ))
+                    .all(decoding: UserWithFollowRow.self )
+                }
+                .flatMapThrowing { rows -> Profile in
                     guard let user = rows.first else {
                         throw Error("Delete process is failed. Followee is not found. Logically impossible.", status: 500)
                     }
@@ -200,7 +204,7 @@ extension MySQLDatabaseManager {
     /// - Parameter userId: A favorite userId.
     /// - Parameter articleSlug: A slug of favorite article.
     /// - returns:
-    ///    The `Future` that returns `Article`.
+    ///    The `Future` which Returning favorite `Articles`.
     func insertFavorite(by userId: Int, for articleSlug: String) -> Future<Article> {
         fluent.transaction { fluent in
             (fluent as! MySQLDatabase)
@@ -225,7 +229,7 @@ extension MySQLDatabaseManager {
     /// - Parameter userId: Id of the user to remove favorite.
     /// - Parameter articleSlug: Slug of article to remove favorite.
     /// - returns:
-    ///    The `Future` that returns `Article`.
+    ///   The `Future` which returning `Articles` which stopped favoriting.
     func deleteFavorite(by userId: Int, for articleSlug: String) -> Future<Article> {
         
         fluent.transaction { fluent in
@@ -356,7 +360,32 @@ extension MySQLDatabaseManager {
     /// - returns:
     ///    The `Future` that returns `Article`.
     func insertArticle( author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article> {
-        fluent.transaction { fluent in
+//        fluent.transaction { fluent in
+//            let article = Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
+//            return article
+//                .save(on: fluent)
+//                .flatMap { _ -> Future<Void> in
+//                    let insertTags = tags.map {
+//                        Tags(id: nil, article: article.id!, tag: $0 )
+//                            .save(on: fluent)
+//                            .map { _ in return }
+//                    }
+//                    switch insertTags.serializedFuture() {
+//                    case .some(let futures): return futures
+//                    case .none: return fluent.eventLoop.makeSucceededFuture(Void())
+//                    }
+//                }
+//                .flatMap { [weak self] _ -> Future<[Article]> in
+//                    self!.selectArticles(condition: .slug(slug) )
+//                }
+//                .flatMapThrowing { articles in
+//                    guard let article = articles.first else {
+//                        throw Error( "The article was saved successfully, but fluent did not return a value.", status: 500)
+//                    }
+//                    return article
+//                }
+//        }
+        fluent.transaction { fluent -> Future<Void> in
             let article = Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
             return article
                 .save(on: fluent)
@@ -371,15 +400,15 @@ extension MySQLDatabaseManager {
                     case .none: return fluent.eventLoop.makeSucceededFuture(Void())
                     }
                 }
-                .flatMap { [weak self] _ -> Future<[Article]> in
-                    self!.selectArticles(condition: .slug(slug) )
-                }
-                .flatMapThrowing { articles in
-                    guard let article = articles.first else {
-                        throw Error( "The article was saved successfully, but fluent did not return a value.", status: 500)
-                    }
-                    return article
-                }
+        }
+        .flatMap { [weak self] _ in
+            self!.selectArticles(condition: .slug(slug) )
+        }
+        .flatMapThrowing { articles in
+            guard let article = articles.first else {
+                throw Error( "The article was saved successfully, but fluent did not return a value.", status: 500)
+            }
+            return article
         }
     }
 
