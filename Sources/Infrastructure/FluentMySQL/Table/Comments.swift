@@ -10,7 +10,7 @@ import FluentKit
 /// Representation of Comments table
 public final class Comments: Model {
     
-    public static let schema = "comments"
+    public static let schema = "Comments"
     
     // MARK: Properties
     
@@ -78,7 +78,7 @@ extension Comments {
     /// - Parameter connection: A established connection.
     public static func create(on database: MySQLDatabase) -> EventLoopFuture<Void> {
         database.query("""
-            CREATE TABLE IF NOT EXISTS `Comments` (
+            CREATE TABLE IF NOT EXISTS `\(schema)` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `body` text NOT NULL,
               `author` bigint(20) unsigned NOT NULL,

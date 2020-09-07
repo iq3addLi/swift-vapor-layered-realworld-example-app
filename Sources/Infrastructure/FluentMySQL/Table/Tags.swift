@@ -10,7 +10,7 @@ import FluentKit
 /// Representation of Tags table
 public final class Tags: Model {
     
-    public static let schema = "tags"
+    public static let schema = "Tags"
     
     // MARK: Properties
     
@@ -55,7 +55,7 @@ extension Tags {
     /// - Parameter connection: A established connection.
     public static func create(on database: MySQLDatabase) -> EventLoopFuture<Void> {
         database.query("""
-            CREATE TABLE IF NOT EXISTS `Tags` (
+            CREATE TABLE IF NOT EXISTS `\(schema)` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `article` bigint(20) unsigned NOT NULL,
               `tag` varchar(256) NOT NULL DEFAULT '',

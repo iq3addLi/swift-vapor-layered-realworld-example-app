@@ -12,7 +12,7 @@ final class NIOTests: XCTestCase {
     
     func testEventLoopExecute() throws {
         // Create EventLoopGroup
-        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
+        let evGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
         var result = ""
         evGroup.next().execute { // Note: Exactly non blocking. It's executed without waiting for the current block to finish.
             result += "Hello"

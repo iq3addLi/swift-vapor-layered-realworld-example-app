@@ -168,7 +168,7 @@ extension MySQLDatabaseManager {
                     return aFollow.save(on: fluent)
                 }
         }.map { _ in
-            Profile(username: followee!.username, bio: followee!.bio, image: followee!.image, following: follow!.followee == followee!.id )
+            Profile(username: followee!.username, bio: followee!.bio, image: followee!.image, following: follow!.$followee.id == followee!.id )
         }
     }
 

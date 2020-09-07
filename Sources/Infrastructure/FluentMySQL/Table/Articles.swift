@@ -14,7 +14,7 @@ import FluentKit
 /// Realm is an excellent product, but from this point of view it is very disappointing.😭
 public final class Articles: Model {
     
-    public static let schema = "articles"
+    public static let schema = "Articles"
     
     // MARK: Properties
     
@@ -41,8 +41,8 @@ public final class Articles: Model {
     public var body: String
     
     /// A author. It's a `Users`'s id.
-    @Field(key: "author")
-    public var author: Int
+    @Parent(key: "author")
+    public var author: Users
     
     /// A created date.
     ///
@@ -60,6 +60,13 @@ public final class Articles: Model {
     @Children(for: \.$article)
     public var tags: [Tags]
     
+    /// Favorites this article
+    @Children(for: \.$article)
+    public var favorites: [Favorites]
+    
+    /// Comments this article
+    @Children(for: \.$article)
+    public var comments: [Comments]
     
     // MARK: Initializer
     
@@ -81,7 +88,7 @@ public final class Articles: Model {
         self.title = title
         self.description = description
         self.body = body
-        self.author = author
+        self.$author.id = author
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
@@ -100,7 +107,7 @@ extension Articles {
     /// - Parameter connection: A established connection.
     public static func create(on database: MySQLDatabase) -> EventLoopFuture<Void> {
         database.query("""
-            CREATE TABLE IF NOT EXISTS `Articles` (
+            CREATE TABLE IF NOT EXISTS `\(schema)` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `slug` varchar(100) NOT NULL,
               `title` varchar(1024) NOT NULL,

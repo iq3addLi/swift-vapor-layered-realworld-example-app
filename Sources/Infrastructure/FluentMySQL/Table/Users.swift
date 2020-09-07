@@ -10,7 +10,7 @@ import FluentKit
 /// Representation of Users table.
 public final class Users: Model {
     
-    public static let schema = "users"
+    public static let schema = "Users"
     
     // MARK: Properties
     
@@ -43,7 +43,16 @@ public final class Users: Model {
     /// A salt added when the password is hashed.
     @Field(key: "salt")
     public var salt: String
-
+    
+    /// Follows this user
+    @Children(for: \.$follower)
+    public var follows: [Follows]
+    
+    /// Articles which this user writen.
+    @Children(for: \.$author)
+    public var articles: [Articles]
+    
+    
     // MARK: Initializer
     
     public init() { }
@@ -80,7 +89,7 @@ extension Users {
     /// - Parameter connection: A established connection.
     public static func create(on database: MySQLDatabase) -> EventLoopFuture<Void> {
         database.query("""
-            CREATE TABLE IF NOT EXISTS `Users` (
+            CREATE TABLE IF NOT EXISTS `\(schema)` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `username` varchar(256) NOT NULL DEFAULT '',
               `email` varchar(1024) NOT NULL DEFAULT '',

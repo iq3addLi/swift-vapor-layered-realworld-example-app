@@ -6,41 +6,62 @@
 //
 
 import XCTest
-import FluentMySQLDriver
 
 @testable import Domain
 import Infrastructure
 import SwiftSlug
+import FluentMySQLDriver
+
+/*
+ 
+ << Create database for UnitTests >>
+ 
+ CREATE DATABASE database_for_unittest;
+ CREATE USER 'unittest_user'@'127.0.0.1' IDENTIFIED BY 'unittest_userpass';
+ GRANT ALL ON database_for_unittest.* TO 'unittest_user'@'127.0.0.1';
+ 
+ */
+
+let manager: MySQLDatabaseManager = {
+    return MySQLDatabaseManager(
+        hostname: "127.0.0.1",
+        username: "unittest_user",
+        password: "unittest_userpass",
+        database: "database_for_unittest"
+    )
+}()
 
 final class MySQLFluentTests: XCTestCase {
     
-    lazy var manager: MySQLDatabaseManager! = {
-        return MySQLDatabaseManager()
-    }()
-    
-    // Note: Naturally, transactions work within the same connection.
-    lazy var connection: MySQLConnection! = {
-        do {
-            return try self.manager.newConnection(on: worker).wait()
-        }catch( let error ){
-            fatalError(error.localizedDescription)
+    static override func setUp() {
+        // generate test data
+        do{
+            let database = manager.mysql
+            return try Articles.create(on: database)
+                .flatMap { Comments.create(on: database) }
+                .flatMap { Favorites.create(on: database) }
+                .flatMap { Follows.create(on: database) }
+                .flatMap { Tags.create(on: database) }
+                .flatMap { Users.create(on: database) }
+                .wait()
+        }catch{
+            fatalError("\(#function)\n\(error)")
         }
-    }()
+    }
     
-    private lazy var worker: Worker = {
-        MultiThreadedEventLoopGroup(numberOfThreads: 2)
-    }()
-    
-    /// dummy comment
-    deinit{
-        connection.close()
-        
-        worker.shutdownGracefully{ (error) in
-            if let error = error{
-                print("Worker shutdown is failed. reason=\(error)")
-            }
+    static override func tearDown() {
+        // clean test data
+        do{
+            let database = manager.sql
+            try database.drop(table: Articles.schema ).run().wait()
+            try database.drop(table: Comments.schema ).run().wait()
+            try database.drop(table: Favorites.schema ).run().wait()
+            try database.drop(table: Follows.schema ).run().wait()
+            try database.drop(table: Tags.schema ).run().wait()
+            try database.drop(table: Users.schema ).run().wait()
+        }catch{
+            fatalError("\(#function)\n\(error)")
         }
-        manager = nil
     }
     
     static let allTests = [
@@ -49,11 +70,12 @@ final class MySQLFluentTests: XCTestCase {
     ]
     
     func testSelectUserByEmail() throws {
+        
         // Variables
         let email = "user_1@realworld_test.app"
         
         // Quering
-        guard let user = try manager.selectUser(on: connection, email: email).wait() else{
+        guard let user = try manager.selectUser(email: email).wait() else{
             XCTFail(); return
         }
         
@@ -68,30 +90,26 @@ final class MySQLFluentTests: XCTestCase {
         let hash = "hash_salt"
         let salt = "_salt"
         
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Quering
-        let user = try manager.insertUser(on: connection, name: username, email: email, hash: hash, salt: salt).wait()
+        let user = try manager.insertUser(name: username, email: email, hash: hash, salt: salt).wait()
         
         // Examining
         XCTAssertTrue(user.id != .none)
         XCTAssertTrue(user.username == username)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
+    
     
     func testSelectUserById() throws {
         // Variables
         let readItUser = 1
         
         // Quering
-        guard let user = try manager.selectUser(on: connection, id: readItUser).wait() else{
+        guard let user = try manager.selectUser(id: readItUser).wait() else{
             XCTFail(); return
         }
         XCTAssertTrue(user.username == "user_1")
     }
+    
     
     func testUpdateUser() throws {
         // Variables
@@ -100,19 +118,13 @@ final class MySQLFluentTests: XCTestCase {
         let bio   = "updated"
         let image = "updated"
 
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Quering
-        let user = try manager.updateUser(on: connection, id: readItUser, email: email, bio: bio, image: image).wait()
+        let user = try manager.updateUser(id: readItUser, email: email, bio: bio, image: image).wait()
         
         // Examining
         XCTAssertTrue(user.email == "updated")
         XCTAssertTrue(user.bio == "updated")
         XCTAssertTrue(user.image == "updated")
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testSelectProfileByUsername() throws {
@@ -121,7 +133,7 @@ final class MySQLFluentTests: XCTestCase {
         let tergetUserName = "user_1"
         
         // Quering
-        guard let profile = try manager.selectProfile(on: connection, username: tergetUserName, readIt: readItUser).wait() else{
+        guard let profile = try manager.selectProfile(username: tergetUserName, readIt: readItUser).wait() else{
             XCTFail(); return
         }
         
@@ -134,18 +146,12 @@ final class MySQLFluentTests: XCTestCase {
         // Variables
         let readItUser = 1
         let tergetUserName = "user_2"
-                
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
         
         // Quering
-        let profile = try manager.insertFollow(on: connection, followee: tergetUserName, follower: readItUser).wait()
+        let profile = try manager.insertFollow(followee: tergetUserName, follower: readItUser).wait()
         
         // Examining
         XCTAssertTrue(profile.following)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
 
     
@@ -154,17 +160,11 @@ final class MySQLFluentTests: XCTestCase {
         let readItUser = 2
         let tergetUserName = "user_1"
         
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Quering
-        let profile = try manager.deleteFollow(on: connection, followee: tergetUserName, follower: readItUser).wait()
+        let profile = try manager.deleteFollow(followee: tergetUserName, follower: readItUser).wait()
         
         // Examining
         XCTAssertTrue(profile.following == false)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testInsertFavoriteBySlug() throws {
@@ -172,18 +172,12 @@ final class MySQLFluentTests: XCTestCase {
         let readItUser = 2
         let tergetArticleSlug = "slug_3"
         
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Quering
-        let article = try manager.insertFavorite(on: connection, by: readItUser, for: tergetArticleSlug).wait()
+        let article = try manager.insertFavorite(by: readItUser, for: tergetArticleSlug).wait()
         
         // Examining
         XCTAssertTrue(article.favorited )
         XCTAssertTrue(article.favoritesCount == 1)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testDeleteFavoritesByUsername() throws {
@@ -191,18 +185,12 @@ final class MySQLFluentTests: XCTestCase {
         let readItUser = 1
         let tergetArticleSlug = "slug_1"
     
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Quering
-        let article = try manager.deleteFavorite(on: connection, by: readItUser, for: tergetArticleSlug).wait()
+        let article = try manager.deleteFavorite(by: readItUser, for: tergetArticleSlug).wait()
         
         // Examining
         XCTAssertTrue(article.favorited == false)
         XCTAssertTrue(article.favoritesCount == 0)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testSelectCommentsBySlug() throws {
@@ -211,7 +199,7 @@ final class MySQLFluentTests: XCTestCase {
         let tergetArticleSlug = "slug_3"
                 
         // Quering
-        let comments = try manager.selectComments(on: connection, for: tergetArticleSlug, readit: readItUser).wait()
+        let comments = try manager.selectComments(for: tergetArticleSlug, readit: readItUser).wait()
         
         // Examining
         XCTAssertTrue(comments.count == 2)
@@ -225,21 +213,31 @@ final class MySQLFluentTests: XCTestCase {
         let targetArticleSlug = "slug_1"
         
         // <1>Select
-        guard let article = try Articles.query(on: connection).filter(\Articles.slug == targetArticleSlug).all().wait().first else{
+        let database = manager.fluent
+        guard let article = try Articles.query(on: database)
+            .filter(\.$slug == targetArticleSlug)
+            .all()
+            .wait()
+            .first else{
             XCTFail(); return
         }
 
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // <2>Insert to Comments
-        let inserted = try Comments(body: commentBody, author: readItUser, article: article.id! ).save(on: connection).wait() // MEMO: Return value's timestamp is nil when insert😣 So need to select again😩
+        let comment = Comments(body: commentBody, author: readItUser, article: article.id! )
+        try comment
+            .save(on: database)
+            .wait()
 
         // <3>Get author infomation
-        let author = try inserted.commentedUser.get(on: connection).wait()
+        let author = comment.author
         
         // <4>Get Inserted row
-        guard let row = try Comments.query(on: connection).filter(\Comments.id == inserted.id!).all().wait().first else{
+        guard let row = try Comments
+            .query(on: database)
+            .filter(\.$id == comment.id!)
+            .all()
+            .wait()
+            .first else{
             XCTFail(); return
         }
         
@@ -249,28 +247,23 @@ final class MySQLFluentTests: XCTestCase {
         // Examining
         XCTAssertTrue(insertedComment.body == commentBody)
         XCTAssertTrue(insertedComment.author.username == author.username)
-        XCTAssertTrue(row.article == article.id)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
+        XCTAssertTrue(row.$article.id == article.id)
     }
     
     func testDeleteCommentsBySlug() throws {
         // Variables
         let commentId = 1
         
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Querying
-        try manager.deleteComments(on: connection, commentId: commentId).wait()
+        try manager.deleteComments(commentId: commentId)
+            .wait()
         
         // Examining
-        let rows = try Comments.query(on: connection).all().wait()
+        let rows = try Comments
+            .query(on: manager.fluent)
+            .all()
+            .wait()
         XCTAssertTrue(rows.count == 1)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testSelectArticlesbyFollower() throws {
@@ -278,7 +271,7 @@ final class MySQLFluentTests: XCTestCase {
         let readItUser = 2
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .feed(readItUser), readIt: readItUser).wait()
+        let articles = try manager.selectArticles(condition: .feed(readItUser), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -290,7 +283,7 @@ final class MySQLFluentTests: XCTestCase {
         let tagString = "Vapor"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .tag(tagString), readIt: readItUser).wait()
+        let articles = try manager.selectArticles( condition: .tag(tagString), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 2)
@@ -302,7 +295,7 @@ final class MySQLFluentTests: XCTestCase {
         let targetUsername = "user_1"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .author(targetUsername), readIt: readItUser).wait()
+        let articles = try manager.selectArticles(condition: .author(targetUsername), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 3)
@@ -314,7 +307,7 @@ final class MySQLFluentTests: XCTestCase {
         let targetUsername = "user_1"
         
         // Querying
-        let articles = try manager.selectArticles(on: connection, condition: .favorite(targetUsername), readIt: readItUser).wait()
+        let articles = try manager.selectArticles(condition: .favorite(targetUsername), readIt: readItUser).wait()
         
         // Examining
         XCTAssertTrue(articles.count == 1)
@@ -333,11 +326,8 @@ final class MySQLFluentTests: XCTestCase {
             XCTFail("Generate slug is failed."); return
         }
         
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Querying
-        let article = try manager.insertArticle(on: connection, author: author, title: title, slug: slug, description: description, body: body, tags: tags).wait()
+        let article = try manager.insertArticle(author: author, title: title, slug: slug, description: description, body: body, tags: tags).wait()
         
         // Examining
         XCTAssertTrue(article.slug == slug)
@@ -346,8 +336,6 @@ final class MySQLFluentTests: XCTestCase {
         XCTAssertTrue(article.body == body)
         XCTAssertTrue(article.tagList == tags)
         
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testSelectArticlebySlug() throws {
@@ -356,7 +344,7 @@ final class MySQLFluentTests: XCTestCase {
         let readItUser = 2
         
         // Querying
-        guard let article = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).wait().first else{
+        guard let article = try manager.selectArticles( condition: .slug(slug), readIt: readItUser).wait().first else{
             XCTFail(); return
         }
         
@@ -374,27 +362,28 @@ final class MySQLFluentTests: XCTestCase {
         let readItUser = 2
         
         // (1)Search Articles
-        guard let article = try Articles.query(on: connection).filter(\Articles.slug == slug).all().wait().first else{
+        guard let article = try Articles.query(on: manager.fluent)
+            .filter(\.$slug == slug)
+            .all()
+            .wait()
+            .first else{
             XCTFail(); return
         }
         
         // (2)Search Tags
-        let tags = try article.tags.query(on: connection).all().wait()
+        let tags = article.tags
         
         // (3)Search User
-        guard let author = try article.postedUser?.get(on: connection).wait() else{
-            XCTFail(); return
-        }
+        let author = article.author
         
         // (4)This article favorited?
-        let favorited = try Favorites.query(on: connection).filter(\Favorites.user == readItUser).filter(\Favorites.article == article.id!).all().wait().count != 0
+        let favorited = article.favorites.filter{ $0.$user.id == readItUser }.isEmpty == false
         
         // (5)Author of article is followed?
-        let following = try Follows.query(on: connection).filter(\Follows.follower == readItUser).filter(\Follows.followee == article.author).all().wait().count != 0
+        let following = article.author.follows.filter{ $0.id == readItUser }.isEmpty == false
         
         // (6)This article has number of favorite?
-        let favoritesCount = try Favorites.query(on: connection).filter(\Favorites.article == article.id!).all().wait().count
-               
+        let favoritesCount = article.favorites.count
         
         // Create response data
         let response = Article(slug: article.slug, title: article.title, _description: article.description, body: article.body, tagList: tags.map{ $0.tag }, createdAt: article.createdAt!, updatedAt: article.updatedAt!, favorited: favorited, favoritesCount: favoritesCount, author: Profile(username: author.username, bio: author.bio, image: author.image, following: following))
@@ -417,29 +406,30 @@ final class MySQLFluentTests: XCTestCase {
         let tagList = ["Update","Vapor"]
         
         // Search Articles
-        guard let article = try Articles.query(on: connection).filter(\Articles.slug == slug).all().wait().first else{
+        guard let article = try Articles.query(on: manager.fluent)
+            .filter(\.$slug == slug)
+            .all()
+            .wait()
+            .first else{
             XCTFail(); return
         }
         article.title = title
         article.description = description
         article.body = body
-                
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-
+        
         // Update Article
-        let _ = try article.update(on: connection).wait()
+        let _ = try article.update(on: manager.fluent).wait()
         
         // Update Tags
-        let tags = try article.tags.query(on: connection).all().wait()
+        let tags = article.tags
         
         try tags.filter{ tagList.contains($0.tag) == false }
-                .forEach{ try $0.delete(on: connection).wait() }
+                .forEach{ try $0.delete(on: manager.fluent).wait() }
         try tagList.filter{ tags.map{ $0.tag }.contains($0) == false }
-                .forEach{ _ = try Tags(id: nil, article: article.id!, tag: $0).save(on: connection).wait() }
+                .forEach{ _ = try Tags(id: nil, article: article.id!, tag: $0).save(on: manager.fluent).wait() }
                         
         // Querying
-        guard let response = try manager.selectArticles(on: connection, condition: .slug(slug), readIt: readItUser).wait().first else{
+        guard let response = try manager.selectArticles(condition: .slug(slug), readIt: readItUser).wait().first else{
             XCTFail(); return
         }
         
@@ -449,33 +439,23 @@ final class MySQLFluentTests: XCTestCase {
         XCTAssertTrue(response._description == description)
         XCTAssertTrue(response.body == body)
         XCTAssertTrue(response.tagList == tagList)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
-        
     }
     
     func testDeleteArticlebySlug() throws {
         // Variables
         let slug = "slug_1"
         
-        // transaction start
-        _ = try! connection.simpleQuery("START TRANSACTION").wait()
-        
         // Querying
-        try manager.deleteArticle(on: connection, slug: slug).wait()
+        try manager.deleteArticle(slug: slug).wait()
         
         // Examing
-        let article = try manager.selectArticles(on: connection, condition: .slug(slug)).wait().first
+        let article = try manager.selectArticles(condition: .slug(slug)).wait().first
         XCTAssertNil(article)
-        
-        // transaction rollback
-        _ = try! connection.simpleQuery("ROLLBACK").wait()
     }
     
     func testSelectTags() throws {
         // Querying
-        let tags = try manager.selectTags(on: connection).wait()
+        let tags = try manager.selectTags().wait()
         // Examing
         XCTAssertTrue(tags.count == 2)
     }

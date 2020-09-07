@@ -10,7 +10,7 @@ import FluentKit
 /// Representation of Follows table.
 public final class Follows: Model {
     
-    public static let schema = "follows"
+    public static let schema = "Follows"
     
     // MARK: Properties
     
@@ -21,12 +21,12 @@ public final class Follows: Model {
     public var id: Int?
     
     /// A followee. It's a `Users`'s id.
-    @Field(key: "followee")
-    public var followee: Int
+    @Parent(key: "followee")
+    public var followee: Users
     
     /// A follower. It's a `Users`'s id.
-    @Field(key: "follower")
-    public var follower: Int
+    @Parent(key: "follower")
+    public var follower: Users
     
     // MARK: Initializer
     
@@ -39,8 +39,8 @@ public final class Follows: Model {
     ///   - follower: See `follower`
     public init( id: Int?, followee: Int, follower: Int ) {
         self.id = id
-        self.followee = followee
-        self.follower = follower
+        self.$followee.id = followee
+        self.$follower.id = follower
     }
 }
 
@@ -55,7 +55,7 @@ extension Follows {
     /// - Parameter connection: A established connection.
     public static func create(on database: MySQLDatabase) -> EventLoopFuture<Void> {
         database.query("""
-            CREATE TABLE IF NOT EXISTS `Follows` (
+            CREATE TABLE IF NOT EXISTS `\(schema)` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `followee` bigint(20) unsigned NOT NULL,
               `follower` bigint(20) unsigned NOT NULL,
