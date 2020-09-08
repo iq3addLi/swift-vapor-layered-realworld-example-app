@@ -43,9 +43,7 @@ struct ArticlesController {
         let tag = request.query[ String.self, at: "tag" ]
 
         // Get relayed parameter
-        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
-            fatalError("Middleware not passed authenticated user.") // Require
-        }
+        let userId = request.storage[VerifiedUserEntity.Key.self]?.id // Optional
 
         // Return future
         return useCase.getArticles( author: author, favorited: favorited, tag: tag, offset: offset, limit: limit, readingUserId: userId)
