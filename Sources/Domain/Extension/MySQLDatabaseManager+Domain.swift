@@ -300,6 +300,8 @@ extension MySQLDatabaseManager {
                     }
                     return comment
                 }
+        }.flatMap { [weak self] comment in
+            comment.$author.load(on: self!.fluent).map{ comment }
         }.map { comment in
             Comment(_id: comment.id!,
                     createdAt: comment.createdAt!,
@@ -360,31 +362,7 @@ extension MySQLDatabaseManager {
     /// - returns:
     ///    The `Future` that returns `Article`.
     func insertArticle( author: Int, title: String, slug: String, description: String, body: String, tags: [String], readIt userId: Int? = nil) -> Future<Article> {
-//        fluent.transaction { fluent in
-//            let article = Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
-//            return article
-//                .save(on: fluent)
-//                .flatMap { _ -> Future<Void> in
-//                    let insertTags = tags.map {
-//                        Tags(id: nil, article: article.id!, tag: $0 )
-//                            .save(on: fluent)
-//                            .map { _ in return }
-//                    }
-//                    switch insertTags.serializedFuture() {
-//                    case .some(let futures): return futures
-//                    case .none: return fluent.eventLoop.makeSucceededFuture(Void())
-//                    }
-//                }
-//                .flatMap { [weak self] _ -> Future<[Article]> in
-//                    self!.selectArticles(condition: .slug(slug) )
-//                }
-//                .flatMapThrowing { articles in
-//                    guard let article = articles.first else {
-//                        throw Error( "The article was saved successfully, but fluent did not return a value.", status: 500)
-//                    }
-//                    return article
-//                }
-//        }
+        
         fluent.transaction { fluent -> Future<Void> in
             let article = Articles(id: nil, slug: slug, title: title, description: description, body: body, author: author)
             return article

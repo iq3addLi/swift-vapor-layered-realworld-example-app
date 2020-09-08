@@ -14,6 +14,8 @@ import FluentMySQLDriver
 
 /*
  
+ To pass this unit test, you will need to launch MySQL in a local environment.
+ 
  << Create database for UnitTests >>
  
  CREATE DATABASE database_for_unittest;
@@ -51,7 +53,7 @@ final class MySQLFluentTests: XCTestCase {
             let user1 = try manager.insertUser(name: "user_1", email: "user_1@realworld_test.app", hash: "dummy", salt: "dummy").wait()
             
             // Test data for update
-            _ = try manager.insertUser(name: "user_2", email: "user_2@realworld_test.app", hash: "dummy", salt: "dummy").wait()
+            let user2 = try manager.insertUser(name: "user_2", email: "user_2@realworld_test.app", hash: "dummy", salt: "dummy").wait()
             
             // Test data for user relation
             let user3 = try manager.insertUser(name: "user_3", email: "user_3@realworld_test.app", hash: "dummy", salt: "dummy").wait()
@@ -59,7 +61,20 @@ final class MySQLFluentTests: XCTestCase {
             let _ = try manager.insertUser(name: "user_4", email: "user_4@realworld_test.app", hash: "dummy", salt: "dummy").wait()
             
             // Test data for articles
-            let _ = try manager.insertArticle(author: user1.id!, title: "art_1", slug: "slug_1", description: "dummy", body: "dummy", tags: []).wait()
+            let article1 = try manager.insertArticle(author: user1.id!, title: "art_1", slug: "slug_1", description: "dummy", body: "dummy", tags: ["Vapor"]).wait()
+            
+            // Test data for comments
+            let _ = try manager.insertComment(for: article1.slug, body: "I'm commented", author: user3.id!).wait() // comment_user3_to_user1's_article
+            let _ = try manager.insertFollow(followee: user3.username, follower: user2.id!).wait() // follow_user2_to_user3
+            
+            // Test data for Tags
+            let _ = try manager.insertArticle(author: user1.id!, title: "art_2", slug: "slug_2", description: "dummy", body: "dummy", tags: [ "Vapor", "Swift" ] ).wait() // favorite_user3_to_slug2_article
+            
+            // Test data for Favorites
+            let _ = try manager.insertFavorite(by: user3.id!, for: article1.slug).wait()
+            
+            // Test data for delete Article
+            let _ = try manager.insertArticle(author: user3.id!, title: "dummy", slug: "beDelete", description: "dummy", body: "dummy", tags: [ "Swift", "Fluent" ] ).wait()
             
         }catch{
             fatalError("\(#function)\n\(error)")
@@ -89,6 +104,19 @@ final class MySQLFluentTests: XCTestCase {
         ("testSelectProfileByUsername", testSelectProfileByUsername),
         ("testInsertFollowsByUsername", testInsertFollowsByUsername),
         ("testDeleteFollowsByUsername", testDeleteFollowsByUsername),
+        ("testFavoriteAndUnfavoriteBySlug", testFavoriteAndUnfavoriteBySlug),
+        ("testSelectCommentsBySlug", testSelectCommentsBySlug),
+        ("testDeleteCommentsBySlug", testDeleteCommentsBySlug),
+        ("testSelectArticlesbyFollower", testSelectArticlesByFollower),
+        ("testSelectArticlesByTag", testSelectArticlesByTag),
+        ("testSelectArticlesByAuthor", testSelectArticlesByAuthor),
+        ("testSelectArticlesInFavorite", testSelectArticlesInFavorite),
+        ("testInsertArticle", testInsertArticle),
+        ("testSelectArticleBySlug", testSelectArticleBySlug),
+        ("testSelectArticleBySlugUsingFluent", testSelectArticleBySlugUsingFluent),
+        ("testUpdateArticlebySlug", testUpdateArticleBySlug),
+        ("testDeleteArticlebySlug", testDeleteArticleBySlug),
+        ("testSelectTags", testSelectTags),
     ]
     
     func testSelectUserByEmail() throws {
@@ -102,7 +130,7 @@ final class MySQLFluentTests: XCTestCase {
         }
         
         // Examining
-        XCTAssertTrue(user.username == "user_1")
+        XCTAssertEqual(user.username, "user_1")
     }
     
     func testInsertUser() throws{
@@ -114,8 +142,8 @@ final class MySQLFluentTests: XCTestCase {
         let user = try manager.insertUser(name: username, email: email, hash: "dummy", salt: "dummy").wait()
         
         // Examining
-        XCTAssertTrue(user.id != .none)
-        XCTAssertTrue(user.username == username)
+        XCTAssertNotEqual(user.id, .none)
+        XCTAssertEqual(user.username, username)
     }
     
     func testSelectUserById() throws {
@@ -126,7 +154,7 @@ final class MySQLFluentTests: XCTestCase {
         guard let user = try manager.selectUser(id: readItUser).wait() else{
             XCTFail(); return
         }
-        XCTAssertTrue(user.username == "user_1")
+        XCTAssertEqual(user.username, "user_1")
     }
     
     func testUpdateUser() throws {
@@ -140,10 +168,10 @@ final class MySQLFluentTests: XCTestCase {
         let user = try manager.updateUser(id: readItUser, email: email, bio: bio, image: image).wait()
         
         // Examining
-        XCTAssertTrue(user.username == "user_2")
-        XCTAssertTrue(user.email == email)
-        XCTAssertTrue(user.bio == bio)
-        XCTAssertTrue(user.image == image)
+        XCTAssertEqual(user.username, "user_2")
+        XCTAssertEqual(user.email, email)
+        XCTAssertEqual(user.bio, bio)
+        XCTAssertEqual(user.image, image)
     }
     
     func testSelectProfileByUsername() throws {
@@ -157,7 +185,7 @@ final class MySQLFluentTests: XCTestCase {
         }
         
         // Examining
-        XCTAssertTrue(profile.username == "user_1")
+        XCTAssertEqual(profile.username, "user_1")
         XCTAssertTrue(profile.following )
     }
     
@@ -174,12 +202,11 @@ final class MySQLFluentTests: XCTestCase {
         }
         
         // Examining
-        XCTAssertTrue(followee.username == followeeUserName)
+        XCTAssertEqual(followee.username, followeeUserName)
         XCTAssertTrue(followee.following) // user_1 is follow to user_4
-        XCTAssertTrue(follower.username == followerUserName)
+        XCTAssertEqual(follower.username, followerUserName)
         XCTAssertFalse(follower.following) // user_4 is not follow to user_1
     }
-
     
     func testDeleteFollowsByUsername() throws {
         // Variables
@@ -204,152 +231,154 @@ final class MySQLFluentTests: XCTestCase {
         XCTAssertFalse(exFollowee.following) // user_2 is not follow to user_1
     }
     
-    func testInsertFavoriteBySlug() throws {
+    func testFavoriteAndUnfavoriteBySlug() throws {
         // Variables
         let readItUser = 2
-        let favoriteArticleSlug = "slug_1"
         
         // Quering
-        let article = try manager.insertFavorite(by: readItUser, for: favoriteArticleSlug).wait()
+        let inserted = try manager.insertArticle(author: 3, title: "dummy", slug: "dummy", description: "dummy", body: "dummy", tags: []).wait()
+        let article = try manager.insertFavorite(by: readItUser, for: inserted.slug).wait()
         
         // Examining
         XCTAssertTrue(article.favorited )
-        XCTAssertTrue(article.favoritesCount == 1)
-    }
-    
-    /*
-    func testDeleteFavoritesByUsername() throws {
-        // Variables
-        let readItUser = 1
-        let tergetArticleSlug = "slug_1"
-    
+        XCTAssertEqual(article.favoritesCount, 1)
+        
         // Quering
-        let article = try manager.deleteFavorite(by: readItUser, for: tergetArticleSlug).wait()
+        let article_after = try manager.deleteFavorite(by: readItUser, for: inserted.slug).wait()
         
         // Examining
-        XCTAssertTrue(article.favorited == false)
-        XCTAssertTrue(article.favoritesCount == 0)
+        XCTAssertFalse(article_after.favorited )
+        XCTAssertEqual(article_after.favoritesCount, 0)
     }
+    
     
     func testSelectCommentsBySlug() throws {
+        // user_2 reads user_3's comments on user_1's article.
+        
         // Variables
         let readItUser = 2
-        let tergetArticleSlug = "slug_3"
+        let commentedArticleSlug = "slug_1"
                 
         // Quering
-        let comments = try manager.selectComments(for: tergetArticleSlug, readit: readItUser).wait()
+        let comments = try manager.selectComments(for: commentedArticleSlug, readit: readItUser).wait()
         
         // Examining
-        XCTAssertTrue(comments.count == 2)
-        XCTAssertTrue(comments.filter{ $0.author.username == "user_1" }.first!.author.following == true)
-    }
-    
-    func testInsertCommentBySlugUsingFluent() throws {
-        // Variables
-        let readItUser = 1
-        let commentBody = "Comment by unittest."
-        let targetArticleSlug = "slug_1"
-        
-        // <1>Select
-        let database = manager.fluent
-        guard let article = try Articles.query(on: database)
-            .filter(\.$slug == targetArticleSlug)
-            .all()
-            .wait()
-            .first else{
-            XCTFail(); return
+        guard let comment = comments.first else{
+            throw Error("Article's comment is not found.")
         }
-
-        // <2>Insert to Comments
-        let comment = Comments(body: commentBody, author: readItUser, article: article.id! )
-        try comment
-            .save(on: database)
-            .wait()
-
-        // <3>Get author infomation
-        let author = comment.author
-        
-        // <4>Get Inserted row
-        guard let row = try Comments
-            .query(on: database)
-            .filter(\.$id == comment.id!)
-            .all()
-            .wait()
-            .first else{
-            XCTFail(); return
-        }
-        
-        // Create response data
-        let insertedComment = Comment(_id: row.id!, createdAt: row.createdAt!, updatedAt: row.updatedAt!, body: row.body, author: Profile(username: author.username, bio: author.bio, image: author.image, following: false /* Because It's own. */))
-        
-        // Examining
-        XCTAssertTrue(insertedComment.body == commentBody)
-        XCTAssertTrue(insertedComment.author.username == author.username)
-        XCTAssertTrue(row.$article.id == article.id)
+        XCTAssertEqual(comments.count, 1)
+        XCTAssertEqual(comment.body, "I'm commented")
+        XCTAssertEqual(comment.author.username, "user_3" )
+        XCTAssertTrue(comment.author.following )
     }
     
     func testDeleteCommentsBySlug() throws {
+        // Comment on A's article and then delete it.
+        
         // Variables
-        let commentId = 1
+        let body = "It's awesome!"
+        let commentedUserId = 2
+        let wasCommentedArticleSlug = "slug_1"
         
-        // Querying
-        try manager.deleteComments(commentId: commentId)
-            .wait()
+        // Add comment
+        let comment = try manager.insertComment(for: wasCommentedArticleSlug, body: body, author: commentedUserId).wait()
         
-        // Examining
-        let rows = try Comments
+        let before = try Comments
             .query(on: manager.fluent)
             .all()
             .wait()
-        XCTAssertTrue(rows.count == 1)
-    }
-    
-    func testSelectArticlesbyFollower() throws {
-        // Variables
-        let readItUser = 2
         
-        // Querying
-        let articles = try manager.selectArticles(condition: .feed(readItUser), readIt: readItUser).wait()
+        XCTAssertEqual( comment.body, body )
+        XCTAssertEqual( comment.author.username, "user_\(commentedUserId)" )
+        XCTAssertFalse( comment.author.following )
+        XCTAssertEqual( before.count, 2 )
+        
+        // Delete comment
+        try manager.deleteComments(commentId: comment._id).wait()
         
         // Examining
-        XCTAssertTrue(articles.count == 3)
+        let after = try Comments
+            .query(on: manager.fluent)
+            .all()
+            .wait()
+        
+        XCTAssertEqual(after.count, 1 )
     }
     
-    func testSelectArticlesbyTag() throws {
+    
+    func testSelectArticlesByFollower() throws {
         // Variables
-        let readItUser = 2
+        let readItUser = 3
+        
+        // Querying
+        let articles = try manager.selectArticles(condition: .feed(readItUser)).wait()
+        
+        // Examining
+        XCTAssertEqual(articles.count, 2)
+    }
+    
+    func testSelectArticlesByTag() throws {
+        // Variables
         let tagString = "Vapor"
         
         // Querying
-        let articles = try manager.selectArticles( condition: .tag(tagString), readIt: readItUser).wait()
+        let articles = try manager.selectArticles( condition: .tag(tagString)).wait()
         
         // Examining
-        XCTAssertTrue(articles.count == 2)
+        XCTAssertEqual(articles.count, 2)
     }
     
-    func testSelectArticlesbyAuthor() throws {
+    func testSelectArticlesByAuthor() throws {
         // Variables
-        let readItUser = 2
+        let readItUser = 3
         let targetUsername = "user_1"
         
         // Querying
         let articles = try manager.selectArticles(condition: .author(targetUsername), readIt: readItUser).wait()
         
         // Examining
-        XCTAssertTrue(articles.count == 3)
+        XCTAssertEqual(articles.count, 2)
+        
+        guard
+            let article1 = articles.filter({ $0.slug == "slug_1" }).first,
+            let article2 = articles.filter({ $0.slug == "slug_2" }).first else{
+            throw Error("\(targetUsername)'s article is unexpected.")
+        }
+
+        XCTAssertTrue(article1.favorited)
+        XCTAssertEqual(article1.favoritesCount, 1)
+        XCTAssertFalse(article2.favorited)
+        XCTAssertEqual(article2.favoritesCount, 0)
     }
     
     func testSelectArticlesInFavorite() throws {
         // Variables
-        let readItUser = 2
-        let targetUsername = "user_1"
+        let readItUser = 3
+        let targetUsername = "user_3"
         
-        // Querying
-        let articles = try manager.selectArticles(condition: .favorite(targetUsername), readIt: readItUser).wait()
+        // Case of don't specify a reader.
+        let caseA = try manager.selectArticles(condition: .favorite(targetUsername)).wait()
         
         // Examining
-        XCTAssertTrue(articles.count == 1)
-
+        XCTAssertEqual(caseA.count, 1)
+        if let article = caseA.first {
+            XCTAssertFalse(article.favorited)
+            XCTAssertEqual(article.favoritesCount, 1)
+        }else{
+            throw Error("\(targetUsername)'s favorited article is unexpected.")
+        }
+        
+        // Case of specify a reader.
+        let caseB = try manager.selectArticles(condition: .favorite(targetUsername), readIt: readItUser).wait()
+        
+        // Examining
+        XCTAssertEqual(caseB.count, 1)
+        if let article = caseB.first {
+            XCTAssertTrue(article.favorited)
+            XCTAssertEqual(article.favoritesCount, 1)
+        }else{
+            throw Error("\(targetUsername)'s favorited article is unexpected.")
+        }
     }
     
     func testInsertArticle() throws {
@@ -358,7 +387,7 @@ final class MySQLFluentTests: XCTestCase {
         let title = "It's a new post."
         let description = "It's a description for post."
         let body = "It's a body for post."
-        let tags = ["NewPost","Vapor"]
+        let tags = ["Fluent","Swift"]
         
         guard let slug = try? title.convertedToSlug() else{
             XCTFail("Generate slug is failed."); return
@@ -368,45 +397,54 @@ final class MySQLFluentTests: XCTestCase {
         let article = try manager.insertArticle(author: author, title: title, slug: slug, description: description, body: body, tags: tags).wait()
         
         // Examining
-        XCTAssertTrue(article.slug == slug)
-        XCTAssertTrue(article.title == title)
-        XCTAssertTrue(article._description == description)
-        XCTAssertTrue(article.body == body)
-        XCTAssertTrue(article.tagList == tags)
-        
+        XCTAssertEqual(article.slug, slug)
+        XCTAssertEqual(article.title, title)
+        XCTAssertEqual(article._description, description)
+        XCTAssertEqual(article.body, body)
+        XCTAssertEqual(article.tagList, tags)
     }
     
-    func testSelectArticlebySlug() throws {
+    func testSelectArticleBySlug() throws {
         // Variables
         let slug = "slug_1"
-        let readItUser = 2
+        let readItUser = 3
         
         // Querying
         guard let article = try manager.selectArticles( condition: .slug(slug), readIt: readItUser).wait().first else{
-            XCTFail(); return
+            XCTFail("\(slug) is unexpected"); return
         }
         
         // Examining
-        XCTAssertTrue(article.slug == slug)
-        XCTAssertTrue(article.favoritesCount == 1)
-        XCTAssertTrue(article.favorited == false)
+        XCTAssertEqual(article.slug, slug)
+        XCTAssertEqual(article.favoritesCount, 1)
+        XCTAssertTrue(article.favorited)
         XCTAssertTrue(article.author.following)
-        XCTAssertTrue(article.tagList.count == 0)
+        XCTAssertEqual(article.tagList.count, 1)
     }
     
-    func testSelectArticlebySlugUsingFluent() throws {
+    
+    
+    func testSelectArticleBySlugUsingFluent() throws {
         // Variables
         let slug = "slug_1"
         let readItUser = 2
+        let fluent = manager.fluent
         
         // (1)Search Articles
-        guard let article = try Articles.query(on: manager.fluent)
+        guard let article = try Articles.query(on: fluent)
             .filter(\.$slug == slug)
             .all()
             .wait()
             .first else{
             XCTFail(); return
         }
+        
+        // Load parent/childrens
+        try article.$favorites.load(on: fluent)
+            .flatMap{ _ in article.$author.load(on: fluent) }
+            .flatMap{ _ in article.author.$follows.load(on: fluent) }
+            .flatMap{ _ in article.$tags.load(on: fluent) }
+            .wait()
         
         // (2)Search Tags
         let tags = article.tags
@@ -427,21 +465,22 @@ final class MySQLFluentTests: XCTestCase {
         let response = Article(slug: article.slug, title: article.title, _description: article.description, body: article.body, tagList: tags.map{ $0.tag }, createdAt: article.createdAt!, updatedAt: article.updatedAt!, favorited: favorited, favoritesCount: favoritesCount, author: Profile(username: author.username, bio: author.bio, image: author.image, following: following))
         
         // Examining
-        XCTAssertTrue(response.slug == slug)
-        XCTAssertTrue(response.favoritesCount == 1)
-        XCTAssertTrue(response.favorited == false)
-        XCTAssertTrue(response.author.following )
-        XCTAssertTrue(response.tagList.count == 0)
+        XCTAssertEqual(response.slug, slug)
+        XCTAssertEqual(response.favoritesCount, 1)
+        XCTAssertFalse(response.favorited)
+        XCTAssertFalse(response.author.following )
+        XCTAssertEqual(response.tagList.count, 1)
     }
     
-    func testUpdateArticlebySlug() throws {
+    
+    func testUpdateArticleBySlug() throws {
         // Variables
         let readItUser = 1
         let slug = "slug_1"
         let title = "It's a update post."
         let description = "It's a description for update post."
         let body = "It's a body for update post."
-        let tagList = ["Update","Vapor"]
+        let tagList = ["Fluent","Vapor"]
         
         // Search Articles
         guard let article = try Articles.query(on: manager.fluent)
@@ -459,6 +498,7 @@ final class MySQLFluentTests: XCTestCase {
         let _ = try article.update(on: manager.fluent).wait()
         
         // Update Tags
+        try article.$tags.load(on: manager.fluent).wait()
         let tags = article.tags
         
         try tags.filter{ tagList.contains($0.tag) == false }
@@ -472,16 +512,15 @@ final class MySQLFluentTests: XCTestCase {
         }
         
         // Examining
-        XCTAssertTrue(response.slug == slug)
-        XCTAssertTrue(response.title == title)
-        XCTAssertTrue(response._description == description)
-        XCTAssertTrue(response.body == body)
-        XCTAssertTrue(response.tagList == tagList)
+        XCTAssertEqual(response.slug, slug)
+        XCTAssertEqual(response.title, title)
+        XCTAssertEqual(response._description, description)
+        XCTAssertEqual(response.body, body)
+        XCTAssertEqual(response.tagList, tagList)
     }
-    
-    func testDeleteArticlebySlug() throws {
+    func testDeleteArticleBySlug() throws {
         // Variables
-        let slug = "slug_1"
+        let slug = "beDelete"
         
         // Querying
         try manager.deleteArticle(slug: slug).wait()
@@ -495,8 +534,10 @@ final class MySQLFluentTests: XCTestCase {
         // Querying
         let tags = try manager.selectTags().wait()
         // Examing
-        XCTAssertTrue(tags.count == 2)
+        XCTAssertEqual(tags.count, 3)
+        XCTAssertTrue( tags.contains("Vapor") )
+        XCTAssertTrue( tags.contains("Swift") )
+        XCTAssertTrue( tags.contains("Fluent") )
     }
- */
 }
 
