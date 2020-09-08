@@ -34,7 +34,7 @@ public struct ArticlesUseCase: UseCase {
     ///    The `Future` that returns `MultipleArticlesResponse`.
     public func getArticles( author: String? = nil, feeder: Int? = nil, favorited username: String? = nil, tag: String? = nil, offset: Int? = nil, limit: Int? = nil, readingUserId: Int? = nil) -> Future<MultipleArticlesResponse> {
 
-        let condition = { () -> ArticleCondition in
+        let condition: ArticleCondition = {
             if let feeder = feeder { return .feed(feeder) }
             if let author = author { return .author(author) }
             if let username = username { return .favorite(username) }

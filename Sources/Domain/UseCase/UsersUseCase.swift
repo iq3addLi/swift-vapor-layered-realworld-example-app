@@ -31,14 +31,18 @@ public struct UsersUseCase: UseCase {
     /// - returns:
     ///    The `Future` that returns `UserResponse`.
     public func login( form: LoginUser ) -> Future<UserResponse> {
-        let jwt = self.jwt
+        
         // Search User
-        return conduit.authUser(email: form.email, password: form.password)
-            .flatMapThrowing { id, user -> UserResponse in
-                // Issued JWT
-                let token = try jwt.issueJWT(id: id, username: user.username)
-                // Return response
-                return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
+        conduit.authUser(email: form.email, password: form.password)
+            .flatMapThrowing { id, user in
+                UserResponse(user:
+                    User(email: user.email,
+                         token: try self.jwt.issueJWT(id: id, username: user.username),
+                         username: user.username,
+                         bio: user.bio,
+                         image: user.image
+                    )
+                )
             }
     }
 

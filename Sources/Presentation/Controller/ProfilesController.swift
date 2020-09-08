@@ -33,7 +33,6 @@ struct ProfilesController {
         
         // Get parameter by URL
         guard let username = request.parameters.get("username") else{
-            // Error を throw
             fatalError("URL parameters contains mistake.")
         }
         
@@ -58,7 +57,6 @@ struct ProfilesController {
     func follow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         guard let username = request.parameters.get("username") else{
-            // Error を throw
             fatalError("URL parameters contains mistake.")
         }
         
@@ -85,7 +83,6 @@ struct ProfilesController {
     func unfollow(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         guard let username = request.parameters.get("username") else{
-            // Error を throw
             fatalError("URL parameters contains mistake.")
         }
         

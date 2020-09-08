@@ -70,10 +70,9 @@ struct ArticlesController {
             fatalError("Middleware not passed authenticated user.") // Require
         }
         
-        return useCase.postArticle( req.article, author: userId )
-                .flatMapThrowing { article in
-                    try Response( article )
-                }
+        return useCase.postArticle( req.article, author: userId ).flatMapThrowing { article in
+            try Response( article )
+        }
     }
 
     /// GET /articles/:slug
@@ -88,7 +87,6 @@ struct ArticlesController {
         
         // Get parameter by URL
         guard let slug = request.parameters.get("slug") else{
-            // Error を throw
             fatalError("A Request is not contain to slug.")
         }
 
@@ -114,7 +112,6 @@ struct ArticlesController {
         
         // Get parameter by URL
         guard let slug = request.parameters.get("slug") else{
-            // Error を throw
             fatalError("A Request is not contain to slug.")
         }
 
@@ -136,7 +133,6 @@ struct ArticlesController {
     func updateArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         guard let slug = request.parameters.get("slug") else{
-            // Error を throw
             fatalError("A Request is not contain to slug.")
         }
         
@@ -188,7 +184,6 @@ struct ArticlesController {
         
         // Get parameter by URL
         guard let slug = request.parameters.get("slug") else{
-            // Error を throw
             fatalError("A Request is not contain to slug.")
         }
 
@@ -215,7 +210,6 @@ struct ArticlesController {
     func deleteFavorite(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
         guard let slug = request.parameters.get("slug") else{
-            // Error を throw
             fatalError("A Request is not contain to slug.")
         }
 
@@ -243,7 +237,6 @@ struct ArticlesController {
         
         // Get parameter by URL
         guard let slug = request.parameters.get("slug") else{
-            // Error を throw
             fatalError("A Request is not contain to slug.")
         }
 
@@ -266,7 +259,6 @@ struct ArticlesController {
         
         // Get parameter by URL
         guard let slug = request.parameters.get("slug") else{
-            // Error を throw
             fatalError("A Request is not contain to slug.")
         }
 
@@ -299,7 +291,6 @@ struct ArticlesController {
             let str = request.parameters.get("commentId"),
             let commentId = Int(str)
         else{
-            // Error を throw
             fatalError("URL parameters contains mistake.")
         }
         

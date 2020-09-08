@@ -31,10 +31,9 @@ struct UsersController {
         // Get parameter by body
         let req = try request.content.decode(NewUserRequest.self, using: JSONDecoder.custom(dates: .iso8601))
         
-        return try useCase.register(user: req.user)
-            .flatMapThrowing { response in
-                try Response( response )
-            }
+        return try useCase.register(user: req.user).flatMapThrowing { response in
+            try Response( response )
+        }
     }
 
     /// POST /users/login
@@ -48,10 +47,9 @@ struct UsersController {
         // Get parameter by body
         let req = try request.content.decode(LoginUserRequest.self, using: JSONDecoder.custom(dates: .iso8601))
         
-        return useCase.login(form: req.user)
-            .flatMapThrowing { response in
-                try Response( response )
-            }
+        return useCase.login(form: req.user).flatMapThrowing { response in
+            try Response( response )
+        }
     }
 
     /// GET /user
