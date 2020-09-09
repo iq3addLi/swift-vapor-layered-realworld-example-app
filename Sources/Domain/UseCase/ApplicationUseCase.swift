@@ -20,10 +20,6 @@ public struct ApplicationUseCase: UseCase {
     
     /// Default initializer.
     public init() {}
-
-//    deinit{
-//        print("呼ばれた😢")
-//    }
     
     // MARK: Use cases for application
     

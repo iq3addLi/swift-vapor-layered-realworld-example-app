@@ -39,7 +39,6 @@ struct AuthenticateThenSearchUserMiddleware: Middleware {
         do{
             return try useCase.user(by: token)
             .flatMap { id, user in
-
                 // Add ralay service value
                 request.storage[VerifiedUser.Key] = VerifiedUser(
                     id: id,

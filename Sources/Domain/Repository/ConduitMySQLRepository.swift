@@ -97,8 +97,8 @@ struct ConduitMySQLRepository: ConduitRepository {
                 let hash = try PKCS5.PBKDF2(password: Array(password.utf8), salt: Array(salt.utf8), keyLength: 32).calculate().toHexString() // Note: Too late for debug, but not for release.
                 return (salt, hash)
             }
-            .flatMap { saltWithHash in
-                self.database.insertUser(name: username, email: email, hash: saltWithHash.1, salt: saltWithHash.0)
+            .flatMap { salt, hash in
+                self.database.insertUser(name: username, email: email, hash: hash, salt: salt)
             }
             .map { user -> (Int, User) in
                 ( user.id!, User(email: user.email, token: "", username: user.username, bio: user.bio, image: user.image) )
