@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain - Domain</title>
+    <link rel="stylesheet" type="text/css" href="./all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="./">
+            <strong>
+                Domain
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#classes">Classes</a></li><li><a href="#structures">Structures</a></li><li><a href="#enumerations">Enumerations</a></li><li><a href="#typealiases">Typealiases</a></li><li><a href="#functions">Functions</a></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+                <section id="classes">
+        <h2>Classes</h2>
+        <dl>
+            <dt class="class">
+    <a href="./VerifiedUser" title="class - VerifiedUser">
+        Verified​User
+    </a>
+</dt>
+<dd>
+    <p>Authenticated user information.</p>
+
+</dd>
+<dt class="class">
+    <a href="./VerifiedUserEntity" title="class - VerifiedUserEntity">
+        Verified​User​Entity
+    </a>
+</dt>
+<dd>
+    <p>User information in Payload of JWT.</p>
+
+</dd>
+<dt class="class">
+    <a href="./MySQLDatabaseManager" title="class - MySQLDatabaseManager">
+        MySQLDatabase​Manager
+    </a>
+</dt>
+<dd>
+    <p>Class that manages operations to MySQL.</p>
+
+</dd>
+<dt class="class">
+    <a href="./ArticlesAndAuthorWithFavoritedRow" title="class - ArticlesAndAuthorWithFavoritedRow">
+        Articles​And​Author​With​Favorited​Row
+    </a>
+</dt>
+<dd>
+    <p>Representation of a row combining Articles and authors and favorite information about them.</p>
+
+</dd>
+<dt class="class">
+    <a href="./CommentWithAuthorRow" title="class - CommentWithAuthorRow">
+        Comment​With​Author​Row
+    </a>
+</dt>
+<dd>
+    <p>Representation of a row combining Comments and Users.</p>
+
+</dd>
+<dt class="class">
+    <a href="./TagOnlyRow" title="class - TagOnlyRow">
+        Tag​Only​Row
+    </a>
+</dt>
+<dd>
+    <p>Representation of a row of tag.</p>
+
+</dd>
+<dt class="class">
+    <a href="./UserWithFollowRow" title="class - UserWithFollowRow">
+        User​With​Follow​Row
+    </a>
+</dt>
+<dd>
+    <p>Representation of a row combining Users and Follows information about them.</p>
+
+</dd>
+<dt class="class">
+    <a href="./Articles" title="class - Articles">
+        Articles
+    </a>
+</dt>
+<dd>
+    <p>Representation of Articles table.</p>
+
+</dd>
+<dt class="class">
+    <a href="./Comments" title="class - Comments">
+        Comments
+    </a>
+</dt>
+<dd>
+    <p>Representation of Comments table</p>
+
+</dd>
+<dt class="class">
+    <a href="./Favorites" title="class - Favorites">
+        Favorites
+    </a>
+</dt>
+<dd>
+    <p>Representation of Favorites table.</p>
+
+</dd>
+<dt class="class">
+    <a href="./Follows" title="class - Follows">
+        Follows
+    </a>
+</dt>
+<dd>
+    <p>Representation of Follows table.</p>
+
+</dd>
+<dt class="class">
+    <a href="./Tags" title="class - Tags">
+        Tags
+    </a>
+</dt>
+<dd>
+    <p>Representation of Tags table</p>
+
+</dd>
+<dt class="class">
+    <a href="./Users" title="class - Users">
+        Users
+    </a>
+</dt>
+<dd>
+    <p>Representation of Users table.</p>
+
+</dd>
+        </dl>
+    </section>
+    <section id="structures">
+        <h2>Structures</h2>
+        <dl>
+            <dt class="structure">
+    <a href="./SessionPayload" title="structure - SessionPayload">
+        Session​Payload
+    </a>
+</dt>
+<dd>
+    <p>The payload part of JWT.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./VerifiedUser_Key" title="structure - VerifiedUser.Key">
+        Verified​User.​Key
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
+    <a href="./VerifiedUserEntity_Key" title="structure - VerifiedUserEntity.Key">
+        Verified​User​Entity.​Key
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="structure">
+    <a href="./LoginUser" title="structure - LoginUser">
+        Login​User
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./LoginUserRequest" title="structure - LoginUserRequest">
+        Login​User​Request
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./NewArticle" title="structure - NewArticle">
+        New​Article
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./NewArticleRequest" title="structure - NewArticleRequest">
+        New​Article​Request
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./NewComment" title="structure - NewComment">
+        New​Comment
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./NewCommentRequest" title="structure - NewCommentRequest">
+        New​Comment​Request
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./NewUser" title="structure - NewUser">
+        New​User
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./NewUserRequest" title="structure - NewUserRequest">
+        New​User​Request
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./UpdateArticle" title="structure - UpdateArticle">
+        Update​Article
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./UpdateArticleRequest" title="structure - UpdateArticleRequest">
+        Update​Article​Request
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./UpdateUser" title="structure - UpdateUser">
+        Update​User
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./UpdateUserRequest" title="structure - UpdateUserRequest">
+        Update​User​Request
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./Article" title="structure - Article">
+        Article
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./Comment" title="structure - Comment">
+        Comment
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./EmptyResponse" title="structure - EmptyResponse">
+        Empty​Response
+    </a>
+</dt>
+<dd>
+    <p>Response expressing that there is an empty JSON body.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./GenericErrorModel" title="structure - GenericErrorModel">
+        Generic​Error​Model
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./GenericErrorModelErrors" title="structure - GenericErrorModelErrors">
+        Generic​Error​Model​Errors
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./HTTPErrorResponse" title="structure - HTTPErrorResponse">
+        HTTPError​Response
+    </a>
+</dt>
+<dd>
+    <p>Response for expressing HTTPResponse in JSON body.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./MultipleArticlesResponse" title="structure - MultipleArticlesResponse">
+        Multiple​Articles​Response
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./MultipleCommentsResponse" title="structure - MultipleCommentsResponse">
+        Multiple​Comments​Response
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./Profile" title="structure - Profile">
+        Profile
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./ProfileResponse" title="structure - ProfileResponse">
+        Profile​Response
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./SingleArticleResponse" title="structure - SingleArticleResponse">
+        Single​Article​Response
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./SingleCommentResponse" title="structure - SingleCommentResponse">
+        Single​Comment​Response
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./TagsResponse" title="structure - TagsResponse">
+        Tags​Response
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./User" title="structure - User">
+        User
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./UserResponse" title="structure - UserResponse">
+        User​Response
+    </a>
+</dt>
+<dd>
+    <p>see https://github.com/gothinkster/realworld/blob/master/api/swagger.json</p>
+
+</dd>
+<dt class="structure">
+    <a href="./APICollection" title="structure - APICollection">
+        APICollection
+    </a>
+</dt>
+<dd>
+    <p>Order for defining routing.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./ValidationError" title="structure - ValidationError">
+        Validation​Error
+    </a>
+</dt>
+<dd>
+    <p>Error expressing Validation result according to Realworld specification.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./ApplicationUseCase" title="structure - ApplicationUseCase">
+        Application​Use​Case
+    </a>
+</dt>
+<dd>
+    <p>Use cases for starting server applications.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./ArticlesUseCase" title="structure - ArticlesUseCase">
+        Articles​Use​Case
+    </a>
+</dt>
+<dd>
+    <p>Use cases for Articles.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./AuthenticateMiddlewareUseCase" title="structure - AuthenticateMiddlewareUseCase">
+        Authenticate​Middleware​Use​Case
+    </a>
+</dt>
+<dd>
+    <p>Use cases for authentication middlewares.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./ProfilesUseCase" title="structure - ProfilesUseCase">
+        Profiles​Use​Case
+    </a>
+</dt>
+<dd>
+    <p>Use cases for Profiles</p>
+
+</dd>
+<dt class="structure">
+    <a href="./TagsUseCase" title="structure - TagsUseCase">
+        Tags​Use​Case
+    </a>
+</dt>
+<dd>
+    <p>Use cases for Tags.</p>
+
+</dd>
+<dt class="structure">
+    <a href="./UsersUseCase" title="structure - UsersUseCase">
+        Users​Use​Case
+    </a>
+</dt>
+<dd>
+    <p>Use cases for Users.</p>
+
+</dd>
+        </dl>
+    </section>
+    <section id="enumerations">
+        <h2>Enumerations</h2>
+        <dl>
+            <dt class="enumeration">
+    <a href="./NewArticle_CodingKeys" title="enumeration - NewArticle.CodingKeys">
+        New​Article.​Coding​Keys
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
+    <a href="./UpdateArticle_CodingKeys" title="enumeration - UpdateArticle.CodingKeys">
+        Update​Article.​Coding​Keys
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
+    <a href="./Article_CodingKeys" title="enumeration - Article.CodingKeys">
+        Article.​Coding​Keys
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
+    <a href="./Comment_CodingKeys" title="enumeration - Comment.CodingKeys">
+        Comment.​Coding​Keys
+    </a>
+</dt>
+<dd>
+    
+</dd>
+<dt class="enumeration">
+    <a href="./ArticleCondition" title="enumeration - ArticleCondition">
+        Article​Condition
+    </a>
+</dt>
+<dd>
+    <p>An enum that expresses conditions when searching for articles.</p>
+
+</dd>
+<dt class="enumeration">
+    <a href="./HTTPMethodInDomain" title="enumeration - HTTPMethodInDomain">
+        HTTPMethod​InDomain
+    </a>
+</dt>
+<dd>
+    <p>HTTPMethod in domain.</p>
+
+</dd>
+<dt class="enumeration">
+    <a href="./RawSQLQueries" title="enumeration - RawSQLQueries">
+        Raw​SQLQueries
+    </a>
+</dt>
+<dd>
+    <p>Object that generates raw SQL.</p>
+
+</dd>
+        </dl>
+    </section>
+    <section id="typealiases">
+        <h2>Typealiases</h2>
+        <dl>
+            <dt class="typealias">
+    <a href="./Future" title="typealias - Future">
+        Future
+    </a>
+</dt>
+<dd>
+    <p>Convenience shorthand for <code>EventLoopFuture</code>.</p>
+
+</dd>
+<dt class="typealias">
+    <a href="./Promise" title="typealias - Promise">
+        Promise
+    </a>
+</dt>
+<dd>
+    <p>Convenience shorthand for <code>EventLoopPromise</code>.</p>
+
+</dd>
+        </dl>
+    </section>
+    <section id="functions">
+        <h2>Functions</h2>
+        <dl>
+            <dt class="function">
+    <a href="./applciationMain()" title="function - applciationMain()">
+        applciation​Main()
+    </a>
+</dt>
+<dd>
+    <p>This application is start here🏃‍♂️</p>
+
+</dd>
+        </dl>
+    </section>
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2020-09-09T14:57:50+0900">2020年9月9日</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.3</span>.
+</p>
+    </footer>
+</body>
+</html>

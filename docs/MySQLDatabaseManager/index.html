@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain - MySQLDatabaseManager</title>
+    <link rel="stylesheet" type="text/css" href="./all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="./">
+            <strong>
+                Domain
+            </strong>
+            <span>Documentation</span>
+        </a>
+        <sup>Beta</sup>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#mysqldatabasemanager.init(hostname:port:username:password:database:tlsconfiguration:maxconnectionspereventloop:connectionpooltimeout:encoder:decoder:)">init(hostname:​port:​username:​password:​database:​tls​Configuration:​max​Connections​Per​Event​Loop:​connection​Pool​Timeout:​encoder:​decoder:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#mysqldatabasemanager.environmental">environmental</a></li><li class="variable"><a href="#mysqldatabasemanager.fluent">fluent</a></li><li class="variable"><a href="#mysqldatabasemanager.mysql">mysql</a></li><li class="variable"><a href="#mysqldatabasemanager.sql">sql</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Class</small>
+    <code class="name">MySQLDatabase​Manager</code>
+</h1>
+
+<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="attribute">final</span> <span class="keyword">class</span> <span class="type">MySQLDatabaseManager</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Class that manages operations to MySQL.</p>
+
+</div>
+
+    <section id="initializers">
+        <h2>Initializers</h2>
+
+        <div role="article" class="initializer" id="mysqldatabasemanager.init(hostname:port:username:password:database:tlsconfiguration:maxconnectionspereventloop:connectionpooltimeout:encoder:decoder:)">
+    <h3>
+        <code>init(hostname:​port:​username:​password:​database:​tls​Configuration:​max​Connections​Per​Event​Loop:​connection​Pool​Timeout:​encoder:​decoder:​)</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">hostname</span>: <span class="type">String</span>, <span class="variable">port</span>: <span class="type">Int</span> = <span class="number literal">3306</span>, <span class="variable">username</span>: <span class="type">String</span>, <span class="variable">password</span>: <span class="type">String</span>, <span class="variable">database</span>: <span class="type">String</span>, <span class="variable">tlsConfiguration</span>: <span class="type">TLSConfiguration</span>? = .<span class="variable">forClient</span>(<span class="variable">certificateVerification</span>: .<span class="variable">none</span>), <span class="variable">maxConnectionsPerEventLoop</span>: <span class="type">Int</span> = <span class="number literal">1</span>, <span class="variable">connectionPoolTimeout</span>: <span class="type">NIO</span>.<span class="type">TimeAmount</span> = .<span class="variable">seconds</span>(<span class="number literal">10</span>), <span class="variable">encoder</span>: <span class="type">MySQLDataEncoder</span> = .<span class="variable">init</span>(), <span class="variable">decoder</span>: <span class="type">MySQLDataDecoder</span> = .<span class="variable">init</span>())</code></pre></body></html>
+</div>
+    </section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="variable" id="mysqldatabasemanager.environmental">
+    <h3>
+        <code>environmental</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">environmental</span>: <span class="keyword">Self</span></code></pre></body></html>
+<div class="summary" role="doc-abstract">
+    <p>Standard global instance of this class.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="mysqldatabasemanager.fluent">
+    <h3>
+        <code>fluent</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">fluent</span>: <span class="type">FluentKit</span>.<span class="type">Database</span></code></pre></body></html>
+</div>
+<div role="article" class="variable" id="mysqldatabasemanager.mysql">
+    <h3>
+        <code>mysql</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">mysql</span>: <span class="type">MySQLNIO</span>.<span class="type">MySQLDatabase</span></code></pre></body></html>
+</div>
+<div role="article" class="variable" id="mysqldatabasemanager.sql">
+    <h3>
+        <code>sql</code>
+    </h3>
+    <html><body><pre class="highlight"><code><span class="keyword">var</span> <span class="variable">sql</span>: <span class="type">SQLKit</span>.<span class="type">SQLDatabase</span></code></pre></body></html>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2020-09-09T14:57:51+0900">2020年9月9日</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.3</span>.
+</p>
+    </footer>
+</body>
+</html>

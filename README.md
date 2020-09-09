@@ -1,4 +1,4 @@
-[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.1-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/docs)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
+[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.2-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-4-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/docs)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
 
 # ![RealWorld Example App](logo.png)
 
@@ -22,7 +22,7 @@ For more information on how to this works with other frontends/backends, head ov
 ### Precondition
 
 * Your platform is Linux or Mac.
-* Swift 5.1.1 or over than is installed.
+* Swift 5.2 or over than is installed.
 * Docker is installed.
 
 ### Build RealWorld App
