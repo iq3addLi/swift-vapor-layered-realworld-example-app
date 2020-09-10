@@ -44,7 +44,7 @@ struct AuthenticateOptionalMiddleware: Middleware {
         do {
             payload = try useCase.payload(by: jwt)
         }catch{
-            return request.eventLoop.makeFailedFuture(Error("failed"))
+            return request.eventLoop.makeFailedFuture(Error("\(error.localizedDescription)"))
         }
         
         // stored relay service value

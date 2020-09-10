@@ -35,12 +35,12 @@ struct JWTWithVaporRepository: JWTRepository {
     /// - returns:
     ///    JWT as `String`.
     func issueJWT( id: Int, username: String ) throws -> String {
-        // create payload
-        let payload = SessionPayload(id: id, username: username, expireAfterSec: 60 * 60 * 24)
         // create JWT and sign
-        let token = try JWTSigner.hs256(key: secret.bytes).sign(payload)
-        
-        return token
+        try JWTSigner
+            .hs256(key: secret.bytes)
+            .sign(
+            SessionPayload(id: id, username: username, expireAfterSec: 60 * 60 * 24)
+        )
     }
 
     /// verify a JWT.
@@ -51,6 +51,6 @@ struct JWTWithVaporRepository: JWTRepository {
     ///    A payload section of JWT as `SessionPayload`.
     func verifyJWT( token: String ) throws -> SessionPayload {
         // Verify and expand
-        return try JWTSigner.hs256(key: secret.bytes).verify(token, as: SessionPayload.self)
+        try JWTSigner.hs256(key: secret.bytes).verify(token, as: SessionPayload.self)
     }
 }

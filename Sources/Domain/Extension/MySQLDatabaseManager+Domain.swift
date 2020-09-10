@@ -402,10 +402,9 @@ extension MySQLDatabaseManager {
     ///    The `Future` that returns `Article`.
     func updateArticle(slug: String, title: String?, description: String?, body: String?, tagList: [String]?, readIt userId: Int?) -> Future<Article> {
         
-        let fluent = self.fluent
-        
         // Define update article process
-        let updating = Articles
+        let updateArticles = { fluent in
+            Articles
                 .query(on: fluent)
                 .filter(\.$slug == slug)
                 .all()
@@ -424,6 +423,7 @@ extension MySQLDatabaseManager {
                         .update(on: fluent)
                         .map{ article }
                 }
+        }
         
         // Define finishing process
         let getArticles: () -> Future<[Article]> = { [weak self] in
@@ -438,25 +438,30 @@ extension MySQLDatabaseManager {
         
         // case of no tags updating
         guard let tagStrings = tagList else {
-            return fluent.transaction{ _ in updating }
+            return fluent.transaction( updateArticles )
                 .map{ _ in return }
                 .flatMap( getArticles )
                 .flatMapThrowing( pickArticle )
         }
 
         // case of has tags updating
-        let eventLoop = updating.eventLoop
         return fluent.transaction{ fluent in
-            updating
-                .flatMap { articles in
-                    let tags = articles.tags
+            
+                var article: Articles?
+                return updateArticles( fluent )
+                .flatMap { a -> EventLoopFuture<Void> in
+                    article = a
+                    return a.$tags.load(on: fluent)
+                }
+                .flatMap { _ -> EventLoopFuture<Void> in
+                    let tags = article!.tags
                     let deletings = tags
                                         .filter { tagStrings.contains($0.tag) == false }
                                         .map { $0.delete(on: fluent) }
                     let insertings = tagStrings
                                         .filter { tags.map { $0.tag }.contains($0) == false }
-                                        .map { Tags(id: nil, article: articles.id!, tag: $0).save(on: fluent) }
-                    return (deletings + insertings).serializedFuture() ?? eventLoop.makeSucceededFuture(Void())
+                                        .map { Tags(id: nil, article: article!.id!, tag: $0).save(on: fluent) }
+                    return (deletings + insertings).serializedFuture() ?? fluent.eventLoop.makeSucceededFuture(Void())
                 }
             }
             .flatMap( getArticles )
