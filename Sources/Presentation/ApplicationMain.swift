@@ -40,7 +40,7 @@ public func applciationMain() throws {
         // Profile
         .init(method: .get, paths: ["profiles", ":username"], closure: profiles.getProfile, middlewares: [authOptional]  ),
         .init(method: .post, paths: ["profiles", ":username", "follow"], closure: profiles.follow, middlewares: [authThenExpandPayload]  ),
-        .init(method: .delete, paths: ["profiles", ":username", "follow"], closure: profiles.unfollow, middlewares: [authThenExpandPayload]  ),
+        .init(method: .delete, paths: ["profiles", ":username", "follow"], closure: profiles.unfollow, middlewares: [authThenExpandPayload] ),
 
         // Articles
         .init(method: .get, paths: ["articles"], closure: articles.getArticles, middlewares: [authOptional] ),

@@ -70,27 +70,8 @@ class VaporApplicationRepository: RESTApplicationRepository {
     }
     
     /// Start `Vapor.Application`.
-    /// - Parameters:
-    ///   - hostname: Host name where the server starts. ex. `"127.0.0.1"`.
-    ///   - port: Server port number. ex. `80`.
-    /// - throws:
-    ///    See `Application.init(config:environment:services:)`.
+    /// - Throws: See `Application.init(config:environment:services:)`.
     func applicationLaunch() throws {
-        
-        // read hostname and port from environment
-        guard
-            let hostname = Environment.get("HOSTNAME"),
-            let portStr = Environment.get("PORT"), let port = Int(portStr) else {
-            throw Error("Your environment not contain HOSTNAME or PORT.")
-        }
-        
-        // Set server config
-        application.http.server.configuration = HTTPServer.Configuration(
-            hostname: hostname,
-            port: port
-        )
-        
-        // Application launch
         try application.run()
     }
     

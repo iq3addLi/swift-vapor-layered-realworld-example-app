@@ -37,3 +37,17 @@ extension HTTPHeaders {
         }
     }
 }
+
+
+import NIOHTTP1
+
+extension HTTPHeaders{
+    
+    public static var jsonType: Self {
+        Self([(HTTPHeaders.Name.contentType.description, HTTPMediaType.json.serialize())])
+    }
+    
+    public static var plainTextType: Self {
+        Self([(HTTPHeaders.Name.contentType.description, HTTPMediaType.plainText.serialize())])
+    }
+}

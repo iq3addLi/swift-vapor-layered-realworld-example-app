@@ -48,8 +48,7 @@ extension MySQLDatabaseManager {
         Users
             .query(on: fluent)
             .filter(\.$email == email)
-            .all()
-            .map { $0.first }
+            .first()
     }
     
     /// Returns the result of querying MySQL Database for Users.
@@ -61,8 +60,7 @@ extension MySQLDatabaseManager {
         Users
             .query(on: fluent)
             .filter(\.$id == id)
-            .all()
-            .map { $0.first }
+            .first()
     }
     
     /// Returns the result of querying MySQL Database for Users.
@@ -75,8 +73,7 @@ extension MySQLDatabaseManager {
         Users
             .query(on: fluent)
             .filter(\.$username == username)
-            .all()
-            .map { $0.first }
+            .first()
     }
     
     /// Insert Users into MySQL Database.
@@ -325,8 +322,7 @@ extension MySQLDatabaseManager {
         fluent.transaction { fluent in
             (fluent as! SQLDatabase)
             .raw( SQLQueryString(RawSQLQueries.deleteComments( id: commentId )) )
-            .all()
-            .map { _ in return }
+            .run()
         }
     }
     
@@ -477,8 +473,7 @@ extension MySQLDatabaseManager {
         fluent.transaction { database in
             (database as! SQLDatabase)
                 .raw( SQLQueryString( RawSQLQueries.deleteArticles(slug: slug)) )
-                .all()
-                .map { _ in return }
+                .run()
         }
     }
     /// Query MySQL Database for all tags.

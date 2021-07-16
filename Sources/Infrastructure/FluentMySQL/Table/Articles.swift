@@ -6,6 +6,7 @@
 //
 
 import FluentKit
+import struct Foundation.Date
 
 /// Representation of Articles table.
 ///

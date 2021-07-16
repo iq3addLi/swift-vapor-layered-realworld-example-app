@@ -13,9 +13,7 @@ public final class MySQLDatabaseManager {
     
     // MARK: Properties
     private let databases: Databases
-    
     private let databaseId: DatabaseID
-    
     private let logger: Logger = Logger(label: "li.addr.MySQLDatabaseManager")
     
     public init(
@@ -32,9 +30,7 @@ public final class MySQLDatabaseManager {
     ){
         let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
         let threadPool = NIOThreadPool(numberOfThreads: System.coreCount)
-        
         let databases = Databases(threadPool: threadPool, on: eventLoopGroup)
-        
         let databaseId = DatabaseID(string: database)
         
         databases.use(
@@ -65,6 +61,10 @@ public final class MySQLDatabaseManager {
 
 extension MySQLDatabaseManager{
     
+    
+    /// database connection with fleunt
+    ///
+    /// Refer to it when you need to connect to the database. Otherwise, an unnecessary connection will be generated.
     public var fluent: FluentKit.Database {
         let eventLoop = databases.eventLoopGroup.next()
         guard let database = databases.database(databaseId, logger: logger, on: eventLoop) else{
@@ -75,14 +75,14 @@ extension MySQLDatabaseManager{
     
     public var mysql: MySQLNIO.MySQLDatabase {
         guard let mysql = self.fluent as? MySQLDatabase else{
-            fatalError("Cast failed. Check for Vapor implementation?")
+            fatalError("Cast failed. Please check that Vapor implementation.")
         }
         return mysql
     }
     
     public var sql: SQLKit.SQLDatabase {
         guard let sql = self.fluent as? SQLDatabase else{
-            fatalError("Cast failed. Check for Vapor implementation?")
+            fatalError("Cast failed. Please check that Vapor implementation.")
         }
         return sql
     }

@@ -142,7 +142,7 @@ extension MySQLDatabaseManager {
     func isUnique(username: String) -> Future<ValidateIssue?> {
         selectUser(username: username)
             .map {
-                $0 == nil ? ValidateIssue(key: "username", report: "has already been taken" ) : nil
+                $0 == nil ? nil : ValidateIssue(key: "username", report: "has already been taken" )
             }
     }
 
@@ -153,7 +153,7 @@ extension MySQLDatabaseManager {
     func isUnique(email: String) -> Future<ValidateIssue?> {
         selectUser(email: email)
             .map {
-                $0 == nil ? ValidateIssue(key: "email", report: "has already been taken" ) : nil
+                $0 == nil ? nil : ValidateIssue(key: "email", report: "has already been taken" )
             }
     }
 }

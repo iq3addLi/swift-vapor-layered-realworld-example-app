@@ -1,10 +1,10 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.4
 import PackageDescription
 
 let package = Package(
     name: "swift-vapor-layered-realworld-example",
     platforms: [
-        .macOS(.v10_15)
+        .macOS(.v11)
     ],
     products: [
         .executable(name: "realworld", targets: ["realworld"]),
@@ -44,7 +44,7 @@ let package = Package(
         .target(name: "Presentation", dependencies: [
             .target(name: "Domain"),
         ]),
-        .target(name: "realworld", dependencies: [
+        .executableTarget(name: "realworld", dependencies: [
             .target(name: "Presentation"),
         ]),
         .testTarget(name: "AppTests", dependencies: [
