@@ -14,7 +14,6 @@
             </strong>
             <span>Documentation</span>
         </a>
-        <sup>Beta</sup>
     </header>
 
     <!--
@@ -37,7 +36,9 @@
     <code class="name">Raw​SQLQueries</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">RawSQLQueries</span></code></pre></body></html>
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">RawSQLQueries</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Object that generates raw SQL.</p>
 
@@ -78,9 +79,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 
         <div role="article" class="function" id="rawsqlqueries.selectarticles(condition:readit:offset:limit:)">
     <h3>
-        <code>select​Articles(condition:​read​It:​offset:​limit:​)</code>
+        <code><a href="#rawsqlqueries.selectarticles(condition:readit:offset:limit:)">select​Articles(condition:​read​It:​offset:​limit:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectArticles</span>(<span class="variable">condition</span>: <a href="./ArticleCondition"><span class="type">ArticleCondition</span></a>, <span class="variable">readIt</span> <span class="variable">userId</span>: <span class="type">Int</span>?, <span class="variable">offset</span>: <span class="type">Int</span>? = <span class="keyword">nil</span>, <span class="variable">limit</span>: <span class="type">Int</span>? = <span class="keyword">nil</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectArticles</span>(<span class="variable">condition</span>: <a href="./ArticleCondition"><span class="type">ArticleCondition</span></a>, <span class="variable">readIt</span> <span class="variable">userId</span>: <span class="type">Int</span>?, <span class="variable">offset</span>: <span class="type">Int</span>? = <span class="keyword">nil</span>, <span class="variable">limit</span>: <span class="type">Int</span>? = <span class="keyword">nil</span>) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Inquires about articles according to the argument conditions.</p>
 
@@ -128,9 +131,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.deletearticles(slug:)">
     <h3>
-        <code>delete​Articles(slug:​)</code>
+        <code><a href="#rawsqlqueries.deletearticles(slug:)">delete​Articles(slug:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteArticles</span>(<span class="variable">slug</span>: <span class="type">String</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteArticles</span>(<span class="variable">slug</span>: <span class="type">String</span>) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. It deletes an article and related tags and favorite information.</p>
 
@@ -160,9 +165,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.selectuser(name:follower:)">
     <h3>
-        <code>select​User(name:​follower:​)</code>
+        <code><a href="#rawsqlqueries.selectuser(name:follower:)">select​User(name:​follower:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectUser</span>(<span class="variable">name</span>: <span class="type">String</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>?) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectUser</span>(<span class="variable">name</span>: <span class="type">String</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>?) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Inquiries about users and their follow-up information.</p>
 
@@ -198,9 +205,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.selectuser(id:follower:)">
     <h3>
-        <code>select​User(id:​follower:​)</code>
+        <code><a href="#rawsqlqueries.selectuser(id:follower:)">select​User(id:​follower:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectUser</span>(<span class="variable">id</span> <span class="variable">userId</span>: <span class="type">Int</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>?) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectUser</span>(<span class="variable">id</span> <span class="variable">userId</span>: <span class="type">Int</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>?) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Inquiries about users and their follow-up information.</p>
 
@@ -236,9 +245,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.selectcomments(for:readit:)">
     <h3>
-        <code>select​Comments(for:​read​It:​)</code>
+        <code><a href="#rawsqlqueries.selectcomments(for:readit:)">select​Comments(for:​read​It:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectComments</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">readIt</span> <span class="variable">userId</span>: <span class="type">Int</span>? = <span class="keyword">nil</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectComments</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">readIt</span> <span class="variable">userId</span>: <span class="type">Int</span>? = <span class="keyword">nil</span>) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Get comments associated with an article.</p>
 
@@ -274,9 +285,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.insertcomments(for:body:author:)">
     <h3>
-        <code>insert​Comments(for:​body:​author:​)</code>
+        <code><a href="#rawsqlqueries.insertcomments(for:body:author:)">insert​Comments(for:​body:​author:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">insertComments</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">body</span>: <span class="type">String</span>, <span class="variable">author</span> <span class="variable">userId</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">insertComments</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">body</span>: <span class="type">String</span>, <span class="variable">author</span> <span class="variable">userId</span>: <span class="type">Int</span> ) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Inserts a comment associated with an article.</p>
 
@@ -318,9 +331,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.deletecomments(id:)">
     <h3>
-        <code>delete​Comments(id:​)</code>
+        <code><a href="#rawsqlqueries.deletecomments(id:)">delete​Comments(id:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteComments</span>(<span class="variable">id</span> <span class="variable">commentId</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteComments</span>(<span class="variable">id</span> <span class="variable">commentId</span>: <span class="type">Int</span> ) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Delete the comment.</p>
 
@@ -350,9 +365,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.insertfollows(followee:follower:)">
     <h3>
-        <code>insert​Follows(followee:​follower:​)</code>
+        <code><a href="#rawsqlqueries.insertfollows(followee:follower:)">insert​Follows(followee:​follower:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">insertFollows</span>(<span class="variable">followee</span> <span class="variable">username</span>: <span class="type">String</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">insertFollows</span>(<span class="variable">followee</span> <span class="variable">username</span>: <span class="type">String</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Insert follow information associated with a user.</p>
 
@@ -388,9 +405,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.deletefollows(followee:follower:)">
     <h3>
-        <code>delete​Follows(followee:​follower:​)</code>
+        <code><a href="#rawsqlqueries.deletefollows(followee:follower:)">delete​Follows(followee:​follower:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteFollows</span>(<span class="variable">followee</span> <span class="variable">username</span>: <span class="type">String</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteFollows</span>(<span class="variable">followee</span> <span class="variable">username</span>: <span class="type">String</span>, <span class="variable">follower</span> <span class="variable">id</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Delete follow information associated with a user.</p>
 
@@ -426,9 +445,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.insertfavorites(for:by:)">
     <h3>
-        <code>insert​Favorites(for:​by:​)</code>
+        <code><a href="#rawsqlqueries.insertfavorites(for:by:)">insert​Favorites(for:​by:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">insertFavorites</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">by</span> <span class="variable">userId</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">insertFavorites</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">by</span> <span class="variable">userId</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. Inserts favorite information associated with an article.</p>
 
@@ -464,9 +485,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.deletefavorites(for:by:)">
     <h3>
-        <code>delete​Favorites(for:​by:​)</code>
+        <code><a href="#rawsqlqueries.deletefavorites(for:by:)">delete​Favorites(for:​by:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteFavorites</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">by</span> <span class="variable">userId</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">deleteFavorites</span>(<span class="variable">for</span> <span class="variable">articleSlug</span>: <span class="type">String</span>, <span class="variable">by</span> <span class="variable">userId</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. This deletes favorite information associated with an article.</p>
 
@@ -502,9 +525,11 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 </div>
 <div role="article" class="function" id="rawsqlqueries.selecttags()">
     <h3>
-        <code>select​Tags()</code>
+        <code><a href="#rawsqlqueries.selecttags()">select​Tags()</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectTags</span>() -&gt; <span class="type">String</span></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">func</span> <span class="function">selectTags</span>() -&gt; <span class="type">String</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Returns the query. It returns the tag registered in the database as unique.</p>
 
@@ -522,7 +547,7 @@ There is also a growing need to adopt KVS. Database that interacts directly with
 
     <footer>
         <p>
-    Generated on <time datetime="2020-09-09T14:57:50+0900">2020年9月9日</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.3</span>.
+    Generated on <time datetime="2021-07-16T20:58:05+0900">July 16, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>

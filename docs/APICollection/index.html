@@ -14,7 +14,6 @@
             </strong>
             <span>Documentation</span>
         </a>
-        <sup>Beta</sup>
     </header>
 
     <!--
@@ -37,7 +36,9 @@
     <code class="name">APICollection</code>
 </h1>
 
-<html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">APICollection</span></code></pre></body></html>
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">APICollection</span>  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Order for defining routing.</p>
 
@@ -56,9 +57,14 @@
 
         <div role="article" class="initializer" id="apicollection.init(method:paths:closure:middlewares:)">
     <h3>
-        <code>init(method:​paths:​closure:​middlewares:​)</code>
+        <code><a href="#apicollection.init(method:paths:closure:middlewares:)">init(method:​paths:​closure:​middlewares:​)</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">method</span>: <a href="./HTTPMethodInDomain"><span class="type">HTTPMethodInDomain</span></a>, <span class="variable">paths</span>: [<span class="type">PathComponent</span>], <span class="variable">closure</span>: <span class="attribute">@</span><span class="attribute">escaping</span> (<span class="type">Request</span>) <span class="keyword">throws</span> -&gt; <a href="./Future"><span class="type">Future</span></a>&lt;<span class="type">Response</span>&gt;, <span class="variable">middlewares</span>: [<span class="type">Middleware</span>] = [])</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">method</span>: <a href="./HTTPMethodInDomain"><span class="type">HTTPMethodInDomain</span></a>,
+                <span class="variable">paths</span>: [<span class="type">PathComponent</span>],
+                <span class="variable">closure</span>: <span class="attribute">@</span><span class="attribute">escaping</span> (<span class="type">Request</span>) <span class="keyword">throws</span> -&gt; <span class="type">Future</span>&lt;<span class="type">Response</span>&gt;,
+                <span class="variable">middlewares</span>: [<span class="type">Middleware</span>] = [])  </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Default initializer.</p>
 
@@ -107,9 +113,11 @@
 
         <div role="article" class="variable" id="apicollection.method">
     <h3>
-        <code>method</code>
+        <code><a href="#apicollection.method">method</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">method</span>: <a href="./HTTPMethodInDomain"><span class="type">HTTPMethodInDomain</span></a></code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">method</span>: <a href="./HTTPMethodInDomain"><span class="type">HTTPMethodInDomain</span></a></body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>HTTPMethod to which API responds.</p>
 
@@ -117,9 +125,11 @@
 </div>
 <div role="article" class="variable" id="apicollection.paths">
     <h3>
-        <code>paths</code>
+        <code><a href="#apicollection.paths">paths</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">paths</span>: [<span class="type">PathComponent</span>]</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">paths</span>: [<span class="type">PathComponent</span>] </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>See <code>PathComponentsRepresentable</code>.</p>
 
@@ -127,9 +137,11 @@
 </div>
 <div role="article" class="variable" id="apicollection.closure">
     <h3>
-        <code>closure</code>
+        <code><a href="#apicollection.closure">closure</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">closure</span>: (<span class="type">Request</span>) <span class="keyword">throws</span> -&gt; <a href="./Future"><span class="type">Future</span></a>&lt;<span class="type">Response</span>&gt;</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">closure</span>: (<span class="type">Request</span>) <span class="keyword">throws</span> -&gt; <span class="type">Future</span>&lt;<span class="type">Response</span>&gt;</body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>API processing.</p>
 
@@ -137,9 +149,11 @@
 </div>
 <div role="article" class="variable" id="apicollection.middlewares">
     <h3>
-        <code>middlewares</code>
+        <code><a href="#apicollection.middlewares">middlewares</a></code>
     </h3>
-    <html><body><pre class="highlight"><code><span class="keyword">let</span> <span class="variable">middlewares</span>: [<span class="type">Middleware</span>]</code></pre></body></html>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">middlewares</span>: [<span class="type">Middleware</span>] </body></html></code></pre>
+</div>
 <div class="summary" role="doc-abstract">
     <p>Middleware that performs processing between Framework and Controller.</p>
 
@@ -154,7 +168,7 @@
 
     <footer>
         <p>
-    Generated on <time datetime="2020-09-09T14:57:49+0900">2020年9月9日</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-beta.3</span>.
+    Generated on <time datetime="2021-07-16T20:58:05+0900">July 16, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
 </p>
     </footer>
 </body>
