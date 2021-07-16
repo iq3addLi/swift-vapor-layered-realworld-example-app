@@ -5,7 +5,8 @@
 //  Created by iq3AddLi on 2019/10/03.
 //
 
-import JWT
+import Foundation
+import JWTKit
 
 /// JWTRepository implemented in vapor/jwt-kit.
 struct JWTWithVaporRepository: JWTRepository {
@@ -34,18 +35,12 @@ struct JWTWithVaporRepository: JWTRepository {
     /// - returns:
     ///    JWT as `String`.
     func issueJWT( id: Int, username: String ) throws -> String {
-
-        // create payload
-        let payload = SessionPayload(id: id, username: username, expireAfterSec: 60 * 60 * 24)
-
         // create JWT and sign
-        let data = try JWT(payload: payload).sign(using: .hs256(key: secret))
-
-        // Encoding to string and return
-        guard let token =  String(data: data, encoding: .utf8) else {
-            throw Error("JWT crypted data is encoding failed.")
-        }
-        return token
+        try JWTSigner
+            .hs256(key: secret.bytes)
+            .sign(
+            SessionPayload(id: id, username: username, expireAfterSec: 60 * 60 * 24)
+        )
     }
 
     /// verify a JWT.
@@ -56,6 +51,6 @@ struct JWTWithVaporRepository: JWTRepository {
     ///    A payload section of JWT as `SessionPayload`.
     func verifyJWT( token: String ) throws -> SessionPayload {
         // Verify and expand
-        return try JWT<SessionPayload>(from: token, verifiedUsing: .hs256(key: secret)).payload
+        try JWTSigner.hs256(key: secret.bytes).verify(token, as: SessionPayload.self)
     }
 }

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain - APICollection</title>
+    <link rel="stylesheet" type="text/css" href="./all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="./">
+            <strong>
+                Domain
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#apicollection.init(method:paths:closure:middlewares:)">init(method:​paths:​closure:​middlewares:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#apicollection.method">method</a></li><li class="variable"><a href="#apicollection.paths">paths</a></li><li class="variable"><a href="#apicollection.closure">closure</a></li><li class="variable"><a href="#apicollection.middlewares">middlewares</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Structure</small>
+    <code class="name">APICollection</code>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">struct</span> <span class="type">APICollection</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Order for defining routing.</p>
+
+</div>
+<div class="discussion">
+    <p>It was defined as a specification when ordering routing from the presentation layer to the domain layer.</p>
+
+<h3>Note</h3>
+
+<p>If possible, I wanted to define this class as an abstract order that does not depend on the framework, but I gave up it because it was difficult in Vapor.</p>
+
+</div>
+
+    <section id="initializers">
+        <h2>Initializers</h2>
+
+        <div role="article" class="initializer" id="apicollection.init(method:paths:closure:middlewares:)">
+    <h3>
+        <code><a href="#apicollection.init(method:paths:closure:middlewares:)">init(method:​paths:​closure:​middlewares:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">method</span>: <a href="./HTTPMethodInDomain"><span class="type">HTTPMethodInDomain</span></a>,
+                <span class="variable">paths</span>: [<span class="type">PathComponent</span>],
+                <span class="variable">closure</span>: <span class="attribute">@</span><span class="attribute">escaping</span> (<span class="type">Request</span>) <span class="keyword">throws</span> -&gt; <span class="type">Future</span>&lt;<span class="type">Response</span>&gt;,
+                <span class="variable">middlewares</span>: [<span class="type">Middleware</span>] = [])  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Default initializer.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>method</th>
+    <td><code class="type">HTTPMethod​InDomain</code></td>
+    <td><p>HTTPMethod to which API responds.</p>
+</td>
+</tr>
+<tr>
+    <th>paths</th>
+    <td><code class="type">[Path​Component]</code></td>
+    <td><p>See <code>PathComponent</code>.</p>
+</td>
+</tr>
+<tr>
+    <th>closure</th>
+    <td><code class="type">@escaping (Request) throws -&gt; Future&lt;Response&gt;</code></td>
+    <td><p>API processing.</p>
+</td>
+</tr>
+<tr>
+    <th>middlewares</th>
+    <td><code class="type">[Middleware]</code></td>
+    <td><p>Middleware that performs processing between Framework and Controller.</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+    </section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="variable" id="apicollection.method">
+    <h3>
+        <code><a href="#apicollection.method">method</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">method</span>: <a href="./HTTPMethodInDomain"><span class="type">HTTPMethodInDomain</span></a></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>HTTPMethod to which API responds.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="apicollection.paths">
+    <h3>
+        <code><a href="#apicollection.paths">paths</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">paths</span>: [<span class="type">PathComponent</span>] </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>See <code>PathComponentsRepresentable</code>.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="apicollection.closure">
+    <h3>
+        <code><a href="#apicollection.closure">closure</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">closure</span>: (<span class="type">Request</span>) <span class="keyword">throws</span> -&gt; <span class="type">Future</span>&lt;<span class="type">Response</span>&gt;</body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>API processing.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="apicollection.middlewares">
+    <h3>
+        <code><a href="#apicollection.middlewares">middlewares</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">let</span> <span class="variable">middlewares</span>: [<span class="type">Middleware</span>] </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Middleware that performs processing between Framework and Controller.</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-07-16T20:58:05+0900">July 16, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

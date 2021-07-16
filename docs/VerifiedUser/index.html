@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain - VerifiedUser</title>
+    <link rel="stylesheet" type="text/css" href="./all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="./">
+            <strong>
+                Domain
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#verifieduser.init(id:email:token:username:bio:image:)">init(id:​email:​token:​username:​bio:​image:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#verifieduser.id">id</a></li><li class="variable"><a href="#verifieduser.email">email</a></li><li class="variable"><a href="#verifieduser.token">token</a></li><li class="variable"><a href="#verifieduser.username">username</a></li><li class="variable"><a href="#verifieduser.bio">bio</a></li><li class="variable"><a href="#verifieduser.image">image</a></li><li class="variable"><a href="#verifieduser.user">user</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Class</small>
+    <code class="name">Verified​User</code>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="attribute">final</span> <span class="keyword">class</span> <span class="type">VerifiedUser</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Authenticated user information.</p>
+
+</div>
+<div class="discussion">
+    <p>APIs that require the logged-in user's own information to complete the process automatically query the user information through Middleware and relay the information to the controller.
+@see AuthenticateThenSearchUserMiddleware for detail.</p>
+
+<h3>Note</h3>
+
+<p>User is a struct and has no id. This class was prepared because I wanted to use it without changing the swagger definition.</p>
+
+</div>
+<section id="relationships">
+    <h2 hidden>Relationships</h2>
+        
+        <h3>Nested Types</h3>
+<dl>
+    <dt class="structure"><code><a href="./VerifiedUser_Key">VerifiedUser.Key</a></code></dt>
+<dd></dd>
+</dl>
+</section>
+    <section id="initializers">
+        <h2>Initializers</h2>
+
+        <div role="article" class="initializer" id="verifieduser.init(id:email:token:username:bio:image:)">
+    <h3>
+        <code><a href="#verifieduser.init(id:email:token:username:bio:image:)">init(id:​email:​token:​username:​bio:​image:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">init</span>(<span class="variable">id</span>: <span class="type">Int</span> = <span class="number literal">0</span>, <span class="variable">email</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal"/><span class="string literal">"</span>, <span class="variable">token</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal"/><span class="string literal">"</span>, <span class="variable">username</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal"/><span class="string literal">"</span>, <span class="variable">bio</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal"/><span class="string literal">"</span>, <span class="variable">image</span>: <span class="type">String</span> = <span class="string literal">"</span><span class="string literal"/><span class="string literal">"</span>)  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Default initalizer.</p>
+
+</div>
+<h4>Parameters</h4>
+
+<table class="parameters">
+  <thead hidden>
+  <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <th>id</th>
+    <td><code class="type">Int</code></td>
+    <td><p><code>User</code>s Id.</p>
+</td>
+</tr>
+<tr>
+    <th>email</th>
+    <td><code class="type">String</code></td>
+    <td><p><code>User</code>s email.</p>
+</td>
+</tr>
+<tr>
+    <th>token</th>
+    <td><code class="type">String</code></td>
+    <td><p>Verified JWT.</p>
+</td>
+</tr>
+<tr>
+    <th>username</th>
+    <td><code class="type">String</code></td>
+    <td><p><code>User</code>s username.</p>
+</td>
+</tr>
+<tr>
+    <th>bio</th>
+    <td><code class="type">String</code></td>
+    <td><p><code>User</code>s bio.</p>
+</td>
+</tr>
+<tr>
+    <th>image</th>
+    <td><code class="type">String</code></td>
+    <td><p><code>User</code>s image.</p>
+</td>
+</tr>
+  </tbody>
+</table>
+</div>
+    </section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="variable" id="verifieduser.id">
+    <h3>
+        <code><a href="#verifieduser.id">id</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">id</span>: <span class="type">Int</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>User</code>s id.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduser.email">
+    <h3>
+        <code><a href="#verifieduser.email">email</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">email</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>User</code>s email.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduser.token">
+    <h3>
+        <code><a href="#verifieduser.token">token</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">token</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>JWT used for authentication.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduser.username">
+    <h3>
+        <code><a href="#verifieduser.username">username</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">username</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>User</code>s username.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduser.bio">
+    <h3>
+        <code><a href="#verifieduser.bio">bio</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">bio</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>User</code>s bio.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduser.image">
+    <h3>
+        <code><a href="#verifieduser.image">image</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">image</span>: <span class="type">String</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>User</code>s image.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduser.user">
+    <h3>
+        <code><a href="#verifieduser.user">user</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">user</span>: <a href="./User"><span class="type">User</span></a>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Export to <code>User</code>.</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-07-16T20:58:05+0900">July 16, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain - VerifiedUserEntity</title>
+    <link rel="stylesheet" type="text/css" href="./all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="./">
+            <strong>
+                Domain
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#relationships">Relationships</a><ul><li><a href="#relationships">Nested Types</a></li></ul></li><li><a href="#initializers">Initializers</a><ul><li class="initializer"><a href="#verifieduserentity.init(id:username:token:)">init(id:​username:​token:​)</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#verifieduserentity.id">id</a></li><li class="variable"><a href="#verifieduserentity.username">username</a></li><li class="variable"><a href="#verifieduserentity.token">token</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Class</small>
+    <code class="name">Verified​User​Entity</code>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="attribute">final</span> <span class="keyword">class</span> <span class="type">VerifiedUserEntity</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>User information in Payload of JWT.</p>
+
+</div>
+<div class="discussion">
+    <p>APIs that require Payload information to complete processing are automatically expanded by Middleware and relayed to the controller.
+See AuthenticateThenExpandPayloadMiddleware for details.</p>
+
+<h3>Note</h3>
+
+<p>SessionPayload is a struct and has an exp that does not require a relay. I thought I should have another class.</p>
+
+</div>
+<section id="relationships">
+    <h2 hidden>Relationships</h2>
+        
+        <h3>Nested Types</h3>
+<dl>
+    <dt class="structure"><code><a href="./VerifiedUserEntity_Key">VerifiedUserEntity.Key</a></code></dt>
+<dd></dd>
+</dl>
+</section>
+    <section id="initializers">
+        <h2>Initializers</h2>
+
+        <div role="article" class="initializer" id="verifieduserentity.init(id:username:token:)">
+    <h3>
+        <code><a href="#verifieduserentity.init(id:username:token:)">init(id:​username:​token:​)</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">init</span>( <span class="variable">id</span>: <span class="type">Int</span>?, <span class="variable">username</span>: <span class="type">String</span>?, <span class="variable">token</span>: <span class="type">String</span>?) </body></html></code></pre>
+</div>
+</div>
+    </section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="variable" id="verifieduserentity.id">
+    <h3>
+        <code><a href="#verifieduserentity.id">id</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">id</span>: <span class="type">Int</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>SessionPayload</code>s id.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduserentity.username">
+    <h3>
+        <code><a href="#verifieduserentity.username">username</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">username</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>SessionPayload</code>s username.</p>
+
+</div>
+</div>
+<div role="article" class="variable" id="verifieduserentity.token">
+    <h3>
+        <code><a href="#verifieduserentity.token">token</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">token</span>: <span class="type">String</span>? </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>JWT used for authentication.</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-07-16T20:58:05+0900">July 16, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

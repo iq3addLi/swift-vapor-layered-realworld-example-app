@@ -18,42 +18,18 @@ extension AbortError {
     ///    When HTTPBody generation fails. It cannot happen logically.
     /// - returns:
     ///    A representation of this instance as `Response`.
-    func toResponse(for request: Request) throws -> Response {
+    func toResponse() throws -> Response {
         // this is an abort error, we should use its status, reason, and headers
-        let response = request.response(http: .init(status: status, headers: headers))
-        response.http.body = try HTTPBody(data: JSONEncoder().encode(
-            GenericErrorModel(errors: GenericErrorModelErrors(body: [reason]))
-        ))
-        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
-        return response
+        Response(
+            status: .init(statusCode: Int(status.code), reasonPhrase: reason),
+            headers: .jsonType,
+            body: try .init(
+                GenericErrorModel(errors: GenericErrorModelErrors(body: [reason]))
+            )
+        )
     }
 }
 
-// MARK: As Response
-
-/// Extensions required by Domain.
-extension Debuggable {
-    
-    /// Convert Core.Debuggable to Response.
-    /// - Parameter request: A request for response.
-    /// - throws:
-    ///    When HTTPBody generation fails. It cannot happen logically.
-    /// - returns:
-    ///    A representation of this instance as `Response`.
-    func toResponse(for request: Request) throws -> Response {
-        // if not release mode, and error is debuggable, provide debug
-        // info directly to the developer
-        let response = request.response(http: .init(status: .internalServerError, headers: [:]))
-        response.http.body = try HTTPBody(data: JSONEncoder().encode(
-            GenericErrorModel(errors: GenericErrorModelErrors(body: [reason]))
-        ))
-        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
-        return response
-
-    }
-}
-
-// MARK: As Response
 
 /// Extensions required by Domain.
 extension ValidationError {
@@ -64,16 +40,15 @@ extension ValidationError {
     ///    When HTTPBody generation fails. It cannot happen logically.
     /// - returns:
     ///    A representation of this instance as `Response`.
-    func toResponse(for request: Request) throws -> Response {
-        let response = request.response(http: .init(status: .badRequest, headers: [:]))
-        response.http.body = try HTTPBody(data: JSONEncoder().encode(self))
-        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
-        return response
+    func toResponse() throws -> Response {
+        Response(
+            status: .badRequest,
+            headers: .jsonType,
+            body: try .init( self )
+        )
     }
 }
 
-
-// MARK: As Response
 
 /// Extensions required by Domain.
 extension Error {
@@ -84,15 +59,13 @@ extension Error {
     ///    When HTTPBody generation fails. It cannot happen logically.
     /// - returns:
     ///    A representation of this instance as `Response`.
-    func toResponse(for request: Request) throws -> Response {
+    func toResponse() throws -> Response {
         // reason property should be collected as a log
-        let httpStatus = HTTPResponseStatus(statusCode: status)
-        let response = request.response(http: .init(status: httpStatus, headers: [:]))
-        response.http.body = try HTTPBody(data: JSONEncoder().encode(
-            HTTPErrorResponse("\(httpStatus.code)", error: httpStatus.reasonPhrase)
-        ))
-        response.http.headers.replaceOrAdd(name: .contentType, value: "application/json; charset=utf-8")
-        return response
+        Response(
+            status: .init(statusCode: status, reasonPhrase: reason),
+            headers: .jsonType,
+            body: try .init( HTTPErrorResponse("\(status)", error: reason) )
+        )
     }
 }
 

@@ -20,7 +20,7 @@ public struct APICollection {
     public let method: HTTPMethodInDomain
 
     /// See `PathComponentsRepresentable`.
-    public let paths: PathComponentsRepresentable
+    public let paths: [PathComponent]
 
     /// API processing.
     public let closure: (Request) throws -> Future<Response>
@@ -33,11 +33,11 @@ public struct APICollection {
     /// Default initializer.
     /// - Parameters:
     ///   - method: HTTPMethod to which API responds.
-    ///   - paths: See `PathComponentsRepresentable`.
+    ///   - paths: See `PathComponent`.
     ///   - closure: API processing.
     ///   - middlewares: Middleware that performs processing between Framework and Controller.
     public init(method: HTTPMethodInDomain,
-                paths: PathComponentsRepresentable,
+                paths: [PathComponent],
                 closure: @escaping (Request) throws -> Future<Response>,
                 middlewares: [Middleware] = []) {
         self.method = method

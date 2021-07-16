@@ -17,10 +17,9 @@ struct AuthenticateOptionalMiddleware: Middleware {
     ///
     /// See `AuthenticateMiddlewareUseCase`.
     let useCase = AuthenticateMiddlewareUseCase()
-
+    
     
     // MARK: Implementation as a Middleware
-    
     
     /// Relay the result of deploying JWT to the controller using Service.
     ///
@@ -31,21 +30,26 @@ struct AuthenticateOptionalMiddleware: Middleware {
     /// - throws:
     ///    When JWT is sent but verification fails.
     /// - returns:
-    ///    The `Future` that returns `Response`. 
-    func respond(to request: Request, chainingTo next: Responder) throws -> Future<Response> {
+    ///    The `Future` that returns `Response`.
+    func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
+        
         // Get Authentication: Token *
-        var payload: SessionPayload?
-        let token = request.http.headers.tokenAuthorization?.token
-        if let token = token {
-            payload = try useCase.payload(by: token)
+        let token = request.headers.tokenAuthorization?.token
+        guard let jwt = token else{
+            return next.respond(to: request)
         }
+        
+        // Verify then expand payload
+        let payload: SessionPayload
+        do {
+            payload = try useCase.payload(by: jwt)
+        }catch{
+            return request.eventLoop.makeFailedFuture(Error("\(error.localizedDescription)"))
+        }
+        
+        // stored relay service value
+        request.storage[VerifiedUserEntity.Key] = VerifiedUserEntity(id: payload.id, username: payload.username, token: token)
 
-        // Write relay service value
-        let entity = (try request.privateContainer.make(VerifiedUserEntity.self))
-        entity.id = payload?.id
-        entity.username = payload?.username
-        entity.token = token
-
-        return try next.respond(to: request)
+        return next.respond(to: request)
     }
 }

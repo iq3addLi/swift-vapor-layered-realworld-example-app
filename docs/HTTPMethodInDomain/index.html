@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain - HTTPMethodInDomain</title>
+    <link rel="stylesheet" type="text/css" href="./all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="./">
+            <strong>
+                Domain
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#enumeration cases">Enumeration Cases</a><ul><li class="case"><a href="#httpmethodindomain.get">get</a></li><li class="case"><a href="#httpmethodindomain.put">put</a></li><li class="case"><a href="#httpmethodindomain.post">post</a></li><li class="case"><a href="#httpmethodindomain.delete">delete</a></li></ul></li><li><a href="#properties">Properties</a><ul><li class="variable"><a href="#httpmethodindomain.raw">raw</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Enumeration</small>
+    <code class="name">HTTPMethod​InDomain</code>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">HTTPMethodInDomain</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>HTTPMethod in domain.</p>
+
+</div>
+<div class="discussion">
+    <p>The purpose of defining this in the Domain layer is to reduce the dependency on the framework. It's also intended to clarify the HTTPMethod within the project's domain.</p>
+
+<h3>Note</h3>
+
+<p>Continuing from the namespace is Domain.HTTPMethodInDomain. This may seem verbose. I named it because I didn't want to confuse it with NIOHTTP1.HTTPMethod.</p>
+
+<h3>Extra</h3>
+
+<p>I'm want hotly for <a href="https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20160530/020054.html">enum subsets features</a> in Swift.😊</p>
+
+</div>
+
+    <section id="enumeration cases">
+        <h2>Enumeration Cases</h2>
+
+        <div role="article" class="case" id="httpmethodindomain.get">
+    <h3>
+        <code><a href="#httpmethodindomain.get">get</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">get</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>NIO.HTTPMethod.GET</code>.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="httpmethodindomain.put">
+    <h3>
+        <code><a href="#httpmethodindomain.put">put</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">put</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>NIO.HTTPMethod.PUT</code>.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="httpmethodindomain.post">
+    <h3>
+        <code><a href="#httpmethodindomain.post">post</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">post</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>NIO.HTTPMethod.POST</code>.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="httpmethodindomain.delete">
+    <h3>
+        <code><a href="#httpmethodindomain.delete">delete</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">delete</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Same as <code>NIO.HTTPMethod.DELETE</code>.</p>
+
+</div>
+</div>
+    </section>
+    <section id="properties">
+        <h2>Properties</h2>
+
+        <div role="article" class="variable" id="httpmethodindomain.raw">
+    <h3>
+        <code><a href="#httpmethodindomain.raw">raw</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">var</span> <span class="variable">raw</span>: <span class="type">HTTPMethod</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Convert to HTTPMethod.</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-07-16T20:58:05+0900">July 16, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

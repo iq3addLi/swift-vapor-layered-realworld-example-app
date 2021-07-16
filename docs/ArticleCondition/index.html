@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain - ArticleCondition</title>
+    <link rel="stylesheet" type="text/css" href="./all.css" media="all" />
+</head>
+<body>
+    <header>
+        <a href="./">
+            <strong>
+                Domain
+            </strong>
+            <span>Documentation</span>
+        </a>
+    </header>
+
+    <!--
+    <form class="search">
+        <input type="search" placeholder="Search" />
+    </form>
+    -->
+
+    <nav>
+        <div class="wrapper">
+            <h2>On This Page</h2>
+            <ol><li><a href="#enumeration cases">Enumeration Cases</a><ul><li class="case"><a href="#articlecondition.global">global</a></li><li class="case"><a href="#articlecondition.feed">feed</a></li><li class="case"><a href="#articlecondition.favorite">favorite</a></li><li class="case"><a href="#articlecondition.tag">tag</a></li><li class="case"><a href="#articlecondition.author">author</a></li><li class="case"><a href="#articlecondition.slug">slug</a></li></ul></li></ol>
+        </div>
+    </nav>
+
+    <main>
+        <article>
+            <h1>
+    <small>Enumeration</small>
+    <code class="name">Article​Condition</code>
+</h1>
+
+<div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">public</span> <span class="keyword">enum</span> <span class="type">ArticleCondition</span>  </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>An enum that expresses conditions when searching for articles.</p>
+
+</div>
+
+    <section id="enumeration cases">
+        <h2>Enumeration Cases</h2>
+
+        <div role="article" class="case" id="articlecondition.global">
+    <h3>
+        <code><a href="#articlecondition.global">global</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">global</span></body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Search all data in Conduit.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="articlecondition.feed">
+    <h3>
+        <code><a href="#articlecondition.feed">feed</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">feed</span>(<span class="type">Int</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Search for articles the user following.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="articlecondition.favorite">
+    <h3>
+        <code><a href="#articlecondition.favorite">favorite</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">favorite</span>(<span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Search for articles the user favotites.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="articlecondition.tag">
+    <h3>
+        <code><a href="#articlecondition.tag">tag</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">tag</span>(<span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Search by tag.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="articlecondition.author">
+    <h3>
+        <code><a href="#articlecondition.author">author</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">author</span>(<span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Search by author.</p>
+
+</div>
+</div>
+<div role="article" class="case" id="articlecondition.slug">
+    <h3>
+        <code><a href="#articlecondition.slug">slug</a></code>
+    </h3>
+    <div class="declaration">
+<pre class="highlight"><code><html><body><span class="keyword">case</span> <span class="variable">slug</span>(<span class="type">String</span>) </body></html></code></pre>
+</div>
+<div class="summary" role="doc-abstract">
+    <p>Identify articles with slug.</p>
+
+</div>
+</div>
+    </section>
+
+
+
+        </article>
+    </main>
+
+    <footer>
+        <p>
+    Generated on <time datetime="2021-07-16T20:58:05+0900">July 16, 2021</time> using <a href="https://github.com/SwiftDocOrg/swift-doc">swift-doc</a> <span class="version">1.0.0-rc.1</span>.
+</p>
+    </footer>
+</body>
+</html>

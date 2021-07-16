@@ -1,4 +1,4 @@
-[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.1-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-3.3-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/docs)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
+[![RealWorld Frontend](https://img.shields.io/badge/realworld-backend-%23783578.svg)](http://realworld.io)  [![swift.org](https://img.shields.io/badge/swift-5.4-orange.svg?logo=swift)](https://swift.org)  [![Vapor Documentation](http://img.shields.io/badge/💧_vapor-4-2196f3.svg)](https://github.com/vapor/vapor)  [![API Doc](https://img.shields.io/badge/Project's_domain-doc-brightgreen.svg)](https://iq3addli.github.io/swift-vapor-layered-realworld-example-app/docs)  [![My frontend](https://img.shields.io/badge/Frontend-here-red.svg)](https://github.com/iq3addLi/riot_v4_realworld_example_app)
 
 # ![RealWorld Example App](logo.png)
 
@@ -22,7 +22,7 @@ For more information on how to this works with other frontends/backends, head ov
 ### Precondition
 
 * Your platform is Linux or Mac.
-* Swift 5.1.1 or over than is installed.
+* Swift 5.2 or over than is installed.
 * Docker is installed.
 
 ### Build RealWorld App
@@ -81,6 +81,12 @@ By `Control + C` on launched terminal. Will stop MySQL and App.
 $ docker build -t realworld:latest .
 ```
 
+### Create network for local servers
+
+```zsh
+$ docker network create realworld-network
+```
+
 ### Set environments for MySQL
 
 ```bash
@@ -95,15 +101,18 @@ This setting values is editable.  Note that the value set at the beginning is re
 ### Launch container of MySQL
 
 ```bash
-$ docker run \
-  --rm \
-  -e MYSQL_USER=${MYSQL_USERNAME}\
-  -e MYSQL_PASSWORD=${MYSQL_PASSWORD}\
-  -e MYSQL_DATABASE=${MYSQL_DATABASE}\
-  -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOTPASS}\
-  -v ${PWD}/mysql_data:/var/lib/mysql \
-  -p 3306:3306 \
-  mysql:5.7
+$ docker run -d --rm \
+    --name mysql-server \
+    --network realworld-network \
+    --env MYSQL_USER=${MYSQL_USERNAME} \
+    --env MYSQL_PASSWORD=${MYSQL_PASSWORD} \
+    --env MYSQL_DATABASE=${MYSQL_DATABASE} \
+    --env MYSQL_ROOT_PASSWORD=${MYSQL_ROOTPASS} \
+    -v ${PWD}/mysql_data:/var/lib/mysql \
+    -p 3306:3306 \
+    mysql:5.7 \
+      --character-set-server=utf8mb4 \
+      --collation-server=utf8mb4_unicode_ci
 ```
 
 ### Check MySQL address in bridge network on docker
@@ -116,15 +125,16 @@ $ docker network inspect bridge | grep IPv4Address
 ### Launch container of RealWorld App 
 
 ```bash
-$ docker run \
-  --rm \
-  -p 8080:80 \
-  -e SECRET_FOR_JWT={{ secret for JWT }}\
-  -e MYSQL_HOSTNAME={{ host part of MySQL address }}\
-  -e MYSQL_USERNAME=${MYSQL_USERNAME}\
-  -e MYSQL_PASSWORD=${MYSQL_PASSWORD}\
-  -e MYSQL_DATABASE=${MYSQL_DATABASE}\
-  realworld:latest
+$ docker run -d --rm \
+    --name app-server \
+    --network realworld-network \
+    --env SECRET_FOR_JWT={{ secret for JWT }}\
+    --env MYSQL_USERNAME=${MYSQL_USERNAME}\
+    --env MYSQL_PASSWORD=${MYSQL_PASSWORD}\
+    --env MYSQL_DATABASE=${MYSQL_DATABASE}\
+    --env MYSQL_HOSTNAME="mysql-server" \
+    -p 8080:80 \
+    realworld:latest
 ```
 
 `Server starting on http://0.0.0.0:80`  is displayed. But it opens at http://0.0.0.0:8080 .

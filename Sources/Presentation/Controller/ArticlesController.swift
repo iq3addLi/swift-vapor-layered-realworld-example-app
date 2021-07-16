@@ -43,13 +43,13 @@ struct ArticlesController {
         let tag = request.query[ String.self, at: "tag" ]
 
         // Get relayed parameter
-        let userId = try request.privateContainer.make(VerifiedUserEntity.self).id // Optional
+        let userId = request.storage[VerifiedUserEntity.Key.self]?.id // Optional
 
         // Return future
         return useCase.getArticles( author: author, favorited: favorited, tag: tag, offset: offset, limit: limit, readingUserId: userId)
-                .map { articles in
-                    request.response( articles, as: .json)
-                }
+            .flatMapThrowing { articles in
+                try Response( articles )
+            }
     }
 
     /// POST /articles
@@ -61,20 +61,21 @@ struct ArticlesController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func postArticle(_ request: Request) throws -> Future<Response> {
-        let useCase = self.useCase
+ 
         // Get parameter by body
-        return try request.content.decode(json: NewArticleRequest.self, using: .custom(dates: .iso8601))
-            .flatMap { req -> Future<SingleArticleResponse> in
-                // Get relayed parameter
-                let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
-                return useCase.postArticle( req.article, author: userId )
-            }
-            .map { postedArticle in
-                request.response( postedArticle, as: .json)
-            }
+        let req = try request.content.decode(NewArticleRequest.self, using: JSONDecoder.custom(dates: .iso8601))
+        
+        // Get relayed parameter
+        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
+            fatalError("Middleware not passed authenticated user.") // Require
+        }
+        
+        return useCase.postArticle( req.article, author: userId ).flatMapThrowing { article in
+            try Response( article )
+        }
     }
 
-    /// GET /articles/{{slug}}
+    /// GET /articles/:slug
     ///
     /// Auth optional.
     /// - Parameter request: See `Vapor.Request`.
@@ -83,20 +84,23 @@ struct ArticlesController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func getArticle(_ request: Request) throws -> Future<Response> {
+        
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
+        guard let slug = request.parameters.get("slug") else{
+            fatalError("A Request is not contain to slug.")
+        }
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id // Optional
+        let userId = request.storage[VerifiedUserEntity.Key.self]?.id // Optional
 
         // Into domain logic
         return useCase.getArticle(slug: slug, readingUserId: userId)
-            .map { article in
-                request.response( article, as: .json)
+            .flatMapThrowing { article in
+                try Response( article )
             }
     }
 
-    /// DELETE /articles/{{slug}}
+    /// DELETE /articles/:slug
     ///
     /// Auth then expand payload
     /// - Parameter request: See `Vapor.Request`.
@@ -105,17 +109,20 @@ struct ArticlesController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func deleteArticle(_ request: Request) throws -> Future<Response> {
+        
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
+        guard let slug = request.parameters.get("slug") else{
+            fatalError("A Request is not contain to slug.")
+        }
 
         // Into domain logic
         return useCase.deleteArticle(slug: slug)
-            .map {
-                request.response( EmptyResponse(), as: .json)
+            .flatMapThrowing {
+                try Response( EmptyResponse() )
             }
     }
 
-    /// PUT /articles/{{slug}}
+    /// PUT /articles/:slug
     ///
     /// Auth then expand payload
     /// - Parameter request: See `Vapor.Request`.
@@ -125,19 +132,21 @@ struct ArticlesController {
     ///    The `Future` that returns `Response`.
     func updateArticle(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
-
-        // Get relayed parameter
-        let userId = try request.privateContainer.make(VerifiedUserEntity.self).id! // Require
-
+        guard let slug = request.parameters.get("slug") else{
+            fatalError("A Request is not contain to slug.")
+        }
+        
         // Get parameter by body
-        let useCase = self.useCase
-        return try request.content.decode(json: UpdateArticleRequest.self, using: .custom(dates: .iso8601))
-            .flatMap { req in
-                useCase.updateArticle(slug: slug, title: req.article.title, description: req.article._description, body: req.article.body, tagList: req.article.tagList, readingUserId: userId)
-            }
-            .map { response in
-                request.response( response, as: .json)
+        let req = try request.content.decode(UpdateArticleRequest.self, using: JSONDecoder.custom(dates: .iso8601))
+        
+        // Get relayed parameter
+        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
+            fatalError("Middleware not passed authenticated user.")  // Require
+        }
+        
+        return useCase.updateArticle(slug: slug, title: req.article.title, description: req.article._description, body: req.article.body, tagList: req.article.tagList, readingUserId: userId)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
@@ -155,15 +164,15 @@ struct ArticlesController {
         let limit = request.query[ Int.self, at: "limit" ]
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id // Optional
+        let userId = request.storage[VerifiedUserEntity.Key.self]?.id // Optional
 
         return useCase.getArticles(feeder: userId, offset: offset, limit: limit, readingUserId: userId)
-            .map { articles in
-                request.response( articles, as: .json)
+            .flatMapThrowing { articles in
+                try Response( articles )
             }
     }
 
-    /// POST /articles/{{slug}}/favorite
+    /// POST /articles/:slug/favorite
     ///
     /// Auth then expand payload
     /// - Parameter request: See `Vapor.Request`.
@@ -172,20 +181,25 @@ struct ArticlesController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func postFavorite(_ request: Request) throws -> Future<Response> {
+        
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
+        guard let slug = request.parameters.get("slug") else{
+            fatalError("A Request is not contain to slug.")
+        }
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
+        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
+            fatalError("Middleware not passed authenticated user.")  // Require
+        }
 
         // Into domain logic
         return useCase.favorite(by: userId, for: slug)
-            .map { response in
-                request.response( response, as: .json)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
-    /// DELETE /articles/{{slug}}/favorite
+    /// DELETE /articles/:slug/favorite
     ///
     /// Auth then expand payload
     /// - Parameter request: See `Vapor.Request`.
@@ -195,19 +209,23 @@ struct ArticlesController {
     ///    The `Future` that returns `Response`.
     func deleteFavorite(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
+        guard let slug = request.parameters.get("slug") else{
+            fatalError("A Request is not contain to slug.")
+        }
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
+        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
+            fatalError("Middleware not passed authenticated user.")  // Require
+        }
 
         // Into domain logic
         return useCase.unfavorite(by: userId, for: slug)
-            .map { response in
-                request.response( response, as: .json)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
-    /// GET /articles/{{slug}}/comments
+    /// GET /articles/:slug/comments
     ///
     /// Auth optional
     /// - Parameter request: See `Vapor.Request`.
@@ -216,17 +234,20 @@ struct ArticlesController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func getComments(_ request: Request) throws -> Future<Response> {
+        
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
+        guard let slug = request.parameters.get("slug") else{
+            fatalError("A Request is not contain to slug.")
+        }
 
         // Into domain logic
         return useCase.getComments(slug: slug)
-            .map { response in
-                request.response( response, as: .json)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
-    /// POST /articles/{{slug}}/comments
+    /// POST /articles/:slug/comments
     ///
     /// Auth then expand payload.
     /// - Parameter request: See `Vapor.Request`.
@@ -235,24 +256,27 @@ struct ArticlesController {
     /// - returns:
     ///    The `Future` that returns `Response`.
     func postComment(_ request: Request) throws -> Future<Response> {
+        
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
+        guard let slug = request.parameters.get("slug") else{
+            fatalError("A Request is not contain to slug.")
+        }
 
         // Get relayed parameter
-        let userId = (try request.privateContainer.make(VerifiedUserEntity.self)).id! // Require
+        guard let userId = request.storage[VerifiedUserEntity.Key.self]?.id else {
+            fatalError("Middleware not passed authenticated user.")  // Require
+        }
 
         // Get parameter by body
-        let useCase = self.useCase
-        return try request.content.decode(json: NewCommentRequest.self, using: .custom(dates: .iso8601))
-            .flatMap { req in
-                useCase.postComment(slug: slug, body: req.comment.body, author: userId)
-            }
-            .map { response in
-                request.response( response, as: .json)
+        let req = try request.content.decode(NewCommentRequest.self, using: JSONDecoder.custom(dates: .iso8601))
+        
+        return useCase.postComment(slug: slug, body: req.comment.body, author: userId)
+            .flatMapThrowing { response in
+                try Response( response )
             }
     }
 
-    /// DELETE /articles/{{slug}}/comments/{{commentId}}
+    /// DELETE /articles/:slug/comments/:commentId
     ///
     /// Auth required.
     /// - Parameter request: See `Vapor.Request`.
@@ -262,13 +286,17 @@ struct ArticlesController {
     ///    The `Future` that returns `Response`.
     func deleteComment(_ request: Request) throws -> Future<Response> {
         // Get parameter by URL
-        let slug = try request.parameters.next(String.self)
-        let commentId = try request.parameters.next(Int.self)
-
-        // Into domain logic
+        guard
+            let slug = request.parameters.get("slug"),
+            let str = request.parameters.get("commentId"),
+            let commentId = Int(str)
+        else{
+            fatalError("URL parameters contains mistake.")
+        }
+        
         return  useCase.deleteComment(slug: slug, id: commentId)
-            .map { _ in
-                request.response( EmptyResponse(), as: .json)
+            .flatMapThrowing { _ in
+                try Response( EmptyResponse() )
             }
     }
 }

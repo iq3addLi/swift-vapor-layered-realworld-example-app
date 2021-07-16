@@ -9,7 +9,7 @@
 public struct ArticlesUseCase: UseCase {
     
     // MARK: Properties
-    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository.shared
 
     // MARK: Initializer
     
@@ -34,7 +34,7 @@ public struct ArticlesUseCase: UseCase {
     ///    The `Future` that returns `MultipleArticlesResponse`.
     public func getArticles( author: String? = nil, feeder: Int? = nil, favorited username: String? = nil, tag: String? = nil, offset: Int? = nil, limit: Int? = nil, readingUserId: Int? = nil) -> Future<MultipleArticlesResponse> {
 
-        let condition = { () -> ArticleCondition in
+        let condition: ArticleCondition = {
             if let feeder = feeder { return .feed(feeder) }
             if let author = author { return .author(author) }
             if let username = username { return .favorite(username) }
@@ -57,7 +57,7 @@ public struct ArticlesUseCase: UseCase {
     ///    The `Future` that returns `SingleArticleResponse`.
     public func getArticle( slug: String, readingUserId: Int? ) -> Future<SingleArticleResponse> {
         conduit.articles(condition: .slug(slug), readingUserId: readingUserId, offset: nil, limit: nil)
-            .map { articles in
+            .flatMapThrowing { articles in
                 guard let article = articles.first else {
                     throw Error("Article by slug is not found.")
                 }

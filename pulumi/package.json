@@ -1,11 +1,11 @@
 {
-    "name": "aws-typescript",
+    "name": "realworld_on_aws",
     "devDependencies": {
-        "@types/node": "^8.10.60"
+        "@types/node": "^14.0.0"
     },
     "dependencies": {
-        "@pulumi/aws": "^1.31.0",
-        "@pulumi/awsx": "^0.18.14",
-        "@pulumi/pulumi": "^1.14.1"
+        "@pulumi/aws": "^4.0.0",
+        "@pulumi/awsx": "^0.30.0",
+        "@pulumi/pulumi": "^3.0.0"
     }
 }

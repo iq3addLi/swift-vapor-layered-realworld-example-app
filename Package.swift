@@ -1,55 +1,55 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.4
 import PackageDescription
 
 let package = Package(
     name: "swift-vapor-layered-realworld-example",
     platforms: [
-        .macOS(.v10_14)
+        .macOS(.v11)
     ],
     products: [
         .executable(name: "realworld", targets: ["realworld"]),
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
-        .package(url: "https://github.com/vapor/vapor", from: "3.3.3"),
+        .package(name: "vapor", url: "https://github.com/vapor/vapor", from: "4.0.0"),
 
         // 🔵 Swift ORM (queries, models, relations, etc)
-        .package(url: "https://github.com/iq3addLi/fluent-mysql-driver", from: "3.0.2"),
+        .package(name: "fluent-mysql-driver", url: "https://github.com/vapor/fluent-mysql-driver", from: "4.0.0"),
         
         // JWT issue and verify
-        .package(url: "https://github.com/iq3addLi/jwt-kit", from: "3.0.0"),
+        .package(url: "https://github.com/vapor/jwt-kit", from: "4.0.0"),
         
         // A simple package to convert strings to URL slugs.
         .package(url: "https://github.com/twostraws/SwiftSlug", from: "0.3.0"),
         
         // Crypto related functions and helpers for Swift implemented in Swift.
-        .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.3.1"),
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.0.0"),
         
         // Swift logging API
-        // .package(url: "https://github.com/apple/swift-log.git", from: "1.1.1") // error: multiple products named 'Logging' in: Console, swift-log 😢
+        .package(url: "https://github.com/apple/swift-log", from: "1.0.0"),
         
     ],
     targets: [
         .target(name: "Infrastructure", dependencies: [
-            "Vapor",
-            "FluentMySQL",
-            "SwiftSlug",
-            "CryptoSwift",
-            "JWT",
+            .product(name: "Vapor", package: "vapor"),
+            .product(name: "FluentMySQLDriver", package: "fluent-mysql-driver"),
+            .product(name: "JWTKit", package: "jwt-kit"),
+            .product(name: "SwiftSlug", package: "SwiftSlug"),
+            .product(name: "CryptoSwift", package: "CryptoSwift"),
+            .product(name: "Logging", package: "swift-log"),
         ]),
         .target(name: "Domain", dependencies: [
-            "Infrastructure",
+            .target(name: "Infrastructure"),
         ]),
         .target(name: "Presentation", dependencies: [
-            "Domain",
+            .target(name: "Domain"),
         ]),
-        .target(name: "realworld", dependencies: [
-            "Presentation"
+        .executableTarget(name: "realworld", dependencies: [
+            .target(name: "Presentation"),
         ]),
         .testTarget(name: "AppTests", dependencies: [
-            "Presentation"
+            .target(name: "Presentation"),
         ])
-    ],
-    swiftLanguageVersions: [.v5]
+    ]
 )
 

@@ -5,7 +5,7 @@
 //  Created by iq3AddLi on 2019/10/03.
 //
 
-/// Repository that defines the processing to JWT.
+/// Repository that defines the processing to JSONWebToken.
 protocol JWTRepository: Repository {
 
     // MARK: Functions

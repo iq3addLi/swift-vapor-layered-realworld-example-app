@@ -14,13 +14,13 @@ public struct ApplicationUseCase: UseCase {
     private let framework: RESTApplicationRepository = VaporApplicationRepository()
     
     // See `ConduitMySQLRepository`.
-    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository.shared
     
     // MARK: Initalizer
     
     /// Default initializer.
     public init() {}
-
+    
     // MARK: Use cases for application
     
     /// This use case has work of project initialization.
@@ -28,7 +28,7 @@ public struct ApplicationUseCase: UseCase {
     ///    See `ConduitMySQLRepository.ifneededPreparetion()`.
     public func initialize() throws {
         try conduit.ifneededPreparetion()
-        framework.initalize()
+        try framework.initialize()
     }
 
     /// This use case has work of routing instruction.
@@ -41,6 +41,6 @@ public struct ApplicationUseCase: UseCase {
     /// - throws:
     ///    See `VaporApplicationRepository.applicationLaunch(hostname:port:)`.
     public func launch() throws {
-        try framework.applicationLaunch(hostname: "0.0.0.0", port: 8080)
+        try framework.applicationLaunch()
     }
 }

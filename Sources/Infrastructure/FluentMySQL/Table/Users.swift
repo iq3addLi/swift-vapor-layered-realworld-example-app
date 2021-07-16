@@ -5,35 +5,57 @@
 //  Created by iq3AddLi on 2019/10/10.
 //
 
+import FluentKit
+
 /// Representation of Users table.
-public final class Users {
+public final class Users: Model {
+    
+    public static let schema = "Users"
     
     // MARK: Properties
     
     /// A Identifier.
     ///
     /// It is assumed that the value is entered on the Database side. The application does not change this value usually.
+    @ID(custom: .id, generatedBy: .database)
     public var id: Int?
     
     /// A user name.
+    @Field(key: "username")
     public var username: String
     
     /// A email.
+    @Field(key: "email")
     public var email: String
     
     /// A biography.
+    @Field(key: "bio")
     public var bio: String
     
     /// A user icon image URL.
+    @Field(key: "image")
     public var image: String
     
     /// A hashed password.
-    public var hash: String // hashed password
+    @Field(key: "hash")
+    public var hash: String
     
     /// A salt added when the password is hashed.
+    @Field(key: "salt")
     public var salt: String
-
+    
+    /// Follows this user
+    @Children(for: \.$follower)
+    public var follows: [Follows]
+    
+    /// Articles which this user writen.
+    @Children(for: \.$author)
+    public var articles: [Articles]
+    
+    
     // MARK: Initializer
+    
+    public init() { }
     
     /// Default initializer.
     /// - Parameters:
@@ -56,6 +78,8 @@ public final class Users {
 }
 
 
+import MySQLNIO
+
 // MARK: Create table
 extension Users {
 
@@ -63,9 +87,9 @@ extension Users {
     ///
     /// In general, you should use features provided by the following standards: https://docs.vapor.codes/3.0/fluent/models/#create
     /// - Parameter connection: A established connection.
-    public static func create(on connection: MySQLConnection) -> Future<Void> {
-        connection.raw("""
-            CREATE TABLE IF NOT EXISTS `Users` (
+    public static func create(on database: MySQLDatabase) -> EventLoopFuture<Void> {
+        database.query("""
+            CREATE TABLE IF NOT EXISTS `\(schema)` (
               `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
               `username` varchar(256) NOT NULL DEFAULT '',
               `email` varchar(1024) NOT NULL DEFAULT '',
@@ -79,29 +103,27 @@ extension Users {
               UNIQUE KEY `username` (`username`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
             """)
-            .run()
+            .map{ _ in return }
     }
 }
 
-
-import FluentMySQL
 
 // MARK: Model
-extension Users: MySQLModel {
-    /// Table name.
-    public static var name: String {
-        return "Users"
-    }
-}
+//extension Users: MySQLModel {
+//    /// Table name.
+//    public static var name: String {
+//        return "Users"
+//    }
+//}
 
 // MARK: Parent/Children relation
-extension Users {
-    
-    /// List of articles written by the user.
-    ///
-    /// ### Note
-    /// This function is not used because information related to articles must be obtained at the same time.
-    public var articles: Children<Users, Articles> {
-        return children(\.author)
-    }
-}
+//extension Users {
+//    
+//    /// List of articles written by the user.
+//    ///
+//    /// ### Note
+//    /// This function is not used because information related to articles must be obtained at the same time.
+//    public var articles: Children<Users, Articles> {
+//        return children(\.author)
+//    }
+//}

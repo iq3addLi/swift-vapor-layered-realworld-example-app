@@ -11,7 +11,7 @@ public struct UsersUseCase: UseCase {
     // MARK: Properties
     
     /// See `ConduitMySQLRepository`.
-    private let conduit: ConduitRepository = ConduitMySQLRepository()
+    private let conduit: ConduitRepository = ConduitMySQLRepository.shared
     
     /// See `JWTWithVaporRepository`.
     private let jwt: JWTRepository = JWTWithVaporRepository()
@@ -31,15 +31,17 @@ public struct UsersUseCase: UseCase {
     /// - returns:
     ///    The `Future` that returns `UserResponse`.
     public func login( form: LoginUser ) -> Future<UserResponse> {
-        let jwt = self.jwt
-        // Search User
-        return conduit.authUser(email: form.email, password: form.password)
-            .map { tuple -> UserResponse in
-                let (id, user) = tuple
-                // Issued JWT
-                let token = try jwt.issueJWT(id: id, username: user.username)
-                // Return response
-                return UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))
+        
+        conduit.authUser(email: form.email, password: form.password)
+            .flatMapThrowing { id, user in
+                UserResponse(user:
+                    User(email: user.email,
+                         token: try self.jwt.issueJWT(id: id, username: user.username),
+                         username: user.username,
+                         bio: user.bio,
+                         image: user.image
+                    )
+                )
             }
     }
 
@@ -54,12 +56,10 @@ public struct UsersUseCase: UseCase {
         let jwt = self.jwt
         let conduit = self.conduit
 
-        // Register user
         return try conduit.validate(username: form.username, email: form.email, password: form.password)
             .flatMap {
                 conduit.registerUser(name: form.username, email: form.email, password: form.password)
-            .map { tuple -> UserResponse in  /* MEMO: Closure tuple parameter '(Int, User)' does not support destructuring when Swift 5.1 */
-                let (id, user) = tuple
+            .flatMapThrowing { id, user -> UserResponse in
                 // Issued JWT
                 let token = try jwt.issueJWT(id: id, username: user.username)
                 // Return response
@@ -77,7 +77,6 @@ public struct UsersUseCase: UseCase {
     ///    The `Future` that returns `UserResponse`. 
     public func update(userId: Int, token: String, updateUser user: UpdateUser ) -> Future<UserResponse> {
 
-        // Update user in storage
         conduit.updateUser(id: userId, email: user.email, username: user.username, bio: user.bio, image: user.image)
             .map { user in
                 UserResponse(user: User(email: user.email, token: token, username: user.username, bio: user.bio, image: user.image))

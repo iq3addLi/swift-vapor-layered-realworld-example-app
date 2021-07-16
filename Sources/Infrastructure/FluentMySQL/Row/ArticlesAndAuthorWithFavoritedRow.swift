@@ -5,10 +5,9 @@
 //  Created by iq3AddLi on 2019/09/12.
 //
 
+import Foundation
+
 // I don't like the strong nested Protocol and the Model-dependent ORM 😢.
-
-import Core // Supply Codable for Date
-
 /// Representation of a row combining Articles and authors and favorite information about them.
 public final class ArticlesAndAuthorWithFavoritedRow: Codable {
     

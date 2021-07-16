@@ -21,17 +21,16 @@ protocol RESTApplicationRepository: Repository {
     /// RESTApplicationRepository must to implement initialization process.
     ///
     /// If there is no need for initialization, implementation it empty.
-    func initalize()
+    func initialize() throws
     
     /// RESTApplicationRepository must to accept routing instructions.
     /// - Parameter collections: Routing instruction array. See `APICollection`. 
     func routing( collections: [APICollection] )
     
     /// RESTApplicationRepository must implement server application launch.
-    /// - Parameters:
-    ///   - hostname: Host name where the server starts. ex. `"127.0.0.1"`.
-    ///   - port: Server port number. ex. `80`.
+    ///
+    /// For server startup configuration, it is assumed that everything is read from .env.
     /// - throws:
     ///    It's assumed that some error will be thrown if the application server fails to launch.
-    func applicationLaunch(hostname: String, port: Int) throws
+    func applicationLaunch() throws
 }
