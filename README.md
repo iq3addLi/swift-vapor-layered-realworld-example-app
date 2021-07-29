@@ -218,7 +218,7 @@ $ pulumi destroy --yes
 
 ## Connect with Frontend Realworld
 
-Change your Realworld frontend Server host settings.  If you are using the Riot v4 version, see [here](https://github.com/iq3addLi/riot_v4_realworld_example_app#change-api-server).
+Change your Realworld frontend Server host settings.  If you are using the Riot version, see [here](https://github.com/iq3addLi/riot_v4_realworld_example_app#change-api-server).
 
 
 

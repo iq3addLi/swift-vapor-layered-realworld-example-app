@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
         "state": {
           "branch": null,
-          "revision": "54a65d6391a1467a896d0d351ff2de6f469ee53c",
-          "version": "1.2.3"
+          "revision": "e434780428fdd6bab4048172039767a9a3b0042c",
+          "version": "1.3.0"
         }
       },
       {
