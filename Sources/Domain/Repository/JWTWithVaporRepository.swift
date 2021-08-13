@@ -38,9 +38,7 @@ struct JWTWithVaporRepository: JWTRepository {
         // create JWT and sign
         try JWTSigner
             .hs256(key: secret.bytes)
-            .sign(
-            SessionPayload(id: id, username: username, expireAfterSec: 60 * 60 * 24)
-        )
+            .sign(SessionPayload(id: id, username: username, expireAfterSec: 60 * 60 * 24))
     }
 
     /// verify a JWT.

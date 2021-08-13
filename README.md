@@ -207,6 +207,22 @@ $ pulumi destroy --yes
 Open `Package.swift` by latest Xcode.    
 SwiftPM will automatically resolve all the dependencies, and when it is done, you can build.
 
+## Set environment variables
+Required the first time.  
+Set the environment variables in menu  `Product > Scheme > Edit scheme > Run > arguments`  
+
+key | value (example)
+:---|:---
+HOSTNAME|0.0.0.0
+PORT|8080
+MYSQL_HOSTNAME|0.0.0.0
+MYSQL_USERNAME|mysqluser
+MYSQL_PASSWORD|mysqlpass
+MYSQL_DATABASE|mysqldatabase
+SECRET_FOR_JWT|secret
+
+Another way, Put `.env` on the same directory as the executable binary.  
+You can find it in the `Env` direcotory.
 
 ## Code entrance
 

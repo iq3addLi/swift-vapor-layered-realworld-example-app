@@ -12,5 +12,5 @@
 /// Repository input and output types must not depend on a particular library. Use Swift base types or Domain models.
 /// Repository definition must not depend on Infrastructure layer. Repository implementations can depend.
 /// ### Repletion
-/// This is the protocol that lets jazzy generate documentation. It hasn't functional meaning.
+/// This is the protocol that lets swift-doc generate documentation. It hasn't functional meaning.
 protocol Repository {}
