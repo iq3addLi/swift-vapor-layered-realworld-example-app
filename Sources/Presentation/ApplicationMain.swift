@@ -13,7 +13,7 @@ private let useCase: ApplicationUseCase = ApplicationUseCase()
 /// This application is start here🏃‍♂️
 /// - throws:
 ///  See `ApplicationUseCase.initialize()` and `ApplicationUseCase.launch()`
-public func applciationMain() throws {
+public func applicationMain() throws {
     
     // Application initialize
     try useCase.initialize()

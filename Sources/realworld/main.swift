@@ -1,3 +1,3 @@
 import Presentation
 
-try applciationMain()
+try applicationMain()
