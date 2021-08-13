@@ -22,7 +22,7 @@ For more information on how to this works with other frontends/backends, head ov
 ### Precondition
 
 * Your platform is Linux or Mac.
-* Swift 5.2 or over than is installed.
+* Swift 5.4 or over than is installed.
 * Docker is installed.
 
 ### Build RealWorld App
@@ -50,7 +50,7 @@ This can be your favorite method.
 ```bash
 $ export SECRET_FOR_JWT={{ secret for JWT }} \
   MYSQL_HOSTNAME=0.0.0.0 \
-	MYSQL_USERNAME=mysqluser \
+  MYSQL_USERNAME=mysqluser \
   MYSQL_PASSWORD=mysqlpass \
   MYSQL_DATABASE=mysqldatabase
 ```
@@ -113,13 +113,6 @@ $ docker run -d --rm \
     mysql:5.7 \
       --character-set-server=utf8mb4 \
       --collation-server=utf8mb4_unicode_ci
-```
-
-### Check MySQL address in bridge network on docker
-
-```bash
-$ docker network inspect bridge | grep IPv4Address
-                "IPv4Address": "172.17.0.2/16", // example
 ```
 
 ### Launch container of RealWorld App 
@@ -210,31 +203,18 @@ $ pulumi destroy --yes
 
 # Getting started
 
-## Entrance
+## Open Project
+Open `Package.swift` by latest Xcode.    
+SwiftPM will automatically resolve all the dependencies, and when it is done, you can build.
 
-[Source/realworld/main.swift](Source/realworld/main.swift) is code of entrance. From here you can follow the entire code!
+
+## Code entrance
+
+[Sources/realworld/main.swift](Sources/realworld/main.swift) is code of entrance. From here you can follow the entire code!
 
 
 
 ## Connect with Frontend Realworld
 
 Change your Realworld frontend Server host settings.  If you are using the Riot version, see [here](https://github.com/iq3addLi/riot_v4_realworld_example_app#change-api-server).
-
-
-
-# Structures
-
-> Now writting...
-
-
-
-# Impression using Vapor
-
-> Now writting...
-
-
-
-# introspection
-
-> Now writting...
 
