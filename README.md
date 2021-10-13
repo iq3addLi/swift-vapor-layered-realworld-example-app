@@ -222,7 +222,7 @@ MYSQL_DATABASE|mysqldatabase
 SECRET_FOR_JWT|secret
 
 Another way, Put `.env` on the same directory as the executable binary.  
-You can find it in the `Env` direcotory.
+You can find it in the `Env` directory.
 
 ## Code entrance
 
