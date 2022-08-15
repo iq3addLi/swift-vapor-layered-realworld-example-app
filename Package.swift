@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.6
 import PackageDescription
 
 let package = Package(
@@ -11,10 +11,10 @@ let package = Package(
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.
-        .package(name: "vapor", url: "https://github.com/vapor/vapor", from: "4.0.0"),
+        .package(url: "https://github.com/vapor/vapor", from: "4.0.0"),
 
         // 🔵 Swift ORM (queries, models, relations, etc)
-        .package(name: "fluent-mysql-driver", url: "https://github.com/vapor/fluent-mysql-driver", from: "4.0.0"),
+        .package(url: "https://github.com/vapor/fluent-mysql-driver", from: "4.0.0"),
         
         // JWT issue and verify
         .package(url: "https://github.com/vapor/jwt-kit", from: "4.0.0"),

@@ -22,7 +22,7 @@ For more information on how to this works with other frontends/backends, head ov
 ### Precondition
 
 * Your platform is Linux or Mac.
-* Swift 5.4 or over than is installed.
+* Swift 5.6 or over than is installed.
 * Docker is installed.
 
 ### Build RealWorld App
